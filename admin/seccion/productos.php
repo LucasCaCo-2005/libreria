@@ -1,4 +1,5 @@
  <?php  include("../template/cabecera.php") ?>
+
 <?php
 
 $txtID = (isset($_POST['txtID'])) ? $_POST['txtID'] : "";
@@ -7,7 +8,7 @@ $txtIMG = (isset($_FILES['txtIMG']['name'])) ? $_FILES['txtIMG']['name'] : "";
 $accion = (isset($_POST['accion'])) ? $_POST['accion'] : "";
 $txtprecio = (isset($_POST['txtPrecio'])) ? $_POST['txtPrecio'] : "";
 $txtcategoria = (isset($_POST['txtcategoria'])) ? $_POST['txtcategoria'] : "";
- $txtDescripcion = (isset($_POST['txtDescripcion'])) ? $_POST['txtDescripcion'] : "";
+$txtDescripcion = (isset($_POST['txtDescripcion'])) ? $_POST['txtDescripcion'] : "";
 
 include("../config/bd.php");
 
@@ -15,8 +16,12 @@ switch($accion) {
        case 'Agregar':
         // INSERT INTO `libros` (`id`, `nombre`, `imagen`) VALUES (NULL, 'php', 'imagen.jpg');
 
-        $sentencia = $conexion->prepare("INSERT INTO `libros` (nombre, imagen) VALUES (:nombre, :imagen);");
+        $sentencia = $conexion->prepare("INSERT INTO `libros` (nombre, precio, categoria, descripcion, imagen) VALUES (:nombre, :precio, :categoria, :descripcion, :imagen);");
         $sentencia->bindParam(':nombre', $txtNombre);
+        $sentencia->bindParam(':precio', $txtprecio);
+        $sentencia->bindParam(':categoria', $txtcategoria); 
+        $sentencia->bindParam(':descripcion', $txtDescripcion);
+    
 
         // Generar nombre único para el archivo de imagen
         $fecha = new DateTime();
@@ -30,15 +35,38 @@ switch($accion) {
         // Guardar el nombre correcto en la base de datos
         $sentencia->bindParam(':imagen', $nombreArchivo);
         $sentencia->execute();
-        break;
 
-        header("Location: productos.php");
+        
+        header("Location: productos.php?mensaje=¡Libro agregado exitosamente!");
+        exit();
+
+        break;
 
  case 'Modificar':
     // Actualizar el nombre
     $sentencia = $conexion->prepare("UPDATE libros SET nombre=:nombre WHERE id=:id");
     $sentencia->bindParam(':nombre', $txtNombre);
     $sentencia->bindParam(':id', $txtID);
+    $sentencia->execute();
+
+        // Actualizar el precio
+        $sentencia = $conexion->prepare("UPDATE libros SET precio=:precio WHERE id=:id");
+        $sentencia->bindParam(':precio', $txtprecio);
+        $sentencia->bindParam(':id', $txtID);
+        $sentencia->execute();
+
+
+        // Actualizar la categoría
+        $sentencia = $conexion->prepare("UPDATE libros SET categoria=:categoria WHERE id=:id");
+        $sentencia->bindParam(':categoria', $txtcategoria);
+        $sentencia->bindParam(':id', $txtID);
+        $sentencia->execute();
+
+        // Actualizar la descripción
+        $sentencia = $conexion->prepare("UPDATE libros SET descripcion=:descripcion WHERE id=:id");
+        $sentencia->bindParam(':descripcion', $txtDescripcion);
+        $sentencia->bindParam(':id', $txtID);
+
     $sentencia->execute();
 
     // Si se subió una imagen nueva
@@ -52,9 +80,6 @@ switch($accion) {
         if ($tmpImagen != "") {
             move_uploaded_file($tmpImagen, "../../img/" . $nombreArchivo);
         }
-
-
-
         // Actualizar el nombre de la imagen en la base de datos
         $sentencia = $conexion->prepare("UPDATE libros SET imagen=:imagen WHERE id=:id");
         $sentencia->bindParam(':imagen', $nombreArchivo);
@@ -65,18 +90,10 @@ switch($accion) {
 
     break;
 
-
-
-      
         break;
     case 'Cancelar':
 header("Location: productos.php");
 
-
-
-
-
-      
         break;
 
          case 'Seleccionar':
@@ -88,15 +105,14 @@ $libro = $sentencia->fetch(PDO::FETCH_LAZY);
 
 $txtNombre = $libro['nombre'];
 $txtIMG = $libro['imagen'];
+$txtcategoria = $libro['categoria'];
+$txtprecio = $libro['precio'];
+$txtDescripcion = $libro['descripcion'];
 
-
+$mensaje1="Libro seleccionado";
+        
         break;
 
-
-  /*       $sentencia = $conexion->prepare("DELETE FROM libros WHERE id=:id");
-        $sentencia->bindParam(':id', $txtID);
-        $sentencia->execute(); 
- +*/
 case 'Borrar':
     // Buscar la imagen actual
     $sentencia = $conexion->prepare("SELECT imagen FROM libros WHERE id=:id");
@@ -110,7 +126,6 @@ case 'Borrar':
             unlink($rutaImagen);
         }
     }
-
     // Borrar el libro de la base de datos
     $sentencia = $conexion->prepare("DELETE FROM libros WHERE id=:id");
     $sentencia->bindParam(':id', $txtID);
@@ -120,22 +135,14 @@ case 'Borrar':
 
     break;
 
-
-
         break;
 }
-
 
 $sentencia = $conexion->prepare("SELECT * FROM libros");
 $sentencia->execute();
 $listaLibros = $sentencia->fetchAll(PDO::FETCH_ASSOC);
 
-
-
-
-
 ?>
-
 
 <div class="col-md-5">
 
@@ -145,7 +152,17 @@ $listaLibros = $sentencia->fetchAll(PDO::FETCH_ASSOC);
     </div>
 
     <div class="card-body">
-   
+
+<?php if (!empty($_GET['mensaje'])): ?>
+    <div class="alert alert-success" role="alert">
+        <?php echo htmlspecialchars($_GET['mensaje']); ?>
+    </div>
+<?php elseif (!empty($mensaje1)): ?>
+    <div class="alert alert-info" role="alert">
+        <?php echo htmlspecialchars($mensaje1); ?>
+    </div>
+<?php endif; ?>
+
 <form method="POST" enctype="multipart/form-data">
 <div class = "form-group">
 <label hidden for="txtID">Id:</label>
@@ -159,33 +176,28 @@ $listaLibros = $sentencia->fetchAll(PDO::FETCH_ASSOC);
 
 <div class = "form-group">
 <label for="txtPrecio">Precio:</label>
-<input type="text" class="form-control" name="txtPrecio" id="txtPrecio" value="" placeholder="Enter Prize" required>
+<input type="text" class="form-control" name="txtPrecio" id="txtPrecio" value="<?php echo $txtprecio; ?>" placeholder="Enter Prize" required>
+</div>
+
+<div class="form-group">
+    <label for="txtcategoria" class="form-control">Categoria:</label>
+    <select name="txtcategoria" id="txtcategoria" required>
+        <option value="" disabled>Seleccione</option>
+        <option value="Fantasia" <?php if($txtcategoria == 'Fantasia') echo 'selected'; ?>>Fantasia</option>
+        <option value="Terror" <?php if($txtcategoria == 'Terror') echo 'selected'; ?>>Terror</option>
+        <option value="Drama" <?php if($txtcategoria == 'Drama') echo 'selected'; ?>>Drama</option>
+    </select>
 </div>
 
 <div class = "form-group">
- <label for="categoria" class="form-control" name="txtcategoria" id="txtcategoria" required >Categoria:</label>
-        <select name="categoria" required>
-            <option value="" disabled selected>Seleccione</option>
-            <option value="disponible">Fantasia</option>
-            <option value="reservado">Terror</option>
-            <option value="adoptado">Drama</option>
-        </select>
-
+<label for="descripcion">descripcion:</label>
+<input type="text" class="form-control" name="txtDescripcion" id="txtDescripcion" value="<?php echo $txtDescripcion; ?>" placeholder="Enter Description" required>
 </div>
-
-
-<div class = "form-group">
-<label for="txtDescripcion">cion:</label>
-<input type="text" class="form-control" name="txtDescripcion" id="txtDescripcion" value="" placeholder="Enter Description" required>
-</div>
-
-
 
 <div class = "form-group">
 
 <label for="txtIMG">Imagen</label>
 <br>
-
 
 <?php if ($txtIMG != "") { ?>
 
@@ -193,6 +205,7 @@ $listaLibros = $sentencia->fetchAll(PDO::FETCH_ASSOC);
 
 <input type="file" class="form-control" name="txtIMG" id="txtIMG" value="" placeholder="Enter IMG" >
 </div>
+
 <div class="btn-group" role="group" aria-label="">
     <button type="submit" name="accion"  <?php echo ($accion=="Seleccionar")?"disabled":""; ?> value="Agregar" class="btn btn-success">Agregar</button>
     <button type="submit" name="accion"   value="Modificar" class="btn btn-warning">Modificar</button>
@@ -200,13 +213,9 @@ $listaLibros = $sentencia->fetchAll(PDO::FETCH_ASSOC);
 </div> 
 
 </form>
-
-
     </div>
-  
+ 
 </div>
-
-Libros
 
 </div>
 <div class="col-md-7">
@@ -215,6 +224,9 @@ Libros
             <tr>
                 <th>ID</th>
                 <th>Nombre</th>
+                <th>Precio</th>
+                <th>Categoria</th>
+                <th>Descripcion</th>
                 <th>Imagen</th>
                  <th>Acciones</th>
             </tr>
@@ -226,29 +238,23 @@ Libros
             <tr>
                 <td><?php echo  $libro['id']  ?> </td>
                 <td><?php echo  $libro['nombre']  ?> </td>
-                <td>
+                 <td><?php echo  $libro['precio']  ?> </td>               
+                <td><?php echo  $libro['categoria']  ?> </td>
+                <td><?php echo  $libro['descripcion']  ?> </td>
+
+       <td>
                     <img src="../../img/<?php echo $libro['imagen']; ?>" width="100" alt="">
 
 </td>
                 <td>
-
-
+           
 <form action="" method="post">
 
 <input type="hidden" name="txtID" id="txtID" value="<?php echo $libro['id']; ?>">
 <input type="submit" value="Seleccionar" name="accion" class="btn btn-primary" >
 <input type="submit" value="Borrar" name="accion" class="btn btn-danger">
 
-
-
 </form>
-
-
-
-
-
-
-
                 </td>
             </tr>
         <?php } ?>
@@ -256,7 +262,5 @@ Libros
     </table>
     
 </div>
-
-
 
 <?php  include("../template/pie.php") ?>
