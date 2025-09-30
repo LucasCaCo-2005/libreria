@@ -7,7 +7,7 @@ $mensaje = isset($_GET['mensaje']) ? $_GET['mensaje'] : '';
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Login - Administrador</title>
+    <title>Login - Administrador- Oscar</title>
 </head>
 <body>
 <?php if($mensaje): ?>
