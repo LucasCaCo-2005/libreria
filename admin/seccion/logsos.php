@@ -268,6 +268,11 @@ $totalMonto = $sentenciaSuma->fetch(PDO::FETCH_ASSOC)['total'] ?? 0;
                 
                     <form method="post" style="display:inline;">
                         <input type="hidden" name="txtID" value="<?php echo $usuario['id']; ?>">
+                        <input type="submit" class="btn btn-warning" name="accion" value="Seleccionar">
+                    </form>
+              
+                    <form method="post" style="display:inline;">
+                        <input type="hidden" name="txtID" value="<?php echo $usuario['id']; ?>">
                         <input type="hidden" name="tipo_pago" value="pago1">
                         <input type="submit" class="btn btn-primary" name="accion" value="Pagar">
                     </form>
@@ -285,7 +290,8 @@ $totalMonto = $sentenciaSuma->fetch(PDO::FETCH_ASSOC)['total'] ?? 0;
 </div>
 
 <h3>Pagos del mes: <?php echo $mesActual; ?></h3>
-<p><strong>Total de socios que pagaron:</strong> <?php echo $totalPagos; ?></p>
+<p><strong>Total de personas que pagaron:</strong> <?php echo $totalPagos; ?></p>
+<p><strong>Total recaudado:</strong> $<?php echo number_format($totalMonto,2); ?></p>
 
 <table class="table table-bordered">
     <thead>
