@@ -116,3 +116,5 @@ include_once ("../config/bd.php");
     
 </div>
 <?php  include("../template/pie.php") ?>
+
+
