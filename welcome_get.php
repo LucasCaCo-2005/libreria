@@ -17,3 +17,6 @@
         echo $_GET['mensaje'];
     } ?>
 
+
+
+Lorem ipsum dolor sit amet consectetur adipisicing elit. Nobis ut maxime ipsa, vel aspernatur, officia illo cum odio adipisci harum repellat tempore facere nam eveniet ducimus minus earum pariatur enim!

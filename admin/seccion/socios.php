@@ -144,4 +144,4 @@ Registro de Socios
 <?php  include("../template/pie.php"); ?>
     
 </body>
-</html>
+</html> 
