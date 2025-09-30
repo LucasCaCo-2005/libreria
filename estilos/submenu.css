@@ -1,0 +1,80 @@
+/* Estilo general del menú */
+ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+/* Estilo para los ítems del menú principal */
+li {
+    position: relative;
+    display: inline-block;
+    margin: 0 15px;
+}
+
+/* Enlaces del menú */
+li a {
+    display: block;
+    text-decoration: none;
+    color: #ffffff;
+    background-color: #007BFF;
+    padding: 10px 15px;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* Efecto hover */
+li a:hover {
+    background-color: #0056b3;
+}
+
+/* Submenú oculto por defecto */
+.submenu .dropdown {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background-color: #ffffff;
+    min-width: 160px;
+    box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+    z-index: 1000;
+    border-radius: 5px;
+}
+
+/* Ítems del submenú */
+.submenu .dropdown li {
+    display: block;
+}
+
+/* Enlaces del submenú */
+.submenu .dropdown li a {
+    color: #333333;
+    background-color: #ffffff;
+    padding: 10px 15px;
+    border-radius: 0;
+}
+
+/* Hover en ítems del submenú */
+.submenu .dropdown li a:hover {
+    background-color: #f2f2f2;
+    color: #007BFF;
+}
+
+/* Mostrar el submenú al pasar el mouse */
+.submenu:hover .dropdown {
+    display: block;
+}
+
+/* Responsividad básica (menú colapsable opcional) */
+@media (max-width: 768px) {
+    li {
+        display: block;
+        margin: 5px 0;
+    }
+
+    .submenu .dropdown {
+        position: static;
+        box-shadow: none;
+    }
+}
