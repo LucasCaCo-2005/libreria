@@ -11,9 +11,9 @@ class Persona {
     private $Numero;
     private $Celular;
     private $TelefonoFijo;
-    private $correo;
-    private $pass;
-    
+    private $Correo;
+    private $Pass;
+    private $Tipo;
 
          public function getCI() {
         return $this->Ci;
@@ -22,7 +22,7 @@ class Persona {
         return $this->Pass;
     }
 
-    public function setCi($Ci) { $this->Ci = $Ci; }
+    public function setCi($Ci) { $this->Ci = $Ci; } 
     public function setPrimerNombre($PrimerNombre) { $this->PrimerNombre = $PrimerNombre; }
     public function setSegundoNombre($SegundoNombre) { $this->SegundoNombre = $SegundoNombre; }
     public function setPrimerApellido($PrimerApellido) { $this->PrimerApellido = $PrimerApellido; }
@@ -36,8 +36,9 @@ class Persona {
     public function setTipo($Tipo) { $this->Tipo = $Tipo; }
 
 
-    public function CargarPersonas() {
-        include_once '../datos/personasBd.php';
+    public function CargarPersonas() { 
+       // include_once '../datos/personasBd.php';
+     
         $registro = new personasBd();
         $registro->RegistrarPersona(
             $this->Ci,
@@ -50,14 +51,14 @@ class Persona {
             $this->Celular,   
             $this->TelefonoFijo,  
             $this->Correo,
-            $this->pass,
+            $this->Pass,
             $this->Tipo
         )   
         ;
     }
-    public function Login() {
-    $ci = $this->Ci;
-    $pass = $this->Pass;
+    public function Login() { 
+    $Ci = $this->Ci;
+    $Pass = $this->Pass; 
 
     // Crear conexión
     $conexion = new Conexion();
@@ -90,8 +91,81 @@ class Persona {
     }
 }
 public function BuscarPersona(){
-        include_once "./datos/personasBd.php";
+       // include_once "./datos/personasBd.php";
+       
         $personaBD = new personasBd(); 
         return $personaBD->BuscarPersona($this->Ci); 
     }
 }
+
+
+
+
+
+include_once "conexion.php";
+
+
+class personasBD extends Conexion {
+    public function RegistrarPersona($ci, $PrimerNombre, $SegundoNombre, $PrimerApellido, $SegundoApellido, $Calle, $Numero, $Celular, $TelefonoFijo, $Correo, $Pass, $Tipo) {
+        $con = $this->Conectar();
+
+        $stmt = $con->prepare("INSERT INTO personas (ci, PrimerNombre, SegundoNombre, PrimerApellido, SegundoApellido, Calle, Numero, Celular, TelefonoFijo, Correo, Pass, Tipo)
+                               VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+        if (!$stmt) {
+            echo "Error al preparar la consulta: " . $con->error;
+            return;
+        }
+
+        $stmt->bind_param("ssssssssssss", $ci, $PrimerNombre, $SegundoNombre, $PrimerApellido, $SegundoApellido, $Calle, $Numero, $Celular, $TelefonoFijo, $Correo, $Pass, $Tipo);
+
+        if ($stmt->execute()) {
+            echo "✅ Usuario registrado correctamente.";
+        } else {
+            echo "❌ Error al registrar usuario: " . $stmt->error;
+        }
+
+        $stmt->close();
+        $con->close();
+    }
+
+
+public function BuscarUsuarioPorCI($ci, $pass) {
+    $con = $this->Conectar();
+    $stmt = $con->prepare("SELECT * FROM personas WHERE Ci = ? AND Pass =?");
+    $stmt->bind_param("ss", $Ci, $Pass);
+    $stmt->execute();
+
+    $resultado = $stmt->get_result();
+    $usuario = $resultado->fetch_assoc();
+
+    $stmt->close();
+    $con->close();
+
+    return $personas ?: null;
+}
+public function BuscarUsuario($Ci) {
+    $con = $this->Conectar();
+
+    $stmt = $con->prepare("SELECT * FROM personas WHERE Ci = ?");
+    $stmt->bind_param("s", $Ci);
+    $stmt->execute();
+
+    $resultado = $stmt->get_result();
+    $persona = [];
+
+    while ($fila = $resultado->fetch_assoc()) {
+        $persona = new Persona();
+        $persona->setPrimerNombre($fila['Primernombre']);
+        $persona->setCi($fila['Ci']);
+        $persona->setCorreo($fila['Correo']);
+        $persona->setTelefonoFijo($fila['TelefonoFijo']);
+        $persona[] = $persona;
+    }
+
+    $stmt->close();
+    $con->close();
+
+    return $persona;
+}
+}
+?>

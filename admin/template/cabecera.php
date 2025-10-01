@@ -32,6 +32,7 @@ if(!isset($_SESSION['usuario'])){
                    <a class="nav-item nav-link" href="<?php echo $url;?>">Ver sitio web</a>
                         <a class="nav-item nav-link" href="<?php echo $url;?>/admin/seccion/socios.php">Socios</a> 
                          <a class="nav-item nav-link" href="<?php echo $url;?>/admin/seccion/logsos.php">Pagos</a> 
+                             <a class="nav-item nav-link" href="<?php echo $url;?>/admin/paneladmin.php">Talleres</a> 
                       <a class="nav-item nav-link" href="<?php echo $url;?>/admin/seccion/cerrar.php">Cerrar</a> 
     </div>
 </nav>

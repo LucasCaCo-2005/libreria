@@ -14,7 +14,6 @@ if(isset($_GET['id'])){
     $libro = $sentencia->fetch(PDO::FETCH_ASSOC);
 }
 ?>
-
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -42,7 +41,6 @@ if(isset($_GET['id'])){
     <?php } else { ?>
         <p>No se encontró el libro.</p>
     <?php } ?>
-    
 </div>
 <a class="btn btn-sm btn-primary" href="productos.php">Volver</a>
 </body>

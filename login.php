@@ -57,9 +57,14 @@
 </html>
 
 <?php
-include_once "../datos/conexion.php";
-include_once "../logica/persona.php";
-include_once "../datos/personasBd.php";
+
+
+// include_once "../datos/conexion.php";
+//include_once "../logica/persona.php";
+//include_once "../datos/personasBd.php"; 
+
+include_once __DIR__ . "/logica/conexion.php";
+include_once __DIR__ . "/logica/persona.php";
 
 if (isset($_POST['login'])) {
     $persona = new Persona();
@@ -70,10 +75,10 @@ if (isset($_POST['login'])) {
 
     if ($_SESSION['persona'] != NULL) {
         if ($_SESSION['persona']->getTipo() == "admin") {
-            header("Location: ../panelAdmin.php");
+            header("Location: panelAdmin.php");
             exit;
         } else {
-            header("Location: ../index.php");
+            header("Location: index.php");
             exit;
         }
     } else {
@@ -82,7 +87,7 @@ if (isset($_POST['login'])) {
 }
 
 if (isset($_POST['Registrarse'])) {
-    header("Location: ../presentacion/registro.php");
+    header("Location: registro.php");
     exit;
 }
 ?>
