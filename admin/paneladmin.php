@@ -1,9 +1,8 @@
 <?php
-
-include_once "../logica/Talleres.php";
-include_once "../logica/persona.php"; 
-include_once "../logica/conexion.php";
+include_once "seccion/Talleres.php";
+include_once "seccion/persona.php";
 include_once "template/cabecera.php";
+include_once ("../admin/config/bd.php");
 // (aquí van tus clases Talleres y TalleresBD como te pasé antes)
 
 // ----------------------
@@ -17,7 +16,8 @@ if(isset($_POST['agregar'])){
     $taller->setNombre($_POST['nombre']);
     $taller->setDia($_POST['dia']);
     $taller->setHorario($_POST['horario']);
-    include_once "./cargarimagen.php";
+    include_once "../cargarimagen.php";
+    $taller->setDescripcion($_POST['descripcion']);
     $foto = CargarFoto();
     if($foto != null){
         $taller->setFoto($foto);
@@ -39,6 +39,7 @@ if (isset($_POST['BuscarTalleres'])) {
     if (!empty($_POST["dia"])) $taller->setDia($_POST["dia"]);
     if (!empty($_POST["horario"])) $taller->setHorario($_POST["horario"]);
     if (!empty($_POST["foto"])) $taller->setFoto($_POST["foto"]);
+    if (!empty($_POST["descripcion"])) $taller->setDescripcion($_POST["descripcion"]);
     
     $resultados = $taller->BuscarTalleres();
 }
@@ -50,6 +51,7 @@ if(isset($_POST['Cambiar'])){
     $taller->setNombre($_POST['nombre']);
     $taller->setDia($_POST['dia']);
     $taller->setHorario($_POST['horario']);
+    
     $taller->CambiarTalleres();
 }
 ?>
@@ -59,8 +61,7 @@ if(isset($_POST['Cambiar'])){
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Panel de administración</title>
-    <link rel="stylesheet" href="../estilos/adoptar.css">
-    <link rel="stylesheet" href="../estilos/admin.css">
+    <link rel="stylesheet" href="../css/admin.css">
 </head>
 <body>
 
@@ -82,12 +83,18 @@ if(isset($_POST['Cambiar'])){
             <input type="text" name="horario" id="horario">
         </div>
 
-        <div>
+          <div>
+      <label for="exampleTextarea" class="form-label mt-4">Descripcion</label>
+      <textarea class="form-control" id="exampleTextarea" rows="3" style="height: 92px;" name="descripcion" id="descripcion"></textarea>
+    </div>
+    <div>
+         <div>
             <label> Foto</label>
             <input type="file" name="image">
         </div>
 
         <div>
+
             <input type="submit" name="agregar" value="Agregar">
             <input type="submit" name="ListarTalleres" value="Listar Talleres">
             <input type="submit" name="BuscarTalleres" value="Buscar Talleres">
@@ -102,7 +109,8 @@ if(isset($_POST['Cambiar'])){
                 <th>Nombre</th>
                 <th>Día</th>
                 <th>Horario</th>
-                <th>Foto</th>
+                <th>Foto</th>´
+                <th>Descripción</th>
             </tr>
             <?php foreach ($resultados as $taller): ?>
                 <tr>
@@ -111,6 +119,7 @@ if(isset($_POST['Cambiar'])){
                     <td><?= $taller->getDia() ?></td>
                     <td><?= $taller->getHorario() ?></td>
                     <td><?= $taller->getFoto() ?></td>
+                    <td><?= $taller->getDescripcion() ?></td>
                 </tr>
             <?php endforeach; ?>
         </table>

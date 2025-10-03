@@ -11,7 +11,7 @@ $txtContraseña = (isset($_POST['txtContraseña'])) ? $_POST['txtContraseña'] :
 $txtestado = (isset($_POST['txtestado'])) ? $_POST['txtestado'] : "";
 $accion = (isset($_POST['accion'])) ? $_POST['accion'] : ""; 
 
-include("../config/bd.php");
+include("config/bd.php");
 // Obtener la lista de usuarios
 
 $sentencia = $conexion->prepare("SELECT * FROM socios"); $sentencia->execute(); $listaSocios = $sentencia->fetchAll(PDO::FETCH_ASSOC); switch($accion){

@@ -2,7 +2,7 @@
 
 // Procesa el formulario si se envió
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['agregar'])) {
-    include_once "logica/persona.php";
+   include_once __DIR__ . "/admin/seccion/persona.php";
 
     $persona = new Persona();
     $persona->setCi($_POST['ci']);

@@ -31,13 +31,66 @@ if($_POST){
 <head>
     <meta charset="UTF-8">
     <title>Registrar Préstamo</title>
+
+    <style>
+
+
+
+
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        h2 {
+            text-align: center;
+        }
+        form {
+            max-width: 400px;
+            margin: 0 auto;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-shadow: 2px 2px 5px rgba(0,0,0,0.1);
+        }
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+        }
+        input[type="text"], input[type="date"] {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        button {
+            width: 100%;
+            padding: 10px;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #218838;
+        }
+
+        img {
+            max-width: 800px;
+            height: auto;
+            display: block;
+            margin-top: 10px;
+        }
+    </style>
 </head>
 <body>
     <br>
     <h2>Registrar Préstamo</h2>
     <?php if($libro){ ?>
         <br>
-        <p><strong>Libro:</strong> <?php echo $libro['nombre']; ?> (<?php echo $libro['autor']; ?>)</p>
+        <p><strong>Libro:</strong> <?php echo $libro['nombre']; ?> (<?php echo $libro['autor']; ?>)  <img class="card-img-top" src="../images/<?php echo $libro['imagen']; ?>" alt="">   </p>
         <br>
         <form method="post">
             <input type="hidden" name="libro_id" value="<?php echo $libro['id']; ?>">

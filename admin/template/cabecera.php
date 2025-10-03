@@ -26,16 +26,48 @@ if(!isset($_SESSION['usuario'])){
     <div class="nav navbar-nav">
         <a class="nav-item nav-link active" href="#">Administrador <span class="sr-only"></span></a>
         <a class="nav-item nav-link" href="<?php echo $url;?>/admin/inicio.php">Inicio</a>
-                <a class="nav-item nav-link" href="<?php echo $url;?>/admin/seccion/productos.php">Libros</a>
-               <a class="nav-item nav-link" href="<?php echo $url;?>/admin/prest.php">Prestamos</a>
-                  <a class="nav-item nav-link" href="<?php echo $url;?>/admin/Vistalibros.php">Vistalibros</a>
-                   <a class="nav-item nav-link" href="<?php echo $url;?>">Ver sitio web</a>
-                        <a class="nav-item nav-link" href="<?php echo $url;?>/admin/seccion/socios.php">Socios</a> 
-                         <a class="nav-item nav-link" href="<?php echo $url;?>/admin/seccion/logsos.php">Pagos</a> 
-                             <a class="nav-item nav-link" href="<?php echo $url;?>/admin/paneladmin.php">Talleres</a> 
-                      <a class="nav-item nav-link" href="<?php echo $url;?>/admin/seccion/cerrar.php">Cerrar</a> 
+<li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Talleres</a>
+          <div class="dropdown-menu">
+            <a class="dropdown-item" href="<?php echo $url;?>/admin/panelAdmin.php">Registro de talleres</a>
+              <a class="dropdown-item" href="<?php echo $url;?>/admin/VistaT.php">Vista Talleres</a>
+
+          </div>
+        </li>
+
+
+
+
+
+
+<li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Libros</a>
+          <div class="dropdown-menu">
+            <a class="dropdown-item" href="<?php echo $url;?>/admin/productos.php">Registro</a>
+              <a class="dropdown-item" href="<?php echo $url;?>/admin/VistaLibros.php">Vista Libros</a>
+            <div class="dropdown-divider" ></div>
+               <a class="dropdown-item" href="<?php echo $url;?>/admin/prest.php">Prestamos</a>
+            <a class="dropdown-item" href="#" hidden >Separated link</a>
+          </div>
+        </li>
+
+<li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Socios</a>
+          <div class="dropdown-menu">
+            <a class="dropdown-item" href="<?php echo $url;?>/admin/socios.php">Registro de Socios</a>
+            <a class="dropdown-item" href="">Socios</a>
+            <a class="dropdown-item" href="<?php echo $url;?>/admin/logsos.php">Pagos</a>
+            <div class="dropdown-divider" hidden></div>
+            <a class="dropdown-item" href="#" hidden >Separated link</a>
+          </div>
+        </li>
+
+  <a class="nav-item nav-link" href="<?php echo $url;?>">Ver sitio web</a>
+ <a class="nav-item nav-link" href="<?php echo $url;?>/admin/seccion/cerrar.php">Cerrar Sesion</a> 
     </div>
 </nav>
 <div class="container">
     <br><br>
     <div class="row">
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3/dist/js/bootstrap.bundle.min.js"></script>

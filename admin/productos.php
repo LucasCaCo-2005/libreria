@@ -1,7 +1,7 @@
 
-<?php  include("../template/cabecera.php");
-include("logistica.php"); 
-include_once ("../config/bd.php");
+<?php  include("template/cabecera.php");
+include("seccion/logistica.php"); 
+include_once ("config/bd.php");
  ?>
 <div class="container">
   <div class="row">
@@ -45,7 +45,7 @@ include_once ("../config/bd.php");
 
 <div class = "form-group">
 <label for="txtfecha">fecha:</label>
-<input type="text" class="form-control" name="txtfecha" id="txtfecha" value="<?php echo date('Y'); ?>" placeholder="Enter Year" required>
+<input type="text" class="form-control" name="txtfecha" id="txtfecha" value="<?php echo $txtfecha ?>" placeholder="Enter Year" required>
 </div>
 
 <div class = "form-group">
@@ -63,7 +63,7 @@ include_once ("../config/bd.php");
 <label for="txtIMG">Imagen</label>
 <br>
 <?php if ($txtIMG != "") { ?>
-    <img src="../../img/<?php echo $txtIMG; ?>" width="100" alt=""> <?php } ?>
+    <img src="../../images/<?php echo $txtIMG; ?>" width="100" alt=""> <?php } ?>
 <input type="file" class="form-control" name="txtIMG" id="txtIMG" value="" placeholder="Enter IMG" >
 </div>
 <div class="btn-group" role="group" aria-label="">
@@ -99,7 +99,7 @@ include_once ("../config/bd.php");
                 <td><?php echo  $libro['autor']  ?> </td>        
                 <td><?php echo  $libro['stock']  ?> </td>
        <td>
-                    <img src="../../img/<?php echo $libro['imagen']; ?>" width="100" alt="">
+                    <img src="../../images/<?php echo $libro['imagen']; ?>" width="100" alt="">
 
 </td>
                 <td>         
@@ -116,5 +116,4 @@ include_once ("../config/bd.php");
     
 </div>
 <?php  include("../template/pie.php") ?>
-
 

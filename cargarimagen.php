@@ -20,7 +20,8 @@ if (isset($_FILES['image'])) {
 
     if (in_array(needle: $ExtensionDelArchivo, haystack: $extensionesPErmitidas)) {
       
-        $DirectorioDestino = './images/';
+      //  $DirectorioDestino = './images/';
+        $DirectorioDestino = '../images/';
         $RutaCompetaFinal = $DirectorioDestino . $NombreDelArchivo;
 
   

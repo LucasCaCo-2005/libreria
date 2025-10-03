@@ -7,7 +7,7 @@ $accion = (isset($_POST['accion'])) ? $_POST['accion'] : "";
 $txtfecha = (isset($_POST['txtfecha'])) ? $_POST['txtfecha'] : "";
 $txtAutor = (isset($_POST['txtAutor'])) ? $_POST['txtAutor'] : "";
 $txtStock = (isset($_POST['txtStock'])) ? $_POST['txtStock'] : "";
-include("../config/bd.php");
+include("config/bd.php");
 switch($accion) {
        case 'Agregar':
         // INSERT INTO `libros` (`id`, `nombre`, `imagen`) VALUES (NULL, 'php', 'imagen.jpg');
@@ -17,11 +17,11 @@ switch($accion) {
         $sentencia->bindParam(':autor', $txtAutor);
         $sentencia->bindParam(':stock', $txtStock);
         // Generar nombre único para el archivo de imagen
-        $fecha = new DateTime();
-        $nombreArchivo = ($txtIMG != "") ? $fecha->getTimestamp() . "_" . $_FILES['txtIMG']['name'] : "imagen.jpg";
+       $fecha = new DateTime();
+        $nombreArchivo = ($txtIMG != "")? $fecha->getTimestamp() . "_" . $_FILES['txtIMG']['name'] : "imagen.jpg";
         $tmpImagen = $_FILES['txtIMG']['tmp_name'];
         if ($tmpImagen != "") {
-            move_uploaded_file($tmpImagen, "../../img/" . $nombreArchivo);
+            move_uploaded_file($tmpImagen, "../../images/" . $nombreArchivo);
         }
         // Guardar el nombre correcto en la base de datos
         $sentencia->bindParam(':imagen', $nombreArchivo);
@@ -60,7 +60,7 @@ $sentencia = $conexion->prepare("UPDATE libros SET fecha=:fecha WHERE id=:id");
         // Mover la imagen al servidor
         $tmpImagen = $_FILES['txtIMG']['tmp_name'];
         if ($tmpImagen != "") {
-            move_uploaded_file($tmpImagen, "../../img/" . $nombreArchivo);
+            move_uploaded_file($tmpImagen, "../../images/" . $nombreArchivo);
         }
         // Actualizar el nombre de la imagen en la base de datos
         $sentencia = $conexion->prepare("UPDATE libros SET imagen=:imagen WHERE id=:id");
@@ -78,7 +78,6 @@ header("Location: productos.php");
 
         break;
 case 'Seleccionar':
-    session_start();
 
     $sentencia = $conexion->prepare("SELECT * FROM libros WHERE id=:id");
     $sentencia->bindParam(':id', $txtID);
@@ -105,7 +104,7 @@ case 'Borrar':
     $libro = $sentencia->fetch(PDO::FETCH_LAZY);
 
     if (isset($libro["imagen"]) && $libro["imagen"] != "imagen.jpg") {
-        $rutaImagen = "../../img/" . $libro["imagen"];
+        $rutaImagen = "../../images/" . $libro["imagen"];
         if (file_exists($rutaImagen)) {
             unlink($rutaImagen);
         }

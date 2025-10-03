@@ -63,8 +63,8 @@
 //include_once "../logica/persona.php";
 //include_once "../datos/personasBd.php"; 
 
-include_once __DIR__ . "/logica/conexion.php";
-include_once __DIR__ . "/logica/persona.php";
+include_once  "./admin/config/bd.php";
+include_once __DIR__ . "/admin/seccion/persona.php";
 
 if (isset($_POST['login'])) {
     $persona = new Persona();

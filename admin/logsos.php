@@ -11,7 +11,7 @@ $txtestado = (isset($_POST['txtestado'])) ? $_POST['txtestado'] : "";
 $accion = (isset($_POST['accion'])) ? $_POST['accion'] : ""; 
 $tipoPago = (isset($_POST['tipo_pago'])) ? $_POST['tipo_pago'] : "";
 
-include("../config/bd.php");
+include("config/bd.php");
 switch($accion){
     case "Agregar":
         $sentencia = $conexion->prepare("INSERT INTO socios 
@@ -194,7 +194,7 @@ $sentenciaSuma->bindParam(':mes', $mesFormateado);
 $sentenciaSuma->execute();
 $totalMonto = $sentenciaSuma->fetch(PDO::FETCH_ASSOC)['total'] ?? 0;
 ?>
-<?php include("../template/cabecera.php"); ?>
+<?php include("template/cabecera.php"); ?>
 
 <h2>Registro de Socios</h2>
 <form method="POST" enctype="multipart/form-data">
@@ -323,4 +323,4 @@ $totalMonto = $sentenciaSuma->fetch(PDO::FETCH_ASSOC)['total'] ?? 0;
     </tbody>
 </table>
 
-<?php include("../template/pie.php"); ?>
+<?php include("template/pie.php"); ?>

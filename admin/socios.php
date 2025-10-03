@@ -1,6 +1,6 @@
-<?php  include("../template/cabecera.php"); ?>
-<?php include("users.php"); 
-include_once ("../config/bd.php");
+<?php  include("template/cabecera.php"); ?>
+<?php include("seccion/users.php"); 
+include_once ("config/bd.php");
  ?>
 
 <!DOCTYPE html>
@@ -58,16 +58,13 @@ Registro de Socios
 </div>
 
 <div class="form-group">
-    <label for="txtestado" class="form-control">estado:</label>
-    <select name="txtestado" id="txtestado" required>
+    <label for="txtestado" class="form-control" hidden>estado:</label>
+  Estado:  <select name="txtestado" id="txtestado" required>
         <option value="" disabled>Seleccione</option>
         <option value="activo" <?php if($txtestado == 'activo') echo 'selected'; ?>>activo</option>
         <option value="inactivo" <?php if($txtestado == 'inactivo') echo 'selected'; ?>>inactivo</option>
     </select>
 </div>
-
-
-
 
 <div class="btn-group" role="group" aria-label="">
    <button type="submit" name="accion" 

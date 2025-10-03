@@ -1,7 +1,8 @@
 <?php
-include_once "persona.php"; 
-include_once "conexion.php";
 
+// include_once "persona.php"; 
+
+include_once "persona.php";
 //////////////////////
 // CLASE TALLERES
 //////////////////////
@@ -11,6 +12,7 @@ class Talleres {
     private $dia;
     private $horario;
     private $foto;
+    private $descripcion;
 
     // ID
     public function setId($idTaller){ $this->idTaller = $idTaller; }
@@ -32,6 +34,11 @@ class Talleres {
     public function setFoto($foto){ $this->foto = $foto; }
     public function getFoto(){ return $this->foto; }
 
+    // Descripcion
+    public function setDescripcion($descripcion){ $this->descripcion = $descripcion; }
+    public function getDescripcion(){ return $this->descripcion; }
+
+
     // Operaciones
     public function ListarTalleres(){
         $talleresBD = new TalleresBD();
@@ -40,7 +47,7 @@ class Talleres {
 
     public function CargarTalleres(){
         $talleresBD = new TalleresBD();
-        return $talleresBD->CargarTalleres($this->nombre, $this->dia, $this->horario, $this->foto, $this->idTaller);
+        return $talleresBD->CargarTalleres($this->nombre, $this->dia, $this->horario, $this->foto, $this->idTaller, $this->descripcion);
     }
 
     public function CambiarTalleres(){
@@ -50,7 +57,7 @@ class Talleres {
 
     public function BuscarTalleres(){
         $talleresBD = new TalleresBD();
-        return $talleresBD->BuscarTalleres($this->idTaller, $this->nombre, $this->dia, $this->horario);
+        return $talleresBD->BuscarTalleres($this->idTaller, $this->nombre, $this->dia, $this->horario, $this->descripcion);
     }
 }
 
@@ -77,30 +84,31 @@ class TalleresBD extends conexion {
             $taller->setDia($fila['dia']);
             $taller->setHorario($fila['horario']);
             $taller->setFoto($fila['foto']);
+            $taller->setDescripcion($fila['descripcion']);
             $ListaTalleres[] = $taller;
         }
         return $ListaTalleres;
     }
 
-    public function CargarTalleres($nombre, $dia, $horario, $foto, $idTaller) {
+    public function CargarTalleres($nombre, $dia, $horario, $foto, $idTaller, $descripcion) {
         $con = $this->Conectar();
-        $sql = "INSERT INTO talleres (nombre, dia, horario, foto, Id) VALUES (?,?,?,?,?)";
+        $sql = "INSERT INTO talleres (nombre, dia, horario, foto, Id, descripcion ) VALUES (?,?,?,?,?,?)";
         $stmt = $con->prepare($sql);
         if (!$stmt) die("Error preparando consulta: " . $con->error);
-        $stmt->bind_param("sssss", $nombre, $dia, $horario, $foto, $idTaller);
+        $stmt->bind_param("ssssss", $nombre, $dia, $horario, $foto, $idTaller, $descripcion );
         return $stmt->execute();
     }
 
-    public function CambiarTalleres($idTaller, $nombre, $dia, $horario) {
+    public function CambiarTalleres($idTaller, $nombre, $dia, $horario, $descripcion) {
         $con = $this->Conectar();
-        $sql = "UPDATE talleres SET nombre = ?, dia = ?, horario = ? WHERE Id = ?";
+        $sql = "UPDATE talleres SET nombre = ?, dia = ?, horario = ?, descripcion = ? WHERE Id = ?";
         $stmt = $con->prepare($sql);
         if (!$stmt) die("Error preparando consulta: " . $con->error);
-        $stmt->bind_param("sssi", $nombre, $dia, $horario, $idTaller);
+        $stmt->bind_param("sssis", $nombre, $dia, $horario, $idTaller, $descripcion);
         return $stmt->execute();
     }
 
-    public function BuscarTalleres($idTaller, $nombre, $dia, $horario) {
+public function BuscarTalleres($idTaller, $nombre, $dia, $horario, $descripcion) {
         $con = $this->Conectar();
         $sql = "SELECT * FROM talleres WHERE 1=1";
         $params = [];
@@ -110,6 +118,7 @@ class TalleresBD extends conexion {
         if (!empty($nombre)) { $sql .= " AND nombre LIKE ?"; $params[] = "%".$nombre."%"; $types .= "s"; }
         if (!empty($dia)) { $sql .= " AND dia LIKE ?"; $params[] = "%".$dia."%"; $types .= "s"; }
         if (!empty($horario)) { $sql .= " AND horario LIKE ?"; $params[] = "%".$horario."%"; $types .= "s"; }
+        if (!empty($descripcion)) { $sql .= " AND descripcion LIKE ?"; $params[] = "%".$descripcion."%"; $types .= "s"; }
 
         $stmt = $con->prepare($sql);
         if (!$stmt) die("Error preparando consulta: " . $con->error);
@@ -125,6 +134,8 @@ class TalleresBD extends conexion {
             $taller->setNombre($fila['nombre']);
             $taller->setDia($fila['dia']);
             $taller->setHorario($fila['horario']);
+            $taller->setFoto($fila['foto']);
+            $taller->setDescripcion($fila['descripcion']);
             $buscarTalleres[] = $taller;
         }
         return $buscarTalleres;

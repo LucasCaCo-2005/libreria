@@ -1,8 +1,8 @@
 <?php
 session_start();
-include_once __DIR__ . '/logica/conexion.php';
-include_once __DIR__ . '/logica/persona.php';
-include_once __DIR__ . '/logica/Talleres.php';
+include_once __DIR__ . '/admin/seccion/persona.php';
+include_once __DIR__ . '/admin/config/bd.php';
+include_once __DIR__ . '/admin/seccion/Talleres.php';
 
 
 
@@ -18,8 +18,9 @@ $listaTalleres = $talleresBD->ListarTalleres();
 <head>
     <meta charset="UTF-8">
     <title>Mi Página con Banner</title>
-    <link rel="stylesheet" href="./estilos/Index.css"> 
-    
+  <link rel="stylesheet" href="./estilos/Index.css"> 
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <style>
 .modal {
     display: none;
@@ -158,6 +159,7 @@ $listaTalleres = $talleresBD->ListarTalleres();
         <button onclick="window.location.href='#talleres'">Talleres</button>
         <button onclick="window.location.href='#secretaria'">Secretaría</button>
           <button onclick="window.location.href='productos.php'">Productos</button>
+           <button onclick="window.location.href='./admin/inicio.php'">Admin</button>
     </div>
 
     <!-- JS -->
