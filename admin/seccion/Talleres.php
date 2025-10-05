@@ -3,6 +3,7 @@
 // include_once "persona.php"; 
 
 include_once "persona.php";
+include_once ("../admin/config/bd.php");
 //////////////////////
 // CLASE TALLERES
 //////////////////////
@@ -13,6 +14,8 @@ class Talleres {
     private $horario;
     private $foto;
     private $descripcion;
+    private $estado;
+
 
     // ID
     public function setId($idTaller){ $this->idTaller = $idTaller; }
@@ -38,6 +41,9 @@ class Talleres {
     public function setDescripcion($descripcion){ $this->descripcion = $descripcion; }
     public function getDescripcion(){ return $this->descripcion; }
 
+    // Estado
+    public function setEstado($estado){ $this->estado = $estado; }
+    public function getEstado(){ return $this->estado; }
 
     // Operaciones
     public function ListarTalleres(){
@@ -47,7 +53,7 @@ class Talleres {
 
     public function CargarTalleres(){
         $talleresBD = new TalleresBD();
-        return $talleresBD->CargarTalleres($this->nombre, $this->dia, $this->horario, $this->foto, $this->idTaller, $this->descripcion);
+        return $talleresBD->CargarTalleres($this->nombre, $this->dia, $this->horario, $this->foto, $this->idTaller, $this->descripcion, $this->estado);
     }
 
     public function CambiarTalleres(){
@@ -57,7 +63,7 @@ class Talleres {
 
     public function BuscarTalleres(){
         $talleresBD = new TalleresBD();
-        return $talleresBD->BuscarTalleres($this->idTaller, $this->nombre, $this->dia, $this->horario, $this->descripcion);
+        return $talleresBD->BuscarTalleres($this->idTaller, $this->nombre, $this->dia, $this->horario, $this->descripcion, $this->estado);
     }
 }
 
@@ -85,6 +91,7 @@ class TalleresBD extends conexion {
             $taller->setHorario($fila['horario']);
             $taller->setFoto($fila['foto']);
             $taller->setDescripcion($fila['descripcion']);
+            $taller->setEstado($fila['estado']);
             $ListaTalleres[] = $taller;
         }
         return $ListaTalleres;
@@ -92,23 +99,23 @@ class TalleresBD extends conexion {
 
     public function CargarTalleres($nombre, $dia, $horario, $foto, $idTaller, $descripcion) {
         $con = $this->Conectar();
-        $sql = "INSERT INTO talleres (nombre, dia, horario, foto, Id, descripcion ) VALUES (?,?,?,?,?,?)";
+        $sql = "INSERT INTO talleres (nombre, dia, horario, foto, Id, descripcion, estado ) VALUES (?,?,?,?,?,?, 'activo')";
         $stmt = $con->prepare($sql);
         if (!$stmt) die("Error preparando consulta: " . $con->error);
-        $stmt->bind_param("ssssss", $nombre, $dia, $horario, $foto, $idTaller, $descripcion );
+        $stmt->bind_param("ssssis", $nombre, $dia, $horario, $foto, $idTaller, $descripcion );
         return $stmt->execute();
     }
 
-    public function CambiarTalleres($idTaller, $nombre, $dia, $horario, $descripcion) {
+    public function CambiarTalleres($idTaller, $nombre, $dia, $horario, $descripcion, $estado) {
         $con = $this->Conectar();
-        $sql = "UPDATE talleres SET nombre = ?, dia = ?, horario = ?, descripcion = ? WHERE Id = ?";
+        $sql = "UPDATE talleres SET nombre = ?, dia = ?, horario = ?, descripcion = ?, estado = ?, WHERE Id = ?";
         $stmt = $con->prepare($sql);
         if (!$stmt) die("Error preparando consulta: " . $con->error);
-        $stmt->bind_param("sssis", $nombre, $dia, $horario, $idTaller, $descripcion);
+        $stmt->bind_param("sssiss", $nombre, $dia, $horario, $idTaller, $descripcion, $estado);
         return $stmt->execute();
     }
 
-public function BuscarTalleres($idTaller, $nombre, $dia, $horario, $descripcion) {
+public function BuscarTalleres($idTaller, $nombre, $dia, $horario, $descripcion, $estado) {
         $con = $this->Conectar();
         $sql = "SELECT * FROM talleres WHERE 1=1";
         $params = [];
@@ -119,7 +126,7 @@ public function BuscarTalleres($idTaller, $nombre, $dia, $horario, $descripcion)
         if (!empty($dia)) { $sql .= " AND dia LIKE ?"; $params[] = "%".$dia."%"; $types .= "s"; }
         if (!empty($horario)) { $sql .= " AND horario LIKE ?"; $params[] = "%".$horario."%"; $types .= "s"; }
         if (!empty($descripcion)) { $sql .= " AND descripcion LIKE ?"; $params[] = "%".$descripcion."%"; $types .= "s"; }
-
+        if (!empty($estado)) { $sql .= " AND estado = ?"; $params[] = $estado; $types .= "s"; }
         $stmt = $con->prepare($sql);
         if (!$stmt) die("Error preparando consulta: " . $con->error);
         if (!empty($params)) $stmt->bind_param($types, ...$params);
@@ -136,9 +143,52 @@ public function BuscarTalleres($idTaller, $nombre, $dia, $horario, $descripcion)
             $taller->setHorario($fila['horario']);
             $taller->setFoto($fila['foto']);
             $taller->setDescripcion($fila['descripcion']);
+            $taller->setEstado($fila['estado']);
             $buscarTalleres[] = $taller;
         }
         return $buscarTalleres;
     }
 }
+
+$accion = isset($_POST['accion']) ? $_POST['accion'] : "";
+$txtID  = isset($_POST['id']) ? intval($_POST['id']) : 0;
+
+
+if ($accion == "deshabilitar" && $txtID > 0) {
+    $stmt = $conexion->prepare("UPDATE talleres SET estado='inactivo' WHERE Id = ?");
+    $stmt->execute([$txtID]);
+
+    header("Location: vistaT.php");
+    exit();
+}
+
+if ($accion == "habilitar" && $txtID > 0) {
+    $stmt = $conexion->prepare("UPDATE talleres SET estado='activo' WHERE Id = ?");
+    $stmt->execute([$txtID]);
+
+    header("Location: vistaT.php");
+    exit();
+}
+
+$filtro = "";
+$parametros = [];
+
+
+if (isset($_GET['filtroEstado']) && $_GET['filtroEstado'] != "") {
+    $filtro = " WHERE estado = :estado ";
+    $parametros[':estado'] = $_GET['filtroEstado'];
+}
+$sentenciaSQL = $conexion->prepare("SELECT * FROM talleres $filtro");
+$sentenciaSQL->execute($parametros);
+$listaSocios = $sentenciaSQL->fetchAll(PDO::FETCH_ASSOC);
+
+$filtroSeleccionado = isset($_GET['filtroEstado']) ? $_GET['filtroEstado'] : "activo";
+if ($filtroSeleccionado == "inactivo") {
+    $sentencia = $conexion->prepare("SELECT * FROM talleres WHERE estado='inactivo'");
+} else {
+    $sentencia = $conexion->prepare("SELECT * FROM talleres WHERE estado='activo'");
+}
+$sentencia->execute();
+$listaTalleres = $sentencia->fetchAll(PDO::FETCH_ASSOC);
+
 ?>

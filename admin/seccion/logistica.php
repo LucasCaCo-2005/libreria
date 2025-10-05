@@ -118,7 +118,8 @@ case 'Borrar':
     exit();
     break;
 
-        break;
+
+       
 }
 
 if (isset($_SESSION['libroSeleccionado'])) {

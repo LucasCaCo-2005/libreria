@@ -16,8 +16,12 @@ if(isset($_POST['agregar'])){
     $taller->setNombre($_POST['nombre']);
     $taller->setDia($_POST['dia']);
     $taller->setHorario($_POST['horario']);
+    $taller->setfoto($_FILES['image']['name']);
     include_once "../cargarimagen.php";
     $taller->setDescripcion($_POST['descripcion']);
+    $taller->setEstado($_POST['estado']);
+  
+
     $foto = CargarFoto();
     if($foto != null){
         $taller->setFoto($foto);
@@ -40,6 +44,7 @@ if (isset($_POST['BuscarTalleres'])) {
     if (!empty($_POST["horario"])) $taller->setHorario($_POST["horario"]);
     if (!empty($_POST["foto"])) $taller->setFoto($_POST["foto"]);
     if (!empty($_POST["descripcion"])) $taller->setDescripcion($_POST["descripcion"]);
+    if (!empty($_POST["estado"])) $taller->setEstado($_POST["estado"]);
     
     $resultados = $taller->BuscarTalleres();
 }
@@ -51,6 +56,8 @@ if(isset($_POST['Cambiar'])){
     $taller->setNombre($_POST['nombre']);
     $taller->setDia($_POST['dia']);
     $taller->setHorario($_POST['horario']);
+    $taller->setDescripcion($_POST['descripcion']);
+    $taller->setEstado($_POST['estado']);
     
     $taller->CambiarTalleres();
 }
@@ -87,6 +94,14 @@ if(isset($_POST['Cambiar'])){
       <label for="exampleTextarea" class="form-label mt-4">Descripcion</label>
       <textarea class="form-control" id="exampleTextarea" rows="3" style="height: 92px;" name="descripcion" id="descripcion"></textarea>
     </div>
+
+            <div>
+                <label for="estado">Estado</label>
+                <select name="estado" id="estado">
+                    <option value="activo">Activo</option>
+                    <option value="inactivo">Inactivo</option>
+                </select>
+            </div>
     <div>
          <div>
             <label> Foto</label>
@@ -95,10 +110,15 @@ if(isset($_POST['Cambiar'])){
 
         <div>
 
-            <input type="submit" name="agregar" value="Agregar">
+                        <input type="submit" name="agregar" value="Agregar">
             <input type="submit" name="ListarTalleres" value="Listar Talleres">
             <input type="submit" name="BuscarTalleres" value="Buscar Talleres">
             <input type="submit" name="Cambiar" value="Cambiar">
+
+
+
+
+
         </div>
     </form>
 
@@ -111,6 +131,8 @@ if(isset($_POST['Cambiar'])){
                 <th>Horario</th>
                 <th>Foto</th>´
                 <th>Descripción</th>
+                <th>Estado</th>
+               
             </tr>
             <?php foreach ($resultados as $taller): ?>
                 <tr>
@@ -120,6 +142,7 @@ if(isset($_POST['Cambiar'])){
                     <td><?= $taller->getHorario() ?></td>
                     <td><?= $taller->getFoto() ?></td>
                     <td><?= $taller->getDescripcion() ?></td>
+                    <td><?= $taller->getEstado() ?></td>
                 </tr>
             <?php endforeach; ?>
         </table>

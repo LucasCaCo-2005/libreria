@@ -123,13 +123,11 @@ if (isset($_GET['filtroEstado']) && $_GET['filtroEstado'] != "") {
     $filtro = " WHERE estado = :estado ";
     $parametros[':estado'] = $_GET['filtroEstado'];
 }
-
 $sentenciaSQL = $conexion->prepare("SELECT * FROM socios $filtro");
 $sentenciaSQL->execute($parametros);
 $listaSocios = $sentenciaSQL->fetchAll(PDO::FETCH_ASSOC);
 
 $filtroSeleccionado = isset($_GET['filtroEstado']) ? $_GET['filtroEstado'] : "activo";
-
 if ($filtroSeleccionado == "inactivo") {
     $sentencia = $conexion->prepare("SELECT * FROM socios WHERE estado='inactivo'");
 } else {

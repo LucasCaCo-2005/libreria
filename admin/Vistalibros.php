@@ -37,6 +37,7 @@
 <body>
 <?php include_once 'template/cabecera.php'; ?>
 <?php   
+include_once ("seccion/logistica.php");
 include_once ("config/bd.php");
 $sentencia = $conexion->prepare("SELECT * FROM libros");
 $sentencia->execute();

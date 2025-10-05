@@ -3,40 +3,80 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Talleres</title>
+
+    <style>
+        .list-group-item {
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            padding: 15px;
+            margin: 10px auto;
+            max-width: 600px;
+            background-color: #f9f9f9;
+            box-shadow: 2px 2px 5px rgba(0,0,0,0.1);
+        }
+        .btn {
+            padding: 8px 15px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .btn-primary { background-color: #007bff; color: #fff; }
+        .btn-danger { background-color: #dc3545; color: #fff; }
+        .btn-filter { margin: 5px; }
+    </style>
 </head>
 <body>
 
-<?php include_once 'template/cabecera.php';
+<?php 
+include_once 'template/cabecera.php';
 include_once ("config/bd.php");
 include_once ("seccion/Talleres.php");
 
+$filtro = isset($_GET['estado']) ? $_GET['estado'] : "todos";
 
-$sentencia = $conexion->prepare("SELECT * FROM talleres");
+if ($filtro == "activo") {
+    $sentencia = $conexion->prepare("SELECT * FROM talleres WHERE estado='activo'");
+} elseif ($filtro == "inactivo") {
+    $sentencia = $conexion->prepare("SELECT * FROM talleres WHERE estado='inactivo'");
+} else {
+    $sentencia = $conexion->prepare("SELECT * FROM talleres");
+}
+
 $sentencia->execute();
-$listaTalleres = $sentencia->fetchAll(PDO::FETCH_ASSOC); ?>
+$listaTalleres = $sentencia->fetchAll(PDO::FETCH_ASSOC);
+?>
 
-<div class="container">
-    <div class="row">
-        <div class="col-md-12">
-            <h2 class="text-center">Talleres Disponibles</h2>
-            <div class="list-group">
-                <?php foreach($listaTalleres as $taller){ ?> 
-                    <a href="#" class="list-group-item list-group-item-action">
-                        <h5 class="mb-1"><?php echo $taller['nombre']; ?></h5>
-                        <small>Fecha: <?php echo $taller['dia']; ?> | Hora: <?php echo $taller['horario']; ?></small>
-                        <p class="mb-1"><?php echo $taller['descripcion']; ?></p>
-                        <img src="../images/<?php echo $taller['foto']; ?>" alt="<?php echo $taller['nombre']; ?>" style="max-width: 200px; height: auto;">
-                    </a>
-                <?php } ?>
-            </div>
+<br><br>
+
+<div style="text-align:center;">
+    <a href="vistaT.php?estado=activo" class="btn btn-primary btn-filter">Talleres Activos</a>
+    <a href="vistaT.php?estado=inactivo" class="btn btn-danger btn-filter">Talleres Inactivos</a>
+</div>
+
+<br>
+
+<?php if (empty($listaTalleres)) { ?>
+    <p style="text-align:center;">No hay talleres en este estado.</p>
+<?php } else { ?>
+    <?php foreach($listaTalleres as $taller){ ?> 
+        <div class="list-group-item">
+            <h5 class="mb-1"><?php echo $taller['nombre']; ?></h5>
+            <small>Fecha: <?php echo $taller['dia']; ?> | Hora: <?php echo $taller['horario']; ?></small>
+            <br>  
+            <img src="../images/<?php echo $taller['foto']; ?>" 
+                alt="<?php echo $taller['nombre']; ?>" 
+                style="max-width: 200px; height: auto;"> 
+            <br><br>
+
+            <form action="vistaT.php" method="post" style="display:inline;">
+                <input type="hidden" name="id" value="<?php echo $taller['Id']; ?>">
+                <input type="submit" name="accion" value="deshabilitar" class="btn btn-danger">
+                <input type="submit" name="accion" value="habilitar" class="btn btn-primary">
+            </form>
         </div>
-    </div>
+    <?php } ?>
+<?php } ?>
 
-
-
-
-
-    
 </body>
 </html>

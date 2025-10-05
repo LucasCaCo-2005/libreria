@@ -39,19 +39,13 @@ if($_POST){
 
         body {
             font-family: Arial, sans-serif;
-            margin: 20px;
+            
         }
         h2 {
-            text-align: center;
+            text-align: justify;
+            margin-bottom: 10px;
         }
-        form {
-            max-width: 400px;
-            margin: 0 auto;
-            padding: 20px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            box-shadow: 2px 2px 5px rgba(0,0,0,0.1);
-        }
+
         label {
             display: block;
             margin-bottom: 8px;
@@ -78,19 +72,32 @@ if($_POST){
         }
 
         img {
-            max-width: 800px;
+            max-width: 340px;
             height: auto;
             display: block;
-            margin-top: 10px;
+            margin-top: 5px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-shadow: 2px 2px 5px rgba(0,0,0,0.1);
+            margin-left: auto;
+            margin-right: auto;
+            margin-bottom: 20px;
+            text-align: center;
+            justify-content: center;
         }
     </style>
 </head>
 <body>
     <br>
-    <h2>Registrar Préstamo</h2>
+    
+    <br>
+    <br>
     <?php if($libro){ ?>
         <br>
-        <p><strong>Libro:</strong> <?php echo $libro['nombre']; ?> (<?php echo $libro['autor']; ?>)  <img class="card-img-top" src="../images/<?php echo $libro['imagen']; ?>" alt="">   </p>
+
+        <div style="text-align:center; border: 1px solid #ccc; padding: 15px; max-width: 300px; margin: 0 auto;"> Registrar Préstamo
+        <br>
+        <p><strong>Libro:</strong> <?php echo $libro['nombre']; ?> (<?php echo $libro['autor']; ?>) </p>
         <br>
         <form method="post">
             <input type="hidden" name="libro_id" value="<?php echo $libro['id']; ?>">
@@ -101,7 +108,12 @@ if($_POST){
             <label>Fecha de devolución:</label><br>
             <input type="date" name="devolucion" required><br><br>
             <button type="submit">Guardar</button>
-        </form>
+        </form> </div>
+
+ <div style=" border: 1px solid #ccc; padding: 20px; max-width: 300px; margin: 0 auto;"  >      <h1>caratula</h1>
+  <img class="card-img-top" src="../../images/<?php echo $libro['imagen']; ?>" alt="">
+</div> 
+      
     <?php } else { ?>
         <p>No se encontró el libro.</p>
     <?php } ?>
