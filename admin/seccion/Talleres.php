@@ -3,7 +3,7 @@
 // include_once "persona.php"; 
 
 include_once "persona.php";
-include_once ("../admin/config/bd.php");
+include_once ("config/bd.php");
 //////////////////////
 // CLASE TALLERES
 //////////////////////
@@ -121,8 +121,8 @@ public function BuscarTalleres($idTaller, $nombre, $dia, $horario, $descripcion,
         $params = [];
         $types = "";
 
-        if (!empty($idTaller)) { $sql .= " AND Id = ?"; $params[] = $idTaller; $types .= "i"; }
-        if (!empty($nombre)) { $sql .= " AND nombre LIKE ?"; $params[] = "%".$nombre."%"; $types .= "s"; }
+        if (!empty($idTaller)) { $sql .= " AND Id = ?"; $params[] = $idTaller; $types .= "i"; } //
+        if (!empty($nombre)) { $sql .= " AND nombre LIKE ?"; $params[] = "%".$nombre."%"; $types .= "s"; } 
         if (!empty($dia)) { $sql .= " AND dia LIKE ?"; $params[] = "%".$dia."%"; $types .= "s"; }
         if (!empty($horario)) { $sql .= " AND horario LIKE ?"; $params[] = "%".$horario."%"; $types .= "s"; }
         if (!empty($descripcion)) { $sql .= " AND descripcion LIKE ?"; $params[] = "%".$descripcion."%"; $types .= "s"; }
@@ -170,6 +170,16 @@ if ($accion == "habilitar" && $txtID > 0) {
     exit();
 }
 
+if ($accion == "BuscarT" ) {
+    $buscarTermino = isset($_POST['search']) ? $_POST['search'] : "";
+    $sentencia = $conexion->prepare("SELECT * FROM talleres WHERE nombre LIKE :termino OR descripcion LIKE :termino");
+    $sentencia->bindValue(':termino', '%' . $buscarTermino . '%');
+    $sentencia->execute();
+    $listaTalleres = $sentencia->fetchAll(PDO::FETCH_ASSOC);
+}
+
+
+
 $filtro = "";
 $parametros = [];
 
@@ -190,5 +200,6 @@ if ($filtroSeleccionado == "inactivo") {
 }
 $sentencia->execute();
 $listaTalleres = $sentencia->fetchAll(PDO::FETCH_ASSOC);
+
 
 ?>

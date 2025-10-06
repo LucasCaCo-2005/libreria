@@ -1,86 +1,13 @@
 <?php
 $txtID = (isset($_POST['txtID'])) ? $_POST['txtID'] : "";
 $txtNombre = (isset($_POST['txtNombre'])) ? $_POST['txtNombre'] : "";
-$txtApellido = (isset($_POST['txtApellido'])) ? $_POST['txtApellido'] : "";
 $txtCedula = (isset($_POST['txtCedula'])) ? $_POST['txtCedula'] : "";
-$txtDomicilio = (isset($_POST['txtDomicilio'])) ? $_POST['txtDomicilio'] : "";
-$txtTelefono = (isset($_POST['txtTelefono'])) ? $_POST['txtTelefono'] : "";
-$txtCorreo = (isset($_POST['txtCorreo'])) ? $_POST['txtCorreo'] : "";
-$txtContraseña = (isset($_POST['txtContraseña'])) ? $_POST['txtContraseña'] : "";
 $txtestado = (isset($_POST['txtestado'])) ? $_POST['txtestado'] : "";
 $accion = (isset($_POST['accion'])) ? $_POST['accion'] : ""; 
 $tipoPago = (isset($_POST['tipo_pago'])) ? $_POST['tipo_pago'] : "";
 
 include("config/bd.php");
 switch($accion){
-    case "Agregar":
-        $sentencia = $conexion->prepare("INSERT INTO socios 
-            (nombre, apellidos, cedula, domicilio, telefono, correo, contrasena, estado) 
-            VALUES (:nombre, :apellidos, :cedula, :domicilio, :telefono, :correo, :contrasena, :estado)");
-
-        $sentencia->bindParam(':nombre', $txtNombre);
-        $sentencia->bindParam(':apellidos', $txtApellido);
-        $sentencia->bindParam(':cedula', $txtCedula);
-        $sentencia->bindParam(':domicilio', $txtDomicilio);
-        $sentencia->bindParam(':telefono', $txtTelefono);
-        $sentencia->bindParam(':correo', $txtCorreo);
-        $sentencia->bindParam(':contrasena', $txtContraseña);
-        $sentencia->bindParam(':estado', $txtestado);
-        $sentencia->execute();
-        header("Location: logsos.php");
-        break;
-
-    case "Eliminar":
-        $sentencia = $conexion->prepare("DELETE FROM socios WHERE id=:id");
-        $sentencia->bindParam(':id', $txtID);
-        $sentencia->execute();
-        header("Location: logsos.php");
-        break;
-
-    case "Seleccionar":
-        $sentencia = $conexion->prepare("SELECT * FROM socios WHERE id=:id");
-        $sentencia->bindParam(':id', $txtID);
-        $sentencia->execute();
-        $socio = $sentencia->fetch(PDO::FETCH_ASSOC);
-        $txtNombre = $socio['nombre'];
-        $txtApellido = $socio['apellidos'];
-        $txtCedula = $socio['cedula'];
-        $txtDomicilio = $socio['domicilio'];
-        $txtTelefono = $socio['telefono'];
-        $txtCorreo = $socio['correo'];
-        $txtContraseña = $socio['contrasena'];
-        $txtestado = $socio['estado'];
-        break;
-
-    case "Modificar": 
-        $sentencia = $conexion->prepare("UPDATE socios 
-            SET nombre=:nombre, 
-                apellidos=:apellidos, 
-                cedula=:cedula, 
-                domicilio=:domicilio, 
-                telefono=:telefono, 
-                correo=:correo, 
-                contrasena=:contrasena,
-                estado=:estado
-            WHERE id=:id");
-
-        $sentencia->bindParam(':nombre', $txtNombre);
-        $sentencia->bindParam(':apellidos', $txtApellido);
-        $sentencia->bindParam(':cedula', $txtCedula);
-        $sentencia->bindParam(':domicilio', $txtDomicilio);
-        $sentencia->bindParam(':telefono', $txtTelefono);
-        $sentencia->bindParam(':correo', $txtCorreo);
-        $sentencia->bindParam(':contrasena', $txtContraseña);
-        $sentencia->bindParam(':estado', $txtestado);
-        $sentencia->bindParam(':id', $txtID);
-        $sentencia->execute();
-        header("Location: logsos.php");
-        break;
-
-    case "Cancelar":
-        header("Location: logsos.php");
-        break;
-
 case "Pagar":
     $mesActual = date("F Y"); 
     $fechaHoy = date("Y-m-d");
@@ -196,7 +123,6 @@ $totalMonto = $sentenciaSuma->fetch(PDO::FETCH_ASSOC)['total'] ?? 0;
 ?>
 <?php include("template/cabecera.php"); ?>
 
-<h2>Registro de Socios</h2>
 <form method="POST" enctype="multipart/form-data">
 
 </form>
@@ -209,7 +135,7 @@ $totalMonto = $sentenciaSuma->fetch(PDO::FETCH_ASSOC)['total'] ?? 0;
         </button>
     </form>
 </div>
-<h3>Pagos del mes: <?php echo $mesFormateado; ?></h3>
+
 
 <form method="GET" class="mb-3">
     <label>Mes:</label>
@@ -241,36 +167,38 @@ $totalMonto = $sentenciaSuma->fetch(PDO::FETCH_ASSOC)['total'] ?? 0;
         ?>
     </select>
 
+    <br>
+    <br>
+
     <button type="submit" class="btn btn-info">Filtrar</button>
 </form>
 
 
-<div class="col-md-12">
+Buscador de Socios:
+
+
+
+
+
+
+
+<div class="col-md-5">
     <table class="table table-bordered">
         <thead>
             <tr>
-                <th>ID</th><th>Nombre</th><th>Apellido</th><th>Cedula</th>
-                <th>Domicilio</th><th>Telefono</th><th>Correo</th><th>Estado</th><th>Acciones</th>
+                <th>ID</th><th>Nombre</th><th>Cedula</th>
+          <th>Acciones</th>
             </tr>
         </thead>
         <tbody>
             <?php foreach($listaSocios as $usuario){ ?>
             <tr>
-                <td><?php echo $usuario['id']; ?></td>
                 <td><?php echo $usuario['nombre']; ?></td>
-                <td><?php echo $usuario['apellidos']; ?></td>
                 <td><?php echo $usuario['cedula']; ?></td>
-                <td><?php echo $usuario['domicilio']; ?></td>
-                <td><?php echo $usuario['telefono']; ?></td>
-                <td><?php echo $usuario['correo']; ?></td>
                 <td><?php echo $usuario['estado']; ?></td>
                 <td>
                 
-                    <form method="post" style="display:inline;">
-                        <input type="hidden" name="txtID" value="<?php echo $usuario['id']; ?>">
-                        <input type="submit" class="btn btn-warning" name="accion" value="Seleccionar">
-                    </form>
-              
+                 
                     <form method="post" style="display:inline;">
                         <input type="hidden" name="txtID" value="<?php echo $usuario['id']; ?>">
                         <input type="hidden" name="tipo_pago" value="pago1">
@@ -289,8 +217,8 @@ $totalMonto = $sentenciaSuma->fetch(PDO::FETCH_ASSOC)['total'] ?? 0;
     </table>
 </div>
 
-<h3>Pagos del mes: <?php echo $mesActual; ?></h3>
-<p><strong>Total de personas que pagaron:</strong> <?php echo $totalPagos; ?></p>
+<h3>Pagos del mes: <?php echo $mesActual; ?></h3> 
+<br> <p><strong>Total de personas que pagaron:</strong> <?php echo $totalPagos; ?></p>
 <p><strong>Total recaudado:</strong> $<?php echo number_format($totalMonto,2); ?></p>
 
 <table class="table table-bordered">
@@ -307,7 +235,7 @@ $totalMonto = $sentenciaSuma->fetch(PDO::FETCH_ASSOC)['total'] ?? 0;
     <tbody>
         <?php foreach($listaPagos as $pago){ ?>
         <tr>
-            <td><?php echo $pago['nombre']." ".$pago['apellidos']; ?></td>
+            <td><?php echo $pago['nombre']; ?></td>
             <td><?php echo $pago['fecha_pago']; ?></td>
             <td><?php echo $pago['mes_pagado']; ?></td>
             <td><?php echo ucfirst($pago['tipo_pago']); ?></td>

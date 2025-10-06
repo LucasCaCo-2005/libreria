@@ -3,10 +3,6 @@ session_start();
 include_once __DIR__ . '/admin/seccion/persona.php';
 include_once __DIR__ . '/admin/config/bd.php';
 include_once __DIR__ . '/admin/seccion/Talleres.php';
-
-
-
-
 include_once ("admin/config/bd.php");
 
 $talleresBD = new TalleresBD();
@@ -157,9 +153,9 @@ $listaTalleres = $talleresBD->ListarTalleres();
         <button onclick="window.location.href='institucion.html'">Institución</button>
         <button onclick="window.location.href='#autoridades'">Autoridades</button>
         <button onclick="window.location.href='#talleres'">Talleres</button>
-        <button onclick="window.location.href='#secretaria'">Secretaría</button>
+      <button onclick="window.location.href='./admin/inicio.php'">Admin</button>
           <button onclick="window.location.href='productos.php'">Productos</button>
-           <button onclick="window.location.href='./admin/inicio.php'">Admin</button>
+         
     </div>
 
     <!-- JS -->

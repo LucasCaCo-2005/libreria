@@ -55,7 +55,7 @@ if(!isset($_SESSION['usuario'])){
           <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Socios</a>
           <div class="dropdown-menu">
             <a class="dropdown-item" href="<?php echo $url;?>/admin/socios.php">Registro de Socios</a>
-            <a class="dropdown-item" href="">Socios</a>
+            <a class="dropdown-item" href="<?php echo $url;?>/admin/sociosT.php">Socios</a>
             <a class="dropdown-item" href="<?php echo $url;?>/admin/logsos.php">Pagos</a>
             <div class="dropdown-divider" hidden></div>
             <a class="dropdown-item" href="#" hidden >Separated link</a>
@@ -70,4 +70,5 @@ if(!isset($_SESSION['usuario'])){
     <br><br>
     <div class="row">
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3/dist/js/bootstrap.bundle.min.js"></script>
+
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3/dist/js/bootstrap.bundle.min.js"></script>

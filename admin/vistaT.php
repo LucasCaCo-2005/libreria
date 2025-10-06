@@ -27,9 +27,43 @@
     </style>
 </head>
 <body>
-
-<?php 
+    <?php 
 include_once 'template/cabecera.php';
+?>
+<br>
+
+<div style="text-align:center;">
+
+Buscador de Talleres:
+<input type="text" id="searchInput" onkeyup="filterTalleres()" placeholder="Buscar por nombre...">
+<script>
+function filterTalleres() { // función para filtrar talleres
+    var input, filter, container, items, title, i, txtValue; // Declarar variables
+    input = document.getElementById('searchInput'); // Obtener el valor del input
+    filter = input.value.toUpperCase(); // Convertir a mayúsculas para comparación
+    container = document.body; // Contenedor principal
+    items = container.getElementsByClassName('list-group-item');
+
+    for (i = 0; i < items.length; i++) { 
+        title = items[i].getElementsByTagName("h5")[0];
+        if (title) { 
+            txtValue = title.textContent || title.innerText;
+            if (txtValue.toUpperCase().indexOf(filter) > -1) { // si coincide, mostrar
+                items[i].style.display = ""; 
+            } else {
+                items[i].style.display = "none"; // si no coincide, ocultar
+            }
+        }       
+    }
+}
+</script> <br>
+
+    <a href="vistaT.php?estado=activo" class="btn btn-primary btn-filter">Talleres Activos</a> <br>
+    <a href="vistaT.php?estado=inactivo" class="btn btn-danger btn-filter">Talleres Inactivos</a> 
+</div>
+<?php
+
+
 include_once ("config/bd.php");
 include_once ("seccion/Talleres.php");
 
@@ -46,15 +80,6 @@ if ($filtro == "activo") {
 $sentencia->execute();
 $listaTalleres = $sentencia->fetchAll(PDO::FETCH_ASSOC);
 ?>
-
-<br><br>
-
-<div style="text-align:center;">
-    <a href="vistaT.php?estado=activo" class="btn btn-primary btn-filter">Talleres Activos</a>
-    <a href="vistaT.php?estado=inactivo" class="btn btn-danger btn-filter">Talleres Inactivos</a>
-</div>
-
-<br>
 
 <?php if (empty($listaTalleres)) { ?>
     <p style="text-align:center;">No hay talleres en este estado.</p>
@@ -77,6 +102,7 @@ $listaTalleres = $sentencia->fetchAll(PDO::FETCH_ASSOC);
         </div>
     <?php } ?>
 <?php } ?>
+
 
 </body>
 </html>

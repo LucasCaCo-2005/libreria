@@ -1,27 +1,27 @@
 <?php
 
-$txtID = (isset($_POST['txtID'])) ? $_POST['txtID'] : "";
-$txtNombre = (isset($_POST['txtNombre'])) ? $_POST['txtNombre'] : "";
+$txtID = (isset($_POST['txtID'])) ? $_POST['txtID'] : ""; 
+$txtNombre = (isset($_POST['txtNombre'])) ? $_POST['txtNombre'] : ""; 
 $txtIMG = (isset($_FILES['txtIMG']['name'])) ? $_FILES['txtIMG']['name'] : "";
-$accion = (isset($_POST['accion'])) ? $_POST['accion'] : "";
-$txtfecha = (isset($_POST['txtfecha'])) ? $_POST['txtfecha'] : "";
+$accion = (isset($_POST['accion'])) ? $_POST['accion'] : ""; //Agregar, Modificar, Cancelar, Seleccionar, Borrar
+$txtfecha = (isset($_POST['txtfecha'])) ? $_POST['txtfecha'] : ""; 
 $txtAutor = (isset($_POST['txtAutor'])) ? $_POST['txtAutor'] : "";
-$txtStock = (isset($_POST['txtStock'])) ? $_POST['txtStock'] : "";
+$txtStock = (isset($_POST['txtStock'])) ? $_POST['txtStock'] : ""; 
 include("config/bd.php");
 switch($accion) {
        case 'Agregar':
-        // INSERT INTO `libros` (`id`, `nombre`, `imagen`) VALUES (NULL, 'php', 'imagen.jpg');
-        $sentencia = $conexion->prepare("INSERT INTO `libros` (nombre, fecha, autor, stock, imagen) VALUES (:nombre, :fecha, :autor, :stock, :imagen);");
+        $sentencia = $conexion->prepare("INSERT INTO `libros` (nombre, fecha, autor, stock, imagen) VALUES (:nombre, :fecha, :autor, :stock, :imagen);"); //Ajuste en la consulta SQL
+        // Asignar los valores a los parámetros
         $sentencia->bindParam(':nombre', $txtNombre);
         $sentencia->bindParam(':fecha', $txtfecha);
         $sentencia->bindParam(':autor', $txtAutor);
-        $sentencia->bindParam(':stock', $txtStock);
+        $sentencia->bindParam(':stock', $txtStock); 
         // Generar nombre único para el archivo de imagen
-       $fecha = new DateTime();
+       $fecha = new DateTime(); 
         $nombreArchivo = ($txtIMG != "")? $fecha->getTimestamp() . "_" . $_FILES['txtIMG']['name'] : "imagen.jpg";
-        $tmpImagen = $_FILES['txtIMG']['tmp_name'];
+        $tmpImagen = $_FILES['txtIMG']['tmp_name']; 
         if ($tmpImagen != "") {
-            move_uploaded_file($tmpImagen, "../../images/" . $nombreArchivo);
+            move_uploaded_file($tmpImagen, "../../images/" . $nombreArchivo); 
         }
         // Guardar el nombre correcto en la base de datos
         $sentencia->bindParam(':imagen', $nombreArchivo);
@@ -106,23 +106,21 @@ case 'Borrar':
     if (isset($libro["imagen"]) && $libro["imagen"] != "imagen.jpg") {
         $rutaImagen = "../../images/" . $libro["imagen"];
         if (file_exists($rutaImagen)) {
-            unlink($rutaImagen);
+            unlink($rutaImagen); // Eliminar la imagen del servidor
         }
     }
     // Borrar el libro de la base de datos
     $sentencia = $conexion->prepare("DELETE FROM libros WHERE id=:id");
     $sentencia->bindParam(':id', $txtID);
-    $sentencia->execute();
+    $sentencia->execute(); 
 
        header("Location: productos.php?mensaje3=Libro borrado");
     exit();
     break;
 
-
-       
 }
 
-if (isset($_SESSION['libroSeleccionado'])) {
+if (isset($_SESSION['libroSeleccionado'])) { // Verificar si hay un libro seleccionado
     $txtID = $_SESSION['libroSeleccionado']['id'];
     $txtNombre = $_SESSION['libroSeleccionado']['nombre'];
     $txtIMG = $_SESSION['libroSeleccionado']['imagen'];
@@ -130,7 +128,7 @@ if (isset($_SESSION['libroSeleccionado'])) {
     $txtAutor = $_SESSION['libroSeleccionado']['autor'];
     $txtStock = $_SESSION['libroSeleccionado']['stock'];
     unset($_SESSION['libroSeleccionado']);
-}
+} 
 $sentencia = $conexion->prepare("SELECT * FROM libros");
 $sentencia->execute();
 $listaLibros = $sentencia->fetchAll(PDO::FETCH_ASSOC);

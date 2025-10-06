@@ -154,7 +154,6 @@ class personasBD extends Conexion {
         $con->close();
     }
 
-
 public function BuscarUsuarioPorCI($ci, $pass) {
     $con = $this->Conectar();
     $stmt = $con->prepare("SELECT * FROM personas WHERE Ci = ? AND Pass =?");
