@@ -21,41 +21,50 @@ Registro de Socios
        value="<?php echo $txtID; ?>" placeholder="Enter ID">
 </div>
 
-<div class = "form-group">
+<div class="form-group">
 <label for="txtNombre">Nombre:</label>
-<input type="text" class="form-control" name="txtNombre" id="txtNombre" value="<?php echo "$txtNombre"   ?> " placeholder="Enter Name" required>
+<input type="text" class="form-control" name="txtNombre" id="txtNombre" value="<?php echo htmlspecialchars($txtNombre); ?>"
+ placeholder="Ingrese nombre" required>
 </div>
 
-<div class = "form-group">
+<div class="form-group">
 <label for="txtApellido">Apellidos:</label>
-<input type="text" class="form-control" name="txtApellido" id="txtApellido" value="<?php echo "$txtApellido"   ?> " placeholder="Enter Last Name" required>
+ <input type="text" class="form-control" name="txtApellido" id="txtApellido" value="<?php echo htmlspecialchars($txtApellido); ?>"
+placeholder="Ingrese apellidos" required>
 </div>
 
-
-<div class = "form-group">
-<label for="txtCedula">Cedula:</label>
-<input type="text" class="form-control" name="txtCedula" id="txtCedula" value="<?php echo "$txtCedula"   ?> " placeholder="Enter Cedula" required>
+<div class="form-group"> 
+<label for="txtCedula">Cédula (x.xxx.xxx-x):</label>
+<input type="text" class="form-control" name="txtCedula" id="txtCedula" value="<?php echo htmlspecialchars($txtCedula); ?>"
+placeholder="x.xxx.xxx-x" pattern="^[1-9]\.[0-9]{3}\.[0-9]{3}-[0-9X]$" title="Formato válido: x.xxx.xxx-x" required>
 </div>
 
-<div class = "form-group">
-<label for="txtNombre">Domicilio:</label>
-<input type="text" class="form-control" name="txtDomicilio" id="txtDomicilio" value="<?php echo "$txtDomicilio"   ?> " placeholder="Enter Address" >
+<div class="form-group"> <label for="txtDomicilio">Domicilio:</label>
+<input type="text" class="form-control" name="txtDomicilio" id="txtDomicilio"value="<?php echo htmlspecialchars($txtDomicilio); ?>"
+placeholder="Ingrese domicilio">
 </div>
 
-<div class = "form-group">
-<label for="txtTelefono">Telefono:</label>
-<input type="text" class="form-control" name="txtTelefono" id="txtTelefono" value="<?php echo "$txtTelefono"   ?> " placeholder="Enter Phone" >
+<div class="form-group">
+ <label for="txtTelefono">Teléfono (xx/x-xxx-xxx):</label>
+ <input type="text" class="form-control" name="txtTelefono" id="txtTelefono" value="<?php echo htmlspecialchars($txtTelefono); ?>"
+ placeholder="8 o 9 dígitos" pattern="^[1-9]{2,3}\-[0-9]{3}\-[0-9]{3}$"       title="Debe tener 8 o 9 dígitos numéricos">
 </div>
-
-<div class = "form-group">
+<?php //    pattern="^[0-9]{8,9}$"?>
+<div class="form-group">
 <label for="txtCorreo">Correo:</label>
-<input type="Correo" class="form-control" name="txtCorreo" id="txtCorreo" value="<?php echo "$txtCorreo"   ?> " placeholder="Enter Correo" >
+<input type="email" class="form-control" name="txtCorreo" id="txtCorreo"
+value="<?php echo htmlspecialchars($txtCorreo); ?>" placeholder="Ingrese correo electrónico"required>
 </div>
 
-<div class = "form-group">
-<label for="txtContraseña">Contraseña:</label>
-<input type="text" class="form-control" name="txtContraseña" id="txtContraseña" value="<?php echo "$txtContraseña"   ?> " placeholder="Enter Password" >
-</div>
+
+
+
+
+
+
+
+
+
 
 <div class="form-group">
     <label for="txtestado" class="form-control" hidden>estado:</label>
@@ -72,8 +81,6 @@ Registro de Socios
     <button type="submit" name="accion"   value="Modificar" class="btn btn-warning">Modificar</button>
     <button type="submit" name="accion"   value="Cancelar" class="btn btn-info">Cancelar</button> 
 </div> 
-
-
 </form>
 <div class="mb-3">
     <form method="GET" style="display: inline;">
@@ -105,7 +112,6 @@ Registro de Socios
                 <th>Domicilio</th>
                 <th>Telefono</th>
                 <th>Correo</th>
-                <th>Contraseña</th>
                 <th>Estado</th>
                  <th>Acciones</th>
             </tr>
@@ -121,7 +127,6 @@ Registro de Socios
                 <td><?php echo $usuario['domicilio']; ?></td>
                 <td><?php echo $usuario['telefono']; ?></td>
                 <td><?php echo $usuario['correo']; ?></td>
-                <td><?php echo $usuario['contrasena']; ?></td>
                 <td><?php echo $usuario['estado']; ?></td>
                 <td>
                     <form method="post">
@@ -129,9 +134,7 @@ Registro de Socios
                         
                         <input type="submit" class="btn btn-warning" name="accion" value="Seleccionar">
                     </form>
-
 </td>
-
                 </td>
             </tr>
             <?php } ?>

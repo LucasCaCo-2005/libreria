@@ -43,7 +43,6 @@ function filterTalleres() { // función para filtrar talleres
     filter = input.value.toUpperCase(); // Convertir a mayúsculas para comparación
     container = document.body; // Contenedor principal
     items = container.getElementsByClassName('list-group-item');
-
     for (i = 0; i < items.length; i++) { 
         title = items[i].getElementsByTagName("h5")[0];
         if (title) { 

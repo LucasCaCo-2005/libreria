@@ -186,7 +186,7 @@ Buscador de Socios:
     <table class="table table-bordered">
         <thead>
             <tr>
-                <th>ID</th><th>Nombre</th><th>Cedula</th>
+                <th>Nombre</th><th>Cedula</th>
           <th>Acciones</th>
             </tr>
         </thead>
@@ -195,7 +195,6 @@ Buscador de Socios:
             <tr>
                 <td><?php echo $usuario['nombre']; ?></td>
                 <td><?php echo $usuario['cedula']; ?></td>
-                <td><?php echo $usuario['estado']; ?></td>
                 <td>
                 
                  
