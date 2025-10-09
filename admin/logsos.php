@@ -89,10 +89,6 @@ $sentenciaContador->bindParam(':mes', $mesActual);
 $sentenciaContador->execute();
 $totalPagos = $sentenciaContador->fetch(PDO::FETCH_ASSOC)['total'];
 
-$sentenciaSuma = $conexion->prepare("SELECT SUM(monto) as total_monto FROM pagos WHERE mes_pagado = :mes");
-$sentenciaSuma->bindParam(':mes', $mesActual);
-$sentenciaSuma->execute();
-$totalMonto = $sentenciaSuma->fetch(PDO::FETCH_ASSOC)['total'] ?? 0;
 
 $mesSeleccionado = isset($_GET['mes']) ? $_GET['mes'] : date("m");
 $anioSeleccionado = isset($_GET['anio']) ? $_GET['anio'] : date("Y");
@@ -114,12 +110,6 @@ $sentenciaContador->bindParam(':mes', $mesFormateado);
 $sentenciaContador->execute();
 $totalPagos = $sentenciaContador->fetch(PDO::FETCH_ASSOC)['total'];
 
-$sentenciaSuma = $conexion->prepare("SELECT SUM(monto) as total_monto 
-                                     FROM pagos 
-                                     WHERE mes_pagado = :mes");
-$sentenciaSuma->bindParam(':mes', $mesFormateado);
-$sentenciaSuma->execute();
-$totalMonto = $sentenciaSuma->fetch(PDO::FETCH_ASSOC)['total'] ?? 0;
 ?>
 <?php include("template/cabecera.php"); ?>
 
@@ -218,7 +208,6 @@ Buscador de Socios:
 
 <h3>Pagos del mes: <?php echo $mesActual; ?></h3> 
 <br> <p><strong>Total de personas que pagaron:</strong> <?php echo $totalPagos; ?></p>
-<p><strong>Total recaudado:</strong> $<?php echo number_format($totalMonto,2); ?></p>
 
 <table class="table table-bordered">
     <thead>

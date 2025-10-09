@@ -69,7 +69,49 @@ $listaSocios = $sentencia->fetchAll(PDO::FETCH_ASSOC);
 @media (max-width: 576px) {
     .socio-card { flex: 0 1 100%; }
 }
+.button1 {
+    background-color: #0057a0;
+    color: white;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
 
+.button1:hover {
+    background-color: #003d70;
+}
+
+.button {
+    background-color: #008000;
+    color: white;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.button2 {
+    background-color: #ff0000;
+    color: white;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.button3 {
+    background-color: #966868ff;
+    color: white;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
 
 .form-control.search-socios { width: 100%; max-width: 360px; }
 </style>
@@ -81,24 +123,50 @@ $listaSocios = $sentencia->fetchAll(PDO::FETCH_ASSOC);
 
     <form method="GET" class="mb-3">
         <select name="estado" onchange="this.form.submit()" class="form-control" style="max-width:220px;">
+            <option value="">Todos los estados</option>
             <option value="activo" <?php if ($estadoSeleccionado == 'activo') echo 'selected'; ?>>Activos</option>
             <option value="inactivo" <?php if ($estadoSeleccionado == 'inactivo') echo 'selected'; ?>>Inactivos</option>
         </select>
     </form>
 
-    <div class="socios-container" id="sociosContainer">
-        <?php foreach ($listaSocios as $socio): ?>
-            <div class="socio-card" data-nombre="<?php echo htmlspecialchars(strtoupper($socio['nombre'] . ' ' . $socio['apellidos'])); ?>">
-                <h5><?php echo htmlspecialchars($socio['nombre'] . ' ' . $socio['apellidos']); ?></h5>
-                <p><strong>Cédula:</strong> <?php echo htmlspecialchars($socio['cedula']); ?></p>
-                <p><strong>Domicilio:</strong> <?php echo htmlspecialchars($socio['domicilio']); ?></p>
-                <p><strong>Teléfono:</strong> <?php echo htmlspecialchars($socio['telefono']); ?></p>
-                <p><strong>Correo:</strong> <?php echo htmlspecialchars($socio['correo']); ?></p>
-                <p><strong>Estado:</strong> <?php echo htmlspecialchars(ucfirst($socio['estado'])); ?></p>
-            </div>
-        <?php endforeach; ?>
-    </div>
+ <div class="socios-container" id="sociosContainer">
+    <?php foreach ($listaSocios as $socio): ?>
+        <div class="socio-card" data-nombre="<?php echo htmlspecialchars(strtoupper($socio['nombre'] . ' ' . $socio['apellidos'])); ?>">
+            <h5><?php echo htmlspecialchars($socio['nombre'] . ' ' . $socio['apellidos']); ?></h5>
+            <p><strong>Cédula:</strong> <?php echo htmlspecialchars($socio['cedula']); ?></p>
+            <p><strong>Domicilio:</strong> <?php echo htmlspecialchars($socio['domicilio']); ?></p>
+            <p><strong>Teléfono:</strong> <?php echo htmlspecialchars($socio['telefono']); ?></p>
+            <p><strong>Correo:</strong> <?php echo htmlspecialchars($socio['correo']); ?></p>
+            <p><strong>Estado:</strong> <?php echo htmlspecialchars(ucfirst($socio['estado'])); ?></p>
+
+            <button type="button" class="button1" onclick="window.location.href='socios.php?socio_id=<?php echo $socio['id']; ?>'">Ir a editar</button>
+            <button type="button" class="button" onclick="window.location.href='pagos.php?socio_id=<?php echo $socio['id']; ?>'">Ver pagos</button>
+
+            <!-- Formulario oculto -->
+            <form id="formSocio<?php echo $socio['id']; ?>" method="POST" action="SociosT.php" style="display:inline;">
+                <input type="hidden" name="socio_id" value="<?php echo $socio['id']; ?>">
+                <input type="hidden" name="nuevo_estado" value="">
+            </form>
+
+            <!-- Botón visible que activa/desactiva -->
+            <button 
+                type="button" 
+                class="button2" 
+                onclick="enviarSocioAccion('<?php echo $socio['id']; ?>', '<?php echo $socio['estado'] == 'activo' ? 'inactivo' : 'activo'; ?>')">
+                <?php echo $socio['estado'] == 'activo' ? 'Desactivar' : 'Activar'; ?>
+            </button>
+        </div>
+    <?php endforeach; ?>
 </div>
+
+<script>
+function enviarSocioAccion(id, nuevoEstado) {
+    const form = document.getElementById('formSocio' + id);
+    form.querySelector('[name="nuevo_estado"]').value = nuevoEstado;
+    form.submit();
+}
+</script>
+
 
 <script>
 function filterItems() {
@@ -116,6 +184,11 @@ function filterItems() {
     });
 }
 </script>
+
+
+
+
+
 <?php include_once 'template/pie.php'; ?>
 </div>
 </div> 

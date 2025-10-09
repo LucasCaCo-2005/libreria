@@ -19,6 +19,7 @@ if(isset($_POST['agregar'])){
     $taller->setfoto($_FILES['image']['name']);
     include_once "../cargarimagen.php";
     $taller->setDescripcion($_POST['descripcion']);
+    $taller->setCosto($_POST['costo']);
     $taller->setEstado($_POST['estado']);
   
 
@@ -33,6 +34,7 @@ if(isset($_POST['agregar'])){
 if(isset($_POST['ListarTalleres'])) {
     $taller = new Talleres();
     $resultados = $taller->ListarTalleres();
+    
 }
 
 // Buscar
@@ -44,22 +46,10 @@ if (isset($_POST['BuscarTalleres'])) {
     if (!empty($_POST["horario"])) $taller->setHorario($_POST["horario"]);
     if (!empty($_POST["foto"])) $taller->setFoto($_POST["foto"]);
     if (!empty($_POST["descripcion"])) $taller->setDescripcion($_POST["descripcion"]);
+    if (!empty($_POST["costo"])) $taller->setCosto($_POST["costo"]);
     if (!empty($_POST["estado"])) $taller->setEstado($_POST["estado"]);
     
     $resultados = $taller->BuscarTalleres();
-}
-
-// Cambiar
-if(isset($_POST['Cambiar'])){
-    $taller = new Talleres();
-    $taller->setId($_POST['id']);
-    $taller->setNombre($_POST['nombre']);
-    $taller->setDia($_POST['dia']);
-    $taller->setHorario($_POST['horario']);
-    $taller->setDescripcion($_POST['descripcion']);
-    $taller->setEstado($_POST['estado']);
-    
-    $taller->CambiarTalleres();
 }
 ?>
 <!DOCTYPE html>
@@ -88,6 +78,11 @@ if(isset($_POST['Cambiar'])){
         <div>
             <label for="tipo">Horario</label>
             <input type="text" name="horario" id="horario">
+        </div>
+
+        <div>
+            <label for="costo">Costo</label>
+            <input type="text" name="costo" id="costo">
         </div>
 
           <div>
@@ -131,6 +126,7 @@ if(isset($_POST['Cambiar'])){
                 <th>Horario</th>
                 <th>Foto</th>´
                 <th>Descripción</th>
+                <th>Costo</th>
                 <th>Estado</th>
                
             </tr>
@@ -142,6 +138,7 @@ if(isset($_POST['Cambiar'])){
                     <td><?= $taller->getHorario() ?></td>
                     <td><?= $taller->getFoto() ?></td>
                     <td><?= $taller->getDescripcion() ?></td>
+                    <td><?= $taller->getCosto() ?></td>
                     <td><?= $taller->getEstado() ?></td>
                 </tr>
             <?php endforeach; ?>

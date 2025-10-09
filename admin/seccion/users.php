@@ -155,8 +155,130 @@ $sentenciaContador->execute();
 $totalPagos = $sentenciaContador->fetch(PDO::FETCH_ASSOC)['total'];
 
 
-    
+class socios{
+    private $id;
+    private $nombre;
+    private $apellidos;
+    private $cedula;
+    private $domicilio;
+    private $telefono;
+    private $correo;
+    private $contrasena;
+    private $estado;
+
+    public function getId() {
+        return $this->id;
+    }
+
+    public function setId($id) {
+        $this->id = $id;
+    }
+
+    public function getNombre() {
+        return $this->nombre;
+    }
+
+    public function setNombre($nombre) {
+        $this->nombre = $nombre;
+    }
+
+    public function getApellidos() {
+        return $this->apellidos;
+    }
+
+    public function setApellidos($apellidos) {
+        $this->apellidos = $apellidos;
+    }
+
+    public function getCedula() {
+        return $this->cedula;
+    }
+
+    public function setCedula($cedula) {
+        $this->cedula = $cedula;
+    }
+
+    public function getDomicilio() {
+        return $this->domicilio;
+    }
+
+    public function setDomicilio($domicilio) {
+        $this->domicilio = $domicilio;
+    }
+
+    public function getTelefono() {
+        return $this->telefono;
+    }
+
+    public function setTelefono($telefono) {
+        $this->telefono = $telefono;
+    }
+
+    public function getCorreo() {
+        return $this->correo;
+    }
+
+    public function setCorreo($correo) {
+        $this->correo = $correo;
+    }
+
+    public function getContrasena() {
+        return $this->contrasena;
+    }
+
+    public function setContrasena($contrasena) {
+        $this->contrasena = $contrasena;
+    }
+
+    public function getEstado() {
+        return $this->estado;
+    }
+
+    public function setEstado($estado) {
+        $this->estado = $estado;
+    }
+
+    }
 
 
+    if (isset($_POST['socio_id'], $_POST['nuevo_estado'])) {
+    $socio_id = $_POST['socio_id'];
+    $nuevo_estado = $_POST['nuevo_estado'];
 
+    $stmt = $conexion->prepare("UPDATE socios SET estado = ? WHERE id = ?");
+    $stmt->execute([$nuevo_estado, $socio_id]);
+
+    header("Location: SociosT.php");
+    exit();
+}
+
+
+// Verificamos si viene el socio_id por GET
+if (isset($_GET['socio_id'])) {
+    $socio_id = $_GET['socio_id'];
+
+    // Consultamos el socio en la base de datos
+    $stmt = $conexion->prepare("SELECT * FROM socios WHERE id = ?");
+    $stmt->execute([$socio_id]);
+    $socio = $stmt->fetch(PDO::FETCH_ASSOC);
+
+    if ($socio) {
+        // Llenamos las variables con los datos del socio
+        $txtID = $socio['id'];
+        $txtNombre = $socio['nombre'];
+        $txtApellido = $socio['apellidos'];
+        $txtCedula = $socio['cedula'];
+        $txtDomicilio = $socio['domicilio'];
+        $txtTelefono = $socio['telefono'];
+        $txtCorreo = $socio['correo'];
+        $txtestado = $socio['estado'];
+    } else {
+        // Si el ID no existe, inicializamos vacíos
+        $txtID = $txtNombre = $txtApellido = $txtCedula = $txtDomicilio = $txtTelefono = $txtCorreo = $txtestado = "";
+    }
+} else {
+    // Si no hay socio_id, el formulario está vacío (modo agregar)
+    $txtID = $txtNombre = $txtApellido = $txtCedula = $txtDomicilio = $txtTelefono = $txtCorreo = $txtestado = "";
+}
 ?>
+

@@ -1,7 +1,5 @@
 <?php
-
 // include_once "persona.php"; 
-
 include_once "persona.php";
 include_once ("config/bd.php");
 //////////////////////
@@ -14,6 +12,7 @@ class Talleres {
     private $horario;
     private $foto;
     private $descripcion;
+    private $costo;
     private $estado;
 
 
@@ -41,19 +40,27 @@ class Talleres {
     public function setDescripcion($descripcion){ $this->descripcion = $descripcion; }
     public function getDescripcion(){ return $this->descripcion; }
 
+      //Costo
+
+    
+    public function setCosto($costo){ $this->costo = $costo; }
+    public function getCosto(){ return $this->costo; }
+
+
     // Estado
     public function setEstado($estado){ $this->estado = $estado; }
     public function getEstado(){ return $this->estado; }
 
+  
     // Operaciones
     public function ListarTalleres(){
         $talleresBD = new TalleresBD();
         return $talleresBD->ListarTalleres();
-    }
+    } 
 
     public function CargarTalleres(){
         $talleresBD = new TalleresBD();
-        return $talleresBD->CargarTalleres($this->nombre, $this->dia, $this->horario, $this->foto, $this->idTaller, $this->descripcion, $this->estado);
+        return $talleresBD->CargarTalleres($this->nombre, $this->dia, $this->horario, $this->foto, $this->idTaller, $this->descripcion, $this->costo  ,$this->estado);
     }
 
     public function CambiarTalleres(){
@@ -91,18 +98,19 @@ class TalleresBD extends conexion {
             $taller->setHorario($fila['horario']);
             $taller->setFoto($fila['foto']);
             $taller->setDescripcion($fila['descripcion']);
+            $taller->setCosto($fila['costo']);
             $taller->setEstado($fila['estado']);
             $ListaTalleres[] = $taller;
         }
         return $ListaTalleres;
     }
 
-    public function CargarTalleres($nombre, $dia, $horario, $foto, $idTaller, $descripcion) {
+    public function CargarTalleres($nombre, $dia, $horario, $foto, $idTaller, $costo, $descripcion) {
         $con = $this->Conectar();
-        $sql = "INSERT INTO talleres (nombre, dia, horario, foto, Id, descripcion, estado ) VALUES (?,?,?,?,?,?, 'activo')";
+        $sql = "INSERT INTO talleres (nombre, dia, horario, foto, Id, descripcion, costo, estado ) VALUES (?,?,?,?,?,?,?, 'activo')";
         $stmt = $con->prepare($sql);
         if (!$stmt) die("Error preparando consulta: " . $con->error);
-        $stmt->bind_param("ssssis", $nombre, $dia, $horario, $foto, $idTaller, $descripcion );
+        $stmt->bind_param("ssssiss", $nombre, $dia, $horario, $foto, $idTaller, $costo, $descripcion );
         return $stmt->execute();
     }
 
@@ -127,6 +135,7 @@ public function BuscarTalleres($idTaller, $nombre, $dia, $horario, $descripcion,
         if (!empty($horario)) { $sql .= " AND horario LIKE ?"; $params[] = "%".$horario."%"; $types .= "s"; }
         if (!empty($descripcion)) { $sql .= " AND descripcion LIKE ?"; $params[] = "%".$descripcion."%"; $types .= "s"; }
         if (!empty($estado)) { $sql .= " AND estado = ?"; $params[] = $estado; $types .= "s"; }
+
         $stmt = $con->prepare($sql);
         if (!$stmt) die("Error preparando consulta: " . $con->error);
         if (!empty($params)) $stmt->bind_param($types, ...$params);
@@ -143,6 +152,7 @@ public function BuscarTalleres($idTaller, $nombre, $dia, $horario, $descripcion,
             $taller->setHorario($fila['horario']);
             $taller->setFoto($fila['foto']);
             $taller->setDescripcion($fila['descripcion']);
+            $taller->setCosto($fila['costo']);
             $taller->setEstado($fila['estado']);
             $buscarTalleres[] = $taller;
         }
