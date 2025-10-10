@@ -7,7 +7,7 @@ $accion = (isset($_POST['accion'])) ? $_POST['accion'] : ""; //Agregar, Modifica
 $txtfecha = (isset($_POST['txtfecha'])) ? $_POST['txtfecha'] : ""; 
 $txtAutor = (isset($_POST['txtAutor'])) ? $_POST['txtAutor'] : "";
 $txtStock = (isset($_POST['txtStock'])) ? $_POST['txtStock'] : ""; 
-include("config/bd.php");
+include("bd.php");
 switch($accion) {
        case 'Agregar':
         $sentencia = $conexion->prepare("INSERT INTO `libros` (nombre, fecha, autor, stock, imagen) VALUES (:nombre, :fecha, :autor, :stock, :imagen);"); //Ajuste en la consulta SQL

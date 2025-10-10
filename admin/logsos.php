@@ -6,7 +6,7 @@ $txtestado = (isset($_POST['txtestado'])) ? $_POST['txtestado'] : "";
 $accion = (isset($_POST['accion'])) ? $_POST['accion'] : ""; 
 $tipoPago = (isset($_POST['tipo_pago'])) ? $_POST['tipo_pago'] : "";
 
-include("config/bd.php");
+include("seccion/bd.php");
 switch($accion){
 case "Pagar":
     $mesActual = date("F Y"); 

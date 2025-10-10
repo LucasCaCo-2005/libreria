@@ -1,7 +1,7 @@
 <?php
 // include_once "persona.php"; 
-include_once "persona.php";
-include_once ("config/bd.php");
+include_once ("persona.php");
+include_once ("bd.php");
 //////////////////////
 // CLASE TALLERES
 //////////////////////
@@ -62,16 +62,6 @@ class Talleres {
         $talleresBD = new TalleresBD();
         return $talleresBD->CargarTalleres($this->nombre, $this->dia, $this->horario, $this->foto, $this->idTaller, $this->descripcion, $this->costo  ,$this->estado);
     }
-
-    public function CambiarTalleres(){
-        $talleresBD = new TalleresBD();
-        return $talleresBD->CambiarTalleres($this->idTaller, $this->nombre, $this->dia, $this->horario);
-    }
-
-    public function BuscarTalleres(){
-        $talleresBD = new TalleresBD();
-        return $talleresBD->BuscarTalleres($this->idTaller, $this->nombre, $this->dia, $this->horario, $this->descripcion, $this->estado);
-    }
 }
 
 //////////////////////
@@ -113,52 +103,8 @@ class TalleresBD extends conexion {
         $stmt->bind_param("ssssiss", $nombre, $dia, $horario, $foto, $idTaller, $costo, $descripcion );
         return $stmt->execute();
     }
-
-    public function CambiarTalleres($idTaller, $nombre, $dia, $horario, $descripcion, $estado) {
-        $con = $this->Conectar();
-        $sql = "UPDATE talleres SET nombre = ?, dia = ?, horario = ?, descripcion = ?, estado = ?, WHERE Id = ?";
-        $stmt = $con->prepare($sql);
-        if (!$stmt) die("Error preparando consulta: " . $con->error);
-        $stmt->bind_param("sssiss", $nombre, $dia, $horario, $idTaller, $descripcion, $estado);
-        return $stmt->execute();
     }
 
-public function BuscarTalleres($idTaller, $nombre, $dia, $horario, $descripcion, $estado) {
-        $con = $this->Conectar();
-        $sql = "SELECT * FROM talleres WHERE 1=1";
-        $params = [];
-        $types = "";
-
-        if (!empty($idTaller)) { $sql .= " AND Id = ?"; $params[] = $idTaller; $types .= "i"; } //
-        if (!empty($nombre)) { $sql .= " AND nombre LIKE ?"; $params[] = "%".$nombre."%"; $types .= "s"; } 
-        if (!empty($dia)) { $sql .= " AND dia LIKE ?"; $params[] = "%".$dia."%"; $types .= "s"; }
-        if (!empty($horario)) { $sql .= " AND horario LIKE ?"; $params[] = "%".$horario."%"; $types .= "s"; }
-        if (!empty($descripcion)) { $sql .= " AND descripcion LIKE ?"; $params[] = "%".$descripcion."%"; $types .= "s"; }
-        if (!empty($estado)) { $sql .= " AND estado = ?"; $params[] = $estado; $types .= "s"; }
-
-        $stmt = $con->prepare($sql);
-        if (!$stmt) die("Error preparando consulta: " . $con->error);
-        if (!empty($params)) $stmt->bind_param($types, ...$params);
-
-        $stmt->execute();
-        $resultado = $stmt->get_result();
-        $buscarTalleres = [];
-
-        while ($fila = $resultado->fetch_assoc()) {
-            $taller = new Talleres();
-            $taller->setId($fila['Id']);
-            $taller->setNombre($fila['nombre']);
-            $taller->setDia($fila['dia']);
-            $taller->setHorario($fila['horario']);
-            $taller->setFoto($fila['foto']);
-            $taller->setDescripcion($fila['descripcion']);
-            $taller->setCosto($fila['costo']);
-            $taller->setEstado($fila['estado']);
-            $buscarTalleres[] = $taller;
-        }
-        return $buscarTalleres;
-    }
-}
 
 $accion = isset($_POST['accion']) ? $_POST['accion'] : "";
 $txtID  = isset($_POST['id']) ? intval($_POST['id']) : 0;
@@ -210,6 +156,35 @@ if ($filtroSeleccionado == "inactivo") {
 }
 $sentencia->execute();
 $listaTalleres = $sentencia->fetchAll(PDO::FETCH_ASSOC);
+
+if (empty($listaTalleres)) {
+    echo "<p style='text-align:center;'>No hay talleres en este estado.</p>";
+    exit();
+}
+
+switch($accion) {
+    case 'seleccionar':
+        $sentencia = $conexion->prepare("SELECT * FROM talleres WHERE Id=:id");
+        $sentencia->bindParam(':id', $txtID);
+        $sentencia->execute();
+        $taller = $sentencia->fetch(PDO::FETCH_LAZY);
+
+        $_SESSION['tallerSeleccionado'] = [
+            'Id' => $taller['Id'],
+            'nombre' => $taller['nombre'],
+            'dia' => $taller['dia'],
+            'horario' => $taller['horario'],
+            'foto' => $taller['foto'],
+            'descripcion' => $taller['descripcion'],
+            'costo' => $taller['costo'],
+            'estado' => $taller['estado']
+        ];
+
+        header("Location: paneladmin.php?mensaje1=Taller seleccionado");
+        exit();
+}
+
+
 
 
 ?>

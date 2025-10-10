@@ -1,6 +1,6 @@
     <?php 
 include_once 'template/cabecera.php';
-include_once ("config/bd.php");
+include_once ("seccion/bd.php");
 include_once ("seccion/Talleres.php");
 ?>
 
@@ -145,9 +145,7 @@ function enviarAccion(id, accion) {
 </script>
 
         </div>
-    <?php } ?>
+    <?php } ?> 
 <?php } ?>
-
-
 </body>
 </html>

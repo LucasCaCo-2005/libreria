@@ -1,6 +1,6 @@
 <?php include_once 'template/cabecera.php'; ?>
 <?php
-include_once ("config/bd.php");
+include_once ("seccion/bd.php");
 
 $libro = null;
 if(isset($_GET['id'])){

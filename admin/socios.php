@@ -1,6 +1,6 @@
 <?php  include("template/cabecera.php"); ?>
 <?php include("seccion/users.php"); 
-include_once ("config/bd.php");
+include_once ("seccion/bd.php");
  ?>
 
 <!DOCTYPE html>
@@ -55,17 +55,6 @@ placeholder="Ingrese domicilio">
 <input type="email" class="form-control" name="txtCorreo" id="txtCorreo"
 value="<?php echo htmlspecialchars($txtCorreo); ?>" placeholder="Ingrese correo electrónico"required>
 </div>
-
-
-
-
-
-
-
-
-
-
-
 <div class="form-group">
     <label for="txtestado" class="form-control" hidden>estado:</label>
   Estado:  <select name="txtestado" id="txtestado" required>
@@ -113,7 +102,6 @@ value="<?php echo htmlspecialchars($txtCorreo); ?>" placeholder="Ingrese correo 
                 <th>Telefono</th>
                 <th>Correo</th>
                 <th>Estado</th>
-                 <th>Acciones</th>
             </tr>
         </thead>
         <tbody>
@@ -128,12 +116,7 @@ value="<?php echo htmlspecialchars($txtCorreo); ?>" placeholder="Ingrese correo 
                 <td><?php echo $usuario['telefono']; ?></td>
                 <td><?php echo $usuario['correo']; ?></td>
                 <td><?php echo $usuario['estado']; ?></td>
-                <td>
-                    <form method="post">
-                        <input type="hidden" name="txtID" id="txtID" value="<?php echo $usuario['id']; ?>">
-                        
-                        <input type="submit" class="btn btn-warning" name="accion" value="Seleccionar">
-                    </form>
+                
 </td>
                 </td>
             </tr>

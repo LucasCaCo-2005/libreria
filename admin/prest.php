@@ -1,6 +1,6 @@
 <?php include_once 'template/cabecera.php'; ?>
 <?php
-include_once ("config/bd.php");
+include_once ("seccion/bd.php");
 if(isset($_GET['devolver'])){
     $idPrestamo = $_GET['devolver'];
     $sentencia = $conexion->prepare("UPDATE prestamos SET devuelto=1 WHERE id=:id");

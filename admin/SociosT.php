@@ -1,6 +1,6 @@
 <?php
 // --- INICIA PHP: incluye cabecera y carga datos ---
-include_once("config/bd.php");
+include_once("seccion/bd.php");
 include_once("template/cabecera.php");
 include_once("seccion/users.php");
 
@@ -25,9 +25,6 @@ if ($estadoSeleccionado) {
 }
 $sentencia->execute();
 $listaSocios = $sentencia->fetchAll(PDO::FETCH_ASSOC);
-
-
-
 
 ?>
 <style>
@@ -142,13 +139,11 @@ $listaSocios = $sentencia->fetchAll(PDO::FETCH_ASSOC);
             <button type="button" class="button1" onclick="window.location.href='socios.php?socio_id=<?php echo $socio['id']; ?>'">Ir a editar</button>
             <button type="button" class="button" onclick="window.location.href='pagos.php?socio_id=<?php echo $socio['id']; ?>'">Ver pagos</button>
 
-            <!-- Formulario oculto -->
+        
             <form id="formSocio<?php echo $socio['id']; ?>" method="POST" action="SociosT.php" style="display:inline;">
                 <input type="hidden" name="socio_id" value="<?php echo $socio['id']; ?>">
                 <input type="hidden" name="nuevo_estado" value="">
             </form>
-
-            <!-- Botón visible que activa/desactiva -->
             <button 
                 type="button" 
                 class="button2" 

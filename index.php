@@ -1,9 +1,9 @@
 <?php
 session_start();
 include_once __DIR__ . '/admin/seccion/persona.php';
-include_once __DIR__ . '/admin/config/bd.php';
+include_once __DIR__ . '/admin/seccion/bd.php';
 include_once __DIR__ . '/admin/seccion/Talleres.php';
-include_once ("admin/config/bd.php");
+include_once ("admin/seccion/bd.php");
 
 $talleresBD = new TalleresBD();
 $listaTalleres = $talleresBD->ListarTalleres();
@@ -329,6 +329,9 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   }
 </script>
+
+
+<h1>Lorem ipsum dolor sit amet consectetur adipisicing elit. Tempora error eos, quisquam nemo est facere repellat praesentium natus libero ducimus. Cum quos qui assumenda ducimus dignissimos blanditiis similique sint debitis?</h1>
 
 </body>
 </html>

@@ -2,13 +2,22 @@
 include_once "seccion/Talleres.php";
 include_once "seccion/persona.php";
 include_once "template/cabecera.php";
-include_once ("../admin/config/bd.php");
+include_once ("seccion/bd.php");
 // (aquí van tus clases Talleres y TalleresBD como te pasé antes)
 
 // ----------------------
 // PROCESAR FORMULARIOS
 // ----------------------
-$resultados = []; // para guardar lista o búsqueda
+$resultados = []; 
+
+$txtID         = $_POST['txtID'] ?? "";
+$txtNombre     = $_POST['txtNombre'] ?? "";
+$txtDia        = $_POST['txtDia'] ?? "";
+$txtHorario    = $_POST['txtHorario'] ?? "";
+$txtDescripcion= $_POST['txtDescripcion'] ?? "";
+$costo   = $_POST['costo'] ?? "";
+$txtestado     = $_POST['txtestado'] ?? "";
+$accion        = $_POST['accion'] ?? "";
 
 // Agregar
 if(isset($_POST['agregar'])){
@@ -37,20 +46,6 @@ if(isset($_POST['ListarTalleres'])) {
     
 }
 
-// Buscar
-if (isset($_POST['BuscarTalleres'])) {
-    $taller = new Talleres();
-    if (!empty($_POST["id"])) $taller->setId($_POST["id"]);
-    if (!empty($_POST["nombre"])) $taller->setNombre($_POST["nombre"]);
-    if (!empty($_POST["dia"])) $taller->setDia($_POST["dia"]);
-    if (!empty($_POST["horario"])) $taller->setHorario($_POST["horario"]);
-    if (!empty($_POST["foto"])) $taller->setFoto($_POST["foto"]);
-    if (!empty($_POST["descripcion"])) $taller->setDescripcion($_POST["descripcion"]);
-    if (!empty($_POST["costo"])) $taller->setCosto($_POST["costo"]);
-    if (!empty($_POST["estado"])) $taller->setEstado($_POST["estado"]);
-    
-    $resultados = $taller->BuscarTalleres();
-}
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -67,27 +62,27 @@ if (isset($_POST['BuscarTalleres'])) {
 
         <div>
             <label for="nombreL">Nombre</label>
-            <input type="text" name="nombre" id="nombre">
+            <input type="text" name="nombre" id="nombre"  value="<?php echo htmlspecialchars($txtNombre); ?>" placeholder="Ingrese nombre">
         </div>
 
         <div>
             <label for="edad">Día</label>
-            <input type="text" name="dia" id="dia">
+            <input type="text" name="dia" id="dia" value="<?php echo htmlspecialchars($txtDia); ?>" placeholder="Ingrese día" >
         </div>
 
         <div>
             <label for="tipo">Horario</label>
-            <input type="text" name="horario" id="horario">
+            <input type="text" name="horario" id="horario" value="<?php echo htmlspecialchars($txtHorario); ?>" placeholder="Ingrese horario" >
         </div>
 
         <div>
             <label for="costo">Costo</label>
-            <input type="text" name="costo" id="costo">
+            <input type="text" name="costo" id="costo" value="<?php echo htmlspecialchars($costo); ?>" placeholder="Ingrese costo">
         </div>
 
           <div>
-      <label for="exampleTextarea" class="form-label mt-4">Descripcion</label>
-      <textarea class="form-control" id="exampleTextarea" rows="3" style="height: 92px;" name="descripcion" id="descripcion"></textarea>
+      <label for="exampleTextarea" class="form-label mt-4"  value="<?php echo htmlspecialchars($txtDescripcion); ?>"      >Descripcion</label>
+      <textarea class="form-control" id="exampleTextarea" rows="3" style="height: 92px;" name="descripcion" id="descripcion"   ></textarea>
     </div>
 
             <div>
@@ -107,12 +102,7 @@ if (isset($_POST['BuscarTalleres'])) {
 
                         <input type="submit" name="agregar" value="Agregar">
             <input type="submit" name="ListarTalleres" value="Listar Talleres">
-            <input type="submit" name="BuscarTalleres" value="Buscar Talleres">
-            <input type="submit" name="Cambiar" value="Cambiar">
-
-
-
-
+            <input type="submit" name="Modificar" value="Modificar">
 
         </div>
     </form>
@@ -128,6 +118,7 @@ if (isset($_POST['BuscarTalleres'])) {
                 <th>Descripción</th>
                 <th>Costo</th>
                 <th>Estado</th>
+                <th>Accion</th>
                
             </tr>
             <?php foreach ($resultados as $taller): ?>
@@ -140,6 +131,13 @@ if (isset($_POST['BuscarTalleres'])) {
                     <td><?= $taller->getDescripcion() ?></td>
                     <td><?= $taller->getCosto() ?></td>
                     <td><?= $taller->getEstado() ?></td>
+                    <td>
+                        <form method="post" style="display:inline;">
+                            <input type="hidden" name="id" value="<?= $taller->getId() ?>">
+                            <input type="submit" name="BuscarTalleres" value="Seleccionar">
+                        </form>
+                    </td>
+                      
                 </tr>
             <?php endforeach; ?>
         </table>

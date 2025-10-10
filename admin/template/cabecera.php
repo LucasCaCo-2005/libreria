@@ -30,6 +30,7 @@ if(!isset($_SESSION['usuario'])){
           <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Talleres</a>
           <div class="dropdown-menu">
             <a class="dropdown-item" href="<?php echo $url;?>/admin/panelAdmin.php">Registro de talleres</a>
+                       <a class="dropdown-item" href="<?php echo $url;?>/admin/talleresT.php">Registro de talleres 2</a>
               <a class="dropdown-item" href="<?php echo $url;?>/admin/VistaT.php">Vista Talleres</a>
 
           </div>
