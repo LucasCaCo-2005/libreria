@@ -82,7 +82,7 @@ if(isset($_POST['ListarTalleres'])) {
 
           <div>
       <label for="exampleTextarea" class="form-label mt-4"  value="<?php echo htmlspecialchars($txtDescripcion); ?>"      >Descripcion</label>
-      <textarea class="form-control" id="exampleTextarea" rows="3" style="height: 92px;" name="descripcion" id="descripcion"   ></textarea>
+      <textarea class="form-control" id="exampleTextarea" rows="3" style="height: 92px;" name="descripcion" id="descripcion"  placeholder="Descripcion del libro"  ></textarea>
     </div>
 
             <div>
@@ -92,7 +92,7 @@ if(isset($_POST['ListarTalleres'])) {
                     <option value="inactivo">Inactivo</option>
                 </select>
             </div>
-    <div>
+    <div> 
          <div>
             <label> Foto</label>
             <input type="file" name="image">

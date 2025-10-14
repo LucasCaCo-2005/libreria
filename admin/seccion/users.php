@@ -10,6 +10,8 @@ $txtContraseña = (isset($_POST['txtContraseña'])) ? $_POST['txtContraseña'] :
 $txtestado = (isset($_POST['txtestado'])) ? $_POST['txtestado'] : "";
 $accion = (isset($_POST['accion'])) ? $_POST['accion'] : ""; 
 
+
+
 include("bd.php");
 // Obtener la lista de usuarios
 $sentencia = $conexion->prepare("SELECT * FROM socios"); $sentencia->execute(); $listaSocios = $sentencia->fetchAll(PDO::FETCH_ASSOC); switch($accion){
@@ -80,24 +82,7 @@ case "Agregar":
     case "Cancelar":
         header("Location: socios.php");
         break;
-    
-        case "Pagar":
-    $mesActual = date("F Y");
-    $fechaHoy = date("Y-m-d");
 
-    $sentencia = $conexion->prepare("INSERT INTO pagos (socio_id, fecha_pago, mes_pagado) 
-                                     VALUES (:socio_id, :fecha_pago, :mes_pagado)");
-    $sentencia->bindParam(':socio_id', $txtID);
-    $sentencia->bindParam(':fecha_pago', $fechaHoy);
-    $sentencia->bindParam(':mes_pagado', $mesActual);
-    $sentencia->execute();
-    break;
-
-    case "QuitarPago":
-        $sentencia = $conexion->prepare("DELETE FROM pagos WHERE id=:id");
-        $sentencia->bindParam(':id', $txtID);
-        $sentencia->execute();
-        break;
 }
 $filtro = "";
 $parametros = [];
@@ -251,5 +236,16 @@ if (isset($_GET['socio_id'])) {
     // Si no hay socio_id, el formulario está vacío (modo agregar)
     $txtID = $txtNombre = $txtApellido = $txtCedula = $txtDomicilio = $txtTelefono = $txtCorreo = $txtestado = "";
 }
+
+
+
+
+
+
+
+
+
 ?>
+
+
 

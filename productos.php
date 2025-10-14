@@ -32,7 +32,7 @@
 <?php include_once 'template/cabecera.php'; ?>
 
 <?php   
-include_once ("admin/config/bd.php");
+include_once ("admin/seccion/bd.php");
 
 $sentencia = $conexion->prepare("SELECT * FROM libros");
 $sentencia->execute();

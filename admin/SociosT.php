@@ -139,7 +139,6 @@ $listaSocios = $sentencia->fetchAll(PDO::FETCH_ASSOC);
             <button type="button" class="button1" onclick="window.location.href='socios.php?socio_id=<?php echo $socio['id']; ?>'">Ir a editar</button>
             <button type="button" class="button" onclick="window.location.href='pagos.php?socio_id=<?php echo $socio['id']; ?>'">Ver pagos</button>
 
-        
             <form id="formSocio<?php echo $socio['id']; ?>" method="POST" action="SociosT.php" style="display:inline;">
                 <input type="hidden" name="socio_id" value="<?php echo $socio['id']; ?>">
                 <input type="hidden" name="nuevo_estado" value="">
@@ -153,7 +152,6 @@ $listaSocios = $sentencia->fetchAll(PDO::FETCH_ASSOC);
         </div>
     <?php endforeach; ?>
 </div>
-
 <script>
 function enviarSocioAccion(id, nuevoEstado) {
     const form = document.getElementById('formSocio' + id);
