@@ -15,7 +15,6 @@ $txtContraseña = $_POST['txtContraseña'] ?? "";
 $txtestado     = $_POST['txtestado'] ?? "";
 $accion        = $_POST['accion'] ?? "";
 
-
 $estadoSeleccionado = $_GET['estado'] ?? '';
 $filtro = $estadoSeleccionado ? "WHERE estado = :estado" : '';
 
@@ -28,9 +27,7 @@ $listaSocios = $sentencia->fetchAll(PDO::FETCH_ASSOC);
 
 ?>
 <style>
-
 .col-12.socios-wrapper { padding: 0; }
-
 .socios-container {
     display: flex !important;
     flex-wrap: wrap !important;
@@ -159,8 +156,6 @@ function enviarSocioAccion(id, nuevoEstado) {
     form.submit();
 }
 </script>
-
-
 <script>
 function filterItems() {
     var input = document.getElementById('searchInput');
@@ -177,10 +172,6 @@ function filterItems() {
     });
 }
 </script>
-
-
-
-
 
 <?php include_once 'template/pie.php'; ?>
 </div>

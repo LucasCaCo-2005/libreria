@@ -1,7 +1,6 @@
 <?php include_once 'template/cabecera.php'; ?>
 <?php
 include_once ("seccion/bd.php");
-
 $libro = null;
 if(isset($_GET['id'])){
     $idLibro = $_GET['id'];
@@ -52,9 +51,7 @@ if(!$libro){
 
     </style>
 </head>
-
 <body>
-
 <div   class="libro-detalle" style="text-align:center;">
      <br>
 <img class= "imagen"src="../../images/<?php echo $libro['imagen']; ?>" alt="" style="width:200px; height:300px; object-fit:cover;"><br>
@@ -62,11 +59,8 @@ Nombre: <?php echo $libro['nombre']; ?><br>
 Autor: <?php echo $libro['autor']; ?><br>
 </div>
 <br>
-
 <div  class="bboton" style="text-align:center;">
  <a class="boton" href="Vistalibros.php?id=<?php echo $libro['id']; ?>">Volver</a>
 </div>
-
-
 
 </body>

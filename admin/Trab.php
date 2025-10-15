@@ -1,6 +1,7 @@
-<?php  include("template/cabecera.php"); ?>
-<?php include("seccion/users.php"); 
-include_once ("seccion/bd.php");
+<?php 
+ include("template/cabecera.php");
+include("seccion/Trabajador.php"); 
+
  ?>
 
 <!DOCTYPE html>
@@ -11,9 +12,7 @@ include_once ("seccion/bd.php");
     <title>Document</title>
 </head>
 <body>
-
-Registro de Socios
-
+Trabajadores
 <form method="POST" enctype="multipart/form-data">
 <div class = "form-group">
 <label  hidden for="txtID">Id:</label>
@@ -22,15 +21,9 @@ Registro de Socios
 </div>
 
 <div class="form-group">
-<label for="txtNombre">Nombre:</label>
+<label for="txtNombre">Nombre Completo:</label>
 <input type="text" class="form-control" name="txtNombre" id="txtNombre" value="<?php echo htmlspecialchars($txtNombre); ?>"
- placeholder="Ingrese nombre" required>
-</div>
-
-<div class="form-group">
-<label for="txtApellido">Apellidos:</label>
- <input type="text" class="form-control" name="txtApellido" id="txtApellido" value="<?php echo htmlspecialchars($txtApellido); ?>"
-placeholder="Ingrese apellidos" required>
+ placeholder="Ingrese nombre y apellido" required>
 </div>
 
 <div class="form-group"> 
@@ -51,11 +44,6 @@ placeholder="Ingrese domicilio">
 </div>
 <?php //    pattern="^[0-9]{8,9}$"?>
 <div class="form-group">
-<label for="txtCorreo">Correo:</label>
-<input type="email" class="form-control" name="txtCorreo" id="txtCorreo"
-value="<?php echo htmlspecialchars($txtCorreo); ?>" placeholder="Ingrese correo electrónico"required>
-</div>
-<div class="form-group">
     <label for="txtestado" class="form-control" hidden>estado:</label>
   Estado:  <select name="txtestado" id="txtestado" required>
         <option value="" disabled>Seleccione</option>
@@ -63,7 +51,15 @@ value="<?php echo htmlspecialchars($txtCorreo); ?>" placeholder="Ingrese correo 
         <option value="inactivo" <?php if($txtestado == 'inactivo') echo 'selected'; ?>>inactivo</option>
     </select>
 </div>
-
+<div class="form-group">
+    <label for="txtpuesto" class="form-control" hidden>Tipo:</label>
+  Tipo:  <select name="txtpuesto" id="txtpuesto" required>
+        <option value="" disabled>Seleccione</option>
+        <option value="Secretario" <?php if($txtpuesto == 'Secretario') echo 'selected'; ?>>Secretario</option>
+        <option value="Medico" <?php if($txtpuesto == 'Medico') echo 'selected'; ?>>Medico</option>
+               <option value="Podologo" <?php if($txtpuesto == 'Podologo') echo 'selected'; ?>>Podologa</option>
+    </select>
+</div>
 <div class="btn-group" role="group" aria-label="">
    <button type="submit" name="accion" 
     <?php echo (!empty($txtID)) ? 'disabled' : ''; ?> value="Agregar" class="btn btn-success">Agregar</button>
@@ -71,48 +67,38 @@ value="<?php echo htmlspecialchars($txtCorreo); ?>" placeholder="Ingrese correo 
     <button type="submit" name="accion"   value="Cancelar" class="btn btn-info">Cancelar</button> 
 </div> 
 </form>
-<div class="mb-3">
-    <form method="GET" style="display: inline;">
-        <input type="hidden" name="filtroEstado" value="activo">
-        <button type="submit" class="btn <?php echo (isset($_GET['filtroEstado']) && $_GET['filtroEstado']=="activo") ? 'btn-success' : 'btn-outline-success'; ?>">
-            Activos
-        </button>
-    </form>
-
-    <form method="GET" style="display: inline;">
-        <input type="hidden" name="filtroEstado" value="inactivo">
-        <button type="submit" class="btn <?php echo (isset($_GET['filtroEstado']) && $_GET['filtroEstado']=="inactivo") ? 'btn-danger' : 'btn-outline-danger'; ?>">
-            Inactivos
-        </button>
-    </form>
-</div>
-
 <div class="col-md-8">
     <table class="table table-bordered">
         <thead>
             <tr>
                 <th>ID</th>
-                <th>Nombre</th>
-                <th>Apellido</th>
+                <th>Nombre Completo</th>
                 <th>Cedula</th>
                 <th>Domicilio</th>
                 <th>Telefono</th>
-                <th>Correo</th>
                 <th>Estado</th>
+                <th>Tipo</th>
+                <th>Accion</th>
             </tr>
         </thead>
         <tbody>
             <?php 
-            foreach($listaSocios as $usuario){ ?>
+       // var_dump($Trab); 
+            foreach($listaTrabajadores as $Trabajador){ ?>
             <tr>
-                <td><?php echo $usuario['id']; ?></td>
-                <td><?php echo $usuario['nombre']; ?></td>
-                <td><?php echo $usuario['apellidos']; ?></td>
-                <td><?php echo $usuario['cedula']; ?></td>
-                <td><?php echo $usuario['domicilio']; ?></td>
-                <td><?php echo $usuario['telefono']; ?></td>
-                <td><?php echo $usuario['correo']; ?></td>
-                <td><?php echo $usuario['estado']; ?></td>       
+                <td><?php echo $Trabajador['id']; ?></td>
+                <td><?php echo $Trabajador['nombre']; ?></td>
+                <td><?php echo $Trabajador['cedula']; ?></td>
+                <td><?php echo $Trabajador['domicilio']; ?></td>
+                <td><?php echo $Trabajador['telefono']; ?></td>
+                <td><?php echo $Trabajador['estado']; ?></td>
+                <td><?php echo $Trabajador['puesto']; ?></td>
+                              <td>         
+<form action="" method="post">
+<input type="hidden" name="txtID" id="txtID" value="<?php echo $Trabajador['id']; ?>">
+<input type="submit" value="Seleccionar" name="accion" class="btn btn-primary" >
+</form>
+                </td>   
 </td>
                 </td>
             </tr>
@@ -121,6 +107,5 @@ value="<?php echo htmlspecialchars($txtCorreo); ?>" placeholder="Ingrese correo 
     </table>
         </div>
 <?php  include("../template/pie.php"); ?>
-    
 </body>
 </html> 

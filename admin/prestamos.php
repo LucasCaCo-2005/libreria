@@ -23,20 +23,14 @@ if($_POST){
     $sentencia->bindParam(":prestamo", $fechaPrestamo);
     $sentencia->bindParam(":devolucion", $fechaDevolucion);
     $sentencia->execute();
-    echo "<script>alert('Préstamo registrado correctamente');window.location='prest.php';</script>";
-}
+    echo "<script>alert('Préstamo registrado correctamente');window.location='prest.php';</script>"; }
 ?>
 <!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
     <title>Registrar Préstamo</title>
-
     <style>
-
-
-
-
         body {
             font-family: Arial, sans-serif;
             
@@ -70,7 +64,6 @@ if($_POST){
         button:hover {
             background-color: #218838;
         }
-
         img {
             max-width: 340px;
             height: auto;
@@ -89,12 +82,10 @@ if($_POST){
 </head>
 <body>
     <br>
-    
     <br>
     <br>
     <?php if($libro){ ?>
         <br>
-
         <div style="text-align:center; border: 1px solid #ccc; padding: 15px; max-width: 300px; margin: 0 auto;"> Registrar Préstamo
         <br>
         <p><strong>Libro:</strong> <?php echo $libro['nombre']; ?> (<?php echo $libro['autor']; ?>) </p>
@@ -109,14 +100,11 @@ if($_POST){
             <input type="date" name="devolucion" required><br><br>
             <button type="submit">Guardar</button>
         </form> </div>
-
  <div style=" border: 1px solid #ccc; padding: 20px; max-width: 300px; margin: 0 auto;"  >      <h1>caratula</h1>
   <img class="card-img-top" src="../../images/<?php echo $libro['imagen']; ?>" alt="">
 </div> 
-      
     <?php } else { ?>
-        <p>No se encontró el libro.</p>
-    <?php } ?>
+        <p>No se encontró el libro.</p>  <?php } ?>
 </body>
 </html>
 <?php include_once 'template/pie.php'; ?>

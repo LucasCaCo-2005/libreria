@@ -1,51 +1,88 @@
 <?php
-include_once "seccion/Talleres.php";
-include_once "seccion/persona.php";
+include_once "seccion/talleres.php";
 include_once "template/cabecera.php";
-include_once ("seccion/bd.php");
-// (aquí van tus clases Talleres y TalleresBD como te pasé antes)
+include_once "seccion/bd.php";
+$tallerSeleccionado = null;
+$resultados = [];
 
-// ----------------------
-// PROCESAR FORMULARIOS
-// ----------------------
-$resultados = []; 
+// Conexión
+$conn = (new conexion())->Conectar();
+// Variables del formulario
+$txtID          = $_POST['id'] ?? "";
+$txtNombre      = $_POST['nombre'] ?? "";
+$txtDia         = $_POST['dia'] ?? "";
+$txtHorario     = $_POST['horario'] ?? "";
+$txtDescripcion = $_POST['descripcion'] ?? "";
+$costo          = $_POST['costo'] ?? "";
+$txtestado      = $_POST['estado'] ?? "";
+$accion         = $_POST['accion'] ?? "";
 
-$txtID         = $_POST['txtID'] ?? "";
-$txtNombre     = $_POST['txtNombre'] ?? "";
-$txtDia        = $_POST['txtDia'] ?? "";
-$txtHorario    = $_POST['txtHorario'] ?? "";
-$txtDescripcion= $_POST['txtDescripcion'] ?? "";
-$costo   = $_POST['costo'] ?? "";
-$txtestado     = $_POST['txtestado'] ?? "";
-$accion        = $_POST['accion'] ?? "";
-
-// Agregar
-if(isset($_POST['agregar'])){
+if (isset($_POST['agregar'])) {
     $taller = new Talleres();
-    $taller->setNombre($_POST['nombre']);
-    $taller->setDia($_POST['dia']);
-    $taller->setHorario($_POST['horario']);
-    $taller->setfoto($_FILES['image']['name']);
-    include_once "../cargarimagen.php";
-    $taller->setDescripcion($_POST['descripcion']);
-    $taller->setCosto($_POST['costo']);
-    $taller->setEstado($_POST['estado']);
-  
+    $taller->setNombre($txtNombre);
+    $taller->setDia($txtDia);
+    $taller->setHorario($txtHorario);
+    $taller->setDescripcion($txtDescripcion);
+    $taller->setCosto($costo);
+    $taller->setEstado($txtestado ?: "activo");
 
-    $foto = CargarFoto();
-    if($foto != null){
-        $taller->setFoto($foto);
-        $taller->CargarTalleres();
+    // Subir imagen si se seleccionó
+    if (!empty($_FILES['image']['name'])) {
+        include_once "../cargarimagen.php";
+        $foto = CargarFoto();
+        if ($foto) {
+            $taller->setFoto($foto);
+        }
     }
+
+    $taller->CargarTalleres();
 }
 
-// Listar
-if(isset($_POST['ListarTalleres'])) {
+if (isset($_POST['ListarTalleres'])) {
     $taller = new Talleres();
     $resultados = $taller->ListarTalleres();
-    
 }
+if (isset($_POST['BuscarTalleres'])) {
+    $id = intval($_POST['id']);
+    $stmt = $conn->prepare("SELECT * FROM talleres WHERE Id = ?");
+    $stmt->bind_param("i", $id);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    $tallerSeleccionado = $result->fetch_assoc();
 
+    // Rellenar variables para mostrar en el formulario
+    if ($tallerSeleccionado) {
+        $txtID          = $tallerSeleccionado['Id'];
+        $txtNombre      = $tallerSeleccionado['nombre'];
+        $txtDia         = $tallerSeleccionado['dia'];
+        $txtHorario     = $tallerSeleccionado['horario'];
+        $txtDescripcion = $tallerSeleccionado['descripcion'];
+        $costo          = $tallerSeleccionado['costo'];
+        $txtestado      = $tallerSeleccionado['estado'];
+    }}
+if (isset($_POST['Modificar'])) {
+    $id = intval($_POST['id']);
+    if ($id > 0) {
+        // Actualizar campos
+        $sql = "UPDATE talleres 
+                SET nombre = ?, dia = ?, horario = ?, descripcion = ?, costo = ?, estado = ? 
+                WHERE Id = ?";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("ssssssi", $txtNombre, $txtDia, $txtHorario, $txtDescripcion, $costo, $txtestado, $id);
+        $stmt->execute();
+        // Si se subió una nueva imagen, actualizarla
+        if (!empty($_FILES['image']['name'])) {
+            include_once "../cargarimagen.php";
+            $foto = CargarFoto();
+            if ($foto) {
+                $stmtFoto = $conn->prepare("UPDATE talleres SET foto = ? WHERE Id = ?");
+                $stmtFoto->bind_param("si", $foto, $id);
+                $stmtFoto->execute();
+            } }
+        echo "<script>alert('Taller modificado correctamente');</script>";
+    } else {
+        echo "<script>alert('Seleccione un taller antes de modificar');</script>";
+    } }
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -58,52 +95,47 @@ if(isset($_POST['ListarTalleres'])) {
 <body>
 
     <form action="" method="post" enctype="multipart/form-data">
-        <input type="number" name="id" id="idAnimal" hidden>
+
+        <input type="hidden" name="id" value="<?= htmlspecialchars($txtID) ?>">
 
         <div>
-            <label for="nombreL">Nombre</label>
-            <input type="text" name="nombre" id="nombre"  value="<?php echo htmlspecialchars($txtNombre); ?>" placeholder="Ingrese nombre">
+            <label>Nombre</label>
+            <input type="text" name="nombre" value="<?= htmlspecialchars($txtNombre) ?>" placeholder="Ingrese nombre">
         </div>
 
         <div>
-            <label for="edad">Día</label>
-            <input type="text" name="dia" id="dia" value="<?php echo htmlspecialchars($txtDia); ?>" placeholder="Ingrese día" >
+            <label>Día</label>
+            <input type="text" name="dia" value="<?= htmlspecialchars($txtDia) ?>" placeholder="Ingrese día">
         </div>
 
         <div>
-            <label for="tipo">Horario</label>
-            <input type="text" name="horario" id="horario" value="<?php echo htmlspecialchars($txtHorario); ?>" placeholder="Ingrese horario" >
+            <label>Horario</label>
+            <input type="text" name="horario" value="<?= htmlspecialchars($txtHorario) ?>" placeholder="Ingrese horario">
         </div>
 
-        <div>
+         <div>
             <label for="costo">Costo</label>
             <input type="text" name="costo" id="costo" value="<?php echo htmlspecialchars($costo); ?>" placeholder="Ingrese costo">
         </div>
-
-          <div>
-      <label for="exampleTextarea" class="form-label mt-4"  value="<?php echo htmlspecialchars($txtDescripcion); ?>"      >Descripcion</label>
-      <textarea class="form-control" id="exampleTextarea" rows="3" style="height: 92px;" name="descripcion" id="descripcion"  placeholder="Descripcion del libro"  ></textarea>
-    </div>
-
-            <div>
-                <label for="estado">Estado</label>
-                <select name="estado" id="estado">
-                    <option value="activo">Activo</option>
-                    <option value="inactivo">Inactivo</option>
-                </select>
-            </div>
-    <div> 
-         <div>
-            <label> Foto</label>
+        <div>
+            <label>Descripción</label>
+            <textarea name="descripcion" rows="3" placeholder="Descripción del taller"><?= htmlspecialchars($txtDescripcion) ?></textarea>
+        </div>
+        <div>
+            <label>Estado</label>
+            <select name="estado">
+                <option value="activo"   <?= ($txtestado == "activo") ? "selected" : "" ?>>Activo</option>
+                <option value="inactivo" <?= ($txtestado == "inactivo") ? "selected" : "" ?>>Inactivo</option>
+            </select>
+        </div>
+        <div>
+            <label>Foto</label>
             <input type="file" name="image">
         </div>
-
         <div>
-
-                        <input type="submit" name="agregar" value="Agregar">
+            <input type="submit" name="agregar" value="Agregar">
             <input type="submit" name="ListarTalleres" value="Listar Talleres">
             <input type="submit" name="Modificar" value="Modificar">
-
         </div>
     </form>
 
@@ -114,30 +146,28 @@ if(isset($_POST['ListarTalleres'])) {
                 <th>Nombre</th>
                 <th>Día</th>
                 <th>Horario</th>
-                <th>Foto</th>´
+                <th>Foto</th>
                 <th>Descripción</th>
                 <th>Costo</th>
                 <th>Estado</th>
-                <th>Accion</th>
-               
+                <th>Acción</th>
             </tr>
             <?php foreach ($resultados as $taller): ?>
                 <tr>
                     <td><?= $taller->getId() ?></td>
-                    <td><?= $taller->getNombre() ?></td>
-                    <td><?= $taller->getDia() ?></td>
-                    <td><?= $taller->getHorario() ?></td>
-                    <td><?= $taller->getFoto() ?></td>
-                    <td><?= $taller->getDescripcion() ?></td>
-                    <td><?= $taller->getCosto() ?></td>
-                    <td><?= $taller->getEstado() ?></td>
+                    <td><?= htmlspecialchars($taller->getNombre()) ?></td>
+                    <td><?= htmlspecialchars($taller->getDia()) ?></td>
+                    <td><?= htmlspecialchars($taller->getHorario()) ?></td>
+                    <td><?= htmlspecialchars($taller->getFoto()) ?></td>
+                    <td><?= htmlspecialchars($taller->getDescripcion()) ?></td>
+                    <td><?= htmlspecialchars($taller->getCosto()) ?></td>
+                    <td><?= htmlspecialchars($taller->getEstado()) ?></td>
                     <td>
                         <form method="post" style="display:inline;">
                             <input type="hidden" name="id" value="<?= $taller->getId() ?>">
                             <input type="submit" name="BuscarTalleres" value="Seleccionar">
                         </form>
                     </td>
-                      
                 </tr>
             <?php endforeach; ?>
         </table>
