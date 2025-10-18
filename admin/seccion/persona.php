@@ -1,8 +1,4 @@
 <?php
-
-
- //include_once '/datos/conexion.php';
-
 class Persona {
     private $Ci;
     private $PrimerNombre;
@@ -99,13 +95,6 @@ public function BuscarPersona(){
         return $personaBD->BuscarPersona($this->Ci); 
     }
 }
-
-
-
-
-// include_once "/config/bd.php";
-
-
 class Conexion {
     private $nombreservidor ="localhost:3307";
     private $usuario = "root";
@@ -127,10 +116,6 @@ class Conexion {
         $this->conexion->close();
     }
 }
-
-
-
-
 class personasBD extends Conexion {
     public function RegistrarPersona($ci, $PrimerNombre, $SegundoNombre, $PrimerApellido, $SegundoApellido, $Calle, $Numero, $Celular, $TelefonoFijo, $Correo, $Pass, $Tipo) {
         $con = $this->Conectar();

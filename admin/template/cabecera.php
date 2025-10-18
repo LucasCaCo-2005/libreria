@@ -61,6 +61,18 @@ if(!isset($_SESSION['usuario'])){
           </div>
         </li>
 
+
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Empleados</a>
+          <div class="dropdown-menu">
+            <a class="dropdown-item" href="<?php echo $url;?>/admin/Trab.php">Trabajadores</a>
+            <a class="dropdown-item" href="<?php echo $url;?>/admin/medico.php">Medicos</a>
+            <div class="dropdown-divider" hidden></div>
+            <a class="dropdown-item" href="#" hidden >Separated link</a>
+          </div>
+        </li>
+
+
   <a class="nav-item nav-link" href="<?php echo $url;?>">Ver sitio web</a>
  <a class="nav-item nav-link" href="<?php echo $url;?>/admin/seccion/cerrar.php">Cerrar Sesion</a> 
     </div>

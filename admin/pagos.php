@@ -3,14 +3,11 @@ include_once("seccion/bd.php");
 include_once("template/cabecera.php");
 include_once("seccion/users.php");
 
-
-
 // Verifica si se recibió el ID del socio por GET
 if (!isset($_GET['socio_id'])) {
     echo "No se ha especificado un socio.";
     exit;
 }
-
 $socio_id = intval($_GET['socio_id']);
 
 // Obtiene los datos del socio
@@ -23,11 +20,9 @@ if (!$socio) {
     echo "Socio no encontrado.";
     exit;
 }
-
 // Variables del formulario
 $accion = isset($_POST['accion']) ? $_POST['accion'] : "";
 $tipoPago = isset($_POST['tipo_pago']) ? $_POST['tipo_pago'] : "";
-
 // Lógica principal de acciones
 switch ($accion) {
     case "Pagar":
@@ -127,7 +122,7 @@ $totalPagos = $sentenciaContador->fetch(PDO::FETCH_ASSOC)['total'];
     <hr>
     <h3>Registrar Pago</h3>
 
-    <!-- Pago completo -->
+
     <form action="pagos.php?socio_id=<?php echo $socio_id; ?>" method="post">
         <input type="hidden" name="socio_id" value="<?php echo $socio['id']; ?>">
         <input type="hidden" name="tipo_pago" value="pago1">
@@ -135,8 +130,6 @@ $totalPagos = $sentenciaContador->fetch(PDO::FETCH_ASSOC)['total'];
             Pagar Cuota Completa ($100)
         </button>
     </form>
-
-    <!-- Medio pago -->
     <form action="pagos.php?socio_id=<?php echo $socio_id; ?>" method="post">
         <input type="hidden" name="socio_id" value="<?php echo $socio['id']; ?>">
         <input type="hidden" name="tipo_pago" value="pago2">

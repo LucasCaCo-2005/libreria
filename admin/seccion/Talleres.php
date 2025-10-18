@@ -2,9 +2,7 @@
 // include_once "persona.php"; 
 include_once ("persona.php");
 include_once ("bd.php");
-//////////////////////
-// CLASE TALLERES
-//////////////////////
+
 class Talleres {
     private $idTaller;
     private $nombre;
@@ -14,8 +12,6 @@ class Talleres {
     private $descripcion;
     private $costo;
     private $estado;
-
-
     // ID
     public function setId($idTaller){ $this->idTaller = $idTaller; }
     public function getId(){ return $this->idTaller; }
@@ -64,9 +60,6 @@ class Talleres {
     }
 }
 
-//////////////////////
-// CLASE TALLERESBD
-//////////////////////
 class TalleresBD extends conexion {
 
     public function ListarTalleres() {
@@ -152,39 +145,12 @@ $filtroSeleccionado = isset($_GET['filtroEstado']) ? $_GET['filtroEstado'] : "ac
 if ($filtroSeleccionado == "inactivo") {
     $sentencia = $conexion->prepare("SELECT * FROM talleres WHERE estado='inactivo'");
 } else {
-    $sentencia = $conexion->prepare("SELECT * FROM talleres WHERE estado='activo'");
-}
+    $sentencia = $conexion->prepare("SELECT * FROM talleres WHERE estado='activo'");}
 $sentencia->execute();
 $listaTalleres = $sentencia->fetchAll(PDO::FETCH_ASSOC);
 
-if (empty($listaTalleres)) {
-    echo "<p style='text-align:center;'>No hay talleres en este estado.</p>";
-    exit();
-}
-
-switch($accion) {
-    case 'seleccionar':
-        $sentencia = $conexion->prepare("SELECT * FROM talleres WHERE Id=:id");
-        $sentencia->bindParam(':id', $txtID);
-        $sentencia->execute();
-        $taller = $sentencia->fetch(PDO::FETCH_LAZY);
-
-        $_SESSION['tallerSeleccionado'] = [
-            'Id' => $taller['Id'],
-            'nombre' => $taller['nombre'],
-            'dia' => $taller['dia'],
-            'horario' => $taller['horario'],
-            'foto' => $taller['foto'],
-            'descripcion' => $taller['descripcion'],
-            'costo' => $taller['costo'],
-            'estado' => $taller['estado']
-        ];
-
-        header("Location: paneladmin.php?mensaje1=Taller seleccionado");
-        exit();
-}
-
-
-
-
+//  if (empty($listaTalleres)) {
+//     echo "<p style='text-align:center;'>No hay talleres en este estado.</p>";
+//     exit();
+// } 
 ?>

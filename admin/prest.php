@@ -1,11 +1,24 @@
 <?php include_once 'template/cabecera.php'; ?>
 <?php
 include_once ("seccion/bd.php");
-if(isset($_GET['devolver'])){
+
+if (isset($_GET['devolver'])) {
     $idPrestamo = $_GET['devolver'];
-    $sentencia = $conexion->prepare("UPDATE prestamos SET devuelto=1 WHERE id=:id");
+
+    // Fecha actual
+
+ $fechaActual = date("Y-m-d");
+    // Actualizar estado y fecha de devolución
+    $sentencia = $conexion->prepare("
+        UPDATE prestamos 
+        SET devuelto = 1, devolucion = :fechaActual 
+        WHERE id = :id
+    ");
+    $sentencia->bindParam(":fechaActual", $fechaActual);
     $sentencia->bindParam(":id", $idPrestamo);
     $sentencia->execute();
+
+    echo "<script>alert('Libro devuelto correctamente');window.location='prest.php';</script>";
 }
 $sentencia = $conexion->prepare("
     SELECT p.id, l.nombre AS libro, p.persona, 
@@ -17,6 +30,7 @@ $sentencia = $conexion->prepare("
 $sentencia->execute();
 $prestamos = $sentencia->fetchAll(PDO::FETCH_ASSOC);
 ?>
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -26,6 +40,8 @@ $prestamos = $sentencia->fetchAll(PDO::FETCH_ASSOC);
         table { width: 90%; margin: 20px auto; border-collapse: collapse; }
         th, td { border: 1px solid #ccc; padding: 8px; text-align: center; }
         th { background: #eee; }
+        a { color: blue; text-decoration: none; }
+        a:hover { text-decoration: underline; }
     </style>
 </head>
 <body>
@@ -43,15 +59,15 @@ $prestamos = $sentencia->fetchAll(PDO::FETCH_ASSOC);
         <?php foreach($prestamos as $p){ ?>
         <tr>
             <td><?php echo $p['id']; ?></td>
-            <td><?php echo $p['libro']; ?></td>
-            <td><?php echo $p['persona']; ?></td>
+            <td><?php echo htmlspecialchars($p['libro']); ?></td>
+            <td><?php echo htmlspecialchars($p['persona']); ?></td>
             <td><?php echo $p['prestamo']; ?></td>
             <td><?php echo $p['devolucion']; ?></td>
             <td><?php echo $p['devuelto'] ? 'Devuelto' : 'Prestado'; ?></td>
             <td>
                 <?php if(!$p['devuelto']){ ?>
                     <a href="prest.php?devolver=<?php echo $p['id']; ?>" 
-                       onclick="return confirm('¿Marcar como devuelto?')">Devolver</a>
+                       onclick="return confirm('¿Marcar como devuelto hoy?')">Devolver</a>
                 <?php } else { ?>
                     -----
                 <?php } ?>
@@ -61,4 +77,5 @@ $prestamos = $sentencia->fetchAll(PDO::FETCH_ASSOC);
     </table>
 </body>
 </html>
+
 <?php include_once 'template/pie.php'; ?>

@@ -10,7 +10,6 @@ include_once ("seccion/Talleres.php");
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Talleres</title>
-
     <style>
         .list-group-item {
             border: 1px solid #ccc;
@@ -143,7 +142,6 @@ function enviarAccion(id, accion) {
     form.querySelector('[name="accion"]').value = accion;
     form.submit(); }
 </script>
-
         </div>
     <?php } ?> 
 <?php } ?>

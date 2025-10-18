@@ -113,7 +113,6 @@ include_once ("seccion/bd.php");
         <?php } ?>
         </tbody>
     </table>
-    
 </div>
 <?php  include("../template/pie.php") ?>
 

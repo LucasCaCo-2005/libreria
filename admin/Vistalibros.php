@@ -20,18 +20,13 @@
     margin-bottom: 15px;
     border-radius: 5px;
     box-shadow: 2px 2px 5px rgba(0,0,0,0.1);
-
-   
-  
   }
-
 .contenedor-libros {
   display: flex;
   flex-wrap: wrap;   
   justify-content: center; 
   gap: 20px; 
 }
-
 </style>
 </head>
 <body>
