@@ -83,6 +83,12 @@ if (isset($_POST['Modificar'])) {
     } else {
         echo "<script>alert('Seleccione un taller antes de modificar');</script>";
     } }
+
+ if (isset($_POST['Limpiar'])) {
+    $txtID = $txtNombre = $txtDia = $txtHorario = $txtDescripcion = $costo = $txtestado = "";
+    $tallerSeleccionado = null;
+}
+
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -96,7 +102,7 @@ if (isset($_POST['Modificar'])) {
 
     <form action="" method="post" enctype="multipart/form-data">
 
-        <input type="hidden" name="id" value="<?= htmlspecialchars($txtID) ?>">
+        <input type="hidden"   required readonly  name="id" value="<?= htmlspecialchars($txtID) ?>">
 
         <div>
             <label>Nombre</label>
@@ -133,9 +139,11 @@ if (isset($_POST['Modificar'])) {
             <input type="file" name="image">
         </div>
         <div>
-            <input type="submit" name="agregar" value="Agregar">
+           <input type="submit" name="agregar" value="Agregar" <?= !empty($txtID) ? 'disabled' : '' ?>>
             <input type="submit" name="ListarTalleres" value="Listar Talleres">
             <input type="submit" name="Modificar" value="Modificar">
+           <input type="submit" name="Limpiar" value="Cancelar">
+
         </div>
     </form>
 
@@ -152,16 +160,25 @@ if (isset($_POST['Modificar'])) {
                 <th>Estado</th>
                 <th>Acción</th>
             </tr>
-            <?php foreach ($resultados as $taller): ?>
+
+        <br>    <div>
+
+            
+            <?php foreach ($resultados as $taller): ?> <br>
                 <tr>
                     <td><?= $taller->getId() ?></td>
                     <td><?= htmlspecialchars($taller->getNombre()) ?></td>
                     <td><?= htmlspecialchars($taller->getDia()) ?></td>
                     <td><?= htmlspecialchars($taller->getHorario()) ?></td>
                     <td><?= htmlspecialchars($taller->getFoto()) ?></td>
-                    <td><?= htmlspecialchars($taller->getDescripcion()) ?></td>
+                 <td>
+    <?php 
+        $descripcion = htmlspecialchars($taller->getDescripcion());
+        echo strlen($descripcion) > 50 ? substr($descripcion, 0, 50) . '...' : $descripcion;
+    ?>
+</td>
                     <td><?= htmlspecialchars($taller->getCosto()) ?></td>
-                    <td><?= htmlspecialchars($taller->getEstado()) ?></td>
+                    <td><?= htmlspecialchars ($taller->getEstado()) ?></td>
                     <td>
                         <form method="post" style="display:inline;">
                             <input type="hidden" name="id" value="<?= $taller->getId() ?>">
@@ -172,6 +189,7 @@ if (isset($_POST['Modificar'])) {
             <?php endforeach; ?>
         </table>
     <?php endif; ?>
+</div>
 
 </body>
 </html>

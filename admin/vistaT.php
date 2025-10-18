@@ -16,7 +16,7 @@ include_once ("seccion/Talleres.php");
             border-radius: 5px;
             padding: 15px;
             margin: 10px auto;
-            max-width: 600px;
+            max-width: 300;
             background-color: #f9f9f9;
             box-shadow: 2px 2px 5px rgba(0,0,0,0.1);
         }
@@ -126,6 +126,8 @@ $listaTalleres = $sentencia->fetchAll(PDO::FETCH_ASSOC);
     <input type="hidden" name="id" value="<?php echo $taller['Id']; ?>">
     <input type="hidden" name="accion" value="">
 </form>
+
+  <a class="btn btn-sm btn-primary" href="t.php?id=<?php echo $taller['Id'];?>" role="button">Ver más</a>
 
 <!-- Botón externo que hace lo mismo -->
 <button 

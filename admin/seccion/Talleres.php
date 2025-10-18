@@ -127,7 +127,7 @@ if ($accion == "BuscarT" ) {
     $listaTalleres = $sentencia->fetchAll(PDO::FETCH_ASSOC);
 }
 
-
+ 
 
 $filtro = "";
 $parametros = [];
