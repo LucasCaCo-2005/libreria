@@ -1,8 +1,8 @@
 <?php
-$host="localhost";
+$host="localhost:3307";
 $bd="asociacion";
 $usuario="root";
-$contraseña="abc123";
+$contraseña="";
 
 try { 
     $conexion = new PDO("mysql:host=$host;dbname=$bd", $usuario, $contraseña);  
