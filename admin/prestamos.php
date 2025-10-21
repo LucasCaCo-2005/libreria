@@ -23,7 +23,7 @@ if($_POST){
     $sentencia->bindParam(":prestamo", $fechaPrestamo);
     $sentencia->bindParam(":devolucion", $fechaDevolucion);
     $sentencia->execute();
-    echo "<script>alert('Préstamo registrado correctamente');window.location='prest.php';</script>"; }
+    echo "<script>alert('Préstamo registrado correctamente');window.location='prest.php';</script>"; } 
 ?>
 <!DOCTYPE html>
 <html lang="es">

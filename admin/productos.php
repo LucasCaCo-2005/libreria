@@ -59,6 +59,13 @@ include_once ("seccion/bd.php");
 </div>
 
 <div class = "form-group">
+<label for="txtDesc">Desc:</label>
+<input type="text" class="form-control" name="txtDesc" id="txtDesc" value="<?php echo $txtDesc; ?>" placeholder="Enter Desc" required>
+</div>
+
+
+
+<div class = "form-group">
 
 <label for="txtIMG">Imagen</label>
 <br>
@@ -85,7 +92,9 @@ include_once ("seccion/bd.php");
                 <th>fecha</th>
                 <th>autor</th>
                 <th>stock</th>
+                  <th>Desc</th>
                 <th>Imagen</th>
+              
                  <th>Acciones</th>
             </tr>
         </thead>
@@ -98,10 +107,8 @@ include_once ("seccion/bd.php");
                   <td><?php echo  $libro['fecha']  ?> </td>           
                 <td><?php echo  $libro['autor']  ?> </td>        
                 <td><?php echo  $libro['stock']  ?> </td>
-       <td>
-                    <img src="../../images/<?php echo $libro['imagen']; ?>" width="100" alt="">
-
-</td>
+                      <td><?php echo substr($libro['descripcion'], 0, 50) . '...'; ?> </td>
+       <td> <img src="../../images/<?php echo $libro['imagen']; ?>" width="100" alt=""></td>
                 <td>         
 <form action="" method="post">
 <input type="hidden" name="txtID" id="txtID" value="<?php echo $libro['id']; ?>">
@@ -115,4 +122,3 @@ include_once ("seccion/bd.php");
     </table>
 </div>
 <?php  include("../template/pie.php") ?>
-

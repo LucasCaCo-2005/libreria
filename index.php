@@ -91,6 +91,10 @@ $listaTalleres = $talleresBD->ListarTalleres();
 </head>
 <body>
 
+
+
+
+
     <!-- HEADER -->
     <header>
         <div class="header-content">
@@ -129,6 +133,8 @@ $listaTalleres = $talleresBD->ListarTalleres();
                         <h3><?= htmlspecialchars($taller->getNombre()) ?></h3>
                         <p>Día: <?= htmlspecialchars($taller->getDia()) ?></p>
                         <p>Horario: <?= htmlspecialchars($taller->getHorario()) ?></p>
+                        <p>Costo: <?= htmlspecialchars($taller->getCosto()) ?> </p>
+
                     </div>
                 </div>
             <?php endforeach; ?>

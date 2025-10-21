@@ -7,15 +7,17 @@ $accion = (isset($_POST['accion'])) ? $_POST['accion'] : ""; //Agregar, Modifica
 $txtfecha = (isset($_POST['txtfecha'])) ? $_POST['txtfecha'] : ""; 
 $txtAutor = (isset($_POST['txtAutor'])) ? $_POST['txtAutor'] : "";
 $txtStock = (isset($_POST['txtStock'])) ? $_POST['txtStock'] : ""; 
+$txtDesc = (isset($_POST['txtDesc'])) ? $_POST['txtDesc'] : ""; 
 include("bd.php");
 switch($accion) {
        case 'Agregar':
-        $sentencia = $conexion->prepare("INSERT INTO `libros` (nombre, fecha, autor, stock, imagen) VALUES (:nombre, :fecha, :autor, :stock, :imagen);"); //Ajuste en la consulta SQL
+        $sentencia = $conexion->prepare("INSERT INTO `libros` (nombre, fecha, autor, stock, descripcion, imagen) VALUES (:nombre, :fecha, :autor, :stock, :descripcion, :imagen);"); //Ajuste en la consulta SQL
         // Asignar los valores a los parámetros
         $sentencia->bindParam(':nombre', $txtNombre);
         $sentencia->bindParam(':fecha', $txtfecha);
         $sentencia->bindParam(':autor', $txtAutor);
         $sentencia->bindParam(':stock', $txtStock); 
+         $sentencia->bindParam(':descripcion', $txtDesc); 
         // Generar nombre único para el archivo de imagen
        $fecha = new DateTime(); 
         $nombreArchivo = ($txtIMG != "")? $fecha->getTimestamp() . "_" . $_FILES['txtIMG']['name'] : "imagen.jpg";
@@ -50,6 +52,12 @@ $sentencia = $conexion->prepare("UPDATE libros SET fecha=:fecha WHERE id=:id");
     $sentencia->bindParam(':stock', $txtStock);
     $sentencia->bindParam(':id', $txtID);
     $sentencia->execute();
+
+     $sentencia = $conexion->prepare("UPDATE libros SET descripcion=:descripcion WHERE id=:id");
+    $sentencia->bindParam(':descripcion', $txtDesc);
+    $sentencia->bindParam(':id', $txtID);
+    $sentencia->execute();
+
 
     // Si se subió una imagen nueva
     if ($txtIMG != "") {
@@ -90,7 +98,8 @@ case 'Seleccionar':
         'imagen' => $libro['imagen'],
         'fecha' => $libro['fecha'],
         'autor' => $libro['autor'],
-        'stock' => $libro['stock']
+        'stock' => $libro['stock'],
+         'descripcion' => $libro['descripcion']
     ];
 
     header("Location: productos.php?mensaje1=Libro seleccionado");
@@ -127,6 +136,7 @@ if (isset($_SESSION['libroSeleccionado'])) { // Verificar si hay un libro selecc
     $txtfecha = $_SESSION['libroSeleccionado']['fecha'];
     $txtAutor = $_SESSION['libroSeleccionado']['autor'];
     $txtStock = $_SESSION['libroSeleccionado']['stock'];
+    $txtDesc = $_SESSION['libroSeleccionado']['descripcion'];
     unset($_SESSION['libroSeleccionado']);
 } 
 $sentencia = $conexion->prepare("SELECT * FROM libros");
