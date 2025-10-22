@@ -1,10 +1,19 @@
+  </div> <!-- /.row -->
+</div> <!-- /.container -->
+
+<!-- ✅ Bootstrap 5 JS (con Popper incluido) -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+        crossorigin="anonymous"></script>
+
+<!-- 🔸 Script opcional: autoremover alertas -->
 <script>
-    setTimeout(() => {
-        const alerta = document.querySelector('.alert');
-        if (alerta) {
-            alerta.remove();
-        }
-    }, 3000); // 3 segundos
+  setTimeout(() => {
+    const alerta = document.querySelector('.alert');
+    if (alerta) alerta.remove();
+  }, 3000);
 </script>
+
 </body>
 </html>
+

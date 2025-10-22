@@ -7,23 +7,58 @@
     <title>Document</title>
 
     <style>
-  .carta-chica {
-    width: 200px; 
-    border: 1px solid #ceababff;
-    border-radius: 5px;
-    box-shadow: 2px 2px 5px rgba(0,0,0,0.1);
 
-  }
-  .carta-chica img {
-    height: 150px;
-    object-fit: cover;
-  }
-  .contenedor-libros {
-  display: flex;
-  flex-wrap: wrap;   
-  justify-content: center; 
-  gap: 20px; 
+      h1, h2 {
+    color: #111;
+    text-align: center;
 }
+.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 16px;
+    margin: 20px 0;
+}
+.card {
+    background: #fff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    overflow: hidden;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+.card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+}
+.card img {
+    width: 100%;
+    height: 180px;
+    object-fit: cover;
+}
+.card-content {
+    padding: 12px 16px;
+}
+.card-content h3 {
+    margin: 0;
+    font-size: 1.2em;
+    color: #004a85;
+}
+.card-content p {
+    margin: 4px 0;
+    font-size: 0.95em;
+}
+.btn {
+    display: inline-block;
+    padding: 6px 10px;
+    background: #0057a0;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 4px;
+    font-size: 0.9em;
+}
+.btn:hover {
+    background: #003d70;
+}
+  
 </style>
 
 </head>
@@ -39,21 +74,25 @@ $sentencia->execute();
 $listaLibros = $sentencia->fetchAll(PDO::FETCH_ASSOC);
 
 ?>
- <?php   
- foreach($listaLibros as $libro)
- ?> 
-<div class="contenedor-libros">
-<?php foreach($listaLibros as $libro){ ?> 
-    <div class="card carta-chica">
-        <img class="card-img-top" src="/images/<?php echo $libro['imagen']; ?>" alt="">
-        <div class="card-body">
-            <h6 class="card-title"><?php echo $libro['nombre']; ?></h6>
-            <h6 class="card-title"><?php echo $libro['autor']; ?></h6>
-            <a class="btn btn-sm btn-primary" href="" role="button">Ver más</a>
-        </div> 
-    </div> 
-<?php } ?>
-</div> 
+<section>
+  <h2>Libros disponibles</h2>
+  <div class="grid">
+    <?php if (!empty($listaLibros)): ?>
+      <?php foreach ($listaLibros as $libro): ?>
+        <div class="card">
+          <img src="/images/<?= htmlspecialchars($libro['imagen']) ?>" alt="<?= htmlspecialchars($libro['nombre']) ?>">
+          <div class="card-content">
+            <h3><?= htmlspecialchars($libro['nombre']) ?></h3>
+            <p><strong>Autor:</strong> <?= htmlspecialchars($libro['autor']) ?></p>
+             <a class="btn btn-sm btn-primary" href="mas.php?id=<?php echo $libro['id'];?>" role="button">Ver más</a>
+          </div>
+        </div>
+      <?php endforeach; ?>
+    <?php else: ?>
+      <p style="text-align:center;">No hay libros cargados en este momento.</p>
+    <?php endif; ?>
+  </div>
+</section>
 <?php include_once 'template/pie.php'; ?>
 
 </body>

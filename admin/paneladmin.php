@@ -193,3 +193,5 @@ if (isset($_POST['Modificar'])) {
 
 </body>
 </html>
+
+<?php  include("../template/pie.php") ?>

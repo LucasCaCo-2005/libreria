@@ -96,9 +96,9 @@ public function BuscarPersona(){
     }
 }
 class Conexion {
-    private $nombreservidor ="localhost:3307";
+    private $nombreservidor ="localhost";
     private $usuario = "root";
-    private $pass = "";
+    private $pass = "abc123";
     private $base = "asociacion";
     private $conexion;
 
