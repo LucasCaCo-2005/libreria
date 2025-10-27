@@ -1,6 +1,10 @@
 <?php
-include_once "admin/seccion/bd.php";
-include_once "logica/personaBD.php";
+
+include_once __DIR__ . "/bd.php";
+//include_once __DIR__ . "/../logica/personaBD.php";
+//include_once __DIR__ . "/logica/persona/personaBD.php";
+include_once __DIR__ . "/../../logica/personaBD.php";
+
 class Persona {
 
     private $Cedula;
