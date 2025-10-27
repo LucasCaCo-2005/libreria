@@ -58,4 +58,5 @@ public function ListarAutoridades(){
     return $ListaAutoridades;
 }
 }
+
 ?>
