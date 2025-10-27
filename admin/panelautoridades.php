@@ -1,15 +1,15 @@
 <?php
 include_once __DIR__ . "/../admin/seccion/bd.php";
-//include_once __DIR__ . "/../admin/seccion/autoridades.php";
+
 include_once __DIR__ . "/seccion/autoridades.php";
-//include_once __DIR__ . "autoridades.php";
+
 
 $autoridadesSeleccionado = null;
 $resultados = [];
 
 // Conexión
 $conn = (new conexion())->Conectar();
-// Variables del formulario
+// Variables wue utilizo en el formulario
 $txtID          = $_POST['id'] ?? "";
 $txtCedula      = $_POST['cedula'] ?? "";
 $txtCargo      = $_POST['cargo'] ?? "";
@@ -18,7 +18,7 @@ $txtFecha_fin         = $_POST['fecha_fin'] ?? "";
 
 $txtestado      = $_POST['estado'] ?? "";
 
-
+//Datos para cargar una autoridad
 if (isset($_POST['agregar'])) {
     $autoridad = new Autoridades();
     $autoridad->setCedula($txtCedula);
@@ -38,11 +38,12 @@ $autoridad->setEstado($txtestado ?: "activo");
 
     $autoridad->CargarAutoridades();
 }
-
+// llamo al metodo ListarAutoridades
 if (isset($_POST['ListarAutoridades'])) {
     $autoridad = new Autoridades();
     $resultados = $autoridad->ListarAutoridades();
 }
+// llamo al metodo BuscarAutoridades
 if (isset($_POST['BuscarAutoridades'])) {
     $id = intval($_POST['id']);
     $stmt = $conn->prepare("SELECT * FROM autoridades WHERE Id = ?");
@@ -95,7 +96,7 @@ if (isset($_POST['Modificar'])) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Panel de administración</title>
-    <link rel="stylesheet" href="../css/admin.css">
+    <link rel="stylesheet" href="../estilos/bootstrap.min_1.css">
 </head>
 <body>
 

@@ -9,6 +9,7 @@
             <a class="btn btn-primary btn-lg" href="productos.php" role="button">Administrar productos</a> <br> <br>
               <a class="btn btn-primary btn-lg" href="paneladmin.php" role="button">Administrar Talleres</a> <br> <br>
                <a class="btn btn-primary btn-lg" href="socios.php" role="button">Administrar Socios</a> <br> <br>
+                <a class="btn btn-primary btn-lg" href="panelautoridades.php" role="button">Administrar Autoridades</a> <br> <br>
         </p>
        </div>
 <?php include_once ('template/pie.php'); ?>
