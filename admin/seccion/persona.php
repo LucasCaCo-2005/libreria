@@ -1,181 +1,90 @@
 <?php
+include_once "admin/seccion/bd.php";
+include_once "logica/personaBD.php";
 class Persona {
-    private $Ci;
-    private $PrimerNombre;
-    private $SegundoNombre;
-    private $PrimerApellido;
-    private $SegundoApellido;
-    private $Calle;
-    private $Numero;
-    private $Celular;
-    private $TelefonoFijo;
+
+    private $Cedula;
+    private $Nombre;
+    private $Apellidos;
+    private $Domicilio;
+    private $Telefono;
     private $Correo;
-    private $Pass;
+    private $Contrasena;
     private $Tipo;
 
-         public function getCI() {
-        return $this->Ci;
-    }
-   public function getPass() {
-        return $this->Pass;
+    public function getCedula() {
+        return $this->Cedula;
     }
 
-    public function setCi($Ci) { $this->Ci = $Ci; } 
-    public function setPrimerNombre($PrimerNombre) { $this->PrimerNombre = $PrimerNombre; }
-    public function setSegundoNombre($SegundoNombre) { $this->SegundoNombre = $SegundoNombre; }
-    public function setPrimerApellido($PrimerApellido) { $this->PrimerApellido = $PrimerApellido; }
-    public function setSegundoApellido($SegundoApellido) { $this->SegundoApellido = $SegundoApellido; }
-    public function setCalle($Calle) { $this->Calle = $Calle; }
-    public function setNumero($Numero) { $this->Numero = $Numero; }
-    public function setCelular($Celular) { $this->Celular = $Celular; }
-    public function setTelefonoFijo($TelefonoFijo) { $this->TelefonoFijo = $TelefonoFijo; }
-    public function setCorreo($Correo) { $this->Correo = $Correo; }    
-    public function setPass($Pass) { $this->Pass = $Pass; }
+    public function getContrasena() {
+        return $this->Contrasena;
+    }
+
+    public function setCedula($Cedula) { $this->Cedula = $Cedula; }
+    public function setNombre($Nombre) { $this->Nombre = $Nombre; }
+    public function setApellidos($Apellidos) { $this->Apellidos = $Apellidos; }
+    public function setDireccion($Domicilio) { $this->Domicilio = $Domicilio; }
+    public function setTelefono($Telefono) { $this->Telefono = $Telefono; }
+    public function setCorreo($Correo) { $this->Correo = $Correo; }
+    public function setContrasena($Contrasena) { $this->Contrasena = $Contrasena; }
     public function setTipo($Tipo) { $this->Tipo = $Tipo; }
 
-
     public function CargarPersonas() { 
-       // include_once '../datos/personasBd.php';
-     
-        $registro = new personasBd();
+        // Aquí registramos a la persona
+        $registro = new personaBD();
         $registro->RegistrarPersona(
-            $this->Ci,
-            $this->PrimerNombre,
-            $this->SegundoNombre,
-            $this->PrimerApellido,
-            $this->SegundoApellido, 
-            $this->Calle,
-            $this->Numero,   
-            $this->Celular,   
-            $this->TelefonoFijo,  
+            $this->Cedula,
+            $this->Nombre,
+            $this->Apellidos,
+            $this->Domicilio,
+            $this->Telefono,  
             $this->Correo,
-            $this->Pass,
+            $this->Contrasena,
             $this->Tipo
-        )   
-        ;
+        );
     }
-    public function Login() { 
-    $Ci = $this->Ci;
-    $Pass = $this->Pass; 
 
-    // Crear conexión
-    $conexion = new Conexion();
-    $conn = $conexion->Conectar();
+     //public function Login() { 
+    //    $Cedula = $this->Cedula;
+     //   $Contrasena = $this->Contrasena; 
+
+     //   $conexion = new Conexion();
+     //   $conn = $conexion->Conectar();
+
+    //    $stmt = $conn->prepare("SELECT * FROM personas WHERE cedula = ? AND contrasena = ?");
+     //   if (!$stmt) {
+     //       die("Error en la preparación de la consulta: " . $conn->error);
+  //      }
+
+   //    $stmt = $con->prepare("SELECT * FROM personas WHERE cedula = ? AND contrasena = ?");
+//$stmt->execute([$cedula, $contrasena]);
+
+ //       if ($row = $resultado->fetch_assoc()) {
+  //          $persona = new Persona();
+  //          $persona->setCedula($row['cedula']);
+  //          $persona->setContrasena($row['contrasena']);
+    //        $persona->setTipo($row['Tipo']);
+   //         return $persona;
+ //       } else {
+  //          return NULL;
+  //      }
+ //   }
+
+ public function login($cedula, $contrasena) {
+    // Creamos la conexión usando la clase Conexion
+    $conexion = new Conexion(); // instancia de la clase Conexion
+    $con = $conexion->Conectar(); // método que devuelve el PDO
 
     // Preparar la consulta
-    $stmt = $conn->prepare("SELECT * FROM personas WHERE Ci = ? AND Pass = ?");
-    if (!$stmt) {
-        die("Error en la preparación de la consulta: " . $conn->error);
-    }
+    $sql = "SELECT * FROM personas WHERE cedula = :cedula AND contrasena = :contrasena";
+    $stmt = $con->prepare($sql);
 
-    // Asignar parámetros (ss = dos strings)
-    $stmt->bind_param("ss", $ci, $pass);
+    // Usar los parámetros correctos
+    $stmt->bindParam(':cedula', $cedula);
+    $stmt->bindParam(':contrasena', $contrasena);
 
-    // Ejecutar
     $stmt->execute();
 
-    // Obtener resultado
-    $resultado = $stmt->get_result();
-
-    // Verificar si hay un usuario
-    if ($row = $resultado->fetch_assoc()) {
-        $persona = new Persona();
-        $persona->setCI($row['Ci']);
-        $persona->setPass($row['Pass']);
-        $persona->setTipo($row['Tipo']);
-        return $persona;
-    } else {
-        return NULL; // Usuario no encontrado
-    }
-}
-public function BuscarPersona(){
-       // include_once "./datos/personasBd.php";
-       
-        $personaBD = new personasBd(); 
-        return $personaBD->BuscarPersona($this->Ci); 
-    }
-}
-class Conexion {
-    private $nombreservidor ="localhost";
-    private $usuario = "root";
-    private $pass = "abc123";
-    private $base = "asociacion";
-    private $conexion;
-
-    public function Conectar() {
-        $this->conexion = new mysqli($this->nombreservidor, $this->usuario, $this->pass, $this->base);
-
-        if ($this->conexion->connect_error) {
-            echo "error" . $this->conexion->connect_error;
-        } else {
-            return $this->conexion;
-        }
-    }
-
-    public function Desconectar() {
-        $this->conexion->close();
-    }
-}
-class personasBD extends Conexion {
-    public function RegistrarPersona($ci, $PrimerNombre, $SegundoNombre, $PrimerApellido, $SegundoApellido, $Calle, $Numero, $Celular, $TelefonoFijo, $Correo, $Pass, $Tipo) {
-        $con = $this->Conectar();
-
-        $stmt = $con->prepare("INSERT INTO personas (ci, PrimerNombre, SegundoNombre, PrimerApellido, SegundoApellido, Calle, Numero, Celular, TelefonoFijo, Correo, Pass, Tipo)
-                               VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
-        if (!$stmt) {
-            echo "Error al preparar la consulta: " . $con->error;
-            return;
-        }
-
-        $stmt->bind_param("ssssssssssss", $ci, $PrimerNombre, $SegundoNombre, $PrimerApellido, $SegundoApellido, $Calle, $Numero, $Celular, $TelefonoFijo, $Correo, $Pass, $Tipo);
-
-        if ($stmt->execute()) {
-            echo "✅ Usuario registrado correctamente.";
-        } else {
-            echo "❌ Error al registrar usuario: " . $stmt->error;
-        }
-
-        $stmt->close();
-        $con->close();
-    }
-
-public function BuscarUsuarioPorCI($ci, $pass) {
-    $con = $this->Conectar();
-    $stmt = $con->prepare("SELECT * FROM personas WHERE Ci = ? AND Pass =?");
-    $stmt->bind_param("ss", $Ci, $Pass);
-    $stmt->execute();
-
-    $resultado = $stmt->get_result();
-    $usuario = $resultado->fetch_assoc();
-
-    $stmt->close();
-    $con->close();
-
-    return $personas ?: null;
-}
-public function BuscarUsuario($Ci) {
-    $con = $this->Conectar();
-
-    $stmt = $con->prepare("SELECT * FROM personas WHERE Ci = ?");
-    $stmt->bind_param("s", $Ci);
-    $stmt->execute();
-
-    $resultado = $stmt->get_result();
-    $persona = [];
-
-    while ($fila = $resultado->fetch_assoc()) {
-        $persona = new Persona();
-        $persona->setPrimerNombre($fila['Primernombre']);
-        $persona->setCi($fila['Ci']);
-        $persona->setCorreo($fila['Correo']);
-        $persona->setTelefonoFijo($fila['TelefonoFijo']);
-        $persona[] = $persona;
-    }
-
-    $stmt->close();
-    $con->close();
-
-    return $persona;
+    return $stmt->fetch(PDO::FETCH_ASSOC); // devuelve la fila encontrada o false
 }
 }
-?>

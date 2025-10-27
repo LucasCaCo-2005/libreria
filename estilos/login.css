@@ -1,51 +1,92 @@
-.login-container {
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f2f2f2;
     display: flex;
     justify-content: center;
-    margin-top: 100px; /* espacio debajo del header */
-    margin-bottom: 100px; /* espacio antes del banner inferior */
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+}
+
+.form-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #0057a0; /* azul como el registro */
+    padding: 40px;
+    border-radius: 15px;
+    max-width: 400px;
+    width: 100%;
+    box-shadow: 0 0 15px rgba(0,0,0,0.2);
+}
+
+.titulo-formulario {
+    color: white;
+    font-size: 28px;
+    font-weight: bold;
+    margin-bottom: 30px;
+    text-align: center;
+    width: 100%;
 }
 
 .login-form {
-    background-color: #0057a0; /* fondo azul */
-    padding: 30px 40px;
-    border-radius: 15px;
-    box-shadow: 0 0 15px rgba(0,0,0,0.2);
-    color: white;
-    font-family: Arial, sans-serif;
-    font-size: 1.2em;
     width: 100%;
-    max-width: 400px;
 }
 
-.login-form input[type="text"],
-.login-form input[type="password"],
-.login-form input[type="submit"] {
-    display: block;
-    width: 100%;
-    margin: 10px 0;
-    padding: 14px;
-    font-size: 1,5;
+.form-row {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    margin-bottom: 15px;
+}
+
+.form-row label {
+    width: 120px;
+    text-align: right;
+    font-weight: bold;
+    margin-right: 10px;
+    color: white;
+}
+
+.form-row input[type="text"],
+.form-row input[type="password"] {
+    flex: 1;
+    padding: 10px;
     border: none;
-    border-radius: 5px;
+    border-radius: 6px;
+    font-size: 16px;
 }
 
 .login-form input[type="submit"] {
     background-color: #003d70;
     color: white;
+    font-size: 1.2em;
+    padding: 15px;
+    margin-top: 20px;
+    width: 100%;
+    border: none;
+    border-radius: 6px;
     cursor: pointer;
     transition: background-color 0.3s;
-    font-size: 1.5em; /* tamaño aumentado */
-    padding: 20px;    /* espacio interno aumentado */
 }
 
 .login-form input[type="submit"]:hover {
     background-color: #002f5c;
 }
 
-.form-row input {
-    flex: 1;
-    padding: 10px;
-    font-size: 16px;
+.btn-registrarse {
+    background-color: #0074d9;
+    color: white;
+    font-size: 1.2em;
+    padding: 15px;
+    margin-top: 15px;
     border: none;
     border-radius: 6px;
+    cursor: pointer;
+    width: 100%;
+    transition: background-color 0.3s;
+}
+
+.btn-registrarse:hover {
+    background-color: #005fa3;
 }

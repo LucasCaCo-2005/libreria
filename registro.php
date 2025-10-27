@@ -1,21 +1,22 @@
 <?php
-
 // Procesa el formulario si se envió
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['agregar'])) {
    include_once __DIR__ . "/admin/seccion/persona.php";
 
     $persona = new Persona();
-    $persona->setCi($_POST['ci']);
-    $persona->setPrimerNombre($_POST['PrimerNombre']);
-    $persona->setSegundoNombre($_POST['SegundoNombre']);
-    $persona->setPrimerApellido($_POST['PrimerApellido']);
-    $persona->setSegundoApellido($_POST['SegundoApellido']);
-    $persona->setCalle($_POST['Calle']);
-    $persona->setNumero($_POST['Numero']);
-    $persona->setCorreo($_POST['correo']);
-    $persona->setTelefonoFijo($_POST['TelefonoFijo']);
-    $persona->setCelular($_POST['Celular']);
- $persona->setPass($_POST['Pass']);
+    $persona->setCedula($_POST['cedula']);
+    $persona->setNombre($_POST['nombre']);
+
+    $persona->setapellidos($_POST['apellidos']);
+ 
+  $persona->setDireccion($_POST['domicilio']);
+   
+
+   $persona->setTelefono($_POST['telefono']);
+    
+   $persona->setCorreo($_POST['correo']);
+    
+  $persona->setContrasena($_POST['contrasena']);
  $persona->setTipo($_POST['tipo']);
     // Hashear la contraseña antes de guardarla
   //  $hashedPass = password_hash($_POST['pass'], PASSWORD_BCRYPT);
@@ -32,70 +33,41 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['agregar'])) {
  
 </head>
 <body>
-   <form action="" method="post">
-    <div class="form-row">
-        <input type="text" name="ci" >
-        <label for="ci">Cédula:</label>
+    <div class="form-container">
+        <h1 class="titulo-formulario">Ingrese sus Datos</h1>
+        <form action="" method="post">
+            <div class="form-row">
+                <label for="cedula">Cédula:</label>
+                <input type="text" name="cedula" id="cedula">
+            </div>
+            <div class="form-row">
+                <label for="Nombre">Nombre:</label>
+                <input type="text" name="nombre">
+            </div>
+            <div class="form-row">
+                <label for="Apellidos">Apellidos:</label>
+                <input type="text" name="apellidos">
+            </div>
+            <div class="form-row">
+                <label for="domicilio">Calle:</label>
+                <input type="text" name="domicilio">
+            </div>
+            <div class="form-row">
+                <label for="telefono">Teléfono:</label>
+                <input type="tel" name="telefono">
+            </div>
+            <div class="form-row">
+                <label for="correo">Correo:</label>
+                <input type="email" name="correo">
+            </div>
+            <div class="form-row">
+                <label for="contrasena">Contraseña:</label>
+                <input type="password" name="contrasena">
+            </div>
+            <input type="hidden" name="tipo" value="usuario">
+            <input type="submit" name="agregar" value="Agregar">
+        </form>
     </div>
-    
-    <div class="form-row">
-        <input type="text" name="PrimerNombre" >
-        <label for="PrimerNombre">Nombre:</label>
-    </div>
-    
-    <div class="form-row">
-        <input type="text" name="SegundoNombre">
-        <label for="SegundoNombre">Segundo Nombre:</label>
-    </div>
-    
-    <div class="form-row">
-        <input type="text" name="PrimerApellido" >
-        <label for="PrimerApellido">Apellido:</label>
-    </div>
-    
-    <div class="form-row">
-        <input type="text" name="SegundoApellido">
-        <label for="SegundoApellido">Segundo Apellido:</label>
-    </div>
-    
-    <div class="form-row">
-        <input type="text" name="Calle" >
-        <label for="Calle">Calle:</label>
-    </div>
-    
-    <div class="form-row">
-        <input type="text" name="Numero" >
-        <label for="Numero">Número:</label>
-    </div>
-    
-    <div class="form-row">
-        <input type="text" name="TelefonoFijo" >
-        <label for="TelefonoFijo">Teléfono:</label>
-    </div>
-    
-    <div class="form-row">
-        <input type="text" name="Celular" >
-        <label for="Celular">Celular:</label>
-    </div>
-    
-    <div class="form-row">
-        <input type="email" name="correo" >
-        <label for="correo">Correo:</label>
-    </div>
-    
-    <div class="form-row">
-        <input type="password" name="Pass" >
-        <label for="Pass">Contraseña:</label>
-    </div>
-    
-<input type="hidden" name="tipo" value="usuario">
-
-    
-    <input type="submit" name="agregar" value="Agregar">
-</form>
-
-
-        
-    </form>
 </body>
+
 </html>
