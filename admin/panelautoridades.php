@@ -1,5 +1,6 @@
 <?php
 include_once __DIR__ . "/../admin/seccion/bd.php";
+
 include_once __DIR__ . "/seccion/autoridades.php";
 
 
@@ -31,7 +32,7 @@ if (isset($_POST['ListarAutoridades'])) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Panel de administración</title>
-    <link rel="stylesheet" href="../css/admin.css">
+    <link rel="stylesheet" href="../estilos/bootstrap.min_1.css">
 </head>
 <body>
 <?php
