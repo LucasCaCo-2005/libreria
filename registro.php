@@ -6,22 +6,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['agregar'])) {
     $persona = new Persona();
     $persona->setCedula($_POST['cedula']);
     $persona->setNombre($_POST['nombre']);
-
-    $persona->setapellidos($_POST['apellidos']);
- 
-  $persona->setDireccion($_POST['domicilio']);
-   
-
    $persona->setTelefono($_POST['telefono']);
-    
    $persona->setCorreo($_POST['correo']);
-    
   $persona->setContrasena($_POST['contrasena']);
  $persona->setTipo($_POST['tipo']);
-    // Hashear la contraseña antes de guardarla
-  //  $hashedPass = password_hash($_POST['pass'], PASSWORD_BCRYPT);
- //   $usuario->setPass($hashedPass);
-    $persona->CargarPersonas();
 }
 ?>
 <!DOCTYPE html>
@@ -45,16 +33,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['agregar'])) {
                 <input type="text" name="nombre">
             </div>
             <div class="form-row">
-                <label for="Apellidos">Apellidos:</label>
-                <input type="text" name="apellidos">
-            </div>
-            <div class="form-row">
-                <label for="domicilio">Calle:</label>
-                <input type="text" name="domicilio">
-            </div>
-            <div class="form-row">
                 <label for="telefono">Teléfono:</label>
-                <input type="tel" name="telefono">
+                <input type="text" name="telefono">
             </div>
             <div class="form-row">
                 <label for="correo">Correo:</label>

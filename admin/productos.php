@@ -1,7 +1,9 @@
 
-<?php  include("template/cabecera.php");
+<?php 
+ include("template/cabecera.php");
 include("seccion/logistica.php"); 
 include_once ("seccion/bd.php");
+
  ?>
 <div class="container">
   <div class="row">

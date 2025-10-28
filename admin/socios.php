@@ -1,5 +1,7 @@
-<?php  include("template/cabecera.php"); ?>
-<?php include("seccion/users.php"); 
+<?php 
+include("seccion/users.php"); 
+include("template/cabecera.php"); ?>
+<?php 
 include_once ("seccion/bd.php");
  ?>
 

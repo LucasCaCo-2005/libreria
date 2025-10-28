@@ -86,7 +86,7 @@ $url = "http://" . $_SERVER['HTTP_HOST'] . "/sitioweb";
           </a>
           <ul class="dropdown-menu" aria-labelledby="dropdownEmpleados">
             <li><a class="dropdown-item" href="<?php echo $url; ?>/admin/Trab.php">Trabajadores</a></li>
-            <li><a class="dropdown-item" href="<?php echo $url; ?>/admin/medico.php">Médicos</a></li>
+            <li><a class="dropdown-item" href="<?php echo $url; ?>/admin/panelautoridades.php">Autorides</a></li>
           </ul>
         </li>
 

@@ -44,11 +44,22 @@ if (isset($_POST['ListarTalleres'])) {
 }
 if (isset($_POST['BuscarTalleres'])) {
     $id = intval($_POST['id']);
-    $stmt = $conn->prepare("SELECT * FROM talleres WHERE Id = ?");
-    $stmt->bind_param("i", $id);
+    $stmt = $conn->prepare("SELECT * FROM talleres WHERE Id = :id");
+    $stmt->bindParam(':id', $id, PDO::PARAM_INT);
     $stmt->execute();
-    $result = $stmt->get_result();
-    $tallerSeleccionado = $result->fetch_assoc();
+    $tallerSeleccionado = $stmt->fetch(PDO::FETCH_ASSOC);
+
+    if ($tallerSeleccionado) {
+        $txtID          = $tallerSeleccionado['Id'];
+        $txtNombre      = $tallerSeleccionado['nombre'];
+        $txtDia         = $tallerSeleccionado['dia'];
+        $txtHorario     = $tallerSeleccionado['horario'];
+        $txtDescripcion = $tallerSeleccionado['descripcion'];
+        $costo          = $tallerSeleccionado['costo'];
+        $txtestado      = $tallerSeleccionado['estado'];
+    }
+}
+
 
     // Rellenar variables para mostrar en el formulario
     if ($tallerSeleccionado) {
@@ -59,30 +70,42 @@ if (isset($_POST['BuscarTalleres'])) {
         $txtDescripcion = $tallerSeleccionado['descripcion'];
         $costo          = $tallerSeleccionado['costo'];
         $txtestado      = $tallerSeleccionado['estado'];
-    }}
+    }
 if (isset($_POST['Modificar'])) {
     $id = intval($_POST['id']);
     if ($id > 0) {
-        // Actualizar campos
+        // Actualizar campos con PDO
         $sql = "UPDATE talleres 
-                SET nombre = ?, dia = ?, horario = ?, descripcion = ?, costo = ?, estado = ? 
-                WHERE Id = ?";
+                SET nombre = :nombre, dia = :dia, horario = :horario, descripcion = :descripcion, 
+                    costo = :costo, estado = :estado 
+                WHERE Id = :id";
         $stmt = $conn->prepare($sql);
-        $stmt->bind_param("ssssssi", $txtNombre, $txtDia, $txtHorario, $txtDescripcion, $costo, $txtestado, $id);
+        $stmt->bindParam(':nombre', $txtNombre);
+        $stmt->bindParam(':dia', $txtDia);
+        $stmt->bindParam(':horario', $txtHorario);
+        $stmt->bindParam(':descripcion', $txtDescripcion);
+        $stmt->bindParam(':costo', $costo);
+        $stmt->bindParam(':estado', $txtestado);
+        $stmt->bindParam(':id', $id, PDO::PARAM_INT);
         $stmt->execute();
+
         // Si se subió una nueva imagen, actualizarla
         if (!empty($_FILES['image']['name'])) {
             include_once "../cargarimagen.php";
             $foto = CargarFoto();
             if ($foto) {
-                $stmtFoto = $conn->prepare("UPDATE talleres SET foto = ? WHERE Id = ?");
-                $stmtFoto->bind_param("si", $foto, $id);
+                $stmtFoto = $conn->prepare("UPDATE talleres SET foto = :foto WHERE Id = :id");
+                $stmtFoto->bindParam(':foto', $foto);
+                $stmtFoto->bindParam(':id', $id, PDO::PARAM_INT);
                 $stmtFoto->execute();
-            } }
+            }
+        }
+
         echo "<script>alert('Taller modificado correctamente');</script>";
     } else {
         echo "<script>alert('Seleccione un taller antes de modificar');</script>";
-    } }
+    }
+}
 
  if (isset($_POST['Limpiar'])) {
     $txtID = $txtNombre = $txtDia = $txtHorario = $txtDescripcion = $costo = $txtestado = "";

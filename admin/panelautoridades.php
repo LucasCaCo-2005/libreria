@@ -1,94 +1,30 @@
 <?php
 include_once __DIR__ . "/../admin/seccion/bd.php";
-//include_once __DIR__ . "/../admin/seccion/autoridades.php";
 include_once __DIR__ . "/seccion/autoridades.php";
-//include_once __DIR__ . "autoridades.php";
+
 
 $autoridadesSeleccionado = null;
 $resultados = [];
 
-// Conexión
-$conn = (new conexion())->Conectar();
+// Conexión con la base de datos
+$conn = (new Conexion())->Conectar();
+
 // Variables del formulario
-$txtID          = $_POST['id'] ?? "";
-$txtCedula      = $_POST['cedula'] ?? "";
-$txtCargo      = $_POST['cargo'] ?? "";
-$txtFecha_inicio         = $_POST['fecha_inicio'] ?? "";
-$txtFecha_fin         = $_POST['fecha_fin'] ?? "";
-
-$txtestado      = $_POST['estado'] ?? "";
-
-
-if (isset($_POST['agregar'])) {
-    $autoridad = new Autoridades();
-    $autoridad->setCedula($txtCedula);
-   $autoridad->setCargo($txtCargo);
-$autoridad->setFecha_inicio($txtFecha_inicio);
-$autoridad->setFecha_fin($txtFecha_fin);
-$autoridad->setEstado($txtestado ?: "activo");
-
-    // Subir imagen si se seleccionó
-    if (!empty($_FILES['image']['name'])) {
-        include_once "../cargarimagen.php";
-        $foto = CargarFoto();
-        if ($foto) {
-            $autoridad->setFoto($foto);
-        }
-    }
-
-    $autoridad->CargarAutoridades();
-}
+$txtID           = $_POST['id'] ?? "";
+$txtCedula       = $_POST['cedula'] ?? "";
+$txtNombre       = $_POST['nombre'] ?? "";
+$txtCargo        = $_POST['cargo'] ?? "";
+$txtFecha_inicio = $_POST['fecha_inicio'] ?? "";
+$txtFecha_fin    = $_POST['fecha_fin'] ?? "";
+$txtestado       = $_POST['estado'] ?? "";
 
 if (isset($_POST['ListarAutoridades'])) {
     $autoridad = new Autoridades();
     $resultados = $autoridad->ListarAutoridades();
 }
-if (isset($_POST['BuscarAutoridades'])) {
-    $id = intval($_POST['id']);
-    $stmt = $conn->prepare("SELECT * FROM autoridades WHERE Id = ?");
-    $stmt->bind_param("i", $id);
-    $stmt->execute();
-    $result = $stmt->get_result();
-    $autoridadSeleccionado = $result->fetch_assoc();
-
-    // Rellenar variables para mostrar en el formulario
-    if ($AutoridadSeleccionada) {
-        $txtID          =  $autoridadSeleccionado['Id'];
-        $txtCedula         =  $autoridadSeleccionado['cedula'];
-        $txtNombre      =  $autoridadSeleccionado['cargo'];
-        $txtInicio         =  $autoridadSeleccionado['fecha_inicio'];
-        $txtestado      = $autoridadSeleccionado['estado'];
-    }}
-if (isset($_POST['Modificar'])) {
-    $id = intval($_POST['id']);
-    if ($id > 0) {
-        // Actualizar campos
-        $sql = "UPDATE autoridades 
-                SET cedula = ?, cargo = ?, fecha_inicio = ?, fecha_fin = ?, estado = ? 
-                WHERE Id = ?";
-        $stmt = $conn->prepare($sql);
-        $stmt->bind_param("ssssi", $txtcedula, $txtCargo, $txtInicio, $txtFin, $txtestado, $id);
-        $stmt->execute();
-        // Si se subió una nueva imagen, actualizarla
-        if (!empty($_FILES['image']['name'])) {
-            include_once "../cargarimagen.php";
-            $foto = CargarFoto();
-            if ($foto) {
-                $stmtFoto = $conn->prepare("UPDATE autoridades SET foto = ? WHERE Id = ?");
-                $stmtFoto->bind_param("si", $foto, $id);
-                $stmtFoto->execute();
-            } }
-        echo "<script>alert('Autoridad modificado correctamente');</script>";
-    } else {
-        echo "<script>alert('Seleccione una autoridad antes de modificar');</script>";
-    } }
-
- if (isset($_POST['Limpiar'])) {
-    $txtID = $txtCedula = $txtNombre = $txtInicio = $txtFin = $txtestado = "";
-    $autoridadSeleccionado = null;
-}
 
 ?>
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -98,15 +34,23 @@ if (isset($_POST['Modificar'])) {
     <link rel="stylesheet" href="../css/admin.css">
 </head>
 <body>
+<?php
+include_once "template/cabecera.php";
+?>
 
     <form action="" method="post" enctype="multipart/form-data">
-
         <input type="hidden"   required readonly  name="id" value="<?= htmlspecialchars($txtID) ?>">
 
 <div>
     <label>Cedula</label>
     <input type="text" name="cedula" value="<?= htmlspecialchars($txtCedula ?? '') ?>" placeholder="Ingrese cedula">
 </div>
+
+<div>
+    <label>Nombre</label>
+    <input type="text" name="nombre" value="<?= htmlspecialchars($txtNombre ?? '') ?>" placeholder="Ingrese Nombre">
+</div>
+
 
 <div>
     <label>Cargo</label>
@@ -147,6 +91,7 @@ if (isset($_POST['Modificar'])) {
             <tr>
                 <th>Id</th>
                 <th>Cedula</th>
+                <th>Nombre</th>
                 <th>Cargo</th>
                 <th>Inicio</th>
                 <th>Fin</th>
@@ -161,6 +106,7 @@ if (isset($_POST['Modificar'])) {
                 <tr>
                     <td><?= $autoridad->getId() ?></td>
                     <td><?= htmlspecialchars($autoridad->getCedula()) ?></td>
+                    <td><?= htmlspecialchars($autoridad->getNombre()) ?></td>
                     <td><?= htmlspecialchars($autoridad->getCargo()) ?></td>
                     <td><?= htmlspecialchars($autoridad->getFecha_inicio()) ?></td>
                     <td><?= htmlspecialchars($autoridad->getFecha_fin()) ?></td>
@@ -183,7 +129,6 @@ if (isset($_POST['Modificar'])) {
 </td>
                              <form method="post" style="display:inline;">
                             <input type="hidden" name="id" value="<?= $autoridad->getId() ?>">
-                            <input type="submit" name="BuscarAutoridad" value="Seleccionar">
                         </form>
                     </td>
                 </tr>

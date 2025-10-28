@@ -3,14 +3,24 @@
 include_once __DIR__ . "/bd.php";
 //include_once __DIR__ . "/../logica/personaBD.php";
 //include_once __DIR__ . "/logica/persona/personaBD.php";
-include_once __DIR__ . "/../../logica/personaBD.php";
+class personaBD extends Conexion {
+    public function RegistrarPersona($cedula, $nombre, $telefono, $correo, $contrasena, $tipo) {
+        $con = $this->Conectar();
+
+        if ($con === null) {
+            die("No se pudo conectar a la base de datos.");
+        }
+
+               $stmt = $con->prepare("INSERT INTO personas (cedula, Nombre, Telefono, Correo, contrasena, Tipo)
+                               VALUES (?, ?, ?, ?, ?, ?)");
+        $stmt->execute([$cedula, $nombre, $telefono, $correo, $contrasena, $tipo]);
+    }
+}
 
 class Persona {
 
     private $Cedula;
     private $Nombre;
-    private $Apellidos;
-    private $Domicilio;
     private $Telefono;
     private $Correo;
     private $Contrasena;
@@ -26,8 +36,6 @@ class Persona {
 
     public function setCedula($Cedula) { $this->Cedula = $Cedula; }
     public function setNombre($Nombre) { $this->Nombre = $Nombre; }
-    public function setApellidos($Apellidos) { $this->Apellidos = $Apellidos; }
-    public function setDireccion($Domicilio) { $this->Domicilio = $Domicilio; }
     public function setTelefono($Telefono) { $this->Telefono = $Telefono; }
     public function setCorreo($Correo) { $this->Correo = $Correo; }
     public function setContrasena($Contrasena) { $this->Contrasena = $Contrasena; }
@@ -39,41 +47,12 @@ class Persona {
         $registro->RegistrarPersona(
             $this->Cedula,
             $this->Nombre,
-            $this->Apellidos,
-            $this->Domicilio,
             $this->Telefono,  
             $this->Correo,
             $this->Contrasena,
             $this->Tipo
         );
     }
-
-     //public function Login() { 
-    //    $Cedula = $this->Cedula;
-     //   $Contrasena = $this->Contrasena; 
-
-     //   $conexion = new Conexion();
-     //   $conn = $conexion->Conectar();
-
-    //    $stmt = $conn->prepare("SELECT * FROM personas WHERE cedula = ? AND contrasena = ?");
-     //   if (!$stmt) {
-     //       die("Error en la preparación de la consulta: " . $conn->error);
-  //      }
-
-   //    $stmt = $con->prepare("SELECT * FROM personas WHERE cedula = ? AND contrasena = ?");
-//$stmt->execute([$cedula, $contrasena]);
-
- //       if ($row = $resultado->fetch_assoc()) {
-  //          $persona = new Persona();
-  //          $persona->setCedula($row['cedula']);
-  //          $persona->setContrasena($row['contrasena']);
-    //        $persona->setTipo($row['Tipo']);
-   //         return $persona;
- //       } else {
-  //          return NULL;
-  //      }
- //   }
-
  public function login($cedula, $contrasena) {
     // Creamos la conexión usando la clase Conexion
     $conexion = new Conexion(); // instancia de la clase Conexion
