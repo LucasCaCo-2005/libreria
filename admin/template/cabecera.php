@@ -1,12 +1,6 @@
 <?php 
-session_start();
-if (!isset($_SESSION['usuario'])) {
-    header("Location: ../index.php");
-    exit();
-} else {
-    if ($_SESSION['usuario'] == "ok") {
-        $nombreUsuario = $_SESSION['nombre'];
-    }
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
 }
 
 $url = "http://" . $_SERVER['HTTP_HOST'] . "/sitioweb";

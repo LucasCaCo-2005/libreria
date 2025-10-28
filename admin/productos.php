@@ -1,126 +1,158 @@
+<?php
+session_start(); // 👈 Debe estar siempre al inicio
+include_once("seccion/bd.php");
+include("seccion/logistica.php"); // Procesa Agregar/Modificar/Seleccionar/Borrar
 
-<?php 
- include("template/cabecera.php");
-include("seccion/logistica.php"); 
-include_once ("seccion/bd.php");
+// 1️⃣ Variables iniciales
+$txtID = $txtNombre = $txtIMG = $txtfecha = $txtAutor = $txtStock = $txtDesc = $txtCat = "";
 
- ?>
-<div class="container">
-  <div class="row">
-<div class="col-md-4" >
-      
-<div class="card">
-    <div class="card-header">
-        Datos
-    </div>
-    <div class="card-body">
+// 2️⃣ Llenar variables si hay libro seleccionado
+if (isset($_SESSION['libroSeleccionado'])) {
+    $txtID     = $_SESSION['libroSeleccionado']['id'];
+    $txtNombre = $_SESSION['libroSeleccionado']['nombre'];
+    $txtIMG    = $_SESSION['libroSeleccionado']['imagen'];
+    $txtfecha  = $_SESSION['libroSeleccionado']['fecha'];
+    $txtAutor  = $_SESSION['libroSeleccionado']['autor'];
+    $txtStock  = $_SESSION['libroSeleccionado']['stock'];
+    $txtDesc   = $_SESSION['libroSeleccionado']['descripcion'];
+    $txtCat    = $_SESSION['libroSeleccionado']['categoria'];
 
-<?php if (!empty($_GET['mensaje'])): ?>
-    <div class="alert alert-success" role="alert">
-        <?php echo htmlspecialchars($_GET['mensaje']); ?>
-    </div>
-<?php elseif (!empty($_GET['mensaje1'])): ?>
-    <div class="alert alert-info" role="alert">
-        <?php echo htmlspecialchars($_GET['mensaje1']); ?>
-    </div>
-<?php elseif (!empty($_GET['mensaje2'])): ?>
-    <div class="alert alert-warning" role="alert">
-        <?php echo htmlspecialchars($_GET['mensaje2']); ?>
-    </div>
-<?php elseif (!empty($_GET['mensaje3'])): ?>
-    <div class="alert alert-danger" role="alert">
-        <?php echo htmlspecialchars($_GET['mensaje3']); ?>
-    </div>
+    unset($_SESSION['libroSeleccionado']); // Se usa solo una vez
+}
+
+// 3️⃣ Traer lista de libros
+$listaLibros = $conexion->query("SELECT * FROM libros")->fetchAll(PDO::FETCH_ASSOC);
+?>
+
+<?php include("template/cabecera.php"); ?>
+
+<?php if (!empty($txtNombre)): ?>
+  <div class="alert alert-info">
+    Editando libro: <strong><?= htmlspecialchars($txtNombre); ?></strong>
+  </div>
 <?php endif; ?>
 
 
-<form method="POST" enctype="multipart/form-data">
-<div class = "form-group">
-<label hidden for="txtID">Id:</label>
-<input  required readonly  hidden   type="text" class="form-control" name="txtID" id="txtID" value="<?php echo $txtID; ?>" placeholder="Enter ID" >
-</div>
+<div class="container">
+  <div class="row">
+    <div class="col-md-4">
+      <div class="card">
+        <div class="card-header">Datos</div>
+        <div class="card-body">
 
-<div class = "form-group">
-<label for="txtNombre">Nombre:</label>
-<input type="text" class="form-control" name="txtNombre" id="txtNombre" value="<?php echo $txtNombre; ?>" placeholder="Enter Name" required>
-</div>
+          <?php if (!empty($_GET['mensaje'])): ?>
+            <div class="alert alert-success"><?= htmlspecialchars($_GET['mensaje']); ?></div>
+          <?php elseif (!empty($_GET['mensaje1'])): ?>
+            <div class="alert alert-info"><?= htmlspecialchars($_GET['mensaje1']); ?></div>
+          <?php elseif (!empty($_GET['mensaje2'])): ?>
+            <div class="alert alert-warning"><?= htmlspecialchars($_GET['mensaje2']); ?></div>
+          <?php elseif (!empty($_GET['mensaje3'])): ?>
+            <div class="alert alert-danger"><?= htmlspecialchars($_GET['mensaje3']); ?></div>
+          <?php endif; ?>
 
-<div class = "form-group">
-<label for="txtfecha">fecha:</label>
-<input type="text" class="form-control" name="txtfecha" id="txtfecha" value="<?php echo $txtfecha ?>" placeholder="Enter Year" required>
-</div>
+          <form method="POST" enctype="multipart/form-data">
+            <input type="hidden" name="txtID" value="<?= $txtID; ?>">
 
-<div class = "form-group">
-<label for="txtAutor">Autor:</label>
-<input type="text" class="form-control" name="txtAutor" id="txtAutor" value="<?php echo isset($txtAutor) ? $txtAutor : ''; ?>" placeholder="Enter Author" required>
-</div>
+            <div class="form-group">
+              <label>Nombre:</label>
+              <input type="text" class="form-control" name="txtNombre" value="<?= $txtNombre; ?>" required>
+            </div>
 
-<div class = "form-group">
-<label for="txtStock">Stock:</label>
-<input type="number" class="form-control" name="txtStock" id="txtStock" value="<?php echo isset($txtStock) ? $txtStock : ''; ?>" placeholder="Enter Stock" required>
-</div>
+            <div class="form-group">
+              <label>Fecha:</label>
+              <input type="text" class="form-control" name="txtfecha" value="<?= $txtfecha; ?>" required>
+            </div>
 
-<div class = "form-group">
-<label for="txtDesc">Desc:</label>
-<input type="text" class="form-control" name="txtDesc" id="txtDesc" value="<?php echo $txtDesc; ?>" placeholder="Enter Desc" required>
-</div>
+            <div class="form-group">
+              <label>Autor:</label>
+              <input type="text" class="form-control" name="txtAutor" value="<?= $txtAutor; ?>" required>
+            </div>
 
+            <div class="form-group">
+              <label>Stock:</label>
+              <input type="number" class="form-control" name="txtStock" value="<?= $txtStock; ?>" required>
+            </div>
 
+            <div class="form-group">
+              <label>Descripción:</label>
+              <input type="text" class="form-control" name="txtDesc" value="<?= $txtDesc; ?>" required>
+            </div>
 
-<div class = "form-group">
+            <div class="form-group">
+              <label>Categoría:</label>
+              <select class="form-control" name="txtCat" id="txtCat" required>
+                <option value="" disabled <?= empty($txtCat) ? 'selected' : ''; ?>>Seleccione</option>
+                <option value="Fantasia"   <?= ($txtCat == 'Fantasia') ? 'selected' : ''; ?>>Fantasia</option>
+                <option value="Terror"     <?= ($txtCat == 'Terror') ? 'selected' : ''; ?>>Terror</option>
+                <option value="Drama"      <?= ($txtCat == 'Drama') ? 'selected' : ''; ?>>Drama</option>
+                <option value="Misterio"   <?= ($txtCat == 'Misterio') ? 'selected' : ''; ?>>Misterio</option>
+                <option value="Historico"  <?= ($txtCat == 'Historico') ? 'selected' : ''; ?>>Historico</option>
+                <option value="Ficcion"    <?= ($txtCat == 'Ficcion') ? 'selected' : ''; ?>>Ciencia Ficcion</option>
+                <option value="Romantico"  <?= ($txtCat == 'Romantico') ? 'selected' : ''; ?>>Romantico</option>
+                <option value="Biografia"  <?= ($txtCat == 'Biografia') ? 'selected' : ''; ?>>Biografia</option>
+                <option value="Autoayuda"  <?= ($txtCat == 'Autoayuda') ? 'selected' : ''; ?>>Autoayuda</option>
+                <option value="Nacional"   <?= ($txtCat == 'Nacional') ? 'selected' : ''; ?>>Nacional</option>
+                <option value="Otros"      <?= ($txtCat == 'Otros') ? 'selected' : ''; ?>>Otros</option>
+              </select>
+            </div>
 
-<label for="txtIMG">Imagen</label>
-<br>
-<?php if ($txtIMG != "") { ?>
-    <img src="../../images/<?php echo $txtIMG; ?>" width="100" alt=""> <?php } ?>
-<input type="file" class="form-control" name="txtIMG" id="txtIMG" value="" placeholder="Enter IMG" >
-</div>
-<div class="btn-group" role="group" aria-label="">
-   <button type="submit" name="accion" 
-    <?php echo (!empty($txtID)) ? 'disabled' : ''; ?> value="Agregar" class="btn btn-success">Agregar</button>
-    <button type="submit" name="accion"   value="Modificar" class="btn btn-warning">Modificar</button>
-    <button type="submit" name="accion"   value="Cancelar" class="btn btn-info">Cancelar</button> 
-</div> 
-</form>
+            <div class="form-group">
+              <label>Imagen:</label><br>
+              <?php if ($txtIMG != ""): ?>
+                <img src="../../images/<?= $txtIMG; ?>" width="100">
+              <?php endif; ?>
+              <input type="file" class="form-control" name="txtIMG">
+            </div>
+
+            <div class="btn-group" role="group">
+              <button type="submit" name="accion" value="Agregar" <?= !empty($txtID) ? 'disabled' : ''; ?> class="btn btn-success">Agregar</button>
+              <button type="submit" name="accion" value="Modificar" class="btn btn-warning">Modificar</button>
+              <button type="submit" name="accion" value="Cancelar" class="btn btn-info">Cancelar</button>
+            </div>
+          </form>
+        </div>
+      </div>
     </div>
-</div>
-</div>
-<div class="col-md-8">
-    <table class="table table-bordered">
+
+    <div class="col-md-8">
+      <table class="table table-bordered">
         <thead>
-            <tr>
-                <th>ID</th>
-                <th>Nombre</th>
-                <th>fecha</th>
-                <th>autor</th>
-                <th>stock</th>
-                  <th>Desc</th>
-                <th>Imagen</th>
-              
-                 <th>Acciones</th>
-            </tr>
+          <tr>
+            <th>ID</th>
+            <th>Nombre</th>
+            <th>Fecha</th>
+            <th>Autor</th>
+            <th>Stock</th>
+            <th>Categoría</th>
+            <th>Desc</th>
+            <th>Imagen</th>
+            <th>Acciones</th>
+          </tr>
         </thead>
         <tbody>
-        <?php foreach($listaLibros as $libro) { 
-             ?>
+          <?php foreach ($listaLibros as $libro): ?>
             <tr>
-                <td><?php echo  $libro['id']  ?> </td>
-                <td><?php echo  $libro['nombre']  ?> </td>
-                  <td><?php echo  $libro['fecha']  ?> </td>           
-                <td><?php echo  $libro['autor']  ?> </td>        
-                <td><?php echo  $libro['stock']  ?> </td>
-                      <td><?php echo substr($libro['descripcion'], 0, 50) . '...'; ?> </td>
-       <td> <img src="../../images/<?php echo $libro['imagen']; ?>" width="100" alt=""></td>
-                <td>         
-<form action="" method="post">
-<input type="hidden" name="txtID" id="txtID" value="<?php echo $libro['id']; ?>">
-<input type="submit" value="Seleccionar" name="accion" class="btn btn-primary" >
-<input type="submit" value="Borrar" name="accion" class="btn btn-danger">
-</form>
-                </td>
+              <td><?= $libro['id']; ?></td>
+              <td><?= $libro['nombre']; ?></td>
+              <td><?= $libro['fecha']; ?></td>
+              <td><?= $libro['autor']; ?></td>
+              <td><?= $libro['stock']; ?></td>
+              <td><?= $libro['categoria']; ?></td>
+              <td><?= substr($libro['descripcion'], 0, 50) . '...'; ?></td>
+              <td><img src="../../images/<?= $libro['imagen']; ?>" width="100"></td>
+              <td>
+                <form method="post">
+                  <input type="hidden" name="txtID" value="<?= $libro['id']; ?>">
+                  <input type="submit" name="accion" value="Seleccionar" class="btn btn-primary">
+                  <input type="submit" name="accion" value="Borrar" class="btn btn-danger">
+                </form>
+              </td>
             </tr>
-        <?php } ?>
+          <?php endforeach; ?>
         </tbody>
-    </table>
+      </table>
+    </div>
+  </div>
 </div>
-<?php  include("../template/pie.php") ?>
+
+<?php include("template/pie.php"); ?>

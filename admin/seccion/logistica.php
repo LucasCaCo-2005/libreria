@@ -1,4 +1,8 @@
 <?php
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
+
 
 $txtID = (isset($_POST['txtID'])) ? $_POST['txtID'] : ""; 
 $txtNombre = (isset($_POST['txtNombre'])) ? $_POST['txtNombre'] : ""; 
@@ -6,16 +10,18 @@ $txtIMG = (isset($_FILES['txtIMG']['name'])) ? $_FILES['txtIMG']['name'] : "";
 $accion = (isset($_POST['accion'])) ? $_POST['accion'] : ""; //Agregar, Modificar, Cancelar, Seleccionar, Borrar
 $txtfecha = (isset($_POST['txtfecha'])) ? $_POST['txtfecha'] : ""; 
 $txtAutor = (isset($_POST['txtAutor'])) ? $_POST['txtAutor'] : "";
+$txtCat = (isset($_POST['txtCat'])) ? $_POST['txtCat'] : "";
 $txtStock = (isset($_POST['txtStock'])) ? $_POST['txtStock'] : ""; 
 $txtDesc = (isset($_POST['txtDesc'])) ? $_POST['txtDesc'] : ""; 
 include("bd.php");
 switch($accion) {
        case 'Agregar':
-        $sentencia = $conexion->prepare("INSERT INTO `libros` (nombre, fecha, autor, stock, descripcion, imagen) VALUES (:nombre, :fecha, :autor, :stock, :descripcion, :imagen);"); //Ajuste en la consulta SQL
+        $sentencia = $conexion->prepare("INSERT INTO `libros` (nombre, fecha, autor, categoria, stock, descripcion, imagen) VALUES (:nombre, :fecha, :autor, :categoria, :stock, :descripcion, :imagen);"); //Ajuste en la consulta SQL
         // Asignar los valores a los parámetros
         $sentencia->bindParam(':nombre', $txtNombre);
         $sentencia->bindParam(':fecha', $txtfecha);
         $sentencia->bindParam(':autor', $txtAutor);
+         $sentencia->bindParam(':categoria', $txtCat);
         $sentencia->bindParam(':stock', $txtStock); 
          $sentencia->bindParam(':descripcion', $txtDesc); 
         // Generar nombre único para el archivo de imagen
@@ -47,6 +53,12 @@ $sentencia = $conexion->prepare("UPDATE libros SET fecha=:fecha WHERE id=:id");
     $sentencia->bindParam(':autor', $txtAutor);
     $sentencia->bindParam(':id', $txtID);
     $sentencia->execute();
+
+     $sentencia = $conexion->prepare("UPDATE libros SET categoria=:categoria WHERE id=:id");
+    $sentencia->bindParam(':categoria', $txtCat);
+    $sentencia->bindParam(':id', $txtID);
+    $sentencia->execute();
+
 
     $sentencia = $conexion->prepare("UPDATE libros SET stock=:stock WHERE id=:id");
     $sentencia->bindParam(':stock', $txtStock);
@@ -98,12 +110,14 @@ case 'Seleccionar':
         'imagen' => $libro['imagen'],
         'fecha' => $libro['fecha'],
         'autor' => $libro['autor'],
+        'categoria' => $libro['categoria'],
         'stock' => $libro['stock'],
          'descripcion' => $libro['descripcion']
     ];
 
     header("Location: productos.php?mensaje1=Libro seleccionado");
     exit();
+    break;
 
 case 'Borrar':
     // Buscar la imagen actual
@@ -129,16 +143,6 @@ case 'Borrar':
 
 }
 
-if (isset($_SESSION['libroSeleccionado'])) { // Verificar si hay un libro seleccionado
-    $txtID = $_SESSION['libroSeleccionado']['id'];
-    $txtNombre = $_SESSION['libroSeleccionado']['nombre'];
-    $txtIMG = $_SESSION['libroSeleccionado']['imagen'];
-    $txtfecha = $_SESSION['libroSeleccionado']['fecha'];
-    $txtAutor = $_SESSION['libroSeleccionado']['autor'];
-    $txtStock = $_SESSION['libroSeleccionado']['stock'];
-    $txtDesc = $_SESSION['libroSeleccionado']['descripcion'];
-    unset($_SESSION['libroSeleccionado']);
-} 
 $sentencia = $conexion->prepare("SELECT * FROM libros");
 $sentencia->execute();
 $listaLibros = $sentencia->fetchAll(PDO::FETCH_ASSOC);
