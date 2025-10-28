@@ -108,6 +108,11 @@ $totalPagos = $sentenciaContador->fetch(PDO::FETCH_ASSOC)['total'];
 ?>
 <!DOCTYPE html>
 <html lang="es">
+
+<style>
+
+
+</style>
 <head>
     <meta charset="UTF-8">
     <title>Pagos del Socio</title>
@@ -137,26 +142,8 @@ $totalPagos = $sentenciaContador->fetch(PDO::FETCH_ASSOC)['total'];
             Pagar Medio ($50)
         </button>
     </form>
-
-    <br>
-    <h4>Pagos registrados en <?php echo $mesActual; ?>:</h4>
-    <p><strong>Total de socios que pagaron:</strong> <?php echo $totalPagos; ?></p>
-
-    <ul>
-        <?php foreach ($listaPagos as $pago): ?>
-            <li>
-                <?php echo htmlspecialchars($pago['nombre'] . " " . $pago['apellidos']); ?> — 
-                <?php echo htmlspecialchars($pago['tipo_pago']); ?> — 
-                $<?php echo htmlspecialchars($pago['monto']); ?> 
-                
-                <!-- Botón para eliminar -->
-                <form action="pagos.php?socio_id=<?php echo $socio_id; ?>" method="post" style="display:inline;">
-                    <input type="hidden" name="accion" value="QuitarPago">
-                    <input type="hidden" name="pago_id" value="<?php echo $pago['id']; ?>">
-                    <button type="submit" class="btn btn-danger">Quitar</button>
-                </form>
-            </li>
-        <?php endforeach; ?>
-    </ul>
+<ul>
+          <a class="btn btn-info" href="pagosS.php">Ver Pagos</a>
+</ul>
 </body>
 </html>

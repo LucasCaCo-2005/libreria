@@ -132,9 +132,6 @@ $txtFecha_inicio = $_POST['fecha_inicio'] ?? "";
 $txtFecha_fin    = $_POST['fecha_fin'] ?? "";
 $txtestado       = $_POST['estado'] ?? "";
 
-
-
-
 // ------------------ AGREGAR ------------------
 if (isset($_POST['agregar'])) {
     $autoridad = new Autoridades();
@@ -217,6 +214,12 @@ if (isset($_POST['Limpiar'])) {
     $txtID = $txtCedula = $txtNombre = $txtCargo = $txtFecha_inicio = $txtFecha_fin = $txtestado = "";
     $autoridadSeleccionado = null;
 }
+
+
+
+
+
+
 ?>
 
 
