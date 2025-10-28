@@ -6,19 +6,33 @@
   <title>Biblioteca</title>
 
   <!-- ✅ Bootstrap 5 CSS -->
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
-        rel="stylesheet"
-        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
-        crossorigin="anonymous">
+  <link rel="stylesheet" href="./estilos/bootstrap.min.css">
+
+  <style>
+    /* 🔹 Color celeste personalizado */
+    .navbar-celeste {
+      background-color: #35c4f3ff !important; /* Celeste brillante */
+    }
+
+    /* Opcional: cambia color del texto si el fondo es muy claro */
+    .navbar-celeste .nav-link,
+    .navbar-celeste .navbar-brand {
+      color: white !important;
+    }
+
+    .navbar-celeste .nav-link:hover {
+      color: #e0f7ff !important;
+    }
+  </style>
 </head>
 <body>
 
 <!-- 🔹 Navbar principal -->
-<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+<nav class="navbar navbar-expand-lg navbar-dark navbar-celeste">
   <div class="container-fluid">
     <a class="navbar-brand" href="./admin/inicio.php">Admin</a>
 
-     <button onclick="window.location.href=''">Admin</button>
+
 
     <!-- Botón responsive -->
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarBiblioteca"
@@ -47,8 +61,11 @@
           </ul>
         </li>
       </ul>
+        <button onclick="window.location.href=''">Admin</button>
     </div>
+     
   </div>
+   
 </nav>
 
 <div class="container mt-4">

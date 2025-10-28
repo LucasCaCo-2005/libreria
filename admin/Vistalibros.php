@@ -54,6 +54,9 @@ $listaLibros = $sentencia->fetchAll(PDO::FETCH_ASSOC);
     </div> 
 <?php } ?>
 </div> 
+
+
+<form action=""></form>
 <?php include_once 'template/pie.php'; ?>
 </body>
 </html>

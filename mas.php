@@ -1,6 +1,7 @@
 
 <?php
 include_once __DIR__ . '/admin/seccion/bd.php';
+include_once 'template/cabecera.php';
 $libro = null;
 if(isset($_GET['id'])){
     $idLibro = $_GET['id'];
@@ -62,7 +63,7 @@ Descripcion:  <?php echo $libro['descripcion']; ?> <br>
 </div>
 <br>
 <div  class="bboton" style="text-align:center;">
- <a class="boton" href="inde.php?id=<?php echo $libro['id']; ?>">Volver</a>
+ <a class="boton" href="productos.php">Volver</a>
 </div>
 
 </body>
