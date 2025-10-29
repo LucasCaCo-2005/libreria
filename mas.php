@@ -1,4 +1,3 @@
-
 <?php
 include_once __DIR__ . '/admin/seccion/bd.php';
 include_once 'template/cabecera.php';
@@ -15,55 +14,44 @@ if(!$libro){
     echo "<h2>Libro no encontrado</h2>";
     exit;
 }
-?> <!DOCTYPE html>
+?>
+
+<!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Detalles del Libro</title>
-    <style> 
-.imagen {
-    border: 1px solid #ceababff;
-    border-radius: 5px;
-    box-shadow: 2px 2px 5px rgba(0,0,0,0.1);
-}
-.boton {
-    display: inline-block;
-    padding: 10px 20px;
-    background-color: #007bff;
-    color: white;
-    text-decoration: none;
-    border-radius: 5px;
-}
-.libro-detalle {
-    border: 1px solid #ceababff;
-    border-radius: 5px;
-    box-shadow: 2px 2px 5px rgba(0,0,
-0,0.1);
-    padding: 20px;
-    max-width: 300px;
-    margin: 0 auto;
-    background-color: #f9f9f9;
-}
-
-.bboton {
-    margin-bottom: 20px;
-    text-align: center;
-}
-
+    <title><?php echo $libro['nombre']; ?> - Detalles</title>
+    <link rel="stylesheet" href="./css/mas.css">
+    <style>
+       
     </style>
 </head>
 <body>
-<div   class="libro-detalle" style="text-align:center;">
-     <br>
-<img class= "imagen"src="../images/<?php echo $libro['imagen']; ?>" alt="" style="width:200px; height:300px; object-fit:cover;"><br>
-Nombre: <?php echo $libro['nombre']; ?><br>
-Autor: <?php echo $libro['autor']; ?><br>
-Fecha: <?php echo $libro['fecha']; ?> <br>
-Descripcion:  <?php echo $libro['descripcion']; ?> <br>
-</div>
-<br>
-<div  class="bboton" style="text-align:center;">
- <a class="boton" href="productos.php">Volver</a>
-</div>
+    <div class="contenedor-detalle">
+        <div class="tarjeta-detalle">
+            <div class="seccion-imagen">
+                <img class="imagen-libro" src="../images/<?php echo $libro['imagen']; ?>" alt="Portada de <?php echo $libro['nombre']; ?>">
+            </div>
+            
+            <div class="seccion-info">
+                <span class="categoria-libro"><?php echo $libro['categoria']; ?></span>
+                <h1 class="titulo-libro"><?php echo $libro['nombre']; ?></h1>
+                <p class="autor-libro">por <?php echo $libro['autor']; ?></p>
+                <p class="fecha-libro">Publicado: <?php echo $libro['fecha']; ?></p>
+                
+                <div class="info-adicional">
+                    <h3>📖 Sinopsis</h3>
+                    <p class="descripcion-libro"><?php echo $libro['descripcion']; ?></p>
+                </div>
+                
+                <div class="contenedor-botones">
+                    <a href="productos.php" class="btn-volver">← Volver a la Biblioteca</a>
+                    <a href="reserva.php?id=<?php echo $libro['id']; ?>" class="btn-reservar">📚 Reservar este Libro</a>
+                </div>
+            </div>
+        </div>
+    </div>
 
+    <?php include_once 'template/pie.php'; ?>
 </body>
+</html>

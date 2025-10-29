@@ -1,100 +1,25 @@
-    <?php 
-include_once 'template/cabecera.php';
+<?php 
+
 include_once ("seccion/bd.php");
 include_once ("seccion/Talleres.php");
-?>
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Talleres</title>
-    <style>
-        .list-group-item {
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            padding: 15px;
-            margin: 10px auto;
-            max-width: 300;
-            background-color: #f9f9f9;
-            box-shadow: 2px 2px 5px rgba(0,0,0,0.1);
-        }
-        .btn {
-            padding: 8px 15px;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-        }
-        .btn-primary { background-color: #007bff; color: #fff; }
-        .btn-danger { background-color: #dc3545; color: #fff; }
-        .btn-filter { margin: 5px; }
-
-        .button {
-    background-color: #008000;
-    color: white;
-    border: none;
-    padding: 8px 12px;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s;
-}
-
-.button2 {
-    background-color: #ff0000;
-    color: white;
-    border: none;
-    padding: 8px 12px;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s;
-}
-
-.button3 {
-    background-color: #966868ff;
-    color: white;
-    border: none;
-    padding: 8px 12px;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s;
-}
-    </style>
-</head>
-<body>
-
-<br>
-
-<div style="text-align:center;">
-
-Buscador de Talleres:
-<input type="text" id="searchInput" onkeyup="filterTalleres()" placeholder="Buscar por nombre...">
-<script>
-function filterTalleres() { // función para filtrar talleres
-    var input, filter, container, items, title, i, txtValue; // Declarar variables
-    input = document.getElementById('searchInput'); // Obtener el valor del input
-    filter = input.value.toUpperCase(); // Convertir a mayúsculas para comparación
-    container = document.body; // Contenedor principal
-    items = container.getElementsByClassName('list-group-item');
-    for (i = 0; i < items.length; i++) { 
-        title = items[i].getElementsByTagName("h5")[0];
-        if (title) { 
-            txtValue = title.textContent || title.innerText;
-            if (txtValue.toUpperCase().indexOf(filter) > -1) { // si coincide, mostrar
-                items[i].style.display = ""; 
-            } else {
-                items[i].style.display = "none"; // si no coincide, ocultar
-            }
-        }       
+// Procesar acciones de activar/desactivar
+if ($_POST) {
+    $id = $_POST['id'] ?? '';
+    $accion = $_POST['accion'] ?? '';
+    
+    if ($id && $accion) {
+        $nuevoEstado = ($accion == 'habilitar') ? 'activo' : 'inactivo';
+        $sentencia = $conexion->prepare("UPDATE talleres SET estado = :estado WHERE Id = :id");
+        $sentencia->bindParam(':estado', $nuevoEstado);
+        $sentencia->bindParam(':id', $id);
+        $sentencia->execute();
+        
+        // Recargar para ver cambios
+        header("Location: vistaT.php?estado=" . ($_GET['estado'] ?? 'todos'));
+        exit();
     }
 }
-</script> <br>
-    <a href="vistaT.php?estado=todos" class="btn btn-primary btn-filter">Todos los Talleres</a>
-    <a href="vistaT.php?estado=activo" class="btn btn-primary btn-filter">Talleres Activos</a> <br>
-    <a href="vistaT.php?estado=inactivo" class="btn btn-danger btn-filter">Talleres Inactivos</a> 
-</div>
-<?php
-
 
 $filtro = isset($_GET['estado']) ? $_GET['estado'] : "todos";
 
@@ -108,44 +33,133 @@ if ($filtro == "activo") {
 
 $sentencia->execute();
 $listaTalleres = $sentencia->fetchAll(PDO::FETCH_ASSOC);
+
+
+include_once 'template/cabecera.php';
 ?>
 
-<?php if (empty($listaTalleres)) { ?>
-    <p style="text-align:center;">No hay talleres en este estado.</p>
-<?php } else { ?>
-    <?php foreach($listaTalleres as $taller){ ?> 
-        <div class="list-group-item">
-            <h5 class="mb-1"><?php echo $taller['nombre']; ?></h5>
-            <small>Fecha: <?php echo $taller['dia']; ?> | Hora: <?php echo $taller['horario']; ?></small>
-            <br>  
-            <img src="../images/<?php echo $taller['foto']; ?>" 
-                alt="<?php echo $taller['nombre']; ?>" 
-                style="max-width: 200px; height: auto;"> 
-            <br><br>
-<form id="formTaller<?php echo $taller['Id']; ?>" action="vistaT.php" method="post" style="display:inline;">
-    <input type="hidden" name="id" value="<?php echo $taller['Id']; ?>">
-    <input type="hidden" name="accion" value="">
-</form>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestión de Talleres</title>
+    <link rel="stylesheet" href="./css/vistaT.css">
+</head>
+<body>
 
-  <a class="btn btn-sm btn-primary" href="t.php?id=<?php echo $taller['Id'];?>" role="button">Ver más</a>
+<div class="contenedor-principal">
+    <div class="header-talleres">
+        <h1>🎨 Gestión de Talleres</h1>
+        <p>Administra y visualiza todos los talleres disponibles</p>
+    </div>
 
-<!-- Botón externo que hace lo mismo -->
-<button 
-    type="button" 
-    class="button2" 
-    onclick="enviarAccion('<?php echo $taller['Id']; ?>', '<?php echo $taller['estado'] == 'activo' ? 'deshabilitar' : 'habilitar'; ?>')">
-    <?php echo $taller['estado'] == 'activo' ? 'Desactivar' : 'Activar'; ?>
-</button>
+    <div class="controles-busqueda">
+        <div class="buscador-container">
+            <input type="text" id="searchInput" onkeyup="filterTalleres()" 
+                   placeholder="🔍 Buscar taller por nombre..." class="buscador-input">
+        </div>
+        
+        <div class="filtros-container">
+            <a href="vistaT.php?estado=todos" class="btn-filtro <?= $filtro == 'todos' ? 'btn-filtro-activo' : '' ?>">
+                📋 Todos los Talleres
+            </a>
+            <a href="vistaT.php?estado=activo" class="btn-filtro <?= $filtro == 'activo' ? 'btn-filtro-activo' : '' ?>">
+                ✅ Talleres Activos
+            </a>
+            <a href="vistaT.php?estado=inactivo" class="btn-filtro <?= $filtro == 'inactivo' ? 'btn-filtro-activo' : '' ?>">
+                ⚠️ Talleres Inactivos
+            </a>
+        </div>
+    </div>
+
+    <?php if (empty($listaTalleres)): ?>
+        <div class="mensaje-vacio">
+            <div class="icono-vacio">📭</div>
+            <h3>No hay talleres disponibles</h3>
+            <p>No se encontraron talleres en el estado seleccionado.</p>
+        </div>
+    <?php else: ?>
+        <div class="grid-talleres">
+            <?php foreach($listaTalleres as $taller): ?>
+                <div class="card-taller list-group-item">
+                    <div class="card-header">
+                        <h3 class="titulo-taller"><?php echo htmlspecialchars($taller['nombre']); ?></h3>
+                        <span class="estado-badge estado-<?php echo $taller['estado']; ?>">
+                            <?php echo $taller['estado'] == 'activo' ? '🟢 Activo' : '🔴 Inactivo'; ?>
+                        </span>
+                    </div>
+                    
+                    <div class="card-body">
+                        <div class="info-taller">
+                            <div class="info-item">
+                                <span class="info-icono">📅</span>
+                                <span class="info-texto"><?php echo htmlspecialchars($taller['dia']); ?></span>
+                            </div>
+                            <div class="info-item">
+                                <span class="info-icono">⏰</span>
+                                <span class="info-texto"><?php echo htmlspecialchars($taller['horario']); ?></span>
+                            </div>
+                        </div>
+                        
+                        <div class="imagen-taller">
+                            <img src="../images/<?php echo $taller['foto']; ?>" 
+                                 alt="<?php echo htmlspecialchars($taller['nombre']); ?>" 
+                                 class="img-taller">
+                        </div>
+                    </div>
+                    
+                    <div class="card-footer">
+                        <form id="formTaller<?php echo $taller['Id']; ?>" action="vistaT.php" method="post" class="form-accion">
+                            <input type="hidden" name="id" value="<?php echo $taller['Id']; ?>">
+                            <input type="hidden" name="accion" value="">
+                        </form>
+                        
+                        <div class="botones-accion">
+                            <a href="t.php?id=<?php echo $taller['Id'];?>" class="btn btn-ver">
+                                👁️ Ver Detalles
+                            </a>
+                            
+                            <button type="button" 
+                                    class="btn btn-estado <?php echo $taller['estado'] == 'activo' ? 'btn-desactivar' : 'btn-activar'; ?>" 
+                                    onclick="enviarAccion('<?php echo $taller['Id']; ?>', '<?php echo $taller['estado'] == 'activo' ? 'deshabilitar' : 'habilitar'; ?>')">
+                                <?php echo $taller['estado'] == 'activo' ? '⏸️ Desactivar' : '▶️ Activar'; ?>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            <?php endforeach; ?>
+        </div>
+    <?php endif; ?>
+</div>
 
 <script>
-function enviarAccion(id, accion) {
+function filterTalleres() {
+    var input, filter, container, items, title, i, txtValue;
+    input = document.getElementById('searchInput');
+    filter = input.value.toUpperCase();
+    container = document.querySelector('.grid-talleres');
+    items = container.getElementsByClassName('list-group-item');
+    
+    for (i = 0; i < items.length; i++) {
+        title = items[i].getElementsByClassName("titulo-taller")[0];
+        if (title) {
+            txtValue = title.textContent || title.innerText;
+            if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                items[i].style.display = "";
+            } else {
+                items[i].style.display = "none";
+            }
+        }
+    }
+}
 
+function enviarAccion(id, accion) {
     const form = document.getElementById('formTaller' + id);
     form.querySelector('[name="accion"]').value = accion;
-    form.submit(); }
+    form.submit();
+}
 </script>
-        </div>
-    <?php } ?> 
-<?php } ?>
+
 </body>
 </html>

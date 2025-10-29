@@ -1,128 +1,212 @@
 <?php 
 include("seccion/users.php"); 
-include("template/cabecera.php"); ?>
-<?php 
+include("template/cabecera.php"); 
 include_once ("seccion/bd.php");
- ?>
+?>
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Registro de Socios - Biblioteca</title>
+    <link rel="stylesheet" href="./css/socios.css">
+
 </head>
 <body>
 
-Registro de Socios
+<div class="socios-container">
+    <div class="socios-header">
+        <h1>👥 Registro de Socios</h1>
+        <p>Gestiona los socios de la biblioteca</p>
+    </div>
 
-<form method="POST" enctype="multipart/form-data">
-<div class = "form-group">
-<label  hidden for="txtID">Id:</label>
-<input required readonly type="text" class="form-control" name="txtID" id="txtID" hidden
-       value="<?php echo $txtID; ?>" placeholder="Enter ID">
-</div>
+    <div class="socios-content">
+        <!-- Formulario -->
+        <div class="form-section">
+            <div class="form-header">
+                <h2><?php echo empty($txtID) ? '➕ Registrar Nuevo Socio' : '✏️ Editar Socio'; ?></h2>
+            </div>
+            <div class="form-body">
+                <form method="POST" enctype="multipart/form-data" class="socio-form">
+                    <input type="hidden" name="txtID" value="<?php echo $txtID; ?>">
 
-<div class="form-group">
-<label for="txtNombre">Nombre:</label>
-<input type="text" class="form-control" name="txtNombre" id="txtNombre" value="<?php echo htmlspecialchars($txtNombre); ?>"
- placeholder="Ingrese nombre" required>
-</div>
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label for="txtNombre" class="form-label">
+                                <span class="label-icon">👤</span>
+                                Nombre
+                            </label>
+                            <input type="text" class="form-control" name="txtNombre" id="txtNombre" 
+                                   value="<?php echo htmlspecialchars($txtNombre); ?>"
+                                   placeholder="Ingrese nombre" required>
+                        </div>
 
-<div class="form-group">
-<label for="txtApellido">Apellidos:</label>
- <input type="text" class="form-control" name="txtApellido" id="txtApellido" value="<?php echo htmlspecialchars($txtApellido); ?>"
-placeholder="Ingrese apellidos" required>
-</div>
+                        <div class="form-group">
+                            <label for="txtApellido" class="form-label">
+                                <span class="label-icon">📝</span>
+                                Apellidos
+                            </label>
+                            <input type="text" class="form-control" name="txtApellido" id="txtApellido" 
+                                   value="<?php echo htmlspecialchars($txtApellido); ?>"
+                                   placeholder="Ingrese apellidos" required>
+                        </div>
 
-<div class="form-group"> 
-<label for="txtCedula">Cédula (x.xxx.xxx-x):</label>
-<input type="text" class="form-control" name="txtCedula" id="txtCedula" value="<?php echo htmlspecialchars($txtCedula); ?>"
-placeholder="x.xxx.xxx-x" pattern="^[1-9]\.[0-9]{3}\.[0-9]{3}-[0-9X]$" title="Formato válido: x.xxx.xxx-x" required>
-</div>
+                        <div class="form-group full-width">
+                            <label for="txtCedula" class="form-label">
+                                <span class="label-icon">🆔</span>
+                                Cédula
+                            </label>
+                            <input type="text" class="form-control" name="txtCedula" id="txtCedula" 
+                                   value="<?php echo htmlspecialchars($txtCedula); ?>"
+                                   placeholder="x.xxx.xxx-x" 
+                                   pattern="^[1-9]\.[0-9]{3}\.[0-9]{3}-[0-9X]$" 
+                                   title="Formato válido: x.xxx.xxx-x" required>
+                            <div class="form-help">Formato: x.xxx.xxx-x</div>
+                        </div>
 
-<div class="form-group"> <label for="txtDomicilio">Domicilio:</label>
-<input type="text" class="form-control" name="txtDomicilio" id="txtDomicilio"value="<?php echo htmlspecialchars($txtDomicilio); ?>"
-placeholder="Ingrese domicilio">
-</div>
+                        <div class="form-group full-width">
+                            <label for="txtDomicilio" class="form-label">
+                                <span class="label-icon">🏠</span>
+                                Domicilio
+                            </label>
+                            <input type="text" class="form-control" name="txtDomicilio" id="txtDomicilio"
+                                   value="<?php echo htmlspecialchars($txtDomicilio); ?>"
+                                   placeholder="Ingrese domicilio completo">
+                        </div>
 
-<div class="form-group">
- <label for="txtTelefono">Teléfono (xx/x-xxx-xxx):</label>
- <input type="text" class="form-control" name="txtTelefono" id="txtTelefono" value="<?php echo htmlspecialchars($txtTelefono); ?>"
- placeholder="8 o 9 dígitos" pattern="^[1-9]{2,3}\-[0-9]{3}\-[0-9]{3}$"       title="Debe tener 8 o 9 dígitos numéricos">
-</div>
-<?php //    pattern="^[0-9]{8,9}$"?>
-<div class="form-group">
-<label for="txtCorreo">Correo:</label>
-<input type="email" class="form-control" name="txtCorreo" id="txtCorreo"
-value="<?php echo htmlspecialchars($txtCorreo); ?>" placeholder="Ingrese correo electrónico"required>
-</div>
-<div class="form-group">
-    <label for="txtestado" class="form-control" hidden>estado:</label>
-  Estado:  <select name="txtestado" id="txtestado" required>
-        <option value="" disabled>Seleccione</option>
-        <option value="activo" <?php if($txtestado == 'activo') echo 'selected'; ?>>activo</option>
-        <option value="inactivo" <?php if($txtestado == 'inactivo') echo 'selected'; ?>>inactivo</option>
-    </select>
-</div>
+                        <div class="form-group">
+                            <label for="txtTelefono" class="form-label">
+                                <span class="label-icon">📞</span>
+                                Teléfono
+                            </label>
+                            <input type="text" class="form-control" name="txtTelefono" id="txtTelefono" 
+                                   value="<?php echo htmlspecialchars($txtTelefono); ?>"
+                                   placeholder="xx-xxx-xxx" 
+                                   pattern="^[1-9]{2,3}\-[0-9]{3}\-[0-9]{3}$"
+                                   title="Debe tener 8 o 9 dígitos numéricos">
+                            <div class="form-help">Formato: xx-xxx-xxx</div>
+                        </div>
 
-<div class="btn-group" role="group" aria-label="">
-   <button type="submit" name="accion" 
-    <?php echo (!empty($txtID)) ? 'disabled' : ''; ?> value="Agregar" class="btn btn-success">Agregar</button>
-    <button type="submit" name="accion"   value="Modificar" class="btn btn-warning">Modificar</button>
-    <button type="submit" name="accion"   value="Cancelar" class="btn btn-info">Cancelar</button> 
-</div> 
-</form>
-<div class="mb-3">
-    <form method="GET" style="display: inline;">
-        <input type="hidden" name="filtroEstado" value="activo">
-        <button type="submit" class="btn <?php echo (isset($_GET['filtroEstado']) && $_GET['filtroEstado']=="activo") ? 'btn-success' : 'btn-outline-success'; ?>">
-            Activos
-        </button>
-    </form>
+                        <div class="form-group">
+                            <label for="txtCorreo" class="form-label">
+                                <span class="label-icon">📧</span>
+                                Correo
+                            </label>
+                            <input type="email" class="form-control" name="txtCorreo" id="txtCorreo"
+                                   value="<?php echo htmlspecialchars($txtCorreo); ?>" 
+                                   placeholder="correo@ejemplo.com" required>
+                        </div>
 
-    <form method="GET" style="display: inline;">
-        <input type="hidden" name="filtroEstado" value="inactivo">
-        <button type="submit" class="btn <?php echo (isset($_GET['filtroEstado']) && $_GET['filtroEstado']=="inactivo") ? 'btn-danger' : 'btn-outline-danger'; ?>">
-            Inactivos
-        </button>
-    </form>
-</div>
+                        <div class="form-group full-width">
+                            <div class="estado-container">
+                                <div class="estado-label">
+                                    <span class="label-icon">⚡</span>
+                                    Estado del Socio
+                                </div>
+                                <select name="txtestado" id="txtestado" class="estado-select" required>
+                                    <option value="" disabled>Seleccione estado</option>
+                                    <option value="activo" <?php if($txtestado == 'activo') echo 'selected'; ?>>🟢 Activo</option>
+                                    <option value="inactivo" <?php if($txtestado == 'inactivo') echo 'selected'; ?>>🔴 Inactivo</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
 
-<div class="col-md-8">
-    <table class="table table-bordered">
-        <thead>
-            <tr>
-                <th>ID</th>
-                <th>Nombre</th>
-                <th>Apellido</th>
-                <th>Cedula</th>
-                <th>Domicilio</th>
-                <th>Telefono</th>
-                <th>Correo</th>
-                <th>Estado</th>
-            </tr>
-        </thead>
-        <tbody>
-            <?php 
-            foreach($listaSocios as $usuario){ ?>
-            <tr>
-                <td><?php echo $usuario['id']; ?></td>
-                <td><?php echo $usuario['nombre']; ?></td>
-                <td><?php echo $usuario['apellidos']; ?></td>
-                <td><?php echo $usuario['cedula']; ?></td>
-                <td><?php echo $usuario['domicilio']; ?></td>
-                <td><?php echo $usuario['telefono']; ?></td>
-                <td><?php echo $usuario['correo']; ?></td>
-                <td><?php echo $usuario['estado']; ?></td>       
-</td>
-                </td>
-            </tr>
-            <?php } ?>
-        </tbody>
-    </table>
+                    <div class="form-actions">
+                        <button type="submit" name="accion" value="Agregar" 
+                                class="btn btn-success" <?php echo (!empty($txtID)) ? 'disabled' : ''; ?>>
+                            <span class="btn-icon">➕</span>
+                            Agregar Socio
+                        </button>
+                        <button type="submit" name="accion" value="Modificar" class="btn btn-warning">
+                            <span class="btn-icon">✏️</span>
+                            Modificar
+                        </button>
+                        <button type="submit" name="accion" value="Cancelar" class="btn btn-secondary">
+                            <span class="btn-icon">↩️</span>
+                            Cancelar
+                        </button>
+                    </div>
+                </form>
+            </div>
         </div>
-<?php  include("../template/pie.php"); ?>
-    
+
+        <!-- Lista de Socios -->
+        <div class="table-section">
+            <div class="form-header">
+                <h2>📋 Lista de Socios (<?php echo count($listaSocios); ?>)</h2>
+            </div>
+            
+            <div class="filtros-container">
+                <div class="filtros-header">
+                    <span class="label-icon">🔍</span>
+                    Filtrar por Estado:
+                </div>
+                <div class="filtros-botones">
+                    <form method="GET" style="display: inline;">
+                        <input type="hidden" name="filtroEstado" value="activo">
+                        <button type="submit" class="btn-filtro <?php echo (isset($_GET['filtroEstado']) && $_GET['filtroEstado']=="activo") ? 'btn-filtro-activo' : ''; ?>">
+                            ✅ Socios Activos
+                        </button>
+                    </form>
+
+                    <form method="GET" style="display: inline;">
+                        <input type="hidden" name="filtroEstado" value="inactivo">
+                        <button type="submit" class="btn-filtro <?php echo (isset($_GET['filtroEstado']) && $_GET['filtroEstado']=="inactivo") ? 'btn-filtro-inactivo' : ''; ?>">
+                            ⚠️ Socios Inactivos
+                        </button>
+                    </form>
+                </div>
+            </div>
+
+            <div class="table-responsive">
+                <table class="socios-table">
+                    <thead>
+                        <tr>
+                            
+                            <th>Nombre</th>
+                            <th>Apellido</th>
+                            <th>Cédula</th>
+                            <th>Teléfono</th>
+                            <th>Correo</th>
+                            <th>Estado</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php if (empty($listaSocios)): ?>
+                            <tr>
+                                <td colspan="7" class="no-data">
+                                    <div class="no-data-content">
+                                        <span class="no-data-icon">👥</span>
+                                        <p>No hay socios registrados</p>
+                                    </div>
+                                </td>
+                            </tr>
+                        <?php else: ?>
+                            <?php foreach($listaSocios as $usuario): ?>
+                            <tr>
+                               
+                                <td><?php echo htmlspecialchars($usuario['nombre']); ?></td>
+                                <td><?php echo htmlspecialchars($usuario['apellidos']); ?></td>
+                                <td><?php echo htmlspecialchars($usuario['cedula']); ?></td>
+                                <td><?php echo htmlspecialchars($usuario['telefono']); ?></td>
+                                <td><?php echo htmlspecialchars($usuario['correo']); ?></td>
+                                <td>
+                                    <span class="estado-badge estado-<?php echo $usuario['estado']; ?>">
+                                        <?php echo $usuario['estado'] == 'activo' ? '🟢 Activo' : '🔴 Inactivo'; ?>
+                                    </span>
+                                </td>
+                            </tr>
+                            <?php endforeach; ?>
+                        <?php endif; ?>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<?php include("../template/pie.php"); ?>
 </body>
-</html> 
+</html>
