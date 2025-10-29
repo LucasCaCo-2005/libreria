@@ -5,10 +5,9 @@ include_once ("seccion/bd.php");
 if (isset($_GET['devolver'])) {
     $idPrestamo = $_GET['devolver'];
 
-    // Fecha actual
 
  $fechaActual = date("Y-m-d");
-    // Actualizar estado y fecha de devolución
+ 
     $sentencia = $conexion->prepare("
         UPDATE prestamos 
         SET devuelto = 1, devolucion = :fechaActual 

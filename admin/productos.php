@@ -3,117 +3,281 @@ include("template/cabecera.php");
 include("seccion/logistica.php"); 
 include_once("seccion/bd.php");
 ?>
-<div class="container">
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title> <link rel="stylesheet" href="/css/productos.css">
+</head>
+<body>
+
+<div class="container-fluid">
   <div class="row">
+    
+    <!-- Panel de Formulario -->
     <div class="col-md-4">
-      <div class="card">
-        <div class="card-header">
-          Datos
+      <div class="card shadow-sm mb-4">
+        <div class="card-header bg-primary text-white">
+          <h5 class="mb-0">
+            <i class="fas fa-book me-2"></i>Gestión de Libros
+          </h5>
         </div>
         <div class="card-body">
 
+          <!-- Alertas -->
           <?php if (!empty($_GET['mensaje'])): ?>
-            <div class="alert alert-success" role="alert">
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+              <i class="fas fa-check-circle me-2"></i>
               <?php echo htmlspecialchars($_GET['mensaje']); ?>
+              <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
             </div>
           <?php elseif (!empty($_GET['mensaje1'])): ?>
-            <div class="alert alert-info" role="alert">
+            <div class="alert alert-info alert-dismissible fade show" role="alert">
+              <i class="fas fa-info-circle me-2"></i>
               <?php echo htmlspecialchars($_GET['mensaje1']); ?>
+              <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
             </div>
           <?php elseif (!empty($_GET['mensaje2'])): ?>
-            <div class="alert alert-warning" role="alert">
+            <div class="alert alert-warning alert-dismissible fade show" role="alert">
+              <i class="fas fa-exclamation-triangle me-2"></i>
               <?php echo htmlspecialchars($_GET['mensaje2']); ?>
+              <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
             </div>
           <?php elseif (!empty($_GET['mensaje3'])): ?>
-            <div class="alert alert-danger" role="alert">
+            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+              <i class="fas fa-exclamation-circle me-2"></i>
               <?php echo htmlspecialchars($_GET['mensaje3']); ?>
+              <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
             </div>
           <?php endif; ?>
 
-          <form method="POST" enctype="multipart/form-data">
-            <div class="form-group">
-              <label hidden for="txtID">Id:</label>
-              <input required readonly hidden type="text" class="form-control" name="txtID" id="txtID" value="<?php echo $txtID; ?>" placeholder="Enter ID">
+          <!-- Formulario -->
+          <form method="POST" enctype="multipart/form-data" id="formLibro">
+            <input type="hidden" name="txtID" id="txtID" value="<?php echo $txtID; ?>">
+            
+            <div class="row">
+              <!-- Columna Izquierda -->
+              <div class="col-md-6">
+                <div class="mb-3">
+                  <label for="txtNombre" class="form-label">
+                    <i class="fas fa-heading me-1"></i>Nombre *
+                  </label>
+                  <input type="text" class="form-control" name="txtNombre" id="txtNombre" 
+                         value="<?php echo htmlspecialchars($txtNombre); ?>" 
+                         placeholder="Nombre del libro" required>
+                </div>
+
+                <div class="mb-3">
+                  <label for="txtfecha" class="form-label">
+                    <i class="fas fa-calendar me-1"></i>Fecha *
+                  </label>
+                  <input type="text" class="form-control" name="txtfecha" id="txtfecha" 
+                         value="<?php echo htmlspecialchars($txtfecha); ?>" 
+                         placeholder="Año de publicación" required>
+                </div>
+
+                <div class="mb-3">
+                  <label for="txtAutor" class="form-label">
+                    <i class="fas fa-user me-1"></i>Autor *
+                  </label>
+                  <input type="text" class="form-control" name="txtAutor" id="txtAutor" 
+                         value="<?php echo isset($txtAutor) ? htmlspecialchars($txtAutor) : ''; ?>" 
+                         placeholder="Nombre del autor" required>
+                </div>
+              </div>
+
+              <!-- Columna Derecha -->
+              <div class="col-md-6">
+                <div class="mb-3">
+                  <label for="txtStock" class="form-label">
+                    <i class="fas fa-boxes me-1"></i>Stock *
+                  </label>
+                  <input type="number" class="form-control" name="txtStock" id="txtStock" 
+                         value="<?php echo isset($txtStock) ? $txtStock : ''; ?>" 
+                         placeholder="Cantidad en stock" min="0" required>
+                </div>
+
+                <div class="mb-3">
+                  <label for="txtCat" class="form-label">
+                    <i class="fas fa-tag me-1"></i>Categoría *
+                  </label>
+                  <select class="form-select" name="txtCat" id="txtCat" required>
+                    <option value="">Seleccionar categoría</option>
+                    <option value="Ficción" <?php echo (isset($txtCat) && $txtCat == 'Ficción') ? 'selected' : ''; ?>>Ficción</option>
+                    <option value="No Ficción" <?php echo (isset($txtCat) && $txtCat == 'No Ficción') ? 'selected' : ''; ?>>No Ficción</option>
+                    <option value="Ciencia" <?php echo (isset($txtCat) && $txtCat == 'Ciencia') ? 'selected' : ''; ?>>Ciencia</option>
+                    <option value="Tecnología" <?php echo (isset($txtCat) && $txtCat == 'Tecnología') ? 'selected' : ''; ?>>Tecnología</option>
+                    <option value="Historia" <?php echo (isset($txtCat) && $txtCat == 'Historia') ? 'selected' : ''; ?>>Historia</option>
+                    <option value="Biografía" <?php echo (isset($txtCat) && $txtCat == 'Biografía') ? 'selected' : ''; ?>>Biografía</option>
+                    <option value="Infantil" <?php echo (isset($txtCat) && $txtCat == 'Infantil') ? 'selected' : ''; ?>>Infantil</option>
+                    <option value="Otros" <?php echo (isset($txtCat) && $txtCat == 'Otros') ? 'selected' : ''; ?>>Otros</option>
+                  </select>
+                </div>
+
+                <div class="mb-3">
+                  <label for="txtIMG" class="form-label">
+                    <i class="fas fa-image me-1"></i>Portada
+                  </label>
+                  <?php if ($txtIMG != ""): ?>
+                    <div class="mb-2">
+                      <img src="../../images/<?php echo htmlspecialchars($txtIMG); ?>" 
+                           class="img-thumbnail" width="80" alt="Portada actual">
+                    </div>
+                  <?php endif; ?>
+                  <input type="file" class="form-control" name="txtIMG" id="txtIMG" 
+                         accept="image/*">
+                  <div class="form-text">Formatos: JPG, PNG, GIF. Máx: 2MB</div>
+                </div>
+              </div>
             </div>
 
-            <div class="form-group">
-              <label for="txtNombre">Nombre:</label>
-              <input type="text" class="form-control" name="txtNombre" id="txtNombre" value="<?php echo $txtNombre; ?>" placeholder="Enter Name" required>
+            <div class="mb-3">
+              <label for="txtDesc" class="form-label">
+                <i class="fas fa-align-left me-1"></i>Descripción *
+              </label>
+              <textarea class="form-control" name="txtDesc" id="txtDesc" 
+                        rows="3" placeholder="Descripción del libro" required><?php echo htmlspecialchars($txtDesc); ?></textarea>
             </div>
 
-            <div class="form-group">
-              <label for="txtfecha">fecha:</label>
-              <input type="text" class="form-control" name="txtfecha" id="txtfecha" value="<?php echo $txtfecha; ?>" placeholder="Enter Year" required>
-            </div>
-
-            <div class="form-group">
-              <label for="txtAutor">Autor:</label>
-              <input type="text" class="form-control" name="txtAutor" id="txtAutor" value="<?php echo isset($txtAutor) ? $txtAutor : ''; ?>" placeholder="Enter Author" required>
-            </div>
-
-            <div class="form-group">
-              <label for="txtStock">Stock:</label>
-              <input type="number" class="form-control" name="txtStock" id="txtStock" value="<?php echo isset($txtStock) ? $txtStock : ''; ?>" placeholder="Enter Stock" required>
-            </div>
-
-            <div class="form-group">
-              <label for="txtDesc">Desc:</label>
-              <input type="text" class="form-control" name="txtDesc" id="txtDesc" value="<?php echo $txtDesc; ?>" placeholder="Enter Desc" required>
-            </div>
-
-            <div class="form-group">
-              <label for="txtIMG">Imagen</label>
-              <br>
-              <?php if ($txtIMG != "") { ?>
-                <img src="../../images/<?php echo $txtIMG; ?>" width="100" alt="">
-              <?php } ?>
-              <input type="file" class="form-control" name="txtIMG" id="txtIMG" value="" placeholder="Enter IMG">
-            </div>
-            <div class="btn-group" role="group" aria-label="">
-              <button type="submit" name="accion" <?php echo (!empty($txtID)) ? 'disabled' : ''; ?> value="Agregar" class="btn btn-success">Agregar</button>
-              <button type="submit" name="accion" value="Modificar" class="btn btn-warning">Modificar</button>
-              <button type="submit" name="accion" value="Cancelar" class="btn btn-info">Cancelar</button>
+            <!-- Botones de Acción -->
+            <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+              <button type="submit" name="accion" value="Agregar" 
+                      class="btn btn-success me-md-2 <?php echo (!empty($txtID)) ? 'disabled' : ''; ?>">
+                <i class="fas fa-plus me-1"></i>Agregar
+              </button>
+              <button type="submit" name="accion" value="Modificar" 
+                      class="btn btn-warning me-md-2">
+                <i class="fas fa-edit me-1"></i>Modificar
+              </button>
+              <button type="submit" name="accion" value="Cancelar" 
+                      class="btn btn-secondary">
+                <i class="fas fa-times me-1"></i>Cancelar
+              </button>
             </div>
           </form>
         </div>
       </div>
     </div>
+
+    <!-- Panel de Lista -->
     <div class="col-md-8">
-      <table class="table table-bordered">
-        <thead>
-          <tr>
-            <th>ID</th>
-            <th>Nombre</th>
-            <th>fecha</th>
-            <th>autor</th>
-            <th>stock</th>
-            <th>Desc</th>
-            <th>Imagen</th>
-            <th>Acciones</th>
-          </tr>
-        </thead>
-        <tbody>
-          <?php foreach($listaLibros as $libro) { ?>
-            <tr>
-              <td><?php echo $libro['id']; ?></td>
-              <td><?php echo $libro['nombre']; ?></td>
-              <td><?php echo $libro['fecha']; ?></td>
-              <td><?php echo $libro['autor']; ?></td>
-              <td><?php echo $libro['stock']; ?></td>
-              <td><?php echo substr($libro['descripcion'], 0, 50) . '...'; ?></td>
-              <td><img src="../../images/<?php echo $libro['imagen']; ?>" width="100" alt=""></td>
-              <td>
-                <form action="" method="post">
-                  <input type="hidden" name="txtID" id="txtID" value="<?php echo $libro['id']; ?>">
-                  <input type="submit" value="Seleccionar" name="accion" class="btn btn-primary">
-                  <input type="submit" value="Borrar" name="accion" class="btn btn-danger">
-                </form>
-              </td>
-            </tr>
-          <?php } ?>
-        </tbody>
-      </table>
+      <div class="card shadow-sm">
+        <div class="card-header bg-dark text-white">
+          <h5 class="mb-0">
+            <i class="fas fa-list me-2"></i>Lista de Libros
+            <span class="badge bg-primary ms-2"><?php echo count($listaLibros); ?></span>
+          </h5>
+        </div>
+        <div class="card-body">
+          <div class="table-responsive">
+            <table class="table table-hover table-striped">
+              <thead class="table-dark">
+                <tr>
+                  <th width="5%">ID</th>
+                  <th width="20%">Nombre</th>
+                  <th width="8%">Fecha</th>
+                  <th width="12%">Autor</th>
+                  <th width="8%">Stock</th>
+                  <th width="10%">Categoría</th>
+                  <th width="20%">Descripción</th>
+                  <th width="10%">Imagen</th>
+                  <th width="7%">Acciones</th>
+                </tr>
+              </thead>
+              <tbody>
+                <?php if (empty($listaLibros)): ?>
+                  <tr>
+                    <td colspan="9" class="text-center text-muted py-4">
+                      <i class="fas fa-book-open fa-2x mb-3"></i>
+                      <p>No hay libros registrados</p>
+                    </td>
+                  </tr>
+                <?php else: ?>
+                  <?php foreach($listaLibros as $libro): ?>
+                    <tr>
+                      <td><span class="badge bg-secondary"><?php echo $libro['id']; ?></span></td>
+                      <td><strong><?php echo htmlspecialchars($libro['nombre']); ?></strong></td>
+                      <td><?php echo htmlspecialchars($libro['fecha']); ?></td>
+                      <td><?php echo htmlspecialchars($libro['autor']); ?></td>
+                      <td>
+                        <span class="badge <?php echo ($libro['stock'] > 0) ? 'bg-success' : 'bg-danger'; ?>">
+                          <?php echo $libro['stock']; ?>
+                        </span>
+                      </td>
+                      <td>
+                        <span class="badge bg-info"><?php echo htmlspecialchars($libro['categoria']); ?></span>
+                      </td>
+                      <td>
+                        <small class="text-muted">
+                          <?php echo substr(htmlspecialchars($libro['descripcion']), 0, 50); ?>
+                          <?php if (strlen($libro['descripcion']) > 50): ?>...<?php endif; ?>
+                        </small>
+                      </td>
+                      <td>
+                        <?php if (!empty($libro['imagen'])): ?>
+                          <img src="../../images/<?php echo htmlspecialchars($libro['imagen']); ?>" 
+                               class="img-thumbnail" width="60" alt="Portada">
+                        <?php else: ?>
+                          <span class="text-muted">Sin imagen</span>
+                        <?php endif; ?>
+                      </td>
+                      <td>
+                        <div class="btn-group-vertical btn-group-sm">
+                          <form method="post" class="d-inline">
+                            <input type="hidden" name="txtID" value="<?php echo $libro['id']; ?>">
+                            <button type="submit" name="accion" value="Seleccionar" 
+                                    class="btn btn-outline-primary btn-sm mb-1" title="Seleccionar">
+                              <i class="fas fa-edit"></i>
+                            </button>
+                            <button type="submit" name="accion" value="Borrar" 
+                                    class="btn btn-outline-danger btn-sm" 
+                                    onclick="return confirm('¿Estás seguro de eliminar este libro?')" title="Eliminar">
+                              <i class="fas fa-trash"></i>
+                            </button>
+                          </form>
+                        </div>
+                      </td>
+                    </tr>
+                  <?php endforeach; ?>
+                <?php endif; ?>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </div>
+
+<!-- Estilos adicionales -->
+<style>
+.card {
+  border: none;
+  border-radius: 10px;
+}
+.card-header {
+  border-radius: 10px 10px 0 0 !important;
+}
+.form-label {
+  font-weight: 500;
+  color: #495057;
+}
+.table th {
+  border-top: none;
+  font-weight: 600;
+}
+.btn {
+  border-radius: 6px;
+}
+.img-thumbnail {
+  border-radius: 8px;
+}
+</style>
+
 <?php include("../template/pie.php"); ?>
+  
+</body>
+</html>

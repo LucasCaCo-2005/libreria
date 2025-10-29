@@ -10,7 +10,9 @@ $txtIMG = (isset($_FILES['txtIMG']['name'])) ? $_FILES['txtIMG']['name'] : "";
 $accion = (isset($_POST['accion'])) ? $_POST['accion'] : "";
 $txtfecha = (isset($_POST['txtfecha'])) ? $_POST['txtfecha'] : ""; 
 $txtAutor = (isset($_POST['txtAutor'])) ? $_POST['txtAutor'] : "";
+$txtCat = (isset($_POST['txtCat'])) ? $_POST['txtCat'] : "";
 $txtStock = (isset($_POST['txtStock'])) ? $_POST['txtStock'] : ""; 
+
 $txtDesc = (isset($_POST['txtDesc'])) ? $_POST['txtDesc'] : ""; 
 
 include("bd.php");
@@ -23,13 +25,15 @@ function redirect($url) {
 
 switch($accion) {
     case 'Agregar':
-        $sentencia = $conexion->prepare("INSERT INTO `libros` (nombre, fecha, autor, stock, descripcion, imagen) VALUES (:nombre, :fecha, :autor, :stock, :descripcion, :imagen);");
+        $sentencia = $conexion->prepare("INSERT INTO `libros` (nombre, fecha, autor, categoria, stock, descripcion, imagen) VALUES (:nombre, :fecha, :autor, :categoria, :stock, :descripcion, :imagen);");
         
         $sentencia->bindParam(':nombre', $txtNombre);
         $sentencia->bindParam(':fecha', $txtfecha);
         $sentencia->bindParam(':autor', $txtAutor);
+             $sentencia->bindParam(':categoria', $txtCat); // Nueva categoría
         $sentencia->bindParam(':stock', $txtStock); 
         $sentencia->bindParam(':descripcion', $txtDesc); 
+   
         
         $fecha = new DateTime(); 
         $nombreArchivo = ($txtIMG != "")? $fecha->getTimestamp() . "_" . $_FILES['txtIMG']['name'] : "imagen.jpg";
@@ -45,13 +49,14 @@ switch($accion) {
         break;
         
     case 'Modificar':
-        // Actualizar todos los campos en una sola consulta
-        $sentencia = $conexion->prepare("UPDATE libros SET nombre=:nombre, fecha=:fecha, autor=:autor, stock=:stock, descripcion=:descripcion WHERE id=:id");
+      
+        $sentencia = $conexion->prepare("UPDATE libros SET nombre=:nombre, fecha=:fecha, autor=:autor, stock=:stock, descripcion=:descripcion, categoria=:categoria WHERE id=:id");
         $sentencia->bindParam(':nombre', $txtNombre);
         $sentencia->bindParam(':fecha', $txtfecha);
         $sentencia->bindParam(':autor', $txtAutor);
         $sentencia->bindParam(':stock', $txtStock);
         $sentencia->bindParam(':descripcion', $txtDesc);
+        $sentencia->bindParam(':categoria', $txtCat); 
         $sentencia->bindParam(':id', $txtID);
         $sentencia->execute();
 
@@ -91,8 +96,10 @@ switch($accion) {
             'imagen' => $libro['imagen'],
             'fecha' => $libro['fecha'],
             'autor' => $libro['autor'],
+            'categoria' => $libro['categoria'],
             'stock' => $libro['stock'],
             'descripcion' => $libro['descripcion']
+            // Nueva categoría
         ];
 
         redirect("productos.php?mensaje1=Libro seleccionado");
@@ -127,13 +134,15 @@ if (isset($_SESSION['libroSeleccionado'])) {
     $txtIMG = $_SESSION['libroSeleccionado']['imagen'];
     $txtfecha = $_SESSION['libroSeleccionado']['fecha'];
     $txtAutor = $_SESSION['libroSeleccionado']['autor'];
+    $txtCat = $_SESSION['libroSeleccionado']['categoria'];
     $txtStock = $_SESSION['libroSeleccionado']['stock'];
     $txtDesc = $_SESSION['libroSeleccionado']['descripcion'];
+     // Nueva categoría
     unset($_SESSION['libroSeleccionado']);
 } 
 
 // Obtener lista de libros
-$sentencia = $conexion->prepare("SELECT * FROM libros");
+$sentencia = $conexion->prepare("SELECT * FROM libros ORDER BY id DESC");
 $sentencia->execute();
 $listaLibros = $sentencia->fetchAll(PDO::FETCH_ASSOC);
 ?>

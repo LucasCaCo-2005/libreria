@@ -22,7 +22,7 @@ include_once ("seccion/bd.php");
     </div>
 
     <div class="socios-content">
-        <!-- Formulario -->
+   
         <div class="form-section">
             <div class="form-header">
                 <h2><?php echo empty($txtID) ? '➕ Registrar Nuevo Socio' : '✏️ Editar Socio'; ?></h2>
@@ -132,7 +132,7 @@ include_once ("seccion/bd.php");
             </div>
         </div>
 
-        <!-- Lista de Socios -->
+    
         <div class="table-section">
             <div class="form-header">
                 <h2>📋 Lista de Socios (<?php echo count($listaSocios); ?>)</h2>

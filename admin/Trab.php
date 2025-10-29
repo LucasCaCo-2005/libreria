@@ -24,7 +24,7 @@ include("template/cabecera.php");
     </div>
 
     <div class="trabajadores-content">
-        <!-- Formulario -->
+       
         <div class="form-section">
             <div class="form-header">
                 <h2><?php echo empty($txtID) ? '➕ Registrar Nuevo Trabajador' : '✏️ Editar Trabajador'; ?></h2>

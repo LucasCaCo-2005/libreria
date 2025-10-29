@@ -1,8 +1,9 @@
 <?php
-// --- INICIA PHP: incluye cabecera y carga datos ---
+
 include_once("seccion/bd.php");
-include_once("template/cabecera.php");
+
 include_once("seccion/users.php");
+include_once("template/cabecera.php");
 
 $txtID         = $_POST['txtID'] ?? "";
 $txtNombre     = $_POST['txtNombre'] ?? "";
@@ -43,7 +44,7 @@ $listaSocios = $sentencia->fetchAll(PDO::FETCH_ASSOC);
         <p>Administra y visualiza la información de todos los socios</p>
     </div>
 
-    <!-- Controles superiores -->
+
     <div class="controles-superiores">
         <div class="buscador-container">
             <input type="text" id="searchInput" class="buscador-input" 
@@ -64,7 +65,6 @@ $listaSocios = $sentencia->fetchAll(PDO::FETCH_ASSOC);
         </div>
     </div>
 
-    <!-- Estadísticas -->
     <?php
     $totalSocios = count($listaSocios);
     $sociosActivos = count(array_filter($listaSocios, fn($socio) => $socio['estado'] === 'activo'));
@@ -89,7 +89,6 @@ $listaSocios = $sentencia->fetchAll(PDO::FETCH_ASSOC);
         </div>
     </div>
 
-    <!-- Grid de Socios -->
     <div class="grid-socios" id="sociosContainer">
         <?php if (empty($listaSocios)): ?>
             <div class="sin-resultados">
@@ -100,7 +99,7 @@ $listaSocios = $sentencia->fetchAll(PDO::FETCH_ASSOC);
         <?php else: ?>
             <?php foreach ($listaSocios as $socio): ?>
                 <div class="tarjeta-socio" data-nombre="<?= htmlspecialchars(strtoupper($socio['nombre'] . ' ' . $socio['apellidos'])); ?>">
-                    <!-- Header de la tarjeta -->
+                   
                     <div class="tarjeta-header">
                         <span class="estado-socio estado-<?= $socio['estado']; ?>">
                             <?= $socio['estado'] == 'activo' ? '🟢 Activo' : '🔴 Inactivo'; ?>
@@ -109,7 +108,6 @@ $listaSocios = $sentencia->fetchAll(PDO::FETCH_ASSOC);
                         <p class="cedula-socio">📋 <?= htmlspecialchars($socio['cedula']); ?></p>
                     </div>
 
-                    <!-- Body de la tarjeta -->
                     <div class="tarjeta-body">
                         <div class="info-item">
                             <span class="info-icono">🏠</span>
@@ -136,7 +134,6 @@ $listaSocios = $sentencia->fetchAll(PDO::FETCH_ASSOC);
                         </div>
                     </div>
 
-                    <!-- Footer de la tarjeta -->
                     <div class="tarjeta-footer">
                         <a href="socios.php?socio_id=<?= $socio['id']; ?>" class="btn-accion btn-editar">
                             ✏️ Editar
