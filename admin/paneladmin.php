@@ -133,7 +133,7 @@ if (isset($_POST['Limpiar'])) {
                         <label for="nombre">Nombre del Taller</label>
                         <input type="text" id="nombre" name="nombre" class="form-control" 
                                value="<?= htmlspecialchars($txtNombre) ?>" 
-                               placeholder="Ingrese nombre del taller" required>
+                               placeholder="Ingrese nombre del taller" >
                     </div>
 
                     <div class="form-group">

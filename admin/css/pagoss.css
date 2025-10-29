@@ -1,8 +1,8 @@
  :root {
-    --color-primary: #8b6b6b;
-    --color-secondary: #ceabab;
-    --color-dark: #5a4a4a;
-    --color-light: #f8f4f4;
+    --color-primary: #656faa;
+    --color-secondary: #8f0707;
+    --color-dark: #d37474;
+    --color-light: #ffffff;
     --color-success: #4a8b6b;
     --color-danger: #8b6b6b;
     --color-warning: #8b7b4a;
@@ -11,6 +11,7 @@
     --shadow-hover: 0 6px 20px rgba(0,0,0,0.2);
     --border-radius: 12px;
 }
+ 
  
  .reporte-pagos {
             max-width: 1400px;
