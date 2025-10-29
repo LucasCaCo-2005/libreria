@@ -46,7 +46,7 @@ class autoridadesBD extends Conexion {
             $autoridad = new Autoridades();
             $autoridad->setId($fila['id']);
             $autoridad->setCedula($fila['cedula']);
-            $autoridad->setNombre($fila['nombre']);
+            $autoridad->setNombre($fila['Nombre']);
             $autoridad->setCargo($fila['cargo']);
             $autoridad->setFecha_inicio($fila['fecha_inicio']);
             $autoridad->setFecha_fin($fila['fecha_fin']);
@@ -126,7 +126,7 @@ class Autoridades extends Conexion {
 
 $txtID           = $_POST['id'] ?? "";
 $txtCedula       = $_POST['cedula'] ?? "";
-$txtNombre       = $_POST['nombre'] ?? "";
+$txtNombre = isset($_POST['nombre']) ? $_POST['nombre'] : "";
 $txtCargo        = $_POST['cargo'] ?? "";
 $txtFecha_inicio = $_POST['fecha_inicio'] ?? "";
 $txtFecha_fin    = $_POST['fecha_fin'] ?? "";

@@ -93,14 +93,15 @@ h1, h2 {
   
 
     <section>
-ççç
+
       <div class="grid">
         <?php if (!empty($listaAutoridades)): ?>
           <?php foreach ($listaAutoridades as $autoridad): ?>
             <div class="card">
               <img src="images/<?= htmlspecialchars($autoridad->getFoto()) ?>" alt="Foto de <?= htmlspecialchars($autoridad->getCargo()) ?>">
               <div class="card-content">
-                <p><strong>Señor</strong> <?= htmlspecialchars($autoridad->getCargo()) ?></p>
+                <p><strong> <?= htmlspecialchars($autoridad->getNombre()) ?></strong></p>
+                <p><strong> <?= htmlspecialchars($autoridad->getCargo()) ?> </strong></p>
                 <p><strong>Desde:</strong> <?= htmlspecialchars($autoridad->getFecha_inicio()) ?></p>
                 <p><strong>Hasta:</strong> <?= htmlspecialchars($autoridad->getFecha_fin()) ?></p>
               
