@@ -1,4 +1,25 @@
-<?php session_start(); ?>
+<?php
+session_start();
+include_once "./admin/seccion/bd.php";
+include_once __DIR__ . "/admin/seccion/persona.php";
+
+if (isset($_POST['login'])) {
+    $persona = new Persona();
+    $resultado = $persona->login($_POST['ci'], $_POST['Pass']);
+
+    if ($resultado) {
+        $_SESSION['persona'] = $resultado;
+
+        // Si se abre dentro del modal (iframe)
+        echo "<script>
+            window.parent.postMessage('loginExitoso', '*');
+        </script>";
+        exit;
+    } else {
+        echo "<script>alert('Usuario o contraseña incorrecta');</script>";
+    }
+}
+?>
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -26,46 +47,3 @@
     </div>
 </body>
 </html>
-
-<?php
-include_once  "./admin/seccion/bd.php";
-include_once __DIR__ . "/admin/seccion/persona.php";
-
-if (isset($_POST['login'])) {
-    $persona = new Persona();
-    $resultado = $persona->login($_POST['ci'], $_POST['Pass']);
-   // $persona->setCedula($_POST['ci']);
-//    $persona->setContrasena($_POST['Pass']);
-
-    if ($resultado) {
-        $_SESSION['persona'] = $resultado;
-        if ($_SESSION['persona']['Tipo'] == "admin") {
-            header("Location: panelAdmin.php");
-        } else {
-            header("Location: index.php");
-        }
-        exit;
-    } else {
-        echo "<script>alert('Usuario o contraseña incorrecta');</script>";
-    }
-}
-
-/*
-
-    $persona = $persona->Login();
-    $_SESSION['persona'] = $persona;
-
-    if ($_SESSION['persona'] != NULL) {
-        if ($_SESSION['persona']->getTipo() == "admin") {
-            header("Location: panelAdmin.php");
-            exit;
-        } else {
-            header("Location: index.php");
-            exit;
-        }
-    } else {
-        echo "<script>alert('Usuario o contraseña incorrecta');</script>";
-    }
-}
-    */
-?>
