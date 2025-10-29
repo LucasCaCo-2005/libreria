@@ -3,89 +3,11 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Libros</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      color: #222;
-      background: #f5f5f5;
-      margin: 0;
-    }
 
-    .contenedor-botones {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 10px;
-      margin: 20px 0;
-    }
-
-    .btn-filtro {
-      background-color: #ceabab;
-      border: none;
-      padding: 10px 15px;
-      border-radius: 5px;
-      color: white;
-      cursor: pointer;
-      transition: 0.3s;
-    }
-
-    .btn-filtro:hover {
-      background-color: #b98c8c;
-    }
-
-    .btn-activo {
-      background-color: #8b6b6b;
-    }
-
-    .contenedor-libros {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 20px;
-      margin-bottom: 50px;
-    }
-
-    .carta-chica {
-      width: 400px;
-      border: 1px solid #ceabab;
-      border-radius: 5px;
-      box-shadow: 2px 2px 5px rgba(0,0,0,0.1);
-      background-color: white;
-      overflow: hidden;
-    }
-
-    .carta-chica img {
-      width: 100%;
-      height: 250px;
-      object-fit: cover;
-    }
-
-    .card-body {
-      padding: 10px;
-    }
-
-    .card-title {
-      margin: 5px 0;
-    }
-
-    .btn {
-      background-color: #ceabab;
-      border: none;
-      color: white;
-      padding: 6px 10px;
-      border-radius: 4px;
-      cursor: pointer;
-      text-decoration: none;
-      display: inline-block;
-      margin-right: 5px;
-    }
-
-    .btn:hover {
-      background-color: #b98c8c;
-    }
-  </style>
+  <title>Biblioteca Digital</title>
+     <link rel="stylesheet" href="css/productos.css"> 
 </head>
+
 <body>
 
 <?php include_once 'template/cabecera.php'; ?>
@@ -112,35 +34,47 @@ $categorias = [
 ];
 ?>
 
-<!-- Filtro de categorías -->
-<div class="contenedor-botones">
-  <a href="?categoria=" class="btn-filtro <?php if($categoriaSeleccionada == '') echo 'btn-activo'; ?>">Todos</a>
-  <?php foreach ($categorias as $cat): ?>
-    <a href="?categoria=<?php echo $cat; ?>" 
-       class="btn-filtro <?php if($categoriaSeleccionada == $cat) echo 'btn-activo'; ?>">
-       <?php echo $cat; ?>
-    </a>
-  <?php endforeach; ?>
-</div>
+<div class="contenedor-principal">
+  <h1 class="titulo-pagina">Nuestra Colección de Libros</h1>
 
-<!-- Listado de libros -->
-<div class="contenedor-libros">
-  <?php if (count($listaLibros) > 0): ?>
-    <?php foreach($listaLibros as $libro){ ?> 
-      <div class="card carta-chica">
-        <img src="/images/<?php echo $libro['imagen']; ?>" alt="Imagen del libro">
-        <div class="card-body">
-          <h6 class="card-title"><strong><?php echo $libro['nombre']; ?></strong></h6>
-          <h6 class="card-title"><?php echo $libro['autor']; ?></h6>
-          <h6 class="card-title"><?php echo $libro['categoria']; ?></h6>
-          <a class="btn" href="mas.php?id=<?php echo $libro['id']; ?>">Ver más</a>
-          <a class="btn" href="mas.php?id=<?php echo $libro['id']; ?>">Reservar</a>
+  <!-- Filtro de categorías -->
+  <div class="contenedor-botones">
+    <a href="?categoria=" class="btn-filtro <?php if($categoriaSeleccionada == '') echo 'btn-activo'; ?>">
+      Todos los Libros
+    </a>
+    <?php foreach ($categorias as $cat): ?>
+      <a href="?categoria=<?php echo $cat; ?>" 
+         class="btn-filtro <?php if($categoriaSeleccionada == $cat) echo 'btn-activo'; ?>">
+         <?php echo $cat; ?>
+      </a>
+    <?php endforeach; ?>
+  </div>
+
+  <!-- Listado de libros -->
+  <div class="contenedor-libros">
+    <?php if (count($listaLibros) > 0): ?>
+      <?php foreach($listaLibros as $libro){ ?> 
+        <div class="carta-libro">
+          <img src="/images/<?php echo $libro['imagen']; ?>" alt="Portada de <?php echo $libro['nombre']; ?>">
+          <div class="card-body">
+            <h3 class="card-title"><?php echo $libro['nombre']; ?></h3>
+            <p class="card-autor"><?php echo $libro['autor']; ?></p>
+            <span class="card-categoria"><?php echo $libro['categoria']; ?></span>
+            <div class="contenedor-botones-card">
+              <a class="btn btn-ver" href="mas.php?id=<?php echo $libro['id']; ?>">Ver más</a>
+              <a class="btn btn-reservar" href="mas.php?id=<?php echo $libro['id']; ?>">Reservar</a>
+            </div>
+          </div> 
         </div> 
-      </div> 
-    <?php } ?>
-  <?php else: ?>
-    <p style="text-align:center; color:#555;">No hay libros en esta categoría.</p>
-  <?php endif; ?>
+      <?php } ?>
+    <?php else: ?>
+      <div class="mensaje-vacio">
+        <i>📚</i>
+        <p>No hay libros disponibles en esta categoría.</p>
+        <p style="margin-top: 10px; font-size: 0.9rem;">Prueba con otra categoría o vuelve más tarde.</p>
+      </div>
+    <?php endif; ?>
+  </div>
 </div>
 
 <?php include_once 'template/pie.php'; ?>

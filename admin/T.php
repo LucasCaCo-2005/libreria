@@ -1,71 +1,100 @@
-<?php include_once 'template/cabecera.php'; ?>
-<?php
+<?php 
+include_once 'template/cabecera.php';
 include_once ("seccion/bd.php");
+
 $taller = null;
 if(isset($_GET['id'])){
-    $idTaller = $_GET['id']; // minusculas
+    $idTaller = $_GET['id'];
 
     $sentencia = $conexion->prepare("SELECT * FROM talleres WHERE Id=:Id");
     $sentencia->bindParam(":Id", $idTaller);
     $sentencia->execute();
     $taller = $sentencia->fetch(PDO::FETCH_ASSOC);
 }
+
 if(!$taller){
     echo "<h2>Taller no encontrado</h2>";
     exit;
 }
-?> <!DOCTYPE html>
+?>
+
+<!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Detalles del taller</title>
-    <style> 
-.foto {
-    border: 1px solid #ceababff;
-    border-radius: 5px;
-    box-shadow: 2px 2px 5px rgba(0,0,0,0.1);
-}
-.boton {
-    display: inline-block;
-    padding: 10px 20px;
-    background-color: #007bff;
-    color: white;
-    text-decoration: none;
-    border-radius: 5px;
-}
-.libro-detalle {
-    border: 1px solid #ceababff;
-    border-radius: 5px;
-    box-shadow: 2px 2px 5px rgba(0,0,
-0,0.1);
-    padding: 20px;
-    max-width: 300px;
-    margin: 0 auto;
-    background-color: #f9f9f9;
-}
+    <title><?php echo htmlspecialchars($taller['nombre']); ?> - Detalles del Taller</title>
+    <link rel="stylesheet" href="./css/t.css">
 
-.bboton {
-    margin-bottom: 20px;
-    text-align: center;
-}
-
-    </style>
 </head>
 <body>
-<div   class="libro-detalle" style="text-align:center;">
-     <br>
-<img src="../images/<?php echo $taller['foto']; ?>"  alt="" style="width:200px; height:300px; object-fit:cover;"><br>
-Nombre: <?php echo $taller['nombre']; ?><br>
-Horario: <?php echo $taller['horario']; ?><br>
-Costo: <?php echo $taller['costo']; ?><br>
-Descripcion: <?php echo $taller['descripcion']; ?><br>
+    <div class="pagina-detalle">
+        <div class="contenedor-detalle">
+            <div class="header-detalle">
+                <h1 class="titulo-taller"><?php echo htmlspecialchars($taller['nombre']); ?></h1>
+                <div class="estado-taller">
+                    <?php echo $taller['estado'] == 'activo' ? '🟢 Taller Activo' : '🔴 Taller Inactivo'; ?>
+                </div>
+            </div>
+            
+            <div class="contenido-detalle">
+                <div class="seccion-imagen">
+                    <img src="../images/<?php echo $taller['foto']; ?>" 
+                         alt="Imagen del taller <?php echo htmlspecialchars($taller['nombre']); ?>" 
+                         class="imagen-taller">
+                </div>
+                
+                <div class="seccion-info">
+                    <div class="info-grid">
+                        <div class="info-item">
+                            <span class="info-icono">📅</span>
+                            <div class="info-contenido">
+                                <div class="info-label">Día del Taller</div>
+                                <div class="info-valor"><?php echo htmlspecialchars($taller['dia']); ?></div>
+                            </div>
+                        </div>
+                        
+                        <div class="info-item">
+                            <span class="info-icono">⏰</span>
+                            <div class="info-contenido">
+                                <div class="info-label">Horario</div>
+                                <div class="info-valor"><?php echo htmlspecialchars($taller['horario']); ?></div>
+                            </div>
+                        </div>
+                        
+                        <div class="info-item">
+                            <span class="info-icono">💰</span>
+                            <div class="info-contenido">
+                                <div class="info-label">Costo</div>
+                                <div class="info-valor"><?php echo htmlspecialchars($taller['costo']); ?></div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="descripcion-taller">
+                        <h3>📖 Descripción del Taller</h3>
+                        <p class="descripcion-texto"><?php echo htmlspecialchars($taller['descripcion']); ?></p>
+                    </div>
+                    
+                    <div class="botones-accion">
+                        <a href="vistaT.php" class="btn-volver">
+                            ← Volver a Talleres
+                        </a>
+                        
+                        <?php if ($taller['estado'] == 'activo'): ?>
+                            <a href="inscripcion.php?id=<?php echo $taller['Id']; ?>" class="btn-inscribir">
+                                ✍️ Inscribirse al Taller
+                            </a>
+                        <?php else: ?>
+                            <button class="btn-inscribir" style="background: #8b6b6b; border-color: #8b6b6b; cursor: not-allowed;" disabled>
+                                ⏸️ Taller No Disponible
+                            </button>
+                        <?php endif; ?>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
-
-
-</div>
-<br>
-<div  class="bboton" style="text-align:center;">
- <a class="boton" href="vistaT.php?id=<?php echo $taller['Id']; ?>">Volver</a>
-</div>
-
+    <?php include_once 'template/pie.php'; ?>
 </body>
+</html>
