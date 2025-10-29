@@ -30,7 +30,7 @@
 <!-- 🔹 Navbar principal -->
 <nav class="navbar navbar-expand-lg navbar-dark navbar-celeste">
   <div class="container-fluid">
-    <a class="navbar-brand" href="./admin/inicio.php">Admin</a>
+    <a class="navbar-brand" href="./admin/paneladmin.php">Admin</a>
 
 
 

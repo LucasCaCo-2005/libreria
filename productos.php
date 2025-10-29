@@ -1,99 +1,148 @@
-
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Libros</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      color: #222;
+      background: #f5f5f5;
+      margin: 0;
+    }
 
-    <style>
+    .contenedor-botones {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 10px;
+      margin: 20px 0;
+    }
 
-      h1, h2 {
-    color: #111;
-    text-align: center;
-}
-.grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 16px;
-    margin: 20px 0;
-}
-.card {
-    background: #fff;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    overflow: hidden;
-    transition: transform 0.2s, box-shadow 0.2s;
-}
-.card:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 4px 10px rgba(0,0,0,0.15);
-}
-.card img {
-    width: 100%;
-    height: 180px;
-    object-fit: cover;
-}
-.card-content {
-    padding: 12px 16px;
-}
-.card-content h3 {
-    margin: 0;
-    font-size: 1.2em;
-    color: #004a85;
-}
-.card-content p {
-    margin: 4px 0;
-    font-size: 0.95em;
-}
-.btn {
-    display: inline-block;
-    padding: 6px 10px;
-    background: #0057a0;
-    color: #fff;
-    text-decoration: none;
-    border-radius: 4px;
-    font-size: 0.9em;
-}
-.btn:hover {
-    background: #003d70;
-}
-  
-</style>
+    .btn-filtro {
+      background-color: #ceabab;
+      border: none;
+      padding: 10px 15px;
+      border-radius: 5px;
+      color: white;
+      cursor: pointer;
+      transition: 0.3s;
+    }
 
+    .btn-filtro:hover {
+      background-color: #b98c8c;
+    }
+
+    .btn-activo {
+      background-color: #8b6b6b;
+    }
+
+    .contenedor-libros {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 20px;
+      margin-bottom: 50px;
+    }
+
+    .carta-chica {
+      width: 400px;
+      border: 1px solid #ceabab;
+      border-radius: 5px;
+      box-shadow: 2px 2px 5px rgba(0,0,0,0.1);
+      background-color: white;
+      overflow: hidden;
+    }
+
+    .carta-chica img {
+      width: 100%;
+      height: 250px;
+      object-fit: cover;
+    }
+
+    .card-body {
+      padding: 10px;
+    }
+
+    .card-title {
+      margin: 5px 0;
+    }
+
+    .btn {
+      background-color: #ceabab;
+      border: none;
+      color: white;
+      padding: 6px 10px;
+      border-radius: 4px;
+      cursor: pointer;
+      text-decoration: none;
+      display: inline-block;
+      margin-right: 5px;
+    }
+
+    .btn:hover {
+      background-color: #b98c8c;
+    }
+  </style>
 </head>
 <body>
 
 <?php include_once 'template/cabecera.php'; ?>
+<?php include_once 'admin/seccion/bd.php'; ?>
 
-<?php   
-include_once ("admin/seccion/bd.php");
+<?php
+// Obtener categoría seleccionada desde la URL (GET)
+$categoriaSeleccionada = isset($_GET['categoria']) ? $_GET['categoria'] : '';
 
-$sentencia = $conexion->prepare("SELECT * FROM libros");
+// Consulta con filtro si se seleccionó una categoría
+if ($categoriaSeleccionada) {
+  $sentencia = $conexion->prepare("SELECT * FROM libros WHERE categoria = :categoria");
+  $sentencia->bindParam(':categoria', $categoriaSeleccionada);
+} else {
+  $sentencia = $conexion->prepare("SELECT * FROM libros");
+}
 $sentencia->execute();
 $listaLibros = $sentencia->fetchAll(PDO::FETCH_ASSOC);
 
+// Lista de categorías disponibles
+$categorias = [
+  "Fantasia", "Terror", "Drama", "Misterio", "Historico",
+  "Ficcion", "Romantico", "Biografia", "Autoayuda", "Nacional", "Otros"
+];
 ?>
-<section>
-  <h2>Libros disponibles</h2>
-  <div class="grid">
-    <?php if (!empty($listaLibros)): ?>
-      <?php foreach ($listaLibros as $libro): ?>
-        <div class="card">
-          <img src="/images/<?= htmlspecialchars($libro['imagen']) ?>" alt="<?= htmlspecialchars($libro['nombre']) ?>">
-          <div class="card-content">
-            <h3><?= htmlspecialchars($libro['nombre']) ?></h3>
-            <p><strong>Autor:</strong> <?= htmlspecialchars($libro['autor']) ?></p>
-             <a class="btn btn-sm btn-primary" href="mas.php?id=<?php echo $libro['id'];?>" role="button">Ver más</a>
-          </div>
-        </div>
-      <?php endforeach; ?>
-    <?php else: ?>
-      <p style="text-align:center;">No hay libros cargados en este momento.</p>
-    <?php endif; ?>
-  </div>
-</section>
-<?php include_once 'template/pie.php'; ?>
 
+<!-- Filtro de categorías -->
+<div class="contenedor-botones">
+  <a href="?categoria=" class="btn-filtro <?php if($categoriaSeleccionada == '') echo 'btn-activo'; ?>">Todos</a>
+  <?php foreach ($categorias as $cat): ?>
+    <a href="?categoria=<?php echo $cat; ?>" 
+       class="btn-filtro <?php if($categoriaSeleccionada == $cat) echo 'btn-activo'; ?>">
+       <?php echo $cat; ?>
+    </a>
+  <?php endforeach; ?>
+</div>
+
+<!-- Listado de libros -->
+<div class="contenedor-libros">
+  <?php if (count($listaLibros) > 0): ?>
+    <?php foreach($listaLibros as $libro){ ?> 
+      <div class="card carta-chica">
+        <img src="/images/<?php echo $libro['imagen']; ?>" alt="Imagen del libro">
+        <div class="card-body">
+          <h6 class="card-title"><strong><?php echo $libro['nombre']; ?></strong></h6>
+          <h6 class="card-title"><?php echo $libro['autor']; ?></h6>
+          <h6 class="card-title"><?php echo $libro['categoria']; ?></h6>
+          <a class="btn" href="mas.php?id=<?php echo $libro['id']; ?>">Ver más</a>
+          <a class="btn" href="mas.php?id=<?php echo $libro['id']; ?>">Reservar</a>
+        </div> 
+      </div> 
+    <?php } ?>
+  <?php else: ?>
+    <p style="text-align:center; color:#555;">No hay libros en esta categoría.</p>
+  <?php endif; ?>
+</div>
+
+<?php include_once 'template/pie.php'; ?>
 </body>
 </html>
