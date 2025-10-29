@@ -93,7 +93,7 @@ h1, h2 {
   
 
     <section>
-
+ççç
       <div class="grid">
         <?php if (!empty($listaAutoridades)): ?>
           <?php foreach ($listaAutoridades as $autoridad): ?>
