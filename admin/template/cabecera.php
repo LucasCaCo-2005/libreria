@@ -22,7 +22,7 @@ $url = "http://" . $_SERVER['HTTP_HOST'] . "/sitioweb";
   
   <style>
       :root {
-      --color-primary: #8b6b6b;
+      --color-primary: #ff0000ff;
       --color-secondary: #ceabab;
       --color-dark: #5a4a4a;
       --color-light: #f8f4f4;

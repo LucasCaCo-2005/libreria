@@ -202,3 +202,7 @@ $totalPagos = $sentenciaContador->fetch(PDO::FETCH_ASSOC)['total'];
     </div>
 </body>
 </html>
+
+<div class="footer">
+  <p>&copy; <?php echo date('Y'); ?> Centro Médico. Todos los derechos reservados.</p>
+</div>

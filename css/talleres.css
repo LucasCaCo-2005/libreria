@@ -8,7 +8,7 @@
         text-align: center;
         padding: 60px 20px;
         background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-secondary) 100%);
-        color: rgb(218, 51, 51);
+        color: rgb(0, 0, 0);
         border-radius: var(--border-radius);
         margin-bottom: 50px;
     }
@@ -59,7 +59,7 @@
     }
 
     .card-taller {
-        background: rgb(121, 204, 204);
+        background: rgb(255, 255, 255);
         border-radius: var(--border-radius);
         box-shadow: var(--shadow);
         overflow: hidden;
