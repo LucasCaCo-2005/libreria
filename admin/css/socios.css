@@ -272,6 +272,14 @@
             border-color: var(--color-danger);
         }
 
+        
+        .btn-filtro-pendiente {
+            background: var(--color-info);
+            color: #f8f4f4;
+            border-color: var(--color-info);
+        }
+
+
         .btn-filtro:hover {
             transform: translateY(-2px);
         }

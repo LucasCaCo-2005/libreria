@@ -340,3 +340,109 @@
                 gap: 10px;
             }
         }
+
+
+
+        /* Sección de historial */
+.seccion-historial {
+    grid-column: 1 / -1;
+    margin-top: 20px;
+}
+
+.seccion-historial h2 {
+    color: #2d3748;
+    margin-bottom: 20px;
+    font-size: 1.5rem;
+}
+
+.historial-container {
+    background: #f8fafc;
+    border-radius: 15px;
+    border: 2px solid #e2e8f0;
+    padding: 20px;
+}
+
+.sin-pagos {
+    text-align: center;
+    padding: 40px 20px;
+    color: #6b7280;
+}
+
+.sin-pagos-icono {
+    font-size: 3rem;
+    margin-bottom: 15px;
+}
+
+.lista-pagos {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.pago-item {
+    display: flex;
+    align-items: center;
+    padding: 15px;
+    background: white;
+    border-radius: 10px;
+    border: 1px solid #e2e8f0;
+    transition: all 0.3s ease;
+}
+
+.pago-item:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.pago-icono {
+    font-size: 1.8rem;
+    margin-right: 15px;
+}
+
+.pago-info {
+    flex: 1;
+}
+
+.pago-mes {
+    font-weight: 600;
+    color: #2d3748;
+    margin-bottom: 4px;
+}
+
+.pago-tipo {
+    color: #4f46e5;
+    font-weight: 500;
+    margin-bottom: 4px;
+}
+
+.pago-fecha {
+    color: #6b7280;
+    font-size: 0.9rem;
+}
+
+.pago-monto {
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: #059669;
+}
+
+
+.pagos-content {
+    padding: 0 30px 30px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 30px;
+}
+
+.seccion-pago {
+    grid-column: 1 / -1;
+}
+
+.stats-section {
+    grid-column: 1 / -1;
+}
+
+.seccion-historial {
+    grid-column: 1 / -1;
+    margin-top: 20px;
+}

@@ -1,12 +1,13 @@
 <?php
 $txtID = (isset($_POST['txtID'])) ? $_POST['txtID'] : "";
+$txtsocio = (isset($_POST['txtsocio'])) ? $_POST['txtsocio'] : "";
 $txtNombre = (isset($_POST['txtNombre'])) ? $_POST['txtNombre'] : "";
 $txtApellido = (isset($_POST['txtApellido'])) ? $_POST['txtApellido'] : "";
 $txtCedula = (isset($_POST['txtCedula'])) ? $_POST['txtCedula'] : "";
 $txtDomicilio = (isset($_POST['txtDomicilio'])) ? $_POST['txtDomicilio'] : "";
 $txtTelefono = (isset($_POST['txtTelefono'])) ? $_POST['txtTelefono'] : "";
 $txtCorreo = (isset($_POST['txtCorreo'])) ? $_POST['txtCorreo'] : "";
-$txtContraseña = (isset($_POST['txtContraseña'])) ? $_POST['txtContraseña'] : "";
+$txtcon = (isset($_POST['txtcon'])) ? $_POST['txtcon'] : "";
 $txtestado = (isset($_POST['txtestado'])) ? $_POST['txtestado'] : "";
 $accion = (isset($_POST['accion'])) ? $_POST['accion'] : ""; 
 
@@ -15,15 +16,16 @@ include("bd.php");
 $sentencia = $conexion->prepare("SELECT * FROM socios"); $sentencia->execute(); $listaSocios = $sentencia->fetchAll(PDO::FETCH_ASSOC); switch($accion){
 case "Agregar":
     $sentencia = $conexion->prepare("INSERT INTO socios 
-        (nombre, apellidos, cedula, domicilio, telefono, correo, contrasena, estado) 
-        VALUES (:nombre, :apellidos, :cedula, :domicilio, :telefono, :correo, :contrasena, :estado)");
+        (socio, nombre, apellidos, cedula, domicilio, telefono, correo, contrasena, estado) 
+        VALUES (:socio, :nombre, :apellidos, :cedula, :domicilio, :telefono, :correo, :contrasena, :estado)");
+        $sentencia->bindParam(':socio', $txtsocio);
     $sentencia->bindParam(':nombre', $txtNombre);
     $sentencia->bindParam(':apellidos', $txtApellido);
     $sentencia->bindParam(':cedula', $txtCedula);
     $sentencia->bindParam(':domicilio', $txtDomicilio);
     $sentencia->bindParam(':telefono', $txtTelefono);
     $sentencia->bindParam(':correo', $txtCorreo);
-    $sentencia->bindParam(':contrasena', $txtContraseña);
+    $sentencia->bindParam(':contrasena', $txtcon);
     $sentencia->bindParam(':estado', $txtestado);
 
     $sentencia->execute();
@@ -42,19 +44,21 @@ case "Agregar":
         $sentencia->bindParam(':id', $txtID);
         $sentencia->execute();
         $socio = $sentencia->fetch(PDO::FETCH_ASSOC);
+        $txtsocio = $socio['socio'];
         $txtNombre = $socio['nombre'];
         $txtApellido = $socio['apellidos'];
         $txtCedula = $socio['cedula'];
         $txtDomicilio = $socio['domicilio'];
         $txtTelefono = $socio['telefono'];
         $txtCorreo = $socio['correo'];
-        $txtContraseña = $socio['contrasena'];
+        $txtcon = $socio['contrasena'];
         $txtestado = $socio['estado'];
         break;
 
   case "Modificar": 
     $sentencia = $conexion->prepare("UPDATE socios 
-        SET nombre=:nombre, 
+        SET socio=:socio,
+        nombre=:nombre, 
             apellidos=:apellidos, 
             cedula=:cedula, 
             domicilio=:domicilio, 
@@ -64,13 +68,14 @@ case "Agregar":
             , estado=:estado
         WHERE id=:id");
 
+$sentencia->bindParam(':socio', $txtsocio);
     $sentencia->bindParam(':nombre', $txtNombre);
     $sentencia->bindParam(':apellidos', $txtApellido);
     $sentencia->bindParam(':cedula', $txtCedula);
     $sentencia->bindParam(':domicilio', $txtDomicilio);
     $sentencia->bindParam(':telefono', $txtTelefono);
     $sentencia->bindParam(':correo', $txtCorreo);
-    $sentencia->bindParam(':contrasena', $txtContraseña);
+    $sentencia->bindParam(':contrasena', $txtcon);
     $sentencia->bindParam(':id', $txtID);
     $sentencia->bindParam(':estado', $txtestado);
     $sentencia->execute();
@@ -96,9 +101,12 @@ $listaSocios = $sentenciaSQL->fetchAll(PDO::FETCH_ASSOC);
 $filtroSeleccionado = isset($_GET['filtroEstado']) ? $_GET['filtroEstado'] : "activo";
 if ($filtroSeleccionado == "inactivo") {
     $sentencia = $conexion->prepare("SELECT * FROM socios WHERE estado='inactivo'");
+} elseif ($filtroSeleccionado == "pendiente") {
+    $sentencia = $conexion->prepare("SELECT * FROM socios WHERE estado='pendiente'");
 } else {
     $sentencia = $conexion->prepare("SELECT * FROM socios WHERE estado='activo'");
 }
+
 $sentencia->execute();
 $listaSocios = $sentencia->fetchAll(PDO::FETCH_ASSOC);
 
@@ -118,6 +126,7 @@ $totalPagos = $sentenciaContador->fetch(PDO::FETCH_ASSOC)['total'];
 
 class socios{
     private $id;
+    private $socio;
     private $nombre;
     private $apellidos;
     private $cedula;
@@ -134,6 +143,15 @@ class socios{
     public function setId($id) {
         $this->id = $id;
     }
+
+      public function getsocio() {
+        return $this->socio;
+    }
+
+    public function setsocio($socio) {
+        $this->socio = $socio;
+    }
+
 
     public function getNombre() {
         return $this->nombre;
@@ -219,6 +237,7 @@ if (isset($_GET['socio_id'])) {
     if ($socio) {
         // Llenamos las variables con los datos del socio
         $txtID = $socio['id'];
+        $txtsocio = $socio['socio'];
         $txtNombre = $socio['nombre'];
         $txtApellido = $socio['apellidos'];
         $txtCedula = $socio['cedula'];
@@ -228,11 +247,11 @@ if (isset($_GET['socio_id'])) {
         $txtestado = $socio['estado'];
     } else {
         // Si el ID no existe, inicializamos vacíos
-        $txtID = $txtNombre = $txtApellido = $txtCedula = $txtDomicilio = $txtTelefono = $txtCorreo = $txtestado = "";
+        $txtID = $txtsocio = $txtNombre = $txtApellido = $txtCedula = $txtDomicilio = $txtTelefono = $txtCorreo = $txtestado = "";
     }
 } else {
     // Si no hay socio_id, el formulario está vacío (modo agregar)
-    $txtID = $txtNombre = $txtApellido = $txtCedula = $txtDomicilio = $txtTelefono = $txtCorreo = $txtestado = "";
+    $txtID = $txtsocio = $txtNombre = $txtApellido = $txtCedula = $txtDomicilio = $txtTelefono = $txtCorreo = $txtestado = "";
 }
 
 

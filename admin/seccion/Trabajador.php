@@ -81,4 +81,15 @@ switch($accion) {
         header("Location: Trab.php");
         break;
 }
+
+// Consultar el médico activo
+$sentencia = $conexion->prepare("SELECT * FROM trabajadores WHERE puesto = 'Medico' AND estado = 'activo' LIMIT 1");
+$sentencia->execute();
+$medico = $sentencia->fetch(PDO::FETCH_ASSOC);
+
+// Consultar el podólogo activo
+$sentencia = $conexion->prepare("SELECT * FROM trabajadores WHERE puesto = 'Podologo' AND estado = 'activo' LIMIT 1");
+$sentencia->execute();
+$podologo = $sentencia->fetch(PDO::FETCH_ASSOC);
+
 ?>

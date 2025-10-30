@@ -32,6 +32,19 @@ include_once ("seccion/bd.php");
                     <input type="hidden" name="txtID" value="<?php echo $txtID; ?>">
 
                     <div class="form-grid">
+<div class="form-group">
+                            <label for="txtsocio" class="form-label">
+                                <span class="label-icon">👤</span>
+                                Numero de socio
+                            </label>
+                            <input type="text" class="form-control" name="txtsocio" id="txtsocio" 
+                                   value="<?php echo htmlspecialchars($txtsocio); ?>"
+                                   placeholder="Ingrese Numero de socio" required>
+                        </div>
+
+
+
+
                         <div class="form-group">
                             <label for="txtNombre" class="form-label">
                                 <span class="label-icon">👤</span>
@@ -51,6 +64,20 @@ include_once ("seccion/bd.php");
                                    value="<?php echo htmlspecialchars($txtApellido); ?>"
                                    placeholder="Ingrese apellidos" required>
                         </div>
+
+                         <div class="form-group">
+                            <label for="txtTelefono" class="form-label">
+                                <span class="label-icon">📞</span>
+                                Teléfono
+                            </label>
+                            <input type="text" class="form-control" name="txtTelefono" id="txtTelefono" 
+                                   value="<?php echo htmlspecialchars($txtTelefono); ?>"
+                                   placeholder="xx-xxx-xxx" 
+                                   pattern="^[1-9]{2,3}\-[0-9]{3}\-[0-9]{3}$"
+                                   title="Debe tener 8 o 9 dígitos numéricos">
+                            <div class="form-help">Formato: xx-xxx-xxx</div>
+                        </div>
+
 
                         <div class="form-group full-width">
                             <label for="txtCedula" class="form-label">
@@ -75,19 +102,7 @@ include_once ("seccion/bd.php");
                                    placeholder="Ingrese domicilio completo">
                         </div>
 
-                        <div class="form-group">
-                            <label for="txtTelefono" class="form-label">
-                                <span class="label-icon">📞</span>
-                                Teléfono
-                            </label>
-                            <input type="text" class="form-control" name="txtTelefono" id="txtTelefono" 
-                                   value="<?php echo htmlspecialchars($txtTelefono); ?>"
-                                   placeholder="xx-xxx-xxx" 
-                                   pattern="^[1-9]{2,3}\-[0-9]{3}\-[0-9]{3}$"
-                                   title="Debe tener 8 o 9 dígitos numéricos">
-                            <div class="form-help">Formato: xx-xxx-xxx</div>
-                        </div>
-
+                      
                         <div class="form-group">
                             <label for="txtCorreo" class="form-label">
                                 <span class="label-icon">📧</span>
@@ -97,6 +112,17 @@ include_once ("seccion/bd.php");
                                    value="<?php echo htmlspecialchars($txtCorreo); ?>" 
                                    placeholder="correo@ejemplo.com" required>
                         </div>
+
+                           <div class="form-group">
+                            <label for="txtcon" class="form-label">
+                                <span class="label-icon">📝</span>
+                                Contraseña
+                            </label>
+                            <input type="text" class="form-control" name="txtcon" id="txtcon" 
+                                   value="<?php echo htmlspecialchars($txtcon); ?>"
+                                   placeholder="Ingrese apellidos" >
+                        </div>
+
 
                         <div class="form-group full-width">
                             <div class="estado-container">
@@ -108,6 +134,7 @@ include_once ("seccion/bd.php");
                                     <option value="" disabled>Seleccione estado</option>
                                     <option value="activo" <?php if($txtestado == 'activo') echo 'selected'; ?>>🟢 Activo</option>
                                     <option value="inactivo" <?php if($txtestado == 'inactivo') echo 'selected'; ?>>🔴 Inactivo</option>
+                                    <option value="pendiente" <?php if($txtestado == 'pendiente') echo 'selected'; ?>>🟡 Pendiente</option>
                                 </select>
                             </div>
                         </div>
@@ -157,6 +184,13 @@ include_once ("seccion/bd.php");
                             ⚠️ Socios Inactivos
                         </button>
                     </form>
+
+                     <form method="GET" style="display: inline;">
+                        <input type="hidden" name="filtroEstado" value="pendiente">
+                        <button type="submit" class="btn-filtro <?php echo (isset($_GET['filtroEstado']) && $_GET['filtroEstado']=="pendiente") ? 'btn-filtro-pendiente' : ''; ?>">
+                            🙈 Socios Pendientes
+                        </button>
+                    </form>
                 </div>
             </div>
 
@@ -164,12 +198,13 @@ include_once ("seccion/bd.php");
                 <table class="socios-table">
                     <thead>
                         <tr>
-                            
+                            <th>Nro de Socio</th>
                             <th>Nombre</th>
                             <th>Apellido</th>
                             <th>Cédula</th>
                             <th>Teléfono</th>
                             <th>Correo</th>
+                            <th>Contraseña</th>
                             <th>Estado</th>
                         </tr>
                     </thead>
@@ -186,16 +221,22 @@ include_once ("seccion/bd.php");
                         <?php else: ?>
                             <?php foreach($listaSocios as $usuario): ?>
                             <tr>
-                               
+                               <td><?php echo htmlspecialchars($usuario['socio']); ?></td>
                                 <td><?php echo htmlspecialchars($usuario['nombre']); ?></td>
                                 <td><?php echo htmlspecialchars($usuario['apellidos']); ?></td>
                                 <td><?php echo htmlspecialchars($usuario['cedula']); ?></td>
                                 <td><?php echo htmlspecialchars($usuario['telefono']); ?></td>
                                 <td><?php echo htmlspecialchars($usuario['correo']); ?></td>
+                                <td><?php echo htmlspecialchars($usuario['contrasena']); ?></td>
                                 <td>
-                                    <span class="estado-badge estado-<?php echo $usuario['estado']; ?>">
-                                        <?php echo $usuario['estado'] == 'activo' ? '🟢 Activo' : '🔴 Inactivo'; ?>
-                                    </span>
+                                  <span class="estado-badge estado-<?php echo $usuario['estado']; ?>">
+    <?php
+    echo ($usuario['estado'] == 'activo') ? '🟢 Activo' :
+         (($usuario['estado'] == 'inactivo') ? '🔴 Inactivo' :
+         (($usuario['estado'] == 'pendiente') ? '🟡 Pendiente' : '⚪ Desconocido'));
+    ?>
+</span>
+
                                 </td>
                             </tr>
                             <?php endforeach; ?>
