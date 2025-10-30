@@ -1,14 +1,16 @@
 <?php
 session_start();
 include_once "./admin/seccion/bd.php";
-include_once __DIR__ . "/admin/seccion/persona.php";
+
+
+include_once __DIR__ . "/admin/seccion/users.php";
 
 if (isset($_POST['login'])) {
-    $persona = new Persona();
-    $resultado = $persona->login($_POST['ci'], $_POST['Pass']);
+    $socio = new socios();
+    $resultado = $socio->login($_POST['cedula'], $_POST['contrasena']);
 
     if ($resultado) {
-        $_SESSION['persona'] = $resultado;
+        $_SESSION['socios'] = $resultado;
 
         // Si se abre dentro del modal (iframe)
         echo "<script>
@@ -33,11 +35,11 @@ if (isset($_POST['login'])) {
         <form class="login-form" action="" method="post">
             <div class="form-row">
                 <label for="ci">Usuario:</label>
-                <input type="text" name="ci" id="ci" required>
+                <input type="text" name="cedula" id="cedula" required>
             </div>
             <div class="form-row">
                 <label for="Pass">Contraseña:</label>
-                <input type="password" name="Pass" id="Pass" required>
+                <input type="password" name="contrasena" id="contrasena" required>
             </div>
             <input type="submit" name="login" value="Iniciar sesión">
         </form>

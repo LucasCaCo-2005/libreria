@@ -1,16 +1,34 @@
 <?php
-// Procesa el formulario si se envió
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['agregar'])) {
-   include_once __DIR__ . "/admin/seccion/persona.php";
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
 
-    $persona = new Persona();
-    $persona->setCedula($_POST['cedula']);
-    $persona->setNombre($_POST['nombre']);
-   $persona->setTelefono($_POST['telefono']);
-   $persona->setCorreo($_POST['correo']);
-  $persona->setContrasena($_POST['contrasena']);
- $persona->setTipo($_POST['tipo']);
+include_once __DIR__ . "/admin/seccion/bd.php";
+include_once __DIR__ . "/admin/seccion/users.php";
+include_once __DIR__ . "/logica/usersBD.php"; 
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['agregar'])) {
+
+    // ✅ Capturar todos los valores del formulario
+    $cedula     = $_POST['cedula'] ?? '';
+    $nombre     = $_POST['nombre'] ?? '';
+    $apellidos  = $_POST['apellidos'] ?? '';
+    $telefono   = $_POST['telefono'] ?? '';
+    $correo     = $_POST['correo'] ?? '';
+    $contrasena = $_POST['contrasena'] ?? '';
+    $estado     = $_POST['estado'] ?? 'activo'; // Valor por defecto
+    $domicilio  = $_POST['domicilio'] ?? '';   // Opcional
+
+    // ✅ Crear objeto y registrar
+    $socio = new socios();
+    $resultado = $socio->RegistrarSocio($cedula, $nombre, $apellidos, $domicilio, $telefono, $correo, $contrasena, $estado);
+
+    if ($resultado) {
+        echo "<script>alert('✅ Socio registrado correctamente');</script>";
+    } else {
+        echo "<script>alert('❌ Error al registrar el socio');</script>";
+    }
 }
+
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -32,9 +50,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['agregar'])) {
                 <label for="Nombre">Nombre:</label>
                 <input type="text" name="nombre">
             </div>
+             <div class="form-row">
+                <label for="Nombre">Apellidos:</label>
+                <input type="text" name="apellidos">
+            </div>
             <div class="form-row">
                 <label for="telefono">Teléfono:</label>
                 <input type="text" name="telefono">
+            </div>
+            <div class="form-row">
+                <label for="telefono">Domicilio:</label>
+                <input type="text" name="doicilio">
             </div>
             <div class="form-row">
                 <label for="correo">Correo:</label>
@@ -44,7 +70,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['agregar'])) {
                 <label for="contrasena">Contraseña:</label>
                 <input type="password" name="contrasena">
             </div>
-            <input type="hidden" name="tipo" value="usuario">
+            <input type="hidden" name="estado" value="estado">
             <input type="submit" name="agregar" value="Agregar">
         </form>
     </div>
