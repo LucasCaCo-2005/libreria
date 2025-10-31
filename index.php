@@ -1,8 +1,6 @@
 <?php
 session_start();
 
-
-include_once __DIR__ . '/admin/seccion/persona.php';
 include_once __DIR__ . '/admin/seccion/bd.php';
 include_once __DIR__ . '/admin/seccion/Talleres.php';
 include_once ("admin/seccion/bd.php");

@@ -1,7 +1,6 @@
 <?php
 session_start();
 include_once "./admin/seccion/bd.php";
-include_once __DIR__ . "/admin/seccion/persona.php";
 
 if (isset($_POST['login'])) {
     $persona = new Persona();

@@ -1,5 +1,4 @@
 <?php
-include_once("persona.php");
 include_once("bd.php");
 // Se crea una clase para manejar operaciones de base de datos de autoridades que hereda de la clase Conexion
 class autoridadesBD extends Conexion {
