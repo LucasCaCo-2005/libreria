@@ -1,9 +1,12 @@
 <?php
 session_start();
 include_once "./admin/seccion/bd.php";
+<<<<<<< HEAD
 
 
 include_once __DIR__ . "/admin/seccion/users.php";
+=======
+>>>>>>> 2ad180697827f417a48a26d45496592ac8eebdf8
 
 if (isset($_POST['login'])) {
     $socio = new socios();

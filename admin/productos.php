@@ -3,8 +3,6 @@ include("template/cabecera.php");
 include("seccion/logistica.php"); 
 include_once("seccion/bd.php");
 ?>
-
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -106,13 +104,16 @@ include_once("seccion/bd.php");
                   </label>
                   <select class="form-select" name="txtCat" id="txtCat" required>
                     <option value="">Seleccionar categoría</option>
-                    <option value="Ficción" <?php echo (isset($txtCat) && $txtCat == 'Ficción') ? 'selected' : ''; ?>>Ficción</option>
-                    <option value="No Ficción" <?php echo (isset($txtCat) && $txtCat == 'No Ficción') ? 'selected' : ''; ?>>No Ficción</option>
-                    <option value="Ciencia" <?php echo (isset($txtCat) && $txtCat == 'Ciencia') ? 'selected' : ''; ?>>Ciencia</option>
-                    <option value="Tecnología" <?php echo (isset($txtCat) && $txtCat == 'Tecnología') ? 'selected' : ''; ?>>Tecnología</option>
-                    <option value="Historia" <?php echo (isset($txtCat) && $txtCat == 'Historia') ? 'selected' : ''; ?>>Historia</option>
-                    <option value="Biografía" <?php echo (isset($txtCat) && $txtCat == 'Biografía') ? 'selected' : ''; ?>>Biografía</option>
-                    <option value="Infantil" <?php echo (isset($txtCat) && $txtCat == 'Infantil') ? 'selected' : ''; ?>>Infantil</option>
+                    <option value="Fantasia" <?php echo (isset($txtCat) && $txtCat == 'Fantasia') ? 'selected' : ''; ?>>Fantasia</option>
+                    <option value="Terror" <?php echo (isset($txtCat) && $txtCat == 'Terror') ? 'selected' : ''; ?>>Terror</option>
+                    <option value="Drama" <?php echo (isset($txtCat) && $txtCat == 'Drama') ? 'selected' : ''; ?>>Drama</option>
+                    <option value="Misterio" <?php echo (isset($txtCat) && $txtCat == 'Misterio') ? 'selected' : ''; ?>>Misterio</option>
+                    <option value="Historico" <?php echo (isset($txtCat) && $txtCat == 'Historico') ? 'selected' : ''; ?>>Historico</option>
+                    <option value="Ficcion" <?php echo (isset($txtCat) && $txtCat == 'Ficcion') ? 'selected' : ''; ?>>Ficcion</option>
+                    <option value="Romantico" <?php echo (isset($txtCat) && $txtCat == 'Romantico') ? 'selected' : ''; ?>>Romantico</option>
+                     <option value="Biografia" <?php echo (isset($txtCat) && $txtCat == 'Biografia') ? 'selected' : ''; ?>>Biografia</option>
+                      <option value="Autoayuda" <?php echo (isset($txtCat) && $txtCat == 'Autoayuda') ? 'selected' : ''; ?>>Autoayuda</option>
+                       <option value="Nacional" <?php echo (isset($txtCat) && $txtCat == 'Nacional') ? 'selected' : ''; ?>>Nacional</option>
                     <option value="Otros" <?php echo (isset($txtCat) && $txtCat == 'Otros') ? 'selected' : ''; ?>>Otros</option>
                   </select>
                 </div>

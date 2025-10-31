@@ -1,6 +1,11 @@
 <?php
+<<<<<<< HEAD
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
+=======
+// Procesa el formulario si se envió
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['agregar'])) {
+>>>>>>> 2ad180697827f417a48a26d45496592ac8eebdf8
 
 include_once __DIR__ . "/admin/seccion/bd.php";
 include_once __DIR__ . "/admin/seccion/users.php";
