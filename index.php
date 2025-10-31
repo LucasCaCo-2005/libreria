@@ -183,7 +183,7 @@ $listaTalleres = $talleresBD->ListarTalleres();
         <button onclick="window.location.href='institucion.html'">Institución</button>
         <button onclick="window.location.href='#autoridades'">Autoridades</button>
         <button onclick="window.location.href='#talleres'">Talleres</button>
-      <button onclick="window.location.href='./admin/inicio.php'">Admin</button>
+      <button onclick="window.location.href='./admin/index.php'">Admin</button>
           <button onclick="window.location.href='productos.php'">Productos</button>
          
     </div>
@@ -564,7 +564,7 @@ $listaTalleres = $talleresBD->ListarTalleres();
         <button onclick="window.location.href='institucion.html'">Institución</button>
         <button onclick="window.location.href='/sitioweb/autoridades.php'">Autoridades</button>
         <button onclick="window.location.href='#talleres'">Talleres</button>
-      <button onclick="window.location.href='./admin/inicio.php'">Admin</button>
+      <button onclick="window.location.href='./admin/index.php'">Admin</button>
           <button onclick="window.location.href='productos.php'">Productos</button>
          
     </div>

@@ -1,19 +1,15 @@
 <?php
-
 include_once("persona.php");
 include_once("bd.php");
-
+// Se crea una clase para manejar operaciones de base de datos de autoridades que hereda de la clase Conexion
 class autoridadesBD extends Conexion {
-
+    // metodo para insertar autoridades
   public function CargarAutoridades($cedula, $nombre, $cargo, $fecha_inicio, $fecha_fin, $foto, $estado) {
-    try {
-        $conn = $this->Conectar(); 
-
-        $sql = "INSERT INTO autoridades (cedula, nombre, cargo, fecha_inicio, fecha_fin, foto, estado)
-                VALUES (:cedula, :nombre, :cargo, :fecha_inicio, :fecha_fin, :foto, :estado)";
-
+    try {  $conn = $this->Conectar(); 
+// se establece conexion a base de datos y prepara consulta sql
+        $sql = "INSERT INTO autoridades (cedula, nombre, cargo, fecha_inicio, fecha_fin, foto, estado) VALUES (:cedula, :nombre, :cargo, :fecha_inicio, :fecha_fin, :foto, :estado)";
+// Se vinculan parametros para evitar inyecciones
         $stmt = $conn->prepare($sql);
-
         $stmt->bindParam(':cedula', $cedula);
         $stmt->bindParam(':nombre', $nombre);
         $stmt->bindParam(':cargo', $cargo);
@@ -22,44 +18,36 @@ class autoridadesBD extends Conexion {
         $stmt->bindParam(':foto', $foto);
         $stmt->bindParam(':estado', $estado);
         $stmt->execute();
-
-        echo "<script>alert('Autoridad agregada correctamente');</script>";
-
-    } catch (PDOException $e) {
+        // ejecuta consulta y muestra mensaje adjunto
+        echo "<script>alert('Autoridad agregada correctamente');</script>";} catch (PDOException $e) {
         echo "Error al insertar autoridad: " . $e->getMessage();
-    }
-}
-
-
+    }}
+// metodo para mostrar todas las autoridades
     public function ListarAutoridades() {
         $con = $this->Conectar();
-        $sql = "SELECT * FROM autoridades";
+         $sql = "SELECT * FROM autoridades";
         $stmt = $con->prepare($sql);
-
         if (!$stmt) die("Error preparando consulta: " . $con->errorInfo()[2]);
 
         $stmt->execute();
         $resultado = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
+// se ejecuta la consulta
         $ListaAutoridades = [];
         foreach ($resultado as $fila) {
             $autoridad = new Autoridades();
             $autoridad->setId($fila['id']);
             $autoridad->setCedula($fila['cedula']);
-            $autoridad->setNombre($fila['Nombre']);
+            $autoridad->setNombre($fila['nombre']);
             $autoridad->setCargo($fila['cargo']);
             $autoridad->setFecha_inicio($fila['fecha_inicio']);
             $autoridad->setFecha_fin($fila['fecha_fin']);
             $autoridad->setFoto($fila['foto']);
             $autoridad->setEstado($fila['estado']);
             $ListaAutoridades[] = $autoridad;
-        }
+        }       return $ListaAutoridades;  } } 
+// convierte los datos en objetos y los guarda en un array
 
-        return $ListaAutoridades;
-    }
-}
-
-
+// crea la clase autoridades con sus datos privados
 class Autoridades extends Conexion {
     private $id;
     private $cedula;
@@ -69,43 +57,33 @@ class Autoridades extends Conexion {
     private $fecha_fin;
     private $foto;
     private $estado;
+    // los siguiententes son metodos de acceso para las propiedades
 
     // ID
     public function setId($id){ $this->id = $id; }
-    public function getId(){ return $this->id; }
-
+     public function getId(){ return $this->id; }
     // Cédula
     public function setCedula($cedula){ $this->cedula = $cedula; }
-    public function getCedula(){ return $this->cedula; }
-
+     public function getCedula(){ return $this->cedula; }
     // Nombre
     public function setNombre($nombre){ $this->nombre = $nombre; }
-    public function getNombre(){ return $this->nombre; }
-
+     public function getNombre(){ return $this->nombre; }
     // Cargo
     public function setCargo($cargo){ $this->cargo = $cargo; }
-    public function getCargo(){ return $this->cargo; }
-
+     public function getCargo(){ return $this->cargo; }
     // Fechas
     public function setFecha_inicio($fecha_inicio){ $this->fecha_inicio = $fecha_inicio; }
-    public function getFecha_inicio(){ return $this->fecha_inicio; }
-
+     public function getFecha_inicio(){ return $this->fecha_inicio; }
     public function setFecha_fin($fecha_fin){ $this->fecha_fin = $fecha_fin; }
-    public function getFecha_fin(){ return $this->fecha_fin; }
-
+     public function getFecha_fin(){ return $this->fecha_fin; }
     // Foto
-    public function setFoto($foto){ $this->foto = $foto; }
-    public function getFoto(){ return $this->foto; }
-
+    public function setFoto($foto){ $this->foto = $foto; } public function getFoto(){ return $this->foto; }
     // Estado
-    public function setEstado($estado){ $this->estado = $estado; }
-    public function getEstado(){ return $this->estado; }
-
+    public function setEstado($estado){ $this->estado = $estado; } public function getEstado(){ return $this->estado; }
     // Operaciones
     public function ListarAutoridades() {
         $autoridadesBD = new autoridadesBD();
-        return $autoridadesBD->ListarAutoridades();
-    }
+        return $autoridadesBD->ListarAutoridades();   }
 
     public function CargarAutoridades() {
     $autoridadesBD = new autoridadesBD();
@@ -118,12 +96,9 @@ class Autoridades extends Conexion {
         $this->foto,
         $this->estado
     );
-}
+}}
 
-
-}
-
-
+// Obtiene datos del formulario 
 $txtID           = $_POST['id'] ?? "";
 $txtCedula       = $_POST['cedula'] ?? "";
 $txtNombre = isset($_POST['nombre']) ? $_POST['nombre'] : "";
@@ -132,7 +107,7 @@ $txtFecha_inicio = $_POST['fecha_inicio'] ?? "";
 $txtFecha_fin    = $_POST['fecha_fin'] ?? "";
 $txtestado       = $_POST['estado'] ?? "";
 
-// ------------------ AGREGAR ------------------
+//Detecta cuando se presiona agregar y crea nuevo objeto de Autoridades
 if (isset($_POST['agregar'])) {
     $autoridad = new Autoridades();
     $autoridad->setCedula($txtCedula);
@@ -142,7 +117,7 @@ if (isset($_POST['agregar'])) {
     $autoridad->setFecha_fin($txtFecha_fin);
     $autoridad->setEstado($txtestado ?: "activo");
 
-    // Subir imagen si se seleccionó
+    // Maneja upload de imagen si se selecciono una imagen
     if (!empty($_FILES['image']['name'])) {
         include_once "../cargarimagen.php";
         $foto = CargarFoto();
@@ -150,8 +125,6 @@ if (isset($_POST['agregar'])) {
             $autoridad->setFoto($foto);
         }
     }
-
-    // Insertar en la base
     try {
         $autoridad->CargarAutoridades();
     } catch (PDOException $e) {
@@ -159,13 +132,13 @@ if (isset($_POST['agregar'])) {
     }
 }
 
-// ------------------ LISTAR ------------------
+// agarra todas las unidades de autoridades y las muestra
 if (isset($_POST['ListarAutoridades'])) {
     $autoridad = new Autoridades();
     $resultados = $autoridad->ListarAutoridades();
 }
 
-// ------------------ BUSCAR ------------------
+// busca una autoridad segun su id
 if (isset($_POST['BuscarAutoridades'])) {
     $id = intval($_POST['id']);
     $stmt = $conn->prepare("SELECT * FROM autoridades WHERE Id = ?");
@@ -184,7 +157,7 @@ if (isset($_POST['BuscarAutoridades'])) {
     }
 }
 
-// ------------------ MODIFICAR ------------------
+// hace un update de los datos de una autoridad en la base de datos
 if (isset($_POST['Modificar'])) {
     $id = intval($_POST['id']);
     if ($id > 0) {
@@ -208,17 +181,11 @@ if (isset($_POST['Modificar'])) {
         echo "<script>alert('Seleccione una autoridad antes de modificar');</script>";
     }
 }
-
-// ------------------ LIMPIAR ------------------
+// limpia las variables del formulario
 if (isset($_POST['Limpiar'])) {
     $txtID = $txtCedula = $txtNombre = $txtCargo = $txtFecha_inicio = $txtFecha_fin = $txtestado = "";
     $autoridadSeleccionado = null;
 }
-
-
-
-
-
 
 ?>
 

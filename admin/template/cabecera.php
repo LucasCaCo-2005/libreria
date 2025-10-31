@@ -182,7 +182,7 @@ $url = "http://" . $_SERVER['HTTP_HOST'] . "/sitioweb";
   <div class="container-fluid">
 
     <!-- Logo y Marca -->
-    <a class="navbar-brand" href="<?php echo $url; ?>/admin/inicio.php">
+    <a class="navbar-brand" href="<?php echo $url; ?>/admin/index.php">
       <i class="fas fa-cogs"></i>
       Panel Admin
     </a>
@@ -199,7 +199,7 @@ $url = "http://" . $_SERVER['HTTP_HOST'] . "/sitioweb";
 
         <!-- Inicio -->
         <li class="nav-item">
-          <a class="nav-link" href="<?php echo $url; ?>/admin/inicio.php">
+          <a class="nav-link" href="<?php echo $url; ?>/admin/index.php">
             <i class="fas fa-home"></i>
             Inicio
           </a>

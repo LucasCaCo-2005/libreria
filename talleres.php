@@ -5,9 +5,13 @@ if (session_status() == PHP_SESSION_NONE) {
 include_once __DIR__ . '/admin/seccion/bd.php';
 include_once __DIR__ . '/admin/seccion/Talleres.php';
 
-// Obtener lista de talleres
+
+// Obtener lista de talleres y filtrar solo los activos
 $talleresBD = new TalleresBD();
-$listaTalleres = $talleresBD->ListarTalleres();
+$todosTalleres = $talleresBD->ListarTalleres();
+$listaTalleres = array_filter($todosTalleres, function($taller) {
+    return $taller->getEstado() === 'activo';
+});
 ?>
 
 <!doctype html>

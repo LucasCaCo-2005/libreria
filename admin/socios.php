@@ -110,7 +110,7 @@ include_once ("seccion/bd.php");
                             </label>
                             <input type="email" class="form-control" name="txtCorreo" id="txtCorreo"
                                    value="<?php echo htmlspecialchars($txtCorreo); ?>" 
-                                   placeholder="correo@ejemplo.com" required>
+                                   placeholder="correo@ejemplo.com" >
                         </div>
 
                            <div class="form-group">
