@@ -91,7 +91,9 @@ if (session_status() === PHP_SESSION_NONE) {
       👤 <?= htmlspecialchars($_SESSION['socios']['nombre'] ?? '') ?>
     </button>
     <div class="user-dropdown" id="userDropdown">
-      <a href="perfil.php"><i class="fas fa-user"></i> Mi perfil</a>
+   <a href='/sitioweb/users/Perfil.php'>Mi Perfil</a>
+   
+     
       <a href="ayuda.php"><i class="fas fa-question-circle"></i> Ayuda</a>
       <hr>
       <form action="logout.php" method="POST" style="margin:0;">
