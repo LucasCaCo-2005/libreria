@@ -225,7 +225,70 @@ class socios{
     public function setEstado($estado) {
         $this->estado = $estado;
     }
-    } //actualiza el estado desde el formulario
+
+public function RegistrarSocio($cedula, $nombre, $apellidos, $domicilio, $telefono, $correo, $contrasena, $estado) {
+    try {
+        // ✅ Conectarse con la misma clase que vos usás
+        $db = new Conexion();
+        $con = $db->Conectar();
+
+        // Hashear contraseña por seguridad (opcional)
+        // $contrasena = password_hash($contrasena, PASSWORD_BCRYPT);
+
+        // Preparar consulta
+        $sql = "INSERT INTO socios (cedula, Nombre, Apellidos, Domicilio, Telefono, Correo, contrasena, estado)
+                VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+        $stmt = $con->prepare($sql);
+
+        // Ejecutar con parámetros
+        $resultado = $stmt->execute([
+            $cedula, 
+            $nombre, 
+            $apellidos, 
+            $domicilio, 
+            $telefono, 
+            $correo, 
+            $contrasena, 
+            $estado
+        ]);
+
+        if ($resultado) {
+            return true;
+        } else {
+            return false;
+        }
+
+    } catch (PDOException $e) {
+        // Mostrar el error real
+        echo "<script>alert('Error al registrar socio: " . $e->getMessage() . "');</script>";
+        return false;
+    }
+}
+
+
+
+    //metodo para el login 
+public function login($cedula, $contrasena) {
+    // Creamos la conexión usando la clase Conexion
+    $conexion = new Conexion(); // instancia de la clase Conexion
+    $con = $conexion->Conectar(); // método que devuelve el PDO
+
+    // Preparar la consulta
+    $sql = "SELECT * FROM socios WHERE cedula = :cedula AND contrasena = :contrasena";
+    $stmt = $con->prepare($sql);
+
+    // Usar los parámetros para obtener cedula y contraseña
+    $stmt->bindParam(':cedula', $cedula);
+    $stmt->bindParam(':contrasena', $contrasena);
+
+    $stmt->execute();
+
+    return $stmt->fetch(PDO::FETCH_ASSOC); // devuelve la fila encontrada o false
+}
+
+
+
+    }
     if (isset($_POST['socio_id'], $_POST['nuevo_estado'])) {
     $socio_id = $_POST['socio_id'];
     $nuevo_estado = $_POST['nuevo_estado'];
@@ -262,6 +325,15 @@ if (isset($_GET['socio_id'])) {
     // Si no hay socio_id, el formulario está vacío (modo agregar)
     $txtID = $txtsocio = $txtNombre = $txtApellido = $txtCedula = $txtDomicilio = $txtTelefono = $txtCorreo = $txtestado = "";
 }
+
+
+
+
+
+
+
+
+
 ?>
 
 

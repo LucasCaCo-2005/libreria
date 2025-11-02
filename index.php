@@ -1,6 +1,11 @@
 <?php
 session_start();
 
+<<<<<<< HEAD
+
+include_once __DIR__ . "/admin/seccion/users.php";
+=======
+>>>>>>> 2ad180697827f417a48a26d45496592ac8eebdf8
 include_once __DIR__ . '/admin/seccion/bd.php';
 include_once __DIR__ . '/admin/seccion/Talleres.php';
 include_once ("admin/seccion/bd.php");
@@ -117,17 +122,8 @@ $listaTalleres = $talleresBD->ListarTalleres();
                 
             </div>
           
-          <?php if (isset($_SESSION['persona'])): ?>
-                <button class="login-banner-button" id="userButton">
-                    <span class="user-icon">👤</span>
-          <?= htmlspecialchars($_SESSION['persona']['nombre'] ?? '') ?>
-    </button>
-    <form action="logout.php" method="POST" style="display:inline;">
-        <button type="submit" name="logout" class="logout-button">Cerrar sesión</button>
-    </form>
-<?php else: ?>
-    <button class="login-banner-button" id="loginButton" onclick="openLoginModal()">Iniciar sesión</button>
-<?php endif; ?>
+   <!-- Incluyo el archivo que contiene el usuario logueado y el boton cerrar cesión -->
+<?php include_once './incluidos/loginBanner.php'; ?>
        
     </div>
         <div id="loginModal" class="modal">

@@ -1,4 +1,5 @@
 <?php
+
 if (session_status() == PHP_SESSION_NONE) {
     session_start();
 }
@@ -86,6 +87,7 @@ h1, h2 {
 <body>
 
 <?php include_once 'template/cabecera.php'; ?>
+<?php include_once './incluidos/loginBanner.php'; ?>
 
 <div class="contenido">
     <h1>Autoridades</h1>
