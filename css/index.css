@@ -1,0 +1,78 @@
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.6);
+    justify-content: center;
+    align-items: center;
+    overflow: hidden; /*elimina la barra de desplazamiento*/
+}
+
+.modal-content {
+    background-color: #0057a0;
+    padding: 60px 80px;
+    border-radius: 15px;
+    box-shadow: 0 0 20px rgba(0,0,0,0.3);
+    color: white;
+    font-family: Arial, sans-serif;
+    width: 100%;
+    max-width: 800px;
+    position: relative;
+    overflow: hidden;
+}
+
+.modal-content .close {
+    position: absolute;
+    right: 15px;
+    top: 10px;
+    font-size: 28px;
+    font-weight: bold;
+    color: white;
+    cursor: pointer;
+}
+
+.login-form input[type="text"],
+.login-form input[type="password"],
+.login-form input[type="submit"] {
+    display: block;
+    width: 100%;
+    margin: 12px 0;
+    padding: 10px;
+    font-size: 20px;
+    border: none;
+    border-radius: 5px;
+}
+
+.login-form input[type="submit"] {
+    background-color: #003d70;
+    color: white;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    font-size: 2.5em; /* tamaño aumentado */
+    padding: 10px 0;    /* espacio interno aumentado */
+    border: none;
+    border-radius: 5px;
+    margin-top: 10px;
+
+}
+
+.login-form input[type="submit"]:hover {
+    background-color: #002f5c;
+   
+   .login-banner-button {
+    background-color: #0057a0; /* Fondo azul */
+    color: white; /* Texto blanco */
+    padding: 12px 20px; /* Espaciado alrededor del texto */
+    border: none; /* Sin borde */
+    border-radius: 8px; /* Bordes redondeados */
+    font-size: 18px; /* Tamaño de la fuente */
+    cursor: pointer; /* Apunta con el cursor */
+    transition: background-color 0.3s, transform 0.3s; /* Transiciones suaves */
+    display: inline-block; /* Para no romper el flujo del layout */
+}
+
+}
