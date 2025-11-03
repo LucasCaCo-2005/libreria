@@ -4,6 +4,7 @@ if (session_status() == PHP_SESSION_NONE) {
     session_start();
 }
 
+// Recupera datos enviados por POST, maneja texto e imagenes.
 $txtID = (isset($_POST['txtID'])) ? $_POST['txtID'] : ""; 
 $txtNombre = (isset($_POST['txtNombre'])) ? $_POST['txtNombre'] : ""; 
 $txtIMG = (isset($_FILES['txtIMG']['name'])) ? $_FILES['txtIMG']['name'] : "";
@@ -15,32 +16,32 @@ $txtStock = (isset($_POST['txtStock'])) ? $_POST['txtStock'] : "";
 
 $txtDesc = (isset($_POST['txtDesc'])) ? $_POST['txtDesc'] : ""; 
 
-include("bd.php");
+include("bd.php"); // conexion a base de datos
 
-// Función para redireccionar
+// Función para redireccionar usando java script
 function redirect($url) {
     echo "<script>window.location.href = '$url';</script>";
     exit();
 }
 
-switch($accion) {
-    case 'Agregar':
+switch($accion) { // CRUD
+    case 'Agregar': //Prepara insert para nuevos libros
         $sentencia = $conexion->prepare("INSERT INTO `libros` (nombre, fecha, autor, categoria, stock, descripcion, imagen) VALUES (:nombre, :fecha, :autor, :categoria, :stock, :descripcion, :imagen);");
         
         $sentencia->bindParam(':nombre', $txtNombre);
         $sentencia->bindParam(':fecha', $txtfecha);
         $sentencia->bindParam(':autor', $txtAutor);
-             $sentencia->bindParam(':categoria', $txtCat); // Nueva categoría
+             $sentencia->bindParam(':categoria', $txtCat); 
         $sentencia->bindParam(':stock', $txtStock); 
         $sentencia->bindParam(':descripcion', $txtDesc); 
    
         
         $fecha = new DateTime(); 
         $nombreArchivo = ($txtIMG != "")? $fecha->getTimestamp() . "_" . $_FILES['txtIMG']['name'] : "imagen.jpg";
-        $tmpImagen = $_FILES['txtIMG']['tmp_name']; 
+        $tmpImagen = $_FILES['txtIMG']['tmp_name']; // genera un unico nombre para la imagen en base con timestap
         
         if ($tmpImagen != "") {
-            move_uploaded_file($tmpImagen, "../../images/" . $nombreArchivo); 
+            move_uploaded_file($tmpImagen, "../../images/" . $nombreArchivo); // sube las imagenes a una carpeta
         }
         
         $sentencia->bindParam(':imagen', $nombreArchivo);
@@ -48,7 +49,7 @@ switch($accion) {
         redirect("productos.php?mensaje=¡Libro agregado exitosamente!");
         break;
         
-    case 'Modificar':
+    case 'Modificar': //Update de los datos del libro
       
         $sentencia = $conexion->prepare("UPDATE libros SET nombre=:nombre, fecha=:fecha, autor=:autor, stock=:stock, descripcion=:descripcion, categoria=:categoria WHERE id=:id");
         $sentencia->bindParam(':nombre', $txtNombre);
@@ -81,10 +82,10 @@ switch($accion) {
         break;
 
     case 'Cancelar':
-        redirect("productos.php");
+        redirect("productos.php"); // redirije a la pagina, es para vaciar el formulario
         break;
         
-    case 'Seleccionar':
+    case 'Seleccionar': // Busca un libro en base a su ID
         $sentencia = $conexion->prepare("SELECT * FROM libros WHERE id=:id");
         $sentencia->bindParam(':id', $txtID);
         $sentencia->execute();
@@ -99,14 +100,14 @@ switch($accion) {
             'categoria' => $libro['categoria'],
             'stock' => $libro['stock'],
             'descripcion' => $libro['descripcion']
-            // Nueva categoría
+            
         ];
 
         redirect("productos.php?mensaje1=Libro seleccionado");
         break;
 
     case 'Borrar':
-        // Buscar la imagen actual
+        // Hace un delete de un libro y la imagen,primero busca ambas cosas y las borra despues
         $sentencia = $conexion->prepare("SELECT imagen FROM libros WHERE id=:id");
         $sentencia->bindParam(':id', $txtID);
         $sentencia->execute();
@@ -137,7 +138,6 @@ if (isset($_SESSION['libroSeleccionado'])) {
     $txtCat = $_SESSION['libroSeleccionado']['categoria'];
     $txtStock = $_SESSION['libroSeleccionado']['stock'];
     $txtDesc = $_SESSION['libroSeleccionado']['descripcion'];
-     // Nueva categoría
     unset($_SESSION['libroSeleccionado']);
 } 
 

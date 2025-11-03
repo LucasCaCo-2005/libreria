@@ -1,4 +1,6 @@
 <?php
+
+// Recupera todos los valores enviados por POST con operador ternario para evitar errores
 $txtID = (isset($_POST['txtID'])) ? $_POST['txtID'] : "";
 $txtsocio = (isset($_POST['txtsocio'])) ? $_POST['txtsocio'] : "";
 $txtNombre = (isset($_POST['txtNombre'])) ? $_POST['txtNombre'] : "";
@@ -11,13 +13,15 @@ $txtcon = (isset($_POST['txtcon'])) ? $_POST['txtcon'] : "";
 $txtestado = (isset($_POST['txtestado'])) ? $_POST['txtestado'] : "";
 $accion = (isset($_POST['accion'])) ? $_POST['accion'] : ""; 
 
+// Incluir archivo de conexión a base de datos
 include("bd.php");
 // Obtener la lista de usuarios
 $sentencia = $conexion->prepare("SELECT * FROM socios"); $sentencia->execute(); $listaSocios = $sentencia->fetchAll(PDO::FETCH_ASSOC); switch($accion){
-case "Agregar":
+case "Agregar":// insertar socio nuevo
     $sentencia = $conexion->prepare("INSERT INTO socios 
         (socio, nombre, apellidos, cedula, domicilio, telefono, correo, contrasena, estado) 
         VALUES (:socio, :nombre, :apellidos, :cedula, :domicilio, :telefono, :correo, :contrasena, :estado)");
+         // Vincular todos los parámetros para prevenir inyección SQL
         $sentencia->bindParam(':socio', $txtsocio);
     $sentencia->bindParam(':nombre', $txtNombre);
     $sentencia->bindParam(':apellidos', $txtApellido);
@@ -31,7 +35,7 @@ case "Agregar":
     $sentencia->execute();
     header("Location: socios.php");
     break;
-
+// eliminar socio
     case "Eliminar":
         $sentencia = $conexion->prepare("DELETE FROM socios WHERE id=:id");
         $sentencia->bindParam(':id', $txtID);
@@ -40,10 +44,12 @@ case "Agregar":
         break;
 
     case "Seleccionar":
+        // seleccionar socio
         $sentencia = $conexion->prepare("SELECT * FROM socios WHERE id=:id");
         $sentencia->bindParam(':id', $txtID);
         $sentencia->execute();
         $socio = $sentencia->fetch(PDO::FETCH_ASSOC);
+         // Cargar datos del socio en variables para pre-llenar formulario
         $txtsocio = $socio['socio'];
         $txtNombre = $socio['nombre'];
         $txtApellido = $socio['apellidos'];
@@ -55,7 +61,7 @@ case "Agregar":
         $txtestado = $socio['estado'];
         break;
 
-  case "Modificar": 
+  case "Modificar": // update de los datos del socio
     $sentencia = $conexion->prepare("UPDATE socios 
         SET socio=:socio,
         nombre=:nombre, 
@@ -67,7 +73,7 @@ case "Agregar":
             contrasena=:contrasena
             , estado=:estado
         WHERE id=:id");
-
+// Vincular parámetros incluyendo ID para la cláusula WHERE
 $sentencia->bindParam(':socio', $txtsocio);
     $sentencia->bindParam(':nombre', $txtNombre);
     $sentencia->bindParam(':apellidos', $txtApellido);
@@ -83,13 +89,14 @@ $sentencia->bindParam(':socio', $txtsocio);
     break;
 
     case "Cancelar":
-        header("Location: socios.php");
+        header("Location: socios.php"); // vacia el formulario
         break;
 
 }
+//  sistema de filttado por estado
 $filtro = "";
 $parametros = [];
-
+// Verificar si se aplicó filtro por estado
 if (isset($_GET['filtroEstado']) && $_GET['filtroEstado'] != "") {
     $filtro = " WHERE estado = :estado ";
     $parametros[':estado'] = $_GET['filtroEstado'];
@@ -97,20 +104,22 @@ if (isset($_GET['filtroEstado']) && $_GET['filtroEstado'] != "") {
 $sentenciaSQL = $conexion->prepare("SELECT * FROM socios $filtro");
 $sentenciaSQL->execute($parametros);
 $listaSocios = $sentenciaSQL->fetchAll(PDO::FETCH_ASSOC);
-
+// Consultas específicas según el filtro seleccionado
 $filtroSeleccionado = isset($_GET['filtroEstado']) ? $_GET['filtroEstado'] : "activo";
 if ($filtroSeleccionado == "inactivo") {
     $sentencia = $conexion->prepare("SELECT * FROM socios WHERE estado='inactivo'");
 } elseif ($filtroSeleccionado == "pendiente") {
     $sentencia = $conexion->prepare("SELECT * FROM socios WHERE estado='pendiente'");
-} else {
+} else { // Por defecto muestra socios activos
     $sentencia = $conexion->prepare("SELECT * FROM socios WHERE estado='activo'");
 }
 
 $sentencia->execute();
 $listaSocios = $sentencia->fetchAll(PDO::FETCH_ASSOC);
-
+// Obtener el mes actual
 $mesActual = date("F Y");
+
+// Consultar pagos del mes actual con información del socio
 $sentenciaPagos = $conexion->prepare("SELECT p.*, s.nombre, s.apellidos 
                                       FROM pagos p
                                       INNER JOIN socios s ON p.socio_id = s.id
@@ -118,12 +127,12 @@ $sentenciaPagos = $conexion->prepare("SELECT p.*, s.nombre, s.apellidos
 $sentenciaPagos->bindParam(':mes', $mesActual);
 $sentenciaPagos->execute();
 $listaPagos = $sentenciaPagos->fetchAll(PDO::FETCH_ASSOC);
-
+// Contar total de pagos del mes actual
 $sentenciaContador = $conexion->prepare("SELECT COUNT(*) as total FROM pagos WHERE mes_pagado = :mes");
 $sentenciaContador->bindParam(':mes', $mesActual);
 $sentenciaContador->execute();
 $totalPagos = $sentenciaContador->fetch(PDO::FETCH_ASSOC)['total'];
-
+ //Clase que representa la entidad socio
 class socios{
     private $id;
     private $socio;
@@ -135,7 +144,7 @@ class socios{
     private $correo;
     private $contrasena;
     private $estado;
-
+// setter y getters
     public function getId() {
         return $this->id;
     }
@@ -283,7 +292,7 @@ public function login($cedula, $contrasena) {
     if (isset($_POST['socio_id'], $_POST['nuevo_estado'])) {
     $socio_id = $_POST['socio_id'];
     $nuevo_estado = $_POST['nuevo_estado'];
-
+ // Actualizar estado del socio
     $stmt = $conexion->prepare("UPDATE socios SET estado = ? WHERE id = ?");
     $stmt->execute([$nuevo_estado, $socio_id]);
 
@@ -316,6 +325,7 @@ if (isset($_GET['socio_id'])) {
     // Si no hay socio_id, el formulario está vacío (modo agregar)
     $txtID = $txtsocio = $txtNombre = $txtApellido = $txtCedula = $txtDomicilio = $txtTelefono = $txtCorreo = $txtestado = "";
 }
+
 
 
 
