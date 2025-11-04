@@ -167,7 +167,7 @@ switch($accion) {
         $txtEstado = "activo";
         $foto_actual = "";
         break;
-        
+
 }
 
 // Siempre listar las autoridades (excepto en redirecciones)
@@ -176,4 +176,88 @@ if ($accion !== "Agregar" && $accion !== "Modificar" && $accion !== "Eliminar") 
     $sentencia->execute();
     $listaAutoridades = $sentencia->fetchAll(PDO::FETCH_ASSOC);
 }
+
+
+class AutoridadesBD extends Conexion {
+    
+    // Método para listar autoridades - CORREGIDO
+    public function ListarAutoridades() {
+        try {
+            $con = $this->Conectar();
+            $sql = "SELECT * FROM autoridades WHERE estado = 'activo' ORDER BY 
+                    CASE WHEN LOWER(cargo) = 'presidente' THEN 1 ELSE 2 END, 
+                    cargo, nombre";
+            $stmt = $con->prepare($sql);
+            $stmt->execute();
+            $resultado = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            
+            // Convertir a objetos Autoridades
+            $ListaAutoridades = [];
+            foreach ($resultado as $fila) {
+                $autoridad = new Autoridades();
+                $autoridad->setId($fila['id']);
+                $autoridad->setCedula($fila['cedula']);
+                $autoridad->setNombre($fila['nombre']);
+                $autoridad->setCargo($fila['cargo']);
+                $autoridad->setFecha_inicio($fila['fecha_inicio']);
+                $autoridad->setFecha_fin($fila['fecha_fin']);
+                $autoridad->setFoto($fila['foto']);
+                $autoridad->setEstado($fila['estado']);
+                $ListaAutoridades[] = $autoridad;
+            }
+            return $ListaAutoridades;
+        } catch (PDOException $e) {
+            error_log("Error al listar autoridades: " . $e->getMessage());
+            return [];
+        }
+    }
+}
+
+class Autoridades extends Conexion {
+    private $id;
+    private $cedula;
+    private $nombre;
+    private $cargo;
+    private $fecha_inicio;
+    private $fecha_fin;
+    private $foto;
+    private $estado;
+    
+    // Getters y Setters MEJORADOS para evitar null
+    public function setId($id){ $this->id = $id; }
+    public function getId(){ return $this->id ?? 0; }
+    
+    public function setCedula($cedula){ $this->cedula = $cedula; }
+    public function getCedula(){ return $this->cedula ?? ''; }
+    
+    public function setNombre($nombre){ $this->nombre = $nombre; }
+    public function getNombre(){ return $this->nombre ?? ''; }
+    
+    public function setCargo($cargo){ $this->cargo = $cargo; }
+    public function getCargo(){ return $this->cargo ?? ''; }
+    
+    public function setFecha_inicio($fecha_inicio){ $this->fecha_inicio = $fecha_inicio; }
+    public function getFecha_inicio(){ return $this->fecha_inicio ?? ''; }
+    
+    public function setFecha_fin($fecha_fin){ $this->fecha_fin = $fecha_fin; }
+    public function getFecha_fin(){ return $this->fecha_fin ?? ''; }
+    
+    public function setFoto($foto){ $this->foto = $foto; }
+    public function getFoto(){ return $this->foto ?? 'default-avatar.jpg'; } // Imagen por defecto
+    
+    public function setEstado($estado){ $this->estado = $estado; }
+    public function getEstado(){ return $this->estado ?? 'inactivo'; }
+}
+
+
+
+
+
+
+
+
+
+
+
+
 ?>
