@@ -23,6 +23,22 @@ include("template/cabecera.php");
         <p>Administra el personal de la biblioteca</p>
     </div>
 
+    <!-- Sistema de mensajes elegante -->
+    <?php if (!empty($mostrarMensaje)): 
+        list($tipo, $mensaje) = explode('|', $mostrarMensaje, 2);
+    ?>
+    <div class="alert-message alert-<?= $tipo ?>">
+        <?php if ($tipo == 'success'): ?>
+            <span class="alert-icon">✅</span>
+        <?php elseif ($tipo == 'error'): ?>
+            <span class="alert-icon">❌</span>
+        <?php elseif ($tipo == 'info'): ?>
+            <span class="alert-icon">ℹ️</span>
+        <?php endif; ?>
+        <span class="alert-text"><?= htmlspecialchars($mensaje) ?></span>
+        <button type="button" class="alert-close" onclick="this.parentElement.style.display='none'">×</button>
+    </div>
+    <?php endif; ?>
     <div class="trabajadores-content">
        
         <div class="form-section">
@@ -224,31 +240,57 @@ document.getElementById('txtTelefono').addEventListener('input', function(e) {
     }
 });
 
-// Confirmación para acciones
+// Confirmación para acciones - VERSIÓN MEJORADA
 document.querySelectorAll('form').forEach(form => {
     form.addEventListener('submit', function(e) {
         const accion = this.querySelector('[name="accion"]')?.value;
         
-        if (accion === 'Seleccionar') {
-            return; // No necesita confirmación
+        // NO hacer validación para estas acciones
+        if (accion === 'Seleccionar' || accion === 'Cancelar') {
+            return; // Permitir el envío normal sin confirmación
         }
         
         let mensaje = '';
         switch(accion) {
             case 'Agregar':
+                // Validar que los campos requeridos no estén vacíos
+                const nombre = document.getElementById('txtNombre')?.value;
+                const cedula = document.getElementById('txtCedula')?.value;
+                const puesto = document.getElementById('txtpuesto')?.value;
+                
+                if (!nombre || !cedula || !puesto) {
+                    e.preventDefault();
+                    // Mostrar mensaje de error (será manejado por PHP)
+                    return;
+                }
+                
                 mensaje = '¿Está seguro de agregar este trabajador?';
                 break;
+                
             case 'Modificar':
                 mensaje = '¿Está seguro de modificar este trabajador?';
                 break;
-            case 'Cancelar':
-                mensaje = '¿Está seguro de cancelar los cambios?';
+        }
+          case 'Cancelar':
+               
                 break;
         }
         
         if (mensaje && !confirm(mensaje)) {
             e.preventDefault();
         }
+    });
+});
+
+// Auto-ocultar mensajes después de 5 segundos
+document.addEventListener('DOMContentLoaded', function() {
+    const alertMessages = document.querySelectorAll('.alert-message');
+    alertMessages.forEach(alert => {
+        setTimeout(() => {
+            alert.style.opacity = '0';
+            alert.style.transition = 'opacity 0.5s ease';
+            setTimeout(() => alert.remove(), 500);
+        }, 5000);
     });
 });
 </script>

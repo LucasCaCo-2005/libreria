@@ -1,52 +1,218 @@
 <?php
-include_once("bd.php");
-// Se crea una clase para manejar operaciones de base de datos de autoridades que hereda de la clase Conexion
-class autoridadesBD extends Conexion {
-    // metodo para insertar autoridades
-  public function CargarAutoridades($cedula, $nombre, $cargo, $fecha_inicio, $fecha_fin, $foto, $estado) {
-    try {  $conn = $this->Conectar(); 
-// se establece conexion a base de datos y prepara consulta sql
-        $sql = "INSERT INTO autoridades (cedula, nombre, cargo, fecha_inicio, fecha_fin, foto, estado) VALUES (:cedula, :nombre, :cargo, :fecha_inicio, :fecha_fin, :foto, :estado)";
-// Se vinculan parametros para evitar inyecciones
-        $stmt = $conn->prepare($sql);
-        $stmt->bindParam(':cedula', $cedula);
-        $stmt->bindParam(':nombre', $nombre);
-        $stmt->bindParam(':cargo', $cargo);
-        $stmt->bindParam(':fecha_inicio', $fecha_inicio);
-        $stmt->bindParam(':fecha_fin', $fecha_fin);
-        $stmt->bindParam(':foto', $foto);
-        $stmt->bindParam(':estado', $estado);
-        $stmt->execute();
-        // ejecuta consulta y muestra mensaje adjunto
-        echo "<script>alert('Autoridad agregada correctamente');</script>";} catch (PDOException $e) {
-        echo "Error al insertar autoridad: " . $e->getMessage();
-    }}
-// metodo para mostrar todas las autoridades
+// Inicializar variables
+$txtID = $txtCedula = $txtNombre = $txtCargo = $txtFecha_inicio = $txtFecha_fin = $txtEstado = "";
+$foto_actual = "";
+$listaAutoridades = [];
+
+// Recuperar valores del formulario
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $txtID = $_POST['txtID'] ?? "";
+    $txtCedula = $_POST['txtCedula'] ?? "";
+    $txtNombre = $_POST['txtNombre'] ?? "";
+    $txtCargo = $_POST['txtCargo'] ?? "";
+    $txtFecha_inicio = $_POST['txtFecha_inicio'] ?? "";
+    $txtFecha_fin = $_POST['txtFecha_fin'] ?? "";
+    $txtEstado = $_POST['txtEstado'] ?? "activo";
+    $accion = $_POST['accion'] ?? "";
+} else {
+    $accion = "Listar"; // Acción por defecto al cargar la página
+}
+
+// Incluir archivo de conexión
+include("bd.php");
+
+// Función para cargar imagen
+function cargarImagen() {
+    if (!empty($_FILES['image']['name'])) {
+        $directorio = "../images/";
+        $archivo = $directorio . basename($_FILES['image']['name']);
+        $tipoArchivo = strtolower(pathinfo($archivo, PATHINFO_EXTENSION));
+        
+        // Validar que es una imagen
+        $check = getimagesize($_FILES['image']['tmp_name']);
+        if ($check === false) {
+            return null;
+        }
+        
+        // Generar nombre único
+        $nombreArchivo = uniqid() . '.' . $tipoArchivo;
+        $archivoDestino = $directorio . $nombreArchivo;
+        
+        // Mover archivo
+        if (move_uploaded_file($_FILES['image']['tmp_name'], $archivoDestino)) {
+            return $nombreArchivo;
+        }
+    }
+    return null;
+}
+
+// Procesar acciones
+switch($accion) {
+    case "Agregar":
+        $foto = cargarImagen();
+        
+        $sentencia = $conexion->prepare("
+            INSERT INTO autoridades (cedula, nombre, cargo, fecha_inicio, fecha_fin, foto, estado)
+            VALUES (:cedula, :nombre, :cargo, :fecha_inicio, :fecha_fin, :foto, :estado)
+        ");
+        
+        $sentencia->bindParam(':cedula', $txtCedula);
+        $sentencia->bindParam(':nombre', $txtNombre);
+        $sentencia->bindParam(':cargo', $txtCargo);
+        $sentencia->bindParam(':fecha_inicio', $txtFecha_inicio);
+        $sentencia->bindParam(':fecha_fin', $txtFecha_fin);
+        $sentencia->bindParam(':foto', $foto);
+        $sentencia->bindParam(':estado', $txtEstado);
+        
+        if ($sentencia->execute()) {
+            // Limpiar formulario después de agregar
+            $txtID = $txtCedula = $txtNombre = $txtCargo = $txtFecha_inicio = $txtFecha_fin = "";
+            $txtEstado = "activo";
+            echo "<script>alert('Autoridad agregada correctamente');</script>";
+        } else {
+            echo "<script>alert('Error al agregar la autoridad');</script>";
+        }
+        break;
+
+    case "Seleccionar":
+        $sentencia = $conexion->prepare("SELECT * FROM autoridades WHERE id = :id");
+        $sentencia->bindParam(':id', $txtID);
+        $sentencia->execute();
+        $autoridad = $sentencia->fetch(PDO::FETCH_ASSOC);
+        
+        if ($autoridad) {
+            $txtCedula = $autoridad['cedula'];
+            $txtNombre = $autoridad['nombre'];
+            $txtCargo = $autoridad['cargo'];
+            $txtFecha_inicio = $autoridad['fecha_inicio'];
+            $txtFecha_fin = $autoridad['fecha_fin'];
+            $txtEstado = $autoridad['estado'];
+            $foto_actual = $autoridad['foto'];
+            
+            echo "<script>alert('Autoridad seleccionada para edición: {$autoridad['nombre']}');</script>";
+        } else {
+            echo "<script>alert('Error: No se encontró la autoridad');</script>";
+        }
+        break;
+
+    case "Modificar":
+        if (!empty($txtID)) {
+            // Si hay nueva imagen, cargarla
+            $nueva_foto = cargarImagen();
+            
+            if ($nueva_foto) {
+                // Actualizar con nueva foto
+                $sentencia = $conexion->prepare("
+                    UPDATE autoridades SET
+                        cedula = :cedula,
+                        nombre = :nombre,
+                        cargo = :cargo,
+                        fecha_inicio = :fecha_inicio,
+                        fecha_fin = :fecha_fin,
+                        foto = :foto,
+                        estado = :estado
+                    WHERE id = :id
+                ");
+                $sentencia->bindParam(':foto', $nueva_foto);
+            } else {
+                // Mantener foto actual
+                $sentencia = $conexion->prepare("
+                    UPDATE autoridades SET
+                        cedula = :cedula,
+                        nombre = :nombre,
+                        cargo = :cargo,
+                        fecha_inicio = :fecha_inicio,
+                        fecha_fin = :fecha_fin,
+                        estado = :estado
+                    WHERE id = :id
+                ");
+            }
+            
+            $sentencia->bindParam(':cedula', $txtCedula);
+            $sentencia->bindParam(':nombre', $txtNombre);
+            $sentencia->bindParam(':cargo', $txtCargo);
+            $sentencia->bindParam(':fecha_inicio', $txtFecha_inicio);
+            $sentencia->bindParam(':fecha_fin', $txtFecha_fin);
+            $sentencia->bindParam(':estado', $txtEstado);
+            $sentencia->bindParam(':id', $txtID);
+            
+            if ($sentencia->execute()) {
+                // Limpiar formulario después de modificar
+                $txtID = $txtCedula = $txtNombre = $txtCargo = $txtFecha_inicio = $txtFecha_fin = "";
+                $txtEstado = "activo";
+                $foto_actual = "";
+                echo "<script>alert('Autoridad modificada correctamente');</script>";
+            } else {
+                echo "<script>alert('Error al modificar la autoridad');</script>";
+            }
+        }
+        break;
+
+    case "Eliminar":
+        if (!empty($txtID)) {
+            $sentencia = $conexion->prepare("DELETE FROM autoridades WHERE id = :id");
+            $sentencia->bindParam(':id', $txtID);
+            
+            if ($sentencia->execute()) {
+                echo "<script>alert('Autoridad eliminada correctamente');</script>";
+            } else {
+                echo "<script>alert('Error al eliminar la autoridad');</script>";
+            }
+        }
+        break;
+
+    case "Cancelar":
+        // Limpiar todo
+        $txtID = $txtCedula = $txtNombre = $txtCargo = $txtFecha_inicio = $txtFecha_fin = "";
+        $txtEstado = "activo";
+        $foto_actual = "";
+        break;
+
+}
+
+// Siempre listar las autoridades (excepto en redirecciones)
+if ($accion !== "Agregar" && $accion !== "Modificar" && $accion !== "Eliminar") {
+    $sentencia = $conexion->prepare("SELECT * FROM autoridades ORDER BY cargo, nombre");
+    $sentencia->execute();
+    $listaAutoridades = $sentencia->fetchAll(PDO::FETCH_ASSOC);
+}
+
+
+class AutoridadesBD extends Conexion {
+    
+    // Método para listar autoridades - CORREGIDO
     public function ListarAutoridades() {
-        $con = $this->Conectar();
-         $sql = "SELECT * FROM autoridades";
-        $stmt = $con->prepare($sql);
-        if (!$stmt) die("Error preparando consulta: " . $con->errorInfo()[2]);
+        try {
+            $con = $this->Conectar();
+            $sql = "SELECT * FROM autoridades WHERE estado = 'activo' ORDER BY 
+                    CASE WHEN LOWER(cargo) = 'presidente' THEN 1 ELSE 2 END, 
+                    cargo, nombre";
+            $stmt = $con->prepare($sql);
+            $stmt->execute();
+            $resultado = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            
+            // Convertir a objetos Autoridades
+            $ListaAutoridades = [];
+            foreach ($resultado as $fila) {
+                $autoridad = new Autoridades();
+                $autoridad->setId($fila['id']);
+                $autoridad->setCedula($fila['cedula']);
+                $autoridad->setNombre($fila['nombre']);
+                $autoridad->setCargo($fila['cargo']);
+                $autoridad->setFecha_inicio($fila['fecha_inicio']);
+                $autoridad->setFecha_fin($fila['fecha_fin']);
+                $autoridad->setFoto($fila['foto']);
+                $autoridad->setEstado($fila['estado']);
+                $ListaAutoridades[] = $autoridad;
+            }
+            return $ListaAutoridades;
+        } catch (PDOException $e) {
+            error_log("Error al listar autoridades: " . $e->getMessage());
+            return [];
+        }
+    }
+}
 
-        $stmt->execute();
-        $resultado = $stmt->fetchAll(PDO::FETCH_ASSOC);
-// se ejecuta la consulta
-        $ListaAutoridades = [];
-        foreach ($resultado as $fila) {
-            $autoridad = new Autoridades();
-            $autoridad->setId($fila['id']);
-            $autoridad->setCedula($fila['cedula']);
-            $autoridad->setNombre($fila['Nombre']);
-            $autoridad->setCargo($fila['cargo']);
-            $autoridad->setFecha_inicio($fila['fecha_inicio']);
-            $autoridad->setFecha_fin($fila['fecha_fin']);
-            $autoridad->setFoto($fila['foto']);
-            $autoridad->setEstado($fila['estado']);
-            $ListaAutoridades[] = $autoridad;
-        }       return $ListaAutoridades;  } } 
-// convierte los datos en objetos y los guarda en un array
-
-// crea la clase autoridades con sus datos privados
 class Autoridades extends Conexion {
     private $id;
     private $cedula;
@@ -56,136 +222,42 @@ class Autoridades extends Conexion {
     private $fecha_fin;
     private $foto;
     private $estado;
-    // los siguiententes son metodos de acceso para las propiedades
-
-    // ID
+    
+    // Getters y Setters MEJORADOS para evitar null
     public function setId($id){ $this->id = $id; }
-     public function getId(){ return $this->id; }
-    // Cédula
+    public function getId(){ return $this->id ?? 0; }
+    
     public function setCedula($cedula){ $this->cedula = $cedula; }
-     public function getCedula(){ return $this->cedula; }
-    // Nombre
+    public function getCedula(){ return $this->cedula ?? ''; }
+    
     public function setNombre($nombre){ $this->nombre = $nombre; }
-     public function getNombre(){ return $this->nombre; }
-    // Cargo
+    public function getNombre(){ return $this->nombre ?? ''; }
+    
     public function setCargo($cargo){ $this->cargo = $cargo; }
-     public function getCargo(){ return $this->cargo; }
-    // Fechas
+    public function getCargo(){ return $this->cargo ?? ''; }
+    
     public function setFecha_inicio($fecha_inicio){ $this->fecha_inicio = $fecha_inicio; }
-     public function getFecha_inicio(){ return $this->fecha_inicio; }
+    public function getFecha_inicio(){ return $this->fecha_inicio ?? ''; }
+    
     public function setFecha_fin($fecha_fin){ $this->fecha_fin = $fecha_fin; }
-     public function getFecha_fin(){ return $this->fecha_fin; }
-    // Foto
-    public function setFoto($foto){ $this->foto = $foto; } public function getFoto(){ return $this->foto; }
-    // Estado
-    public function setEstado($estado){ $this->estado = $estado; } public function getEstado(){ return $this->estado; }
-    // Operaciones
-    public function ListarAutoridades() {
-        $autoridadesBD = new autoridadesBD();
-        return $autoridadesBD->ListarAutoridades();   }
-
-    public function CargarAutoridades() {
-    $autoridadesBD = new autoridadesBD();
-    return $autoridadesBD->CargarAutoridades(
-        $this->cedula,
-        $this->nombre,
-        $this->cargo,
-        $this->fecha_inicio,
-        $this->fecha_fin,
-        $this->foto,
-        $this->estado
-    );
-}}
-
-// Obtiene datos del formulario 
-$txtID           = $_POST['id'] ?? "";
-$txtCedula       = $_POST['cedula'] ?? "";
-$txtNombre = isset($_POST['nombre']) ? $_POST['nombre'] : "";
-$txtCargo        = $_POST['cargo'] ?? "";
-$txtFecha_inicio = $_POST['fecha_inicio'] ?? "";
-$txtFecha_fin    = $_POST['fecha_fin'] ?? "";
-$txtestado       = $_POST['estado'] ?? "";
-
-//Detecta cuando se presiona agregar y crea nuevo objeto de Autoridades
-if (isset($_POST['agregar'])) {
-    $autoridad = new Autoridades();
-    $autoridad->setCedula($txtCedula);
-    $autoridad->setNombre($txtNombre); 
-    $autoridad->setCargo($txtCargo);
-    $autoridad->setFecha_inicio($txtFecha_inicio);
-    $autoridad->setFecha_fin($txtFecha_fin);
-    $autoridad->setEstado($txtestado ?: "activo");
-
-    // Maneja upload de imagen si se selecciono una imagen
-    if (!empty($_FILES['image']['name'])) {
-        include_once "../cargarimagen.php";
-        $foto = CargarFoto();
-        if ($foto) {
-            $autoridad->setFoto($foto);
-        }
-    }
-    try {
-        $autoridad->CargarAutoridades();
-    } catch (PDOException $e) {
-        echo "Error al insertar autoridad: " . $e->getMessage();
-    }
+    public function getFecha_fin(){ return $this->fecha_fin ?? ''; }
+    
+    public function setFoto($foto){ $this->foto = $foto; }
+    public function getFoto(){ return $this->foto ?? 'default-avatar.jpg'; } // Imagen por defecto
+    
+    public function setEstado($estado){ $this->estado = $estado; }
+    public function getEstado(){ return $this->estado ?? 'inactivo'; }
 }
 
-// agarra todas las unidades de autoridades y las muestra
-if (isset($_POST['ListarAutoridades'])) {
-    $autoridad = new Autoridades();
-    $resultados = $autoridad->ListarAutoridades();
-}
 
-// busca una autoridad segun su id
-if (isset($_POST['BuscarAutoridades'])) {
-    $id = intval($_POST['id']);
-    $stmt = $conn->prepare("SELECT * FROM autoridades WHERE Id = ?");
-    $stmt->execute([$id]);
-    $autoridadSeleccionado = $stmt->fetch(PDO::FETCH_ASSOC);
 
-    // Rellenar variables para mostrar en el formulario
-    if ($autoridadSeleccionado) {
-        $txtID           = $autoridadSeleccionado['Id'];
-        $txtCedula       = $autoridadSeleccionado['cedula'];
-        $txtNombre       = $autoridadSeleccionado['nombre'];
-        $txtCargo        = $autoridadSeleccionado['cargo'];
-        $txtFecha_inicio = $autoridadSeleccionado['fecha_inicio'];
-        $txtFecha_fin    = $autoridadSeleccionado['fecha_fin'];
-        $txtestado       = $autoridadSeleccionado['estado'];
-    }
-}
 
-// hace un update de los datos de una autoridad en la base de datos
-if (isset($_POST['Modificar'])) {
-    $id = intval($_POST['id']);
-    if ($id > 0) {
-        $sql = "UPDATE autoridades 
-                SET cedula = ?, nombre = ?, cargo = ?, fecha_inicio = ?, fecha_fin = ?, estado = ? 
-                WHERE Id = ?";
-        $stmt = $conn->prepare($sql);
-        $stmt->execute([$txtCedula, $txtNombre, $txtCargo, $txtFecha_inicio, $txtFecha_fin, $txtestado, $id]);
 
-        // Si se subió una nueva imagen, actualizarla
-        if (!empty($_FILES['image']['name'])) {
-            include_once "../cargarimagen.php";
-            $foto = CargarFoto();
-            if ($foto) {
-                $stmtFoto = $conn->prepare("UPDATE autoridades SET foto = ? WHERE Id = ?");
-                $stmtFoto->execute([$foto, $id]);
-            }
-        }
-        echo "<script>alert('Autoridad modificada correctamente');</script>";
-    } else {
-        echo "<script>alert('Seleccione una autoridad antes de modificar');</script>";
-    }
-}
-// limpia las variables del formulario
-if (isset($_POST['Limpiar'])) {
-    $txtID = $txtCedula = $txtNombre = $txtCargo = $txtFecha_inicio = $txtFecha_fin = $txtestado = "";
-    $autoridadSeleccionado = null;
-}
+
+
+
+
+
+
 
 ?>
-
-

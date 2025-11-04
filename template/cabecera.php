@@ -1,4 +1,8 @@
-
+<?php
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
+?>
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -215,7 +219,7 @@
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="nosotros.php">
+          <a class="nav-link" href="nosotros.php" hidden>
             <i class="fas fa-users"></i> Nosotros
           </a>
         </li>
@@ -260,7 +264,7 @@
       <button class="btn btn-admin" onclick="window.location.href='./admin/paneladmin.php'">
         <i class="fas fa-user-shield"></i> Panel Admin
       </button>
-      <?php include_once './incluidos/loginBanner.php'; ?>
+      <?php include_once './users/loginBanner.php'; ?>
     </div>
   </div>
 </nav>

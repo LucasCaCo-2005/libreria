@@ -1,8 +1,4 @@
-<?php
-if (session_status() === PHP_SESSION_NONE) {
-    session_start();
-}
-?>
+
 
 <style>
 /* 🔹 Estilos específicos para el login banner */
