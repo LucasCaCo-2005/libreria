@@ -26,7 +26,7 @@ $listaAutoridades = $autoridadesBD->ListarAutoridades();
 <body>
 
 <?php include_once 'template/cabecera.php'; ?>
-<?php include_once './incluidos/loginBanner.php'; ?>
+<?php include_once './users/loginBanner.php'; ?>
 
 <div class="contenido">
   
@@ -40,38 +40,37 @@ $listaAutoridades = $autoridadesBD->ListarAutoridades();
             $otros = array_filter($listaAutoridades, fn($a) => strtolower($a->getCargo()) !== 'presidente');
         ?>
 
-        <!-- Sección del Presidente -->
-        <?php if (!empty($presidentes)): ?>
-            <div class="organigrama-presidente">
-                <?php foreach ($presidentes as $autoridad): ?>
-                    <div class="card presidente">
-                        <img src="images/<?= htmlspecialchars($autoridad->getFoto()) ?>" alt="Foto de <?= htmlspecialchars($autoridad->getCargo()) ?>">
-                        <div class="card-content">
-                            <p><strong><?= htmlspecialchars($autoridad->getNombre()) ?></strong></p>
-                            <p><strong><?= htmlspecialchars($autoridad->getCargo()) ?></strong></p>
-                            <p><strong>Desde:</strong> <?= htmlspecialchars($autoridad->getFecha_inicio()) ?></p>
-                            <p><strong>Hasta:</strong> <?= htmlspecialchars($autoridad->getFecha_fin()) ?></p>
-                        </div>
-                    </div>
-                <?php endforeach; ?>
-            </div>
-        <?php endif; ?>
-
-        <!-- Sección del resto de autoridades -->
-        <div class="organigrama-otros">
-            <?php foreach ($otros as $autoridad): ?>
-                <div class="card">
-                    <img src="images/<?= htmlspecialchars($autoridad->getFoto()) ?>" alt="Foto de <?= htmlspecialchars($autoridad->getCargo()) ?>">
-                    <div class="card-content">
-                        <p><strong><?= htmlspecialchars($autoridad->getNombre()) ?></strong></p>
-                        <p><strong><?= htmlspecialchars($autoridad->getCargo()) ?></strong></p>
-                        <p><strong>Desde:</strong> <?= htmlspecialchars($autoridad->getFecha_inicio()) ?></p>
-                        <p><strong>Hasta:</strong> <?= htmlspecialchars($autoridad->getFecha_fin()) ?></p>
-                    </div>
+       <!-- Sección del Presidente -->
+<?php if (!empty($presidentes)): ?>
+    <div class="organigrama-presidente">
+        <?php foreach ($presidentes as $autoridad): ?>
+            <div class="card presidente">
+                <img src="images/<?= htmlspecialchars($autoridad->getFoto() ?? '') ?>" alt="Foto de <?= htmlspecialchars($autoridad->getCargo() ?? '') ?>">
+                <div class="card-content">
+                    <p><strong><?= htmlspecialchars($autoridad->getNombre() ?? '') ?></strong></p>
+                    <p><strong><?= htmlspecialchars($autoridad->getCargo() ?? '') ?></strong></p>
+                    <p><strong>Desde:</strong> <?= htmlspecialchars($autoridad->getFecha_inicio() ?? '') ?></p>
+                    <p><strong>Hasta:</strong> <?= htmlspecialchars($autoridad->getFecha_fin() ?? '') ?></p>
                 </div>
-            <?php endforeach; ?>
-        </div>
+            </div>
+        <?php endforeach; ?>
+    </div>
+<?php endif; ?>
 
+<!-- Sección del resto de autoridades -->
+<div class="organigrama-otros">
+    <?php foreach ($otros as $autoridad): ?>
+        <div class="card">
+            <img src="images/<?= htmlspecialchars($autoridad->getFoto() ?? '') ?>" alt="Foto de <?= htmlspecialchars($autoridad->getCargo() ?? '') ?>">
+            <div class="card-content">
+                <p><strong><?= htmlspecialchars($autoridad->getNombre() ?? '') ?></strong></p>
+                <p><strong><?= htmlspecialchars($autoridad->getCargo() ?? '') ?></strong></p>
+                <p><strong>Desde:</strong> <?= htmlspecialchars($autoridad->getFecha_inicio() ?? '') ?></p>
+                <p><strong>Hasta:</strong> <?= htmlspecialchars($autoridad->getFecha_fin() ?? '') ?></p>
+            </div>
+        </div>
+    <?php endforeach; ?>
+</div>
     <?php else: ?>
         <p style="text-align:center;">Próximamente publicaremos las nuevas Autoridades.</p>
     <?php endif; ?>

@@ -36,7 +36,7 @@ $listaTalleres = $talleresBD->ListarTalleres();
             </div>
           
    <!-- Incluyo el archivo que contiene el usuario logueado y el boton cerrar cesión -->
-<?php include_once './incluidos/loginBanner.php'; ?>
+<?php include_once './users/loginBanner.php'; ?>
        
     </div>
         <div id="loginModal" class="modal">

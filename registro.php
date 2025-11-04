@@ -4,7 +4,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['agregar'])) {
 
 include_once __DIR__ . "/admin/seccion/bd.php";
 include_once __DIR__ . "/admin/seccion/users.php";
-include_once __DIR__ . "/logica/usersBD.php"; 
+include_once __DIR__ . "/users/usersBD.php"; 
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['agregar'])) {
 
@@ -15,7 +15,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['agregar'])) {
     $telefono   = $_POST['telefono'] ?? '';
     $correo     = $_POST['correo'] ?? '';
     $contrasena = $_POST['contrasena'] ?? '';
-    $estado     = $_POST['estado'] ?? 'activo'; // Valor por defecto
+    $estado     = $_POST['estado'] ?? 'pendiente'; // Valor por defecto
     $domicilio  = $_POST['domicilio'] ?? '';   // Opcional
 
     // ✅ Crear objeto y registrar
@@ -28,7 +28,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['agregar'])) {
         echo "<script>alert('❌ Error al registrar el socio');</script>";
     }
 }
-
+}
 ?>
 <!DOCTYPE html>
 <html lang="es">
