@@ -28,7 +28,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['agregar'])) {
         echo "<script>alert('❌ Error al registrar el socio');</script>";
     }
 }
-
+}
 ?>
 <!DOCTYPE html>
 <html lang="es">
