@@ -24,6 +24,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['agregar'])) {
 
     if ($resultado) {
         echo "<script>alert('✅ Socio registrado correctamente');</script>";
+        header("Location: login.php?registro=exitoso");
     } else {
         echo "<script>alert('❌ Error al registrar el socio');</script>";
     }
