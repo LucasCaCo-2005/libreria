@@ -8,9 +8,47 @@ include_once __DIR__ . '/admin/seccion/bd.php';
 include_once __DIR__ . '/admin/seccion/Talleres.php';
 include_once ("admin/seccion/bd.php");
 
+$sql = "SELECT titulo, contenido FROM avisos WHERE activo = 1 LIMIT 1";
+$resultado = $conexion->query($sql);
+
+$mensaje = null;
+if ($resultado && $resultado->rowCount() > 0) {
+    $mensaje = $resultado->fetch(PDO::FETCH_ASSOC);
+}
+?>
+<body>
+
+<div class="container mt-5">
+  <h1>Bienvenido al sistema</h1>
+</div>
+
+<?php
+// Si hay mensaje, incluye el modal y pásale los datos
+if ($mensaje) {
+    include 'modalIndex.php';
+}
+?>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+<?php if ($mensaje): ?>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        var modal = new bootstrap.Modal(document.getElementById('mensajeModal'));
+        modal.show();
+    });
+</script>
+<?php endif; ?>
+
+</body>
+</html>
+
+
+
+
 $talleresBD = new TalleresBD();
 $listaTalleres = $talleresBD->ListarTalleres();
-?>
+
 
 <!DOCTYPE html>
 <html lang="es">
@@ -39,7 +77,7 @@ $listaTalleres = $talleresBD->ListarTalleres();
 <?php include_once './users/loginBanner.php'; ?>
        
     </div>
-        <div id="loginModal" class="modal">
+       <div id="loginModal" class="custom-login-modal">
   <div class="modal-content">
     <span class="close" onclick="closeLoginModal()">&times;</span>
     
@@ -165,8 +203,8 @@ $listaTalleres = $talleresBD->ListarTalleres();
         }
     });
 <div id="loginModal" class="modal">
+  div id="loginModal" class="custom-login-modal">
   <div class="modal-content">
-    <span class="close" onclick="closeLoginModal()">&times;</span>
 
     <form method="post" action="login.php" class="login-form">
         <label for="ci">Usuario</label>
@@ -660,6 +698,13 @@ window.addEventListener("message", function(event) {
 </script>
 
 
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Inicio</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
 </body>
 </html>
 
