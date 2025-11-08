@@ -1,7 +1,9 @@
 <?php include_once 'template/cabecera.php'; ?>
 <?php
 include_once ("seccion/bd.php");
+// crea la variable libropara poder usarse e indica que esta vacio
 $libro = null;
+// Obtiene el id del libro desde la URL mediante GET
 if(isset($_GET['id'])){
     $idLibro = $_GET['id'];
 

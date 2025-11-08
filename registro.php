@@ -8,7 +8,7 @@ include_once __DIR__ . "/users/usersBD.php";
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['agregar'])) {
 
-    // ✅ Capturar todos los valores del formulario
+    // Captura todos los valores del formulario
     $cedula     = $_POST['cedula'] ?? '';
     $nombre     = $_POST['nombre'] ?? '';
     $apellidos  = $_POST['apellidos'] ?? '';
@@ -16,9 +16,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['agregar'])) {
     $correo     = $_POST['correo'] ?? '';
     $contrasena = $_POST['contrasena'] ?? '';
     $estado     = $_POST['estado'] ?? 'pendiente'; // Valor por defecto
-    $domicilio  = $_POST['domicilio'] ?? '';   // Opcional
+    $domicilio  = $_POST['domicilio'] ?? '';  
 
-    // ✅ Crear objeto y registrar
+    //  Crear objeto y registrar
     $socio = new socios();
     $resultado = $socio->RegistrarSocio($cedula, $nombre, $apellidos, $domicilio, $telefono, $correo, $contrasena, $estado);
 

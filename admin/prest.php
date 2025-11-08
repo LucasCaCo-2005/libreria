@@ -28,7 +28,7 @@
                 UPDATE prestamos 
                 SET estado = 'devuelto', fecha_devolucion = :fechaActual 
                 WHERE id = :id
-            ");
+            "); // actualiza el estado a devuelto
             $sentencia->bindParam(":fechaActual", $fechaActual);
             $sentencia->bindParam(":id", $idPrestamo);
             $sentencia->execute();
@@ -57,7 +57,7 @@
         INNER JOIN libros l ON p.libro_id = l.id
     ";
 
-    // Aplicar filtro
+    // Aplica filtro
     if ($filtroEstado === 'prestados') {
         $sql .= " WHERE p.estado = 'prestado'";
     } elseif ($filtroEstado === 'devueltos') {
@@ -76,8 +76,8 @@
             <h2>Listado de Préstamos</h2>
             <div class="filters">
                 <div class="filter-group">
-                    <label for="estado">Filtrar por estado:</label>
-                    <select id="estado" onchange="filtrarPrestamos(this.value)">
+                    <label for="estado">Filtrar por estado:</label> <!--Boton de filtrado-->
+                    <select id="estado" onchange="filtrarPrestamos(this.value)"> <!-- Redirije al estado filtrado con JS -->
                         <option value="todos" <?php echo $filtroEstado === 'todos' ? 'selected' : ''; ?>>Todos</option>
                         <option value="prestados" <?php echo $filtroEstado === 'prestados' ? 'selected' : ''; ?>>Prestados</option>
                         <option value="devueltos" <?php echo $filtroEstado === 'devueltos' ? 'selected' : ''; ?>>Devueltos</option>
@@ -119,17 +119,17 @@
                                     echo date('d/m/Y', strtotime($p['fecha_devolucion']));
                                 } else {
                                     echo '--/--/----';
-                                }
+                                } // valores nulos para fechas vaciad
                                 ?>
                             </td>
-                            <td>
+                            <td> <!-- Diferencia de color segun el estado -->
                                 <?php if($p['estado'] == 'devuelto'): ?>
                                     <span class="badge badge-success">Devuelto</span>
                                 <?php else: ?>
                                     <span class="badge badge-warning">Prestado</span>
                                 <?php endif; ?>
                             </td>
-                            <td>
+                            <td> <!-- Acciones segun el contexto -->
                                 <?php if($p['estado'] == 'prestado'): ?>
                                     <a href="prest.php?devolver=<?php echo $p['id']; ?>&estado=<?php echo $filtroEstado; ?>" 
                                        class="btn btn-success btn-sm"
@@ -149,7 +149,7 @@
     </div>
 </div>
 
-<script>
+<script> // filtrado instantaneo
     function filtrarPrestamos(estado) {
         window.location.href = 'prest.php?estado=' + estado;
     }

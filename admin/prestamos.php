@@ -4,7 +4,7 @@ include_once("seccion/bd.php");
 
 $libro = null;
 
-// Obtener datos del libro seleccionado
+// Obtener datos del libro seleccionado con get
 if (isset($_GET['id'])) {
     $idLibro = $_GET['id'];
 
@@ -14,7 +14,7 @@ if (isset($_GET['id'])) {
     $libro = $sentencia->fetch(PDO::FETCH_ASSOC);
 }
 
-// Procesar formulario
+// Captura datos del formulario
 if ($_POST) {
     $idLibro = $_POST['libro_id'];
     $nombrePersona = trim($_POST['persona']);

@@ -21,7 +21,7 @@ include("template/cabecera.php");
     </div>
 
     <div class="admin-content">
-        <!-- Formulario de Gestión -->
+        <!-- Formulario de Gestion -->
         <div class="form-section <?= !empty($txtID) ? 'form-editing' : 'form-adding' ?>">
             <div class="section-header">
                 <h3>
@@ -224,14 +224,14 @@ include("template/cabecera.php");
 </div>
 
 <script>
-// Confirmación para acciones - VERSIÓN MEJORADA
+// Confirmación para acciones
 document.querySelectorAll('form').forEach(form => {
     form.addEventListener('submit', function(e) {
         const accion = this.querySelector('[name="accion"]')?.value;
         
-        // NO hacer submit para estas acciones que no necesitan validación
+      
         if (accion === 'Seleccionar' || accion === 'Cancelar' || accion === 'Listar') {
-            return; // Permitir el envío normal sin validación
+            return; // Diferenciacion de acciones
         }
         
         let mensaje = '';
@@ -256,7 +256,7 @@ document.querySelectorAll('form').forEach(form => {
                 break;
                 
             case 'Eliminar':
-                // Ya tiene confirmación específica en el botón
+                
                 return;
         }
         
@@ -273,9 +273,9 @@ document.addEventListener('DOMContentLoaded', function() {
     
     if (btnCancelar) {
         btnCancelar.addEventListener('click', function(e) {
-            // Solo limpiar, no mostrar mensajes
+           
             e.preventDefault();
-            // Recargar la página para limpiar todo
+         
             window.location.href = window.location.pathname;
         });
     }

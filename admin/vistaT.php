@@ -3,7 +3,7 @@
 include_once ("seccion/bd.php");
 include_once ("seccion/Talleres.php");
 
-// Procesar acciones de activar/desactivar
+// Procesar acciones de activar/desactivar 
 if ($_POST) {
     $id = $_POST['id'] ?? '';
     $accion = $_POST['accion'] ?? '';
@@ -22,7 +22,7 @@ if ($_POST) {
 }
 
 $filtro = isset($_GET['estado']) ? $_GET['estado'] : "todos";
-
+// sistema de filtrado
 if ($filtro == "activo") {
     $sentencia = $conexion->prepare("SELECT * FROM talleres WHERE estado='activo'");
 } elseif ($filtro == "inactivo") {
@@ -57,7 +57,8 @@ include_once 'template/cabecera.php';
     <div class="controles-busqueda">
         <div class="buscador-container">
             <input type="text" id="searchInput" onkeyup="filterTalleres()" 
-                   placeholder="🔍 Buscar taller por nombre..." class="buscador-input">
+                   placeholder="🔍 Buscar taller por nombre..." class="buscador-input"> 
+                   <!-- Filtra sin recargar la página-->
         </div>
         
         <div class="filtros-container">
@@ -108,7 +109,7 @@ include_once 'template/cabecera.php';
                                  class="img-taller">
                         </div>
                     </div>
-                    
+            <!-- Footer con acciones -->
                     <div class="card-footer">
                         <form id="formTaller<?php echo $taller['Id']; ?>" action="vistaT.php" method="post" class="form-accion">
                             <input type="hidden" name="id" value="<?php echo $taller['Id']; ?>">
@@ -134,15 +135,16 @@ include_once 'template/cabecera.php';
 </div>
 
 <script>
+    // filtro por nombre
 function filterTalleres() {
     var input, filter, container, items, title, i, txtValue;
     input = document.getElementById('searchInput');
     filter = input.value.toUpperCase();
-    container = document.querySelector('.grid-talleres');
+    container = document.querySelector('.grid-talleres'); 
     items = container.getElementsByClassName('list-group-item');
     
     for (i = 0; i < items.length; i++) {
-        title = items[i].getElementsByClassName("titulo-taller")[0];
+        title = items[i].getElementsByClassName("titulo-taller")[0]; // busca en titulo de talleres
         if (title) {
             txtValue = title.textContent || title.innerText;
             if (txtValue.toUpperCase().indexOf(filter) > -1) {
@@ -153,7 +155,7 @@ function filterTalleres() {
         }
     }
 }
-
+// cambio de estado
 function enviarAccion(id, accion) {
     const form = document.getElementById('formTaller' + id);
     form.querySelector('[name="accion"]').value = accion;

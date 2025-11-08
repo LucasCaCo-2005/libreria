@@ -1,7 +1,7 @@
-.modal {
+.custom-login-modal {
     display: none;
     position: fixed;
-    z-index: 1000;
+    z-index: 1055; /* Menor que el modal Bootstrap (1060), pero mayor que el resto */
     left: 0;
     top: 0;
     width: 100%;
@@ -9,7 +9,6 @@
     background-color: rgba(0, 0, 0, 0.6);
     justify-content: center;
     align-items: center;
-    overflow: hidden; /*elimina la barra de desplazamiento*/
 }
 
 .modal-content {

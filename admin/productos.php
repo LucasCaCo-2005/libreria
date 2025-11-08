@@ -57,7 +57,7 @@ include_once("seccion/bd.php");
             <input type="hidden" name="txtID" id="txtID" value="<?php echo $txtID; ?>">
             
             <div class="row">
-              <!-- Columna Izquierda -->
+           
               <div class="col-md-6">
                 <div class="mb-3">
                   <label for="txtNombre" class="form-label">
@@ -87,7 +87,7 @@ include_once("seccion/bd.php");
                 </div>
               </div>
 
-              <!-- Columna Derecha -->
+             
               <div class="col-md-6">
                 <div class="mb-3">
                   <label for="txtStock" class="form-label">
@@ -253,7 +253,6 @@ include_once("seccion/bd.php");
   </div>
 </div>
 
-<!-- Estilos adicionales -->
 <style>
 .card {
   border: none;

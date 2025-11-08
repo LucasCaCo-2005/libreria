@@ -3,6 +3,7 @@ include_once 'template/cabecera.php';
 include_once ("seccion/bd.php");
 
 $taller = null;
+// obtecion de datos
 if(isset($_GET['id'])){
     $idTaller = $_GET['id'];
 

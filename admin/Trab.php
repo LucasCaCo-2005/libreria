@@ -23,7 +23,7 @@ include("template/cabecera.php");
         <p>Administra el personal de la biblioteca</p>
     </div>
 
-    <!-- Sistema de mensajes elegante -->
+    <!-- Sistema de mensajes -->
     <?php if (!empty($mostrarMensaje)): 
         list($tipo, $mensaje) = explode('|', $mostrarMensaje, 2);
     ?>
@@ -36,13 +36,14 @@ include("template/cabecera.php");
             <span class="alert-icon">ℹ️</span>
         <?php endif; ?>
         <span class="alert-text"><?= htmlspecialchars($mensaje) ?></span>
-        <button type="button" class="alert-close" onclick="this.parentElement.style.display='none'">×</button>
+        <button type="button" class="alert-close" onclick="this.parentElement.style.display='none'">×</button> 
+        <!-- Oculta con JS-->
     </div>
     <?php endif; ?>
     <div class="trabajadores-content">
        
         <div class="form-section">
-            <div class="form-header">
+            <div class="form-header"> <!--Titulo COntextual-->
                 <h2><?php echo empty($txtID) ? '➕ Registrar Nuevo Trabajador' : '✏️ Editar Trabajador'; ?></h2>
             </div>
             <div class="form-body">
@@ -163,7 +164,7 @@ include("template/cabecera.php");
                             <th>Acción</th>
                         </tr>
                     </thead>
-                    <tbody>
+                    <tbody> <!--  Lista de trabajadores con datos vacios-->
                         <?php if (empty($listaTrabajadores)): ?>
                             <tr>
                                 <td colspan="7" class="no-data">
@@ -216,7 +217,7 @@ include("template/cabecera.php");
 </div>
 
 <script>
-// Validación en tiempo real para cédula
+// Validación en tiempo real para cedula
 document.getElementById('txtCedula').addEventListener('input', function(e) {
     const cedula = e.target.value;
     const pattern = /^[1-9]\.[0-9]{3}\.[0-9]{3}-[0-9X]$/;
@@ -240,7 +241,7 @@ document.getElementById('txtTelefono').addEventListener('input', function(e) {
     }
 });
 
-// Confirmación para acciones - VERSIÓN MEJORADA
+// Sistema de Confirmaciones
 document.querySelectorAll('form').forEach(form => {
     form.addEventListener('submit', function(e) {
         const accion = this.querySelector('[name="accion"]')?.value;
