@@ -1,6 +1,6 @@
 <?php 
 include_once 'template/cabecera.php';
-include_once ("seccion/bd.php");
+include_once "./admin/seccion/bd.php";
 
 $taller = null;
 // obtecion de datos
@@ -39,7 +39,7 @@ if(!$taller){
             
             <div class="contenido-detalle">
                 <div class="seccion-imagen">
-                    <img src="../images/<?php echo $taller['foto']; ?>" 
+                    <img src="./images/<?php echo $taller['foto']; ?>" 
                          alt="Imagen del taller <?php echo htmlspecialchars($taller['nombre']); ?>" 
                          class="imagen-taller">
                 </div>
@@ -77,7 +77,7 @@ if(!$taller){
                     </div>
                     
                     <div class="botones-accion">
-                        <a href="vistaT.php" class="btn-volver">
+                        <a href="talleres.php" class="btn-volver">
                             ← Volver a Talleres
                         </a>
                         

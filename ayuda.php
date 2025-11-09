@@ -6,6 +6,7 @@
     <title>Document</title>
 </head>
 <body>
+  
      <h1 class="titulo-ayuda">Preguntas Frecuentes</h1>
     <h1>¿Cómo me hago Socio ?</h1>
     <p>Para hacerte Socio te puedes Registrar en nuestra página y cuando lo desees concurrir por nuestro local de calle Luis Alberto de Herrera 1043.</p>

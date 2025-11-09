@@ -16,15 +16,14 @@ $url = "http://" . $_SERVER['HTTP_HOST'] . "/sitioweb";
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
         crossorigin="anonymous">
-  
-  <!-- ✅ Font Awesome para iconos -->
+        <!-- iconos -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   
   <style>
       :root {
-      --color-primary: #ff0000ff;
-      --color-secondary: #ceabab;
-      --color-dark: #5a4a4a;
+      --color-primary: #4a80e2ff;
+      --color-secondary: #4a80e2ff;
+       --color-dark: #5a4a4a;
       --color-light: #f8f4f4;
       --color-hover: #b98c8c;
     }
@@ -118,7 +117,7 @@ $url = "http://" . $_SERVER['HTTP_HOST'] . "/sitioweb";
       vertical-align: middle;
     }
 
-    /* Efectos para el menú activo */
+    
     .nav-link.active {
       background: rgba(255, 255, 255, 0.2);
       font-weight: 600;
@@ -159,7 +158,7 @@ $url = "http://" . $_SERVER['HTTP_HOST'] . "/sitioweb";
       animation: fadeInDown 0.3s ease;
     }
 
-    /* Badge para notificaciones */
+    /* notificaciones */
     .nav-badge {
       background: var(--color-secondary);
       color: #f8f4f4;
@@ -177,27 +176,27 @@ $url = "http://" . $_SERVER['HTTP_HOST'] . "/sitioweb";
 </head>
 <body>
 
-<!-- 🔹 Navbar Administrativa Mejorada -->
+
 <nav class="navbar navbar-expand-lg navbar-admin">
   <div class="container-fluid">
 
-    <!-- Logo y Marca -->
+
     <a class="navbar-brand" href="<?php echo $url; ?>/admin/index.php">
       <i class="fas fa-cogs"></i>
       Panel Admin
     </a>
 
-    <!-- Botón responsive -->
+   
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarAdmin"
       aria-controls="navbarAdmin" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
 
-    <!-- Menú Principal -->
+   
     <div class="collapse navbar-collapse" id="navbarAdmin">
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
 
-        <!-- Inicio -->
+      
         <li class="nav-item">
           <a class="nav-link" href="<?php echo $url; ?>/admin/index.php">
             <i class="fas fa-home"></i>
@@ -205,7 +204,7 @@ $url = "http://" . $_SERVER['HTTP_HOST'] . "/sitioweb";
           </a>
         </li>
 
-        <!-- Talleres -->
+   
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" id="dropdownTalleres" role="button" data-bs-toggle="dropdown" aria-expanded="false">
             <i class="fas fa-palette"></i>
@@ -306,7 +305,6 @@ $url = "http://" . $_SERVER['HTTP_HOST'] . "/sitioweb";
           </ul>
         </li>
 
-        <!-- Enlace al Sitio Web -->
         <li class="nav-item">
           <a class="nav-link" href="<?php echo $url; ?>">
             <i class="fas fa-external-link-alt"></i>

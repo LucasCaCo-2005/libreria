@@ -103,7 +103,7 @@
 
         .btn-volver {
             background-color: var(--color-secondary);
-             color: rgb(219, 164, 164);
+             color: rgb(3, 3, 3);
             padding: 12px 30px;
             border-radius: var(--border-radius);
             text-decoration: none;
@@ -122,7 +122,7 @@
 
         .btn-reservar {
             background-color: var(--color-primary);
-            color: rgb(219, 164, 164);
+            color: rgb(0, 0, 0);
             padding: 12px 30px;
             border-radius: var(--border-radius);
             text-decoration: none;

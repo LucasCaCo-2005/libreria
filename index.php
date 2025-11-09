@@ -93,7 +93,7 @@ $listaTalleres = $talleresBD->ListarTalleres();
 
 <!-- Banner lateral -->
 <aside class="vertical-banner" id="verticalBanner">
-    <button onclick="window.location.href='institucion.html'">Institución</button>
+    <button onclick="window.location.href='institucion.php'">Institución</button>
     <button onclick="window.location.href='autoridades.php'">Autoridades</button>
    
     <button onclick="window.location.href='talleres.php'">Talleres</button>
