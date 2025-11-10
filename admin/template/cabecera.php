@@ -1,5 +1,7 @@
 <?php 
+//Garantizo que haya una sesión activa 
 if (session_status() === PHP_SESSION_NONE) {
+  // y creo la sesion.
     session_start();
 }
 
@@ -12,23 +14,24 @@ $url = "http://" . $_SERVER['HTTP_HOST'] . "/sitioweb";
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Panel Administrativo - Biblioteca</title>
 
-  <!-- ✅ Bootstrap 5 CSS -->
+  <!-- Librerias Bootstrap 5 CSS -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
         crossorigin="anonymous">
   
-  <!-- ✅ Font Awesome para iconos -->
+  <!-- Biblioteca de íconos vectoriales - Font Awesome  -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   
   <style>
-      :root {
+    :root {
+      /* Paleta de colores del diseño */
       --color-primary: #ff0000ff;
       --color-secondary: #ceabab;
       --color-dark: #5a4a4a;
       --color-light: #f8f4f4;
       --color-hover: #b98c8c;
     }
-
+   /* Estilo de la barra de navegaciòn, degradado rojo-oscuro, sombra y estilo visual atractivo */
     .navbar-admin {
       background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-dark) 100%) !important;
       box-shadow: 0 4px 12px rgba(0,0,0,0.15);
@@ -48,6 +51,7 @@ $url = "http://" . $_SERVER['HTTP_HOST'] . "/sitioweb";
       font-size: 1.8rem;
     }
 
+     /* Estilo de los enlaces de navegación,  efecto hover elegante (fondo semitransparente y desplazamiento)*/
     .nav-link {
       color: #f8f4f4 !important;
       font-weight: 500;
@@ -63,7 +67,7 @@ $url = "http://" . $_SERVER['HTTP_HOST'] . "/sitioweb";
       background: rgba(255, 255, 255, 0.15);
       transform: translateY(-2px);
     }
-
+/* Estilo de los menues bordes redondeados, sombra, animación al pasar el ratón y cambio de color. */
     .dropdown-menu {
       background: #f8f4f4;
       border: 1px solid #e8e0e0;
@@ -124,7 +128,7 @@ $url = "http://" . $_SERVER['HTTP_HOST'] . "/sitioweb";
       font-weight: 600;
     }
 
-    /* Responsive */
+    /* Responsive (menú móvil) Cuando la pantalla es pequeña, el menú se convierte en un panel colapsable con fondo oscuro.*/
     @media (max-width: 991.98px) {
       .navbar-collapse {
         background: var(--color-dark);

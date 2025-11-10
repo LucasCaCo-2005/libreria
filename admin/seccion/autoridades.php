@@ -1,5 +1,5 @@
 <?php
-// Inicializar variables
+// Inicializar las variables que utilizo para recibir y guardar datos del Form.
 $txtID = $txtCedula = $txtNombre = $txtCargo = $txtFecha_inicio = $txtFecha_fin = $txtEstado = "";
 $foto_actual = "";
 $listaAutoridades = [];
@@ -197,7 +197,7 @@ class AutoridadesBD extends Conexion {
                 $autoridad = new Autoridades();
                 $autoridad->setId($fila['id']);
                 $autoridad->setCedula($fila['cedula']);
-                $autoridad->setNombre($fila['nombre']);
+                $autoridad->setNombre($fila['Nombre']);
                 $autoridad->setCargo($fila['cargo']);
                 $autoridad->setFecha_inicio($fila['fecha_inicio']);
                 $autoridad->setFecha_fin($fila['fecha_fin']);
