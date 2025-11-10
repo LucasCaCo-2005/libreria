@@ -135,7 +135,7 @@ body {
 .card-header {
     padding: 20px;
     background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-dark) 100%);
-    color: #f30000;
+    color: #ffffff;
     display: flex;
     justify-content: space-between;
     align-items: flex-start;

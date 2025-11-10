@@ -2,7 +2,6 @@
 
 <?php
 
-
 include_once("admin/config/bd.php");
 
 if(isset($_GET['id'])){

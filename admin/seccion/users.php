@@ -228,12 +228,9 @@ class socios{
 
 public function RegistrarSocio($cedula, $nombre, $apellidos, $domicilio, $telefono, $correo, $contrasena, $estado) {
     try {
-        // ✅ Conectarse con la misma clase que vos usás
+        // 
         $db = new Conexion();
         $con = $db->Conectar();
-
-        // Hashear contraseña por seguridad (opcional)
-        // $contrasena = password_hash($contrasena, PASSWORD_BCRYPT);
 
         // Preparar consulta
         $sql = "INSERT INTO socios (cedula, Nombre, Apellidos, Domicilio, Telefono, Correo, contrasena, estado)
@@ -322,7 +319,7 @@ if (isset($_GET['socio_id'])) {
         $txtID = $txtsocio = $txtNombre = $txtApellido = $txtCedula = $txtDomicilio = $txtTelefono = $txtCorreo = $txtestado = "";
     }
 } else {
-    // Si no hay socio_id, el formulario está vacío (modo agregar)
+    // Si no hay socio_id, el formulario está vacío 
     $txtID = $txtsocio = $txtNombre = $txtApellido = $txtCedula = $txtDomicilio = $txtTelefono = $txtCorreo = $txtestado = "";
 }
 

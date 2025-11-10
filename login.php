@@ -1,14 +1,7 @@
 <?php
-<<<<<<< HEAD
-//Garantizo que haya una sesión activa y creo la sesion.
-if (session_status() === PHP_SESSION_NONE) {
-    session_start();
-}
-=======
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
 } // inicio de sesion de forma que se evitan varias sesiones
->>>>>>> 724c893d0c5e263a04d36fe6479dcd67a1653b7c
 include_once "./admin/seccion/bd.php";
 include_once __DIR__ . "/admin/seccion/users.php";
 

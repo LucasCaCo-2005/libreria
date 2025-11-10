@@ -14,7 +14,6 @@ if (session_status() === PHP_SESSION_NONE) {
      <link rel="stylesheet" href="css/productos.css"> 
 </head>
 
-<body>
 
 <?php include_once 'template/cabecera.php'; ?>
 <?php include_once 'admin/seccion/bd.php'; ?>
