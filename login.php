@@ -1,8 +1,14 @@
 <?php
+<<<<<<< HEAD
 //Garantizo que haya una sesión activa y creo la sesion.
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
+=======
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+} // inicio de sesion de forma que se evitan varias sesiones
+>>>>>>> 724c893d0c5e263a04d36fe6479dcd67a1653b7c
 include_once "./admin/seccion/bd.php";
 include_once __DIR__ . "/admin/seccion/users.php";
 
@@ -12,9 +18,9 @@ if (isset($_POST['login'])) {
     $resultado = $socio->login($_POST['cedula'], $_POST['contrasena']);
 
     if ($resultado) {
-        $_SESSION['socios'] = $resultado;
+        $_SESSION['socios'] = $resultado; // aqui se almacenan los datos
 
-        // Si se abre dentro del modal (iframe)
+        
         echo "<script>
             window.parent.postMessage('loginExitoso', '*');
         </script>";

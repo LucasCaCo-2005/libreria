@@ -3,20 +3,20 @@ include_once("seccion/bd.php");
 include_once("template/cabecera.php");
 include_once("seccion/users.php");
 
-// Verifica si se recibió el ID del socio por GET
+// Obtiene el id del socio desde la URL mediante el GET
 if (!isset($_GET['socio_id'])) {
     echo "No se ha especificado un socio.";
     exit;
 }
-$socio_id = intval($_GET['socio_id']);
+$socio_id = intval($_GET['socio_id']); //Valida el ID del socio desde la URL
 
-// Obtiene los datos del socio
+// Obtiene los datos del socio mediante una consulta
 $sentencia = $conexion->prepare("SELECT id, nombre, apellidos, correo FROM socios WHERE id = :id");
-$sentencia->bindParam(':id', $socio_id, PDO::PARAM_INT);
+$sentencia->bindParam(':id', $socio_id, PDO::PARAM_INT); // bindparam para evitar inyecciones sql
 $sentencia->execute();
-$socio = $sentencia->fetch(PDO::FETCH_ASSOC);
+$socio = $sentencia->fetch(PDO::FETCH_ASSOC); // array asociativo
 
-if (!$socio) {
+if (!$socio) { // 
     echo "Socio no encontrado.";
     exit;
 }
@@ -25,22 +25,22 @@ if (!$socio) {
 $accion = isset($_POST['accion']) ? $_POST['accion'] : "";
 $tipoPago = isset($_POST['tipo_pago']) ? $_POST['tipo_pago'] : "";
 
-// Lógica principal de acciones
+// Logica principal de acciones
 switch ($accion) {
     case "Pagar":
         $mesActual = date("F Y");
         $fechaHoy = date("Y-m-d");
 
-        // Definimos los tipos de pago
+        // Se definen los tipos de pago
         $tipos = [
             "pago1" => 100.00,
             "pago2" => 50.00
         ];
 
-        if (array_key_exists($tipoPago, $tipos)) {
+        if (array_key_exists($tipoPago, $tipos)) { // Verifica que eñ àgp exista en el array definido $tipos,
             $monto = $tipos[$tipoPago];
 
-            // Verificar si el socio ya pagó ese tipo en el mes actual
+            // Consulta para evitar pagos duplicados
             $check = $conexion->prepare("
                 SELECT COUNT(*) 
                 FROM pagos 
@@ -54,11 +54,11 @@ switch ($accion) {
             $check->execute();
 
             if ($check->fetchColumn() == 0) {
-                // Registrar el pago
+                // Ejecuta insert si el check da =0 
                 $insert = $conexion->prepare("
                     INSERT INTO pagos (socio_id, fecha_pago, mes_pagado, tipo_pago, monto)
                     VALUES (:socio_id, :fecha_pago, :mes_pagado, :tipo_pago, :monto)
-                ");
+                "); // inserts de datos con tipados exclusivps
                 $insert->bindParam(':socio_id', $socio_id, PDO::PARAM_INT);
                 $insert->bindParam(':fecha_pago', $fechaHoy, PDO::PARAM_STR);
                 $insert->bindParam(':mes_pagado', $mesActual, PDO::PARAM_STR);
@@ -73,9 +73,9 @@ switch ($accion) {
         }
         break;
 
-    case "QuitarPago":
+    case "QuitarPago": // Elimina pagos específicos por ID cuando se llama post_accion
         if (isset($_POST['pago_id'])) {
-            $pago_id = intval($_POST['pago_id']);
+            $pago_id = intval($_POST['pago_id']); // Verifica existencia del id del pago a eliminar
             $delete = $conexion->prepare("DELETE FROM pagos WHERE id = :id");
             $delete->bindParam(':id', $pago_id, PDO::PARAM_INT);
             $delete->execute();
@@ -86,13 +86,13 @@ switch ($accion) {
 
 // Consulta de pagos del mes actual
 $mesActual = date("F Y");
-
+// Consulta que obtiene lista completa de pagos del mes en curso
 $sentenciaPagos = $conexion->prepare("
     SELECT p.*, s.nombre, s.apellidos 
     FROM pagos p
     INNER JOIN socios s ON p.socio_id = s.id
     WHERE p.mes_pagado = :mes
-");
+"); // join con socios para traer datos personales
 $sentenciaPagos->bindParam(':mes', $mesActual, PDO::PARAM_STR);
 $sentenciaPagos->execute();
 $listaPagos = $sentenciaPagos->fetchAll(PDO::FETCH_ASSOC);
@@ -102,13 +102,13 @@ $sentenciaContador = $conexion->prepare("
     SELECT COUNT(DISTINCT socio_id) as total 
     FROM pagos 
     WHERE mes_pagado = :mes
-");
+"); // count distinct para contar una vez a los socios, asi se evitan pagos dobles de una misma persona
 $sentenciaContador->bindParam(':mes', $mesActual, PDO::PARAM_STR);
 $sentenciaContador->execute();
 $totalPagos = $sentenciaContador->fetch(PDO::FETCH_ASSOC)['total'];
 
 
-// Obtener historial de pagos del socio
+// Obtener historial de pagos del socio en forma de historial
 $sentenciaHistorial = $conexion->prepare("
     SELECT * FROM pagos 
     WHERE socio_id = :socio_id 
@@ -126,7 +126,7 @@ $historialPagos = $sentenciaHistorial->fetchAll(PDO::FETCH_ASSOC);
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Gestor de Pagos - <?php echo htmlspecialchars($socio['nombre'] . ' ' . $socio['apellidos']); ?></title>
-    <link rel="stylesheet" href="css/pagos.css">
+    <link rel="stylesheet" href="./css/pagos.css">
 </head>
 <body>
     <div class="pagos-container">

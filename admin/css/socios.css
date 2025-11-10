@@ -1,21 +1,19 @@
-/* Estilos adicionales para la página de detalles */
- :root {
-    --color-primary: #656faa;
-    --color-secondary: #8f0707;
-    --color-dark: #d37474;
-    --color-light: #ffffff;
+:root {
+     --color-primary: #4a80e2ff;
+      --color-secondary: #4a80e2ff;
+    --color-dark: #5a4a4a;
+    --color-light: #f8f4f4;
     --color-success: #4a8b6b;
-    --color-danger: #8b6b6b;
+    --color-danger: #ff0000;
+     --color-info: #cee219;
     --color-warning: #8b7b4a;
     --color-hover: #b98c8c;
     --shadow: 0 4px 12px rgba(0,0,0,0.15);
     --shadow-hover: 0 6px 20px rgba(0,0,0,0.2);
     --border-radius: 12px;
 }
+  
  
-/* Los estilos específicos para la página de detalles ya están incluidos en el <style> del HTML */
-
-
         .socios-container {
             max-width: 1400px;
             margin: 0 auto;
@@ -272,7 +270,6 @@
             border-color: var(--color-danger);
         }
 
-        
         .btn-filtro-pendiente {
             background: var(--color-info);
             color: #f8f4f4;
@@ -284,7 +281,7 @@
             transform: translateY(-2px);
         }
 
-        /* Tabla */
+  
         .table-section {
             background: #f8f4f4;
             border-radius: var(--border-radius);
@@ -342,6 +339,11 @@
         .estado-inactivo {
             background: #f8d7da;
             color: #721c24;
+        }
+
+        .estado-pendiente {
+            background: #edff48;
+            color: #668b00;
         }
 
         .no-data {

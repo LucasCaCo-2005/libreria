@@ -33,7 +33,7 @@ if ($categoriaSeleccionada) {
 $sentencia->execute();
 $listaLibros = $sentencia->fetchAll(PDO::FETCH_ASSOC);
 
-// Lista de categorías disponibles
+// Lista de categorias disponibles
 $categorias = [
   "Fantasia", "Terror", "Drama", "Misterio", "Historico",
   "Ficcion", "Romantico", "Biografia", "Autoayuda", "Nacional", "Otros"

@@ -1,19 +1,33 @@
 <?php
 session_start();
+<<<<<<< HEAD
 if (!isset($_SESSION['usuario'])) {
+=======
+if (!isset($_SESSION['usuario'])) { // usuario debe estar logueado
+>>>>>>> 724c893d0c5e263a04d36fe6479dcd67a1653b7c
     header("Location: login.php");
     exit;
 }
 
+<<<<<<< HEAD
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     require 'conexion.php'; // tu archivo de conexión a la BD
     $id = $_SESSION['usuario']['id'];
+=======
+if ($_SERVER['REQUEST_METHOD'] === 'POST') { // acepta unicamente envios por post
+    require 'conexion.php'; D
+    $id = $_SESSION['usuario']['id']; // obtiene datos
+>>>>>>> 724c893d0c5e263a04d36fe6479dcd67a1653b7c
     $actual = $_POST['password_actual'];
     $nueva = $_POST['password_nueva'];
     $confirmar = $_POST['password_confirmar'];
 
+<<<<<<< HEAD
     // Verificar que coincidan
     if ($nueva !== $confirmar) {
+=======
+    if ($nueva !== $confirmar) { // verifica que coincidan las contraseñas nuevas
+>>>>>>> 724c893d0c5e263a04d36fe6479dcd67a1653b7c
         $error = "Las contraseñas nuevas no coinciden.";
     } else {
         // Verificar la contraseña actual

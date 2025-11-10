@@ -4,7 +4,7 @@ include_once("seccion/bd.php");
 
 include_once("seccion/users.php");
 include_once("template/cabecera.php");
-
+// carga datos de los socios
 $txtID         = $_POST['txtID'] ?? "";
 $txtNombre     = $_POST['txtNombre'] ?? "";
 $txtApellido   = $_POST['txtApellido'] ?? "";
@@ -15,10 +15,10 @@ $txtCorreo     = $_POST['txtCorreo'] ?? "";
 $txtContraseña = $_POST['txtContraseña'] ?? "";
 $txtestado     = $_POST['txtestado'] ?? "";
 $accion        = $_POST['accion'] ?? "";
-
+// Filtro por estado  con get
 $estadoSeleccionado = $_GET['estado'] ?? '';
 $filtro = $estadoSeleccionado ? "WHERE estado = :estado" : '';
-
+// select de los socios
 $sentencia = $conexion->prepare("SELECT * FROM socios $filtro");
 if ($estadoSeleccionado) {
     $sentencia->bindParam(':estado', $estadoSeleccionado);
@@ -45,7 +45,7 @@ $listaSocios = $sentencia->fetchAll(PDO::FETCH_ASSOC);
     </div>
 
 
-    <div class="controles-superiores">
+    <div class="controles-superiores"> <!-- Buscador por nombre sin recargar pagina gracias a Js-->
         <div class="buscador-container">
             <input type="text" id="searchInput" class="buscador-input" 
                    placeholder="🔍 Buscar socio por nombre o apellido..." 
@@ -56,7 +56,7 @@ $listaSocios = $sentencia->fetchAll(PDO::FETCH_ASSOC);
         <div class="filtro-container">
             <span class="filtro-label">Filtrar por estado:</span>
             <form method="GET" class="filtro-form">
-                <select name="estado" onchange="this.form.submit()" class="filtro-select">
+                <select name="estado" onchange="this.form.submit()" class="filtro-select"> <!-- Filtro instantaneo -->
                     <option value="">Todos los socios</option>
                     <option value="activo" <?= ($estadoSeleccionado == 'activo') ? 'selected' : ''; ?>>🟢 Activos</option>
                     <option value="inactivo" <?= ($estadoSeleccionado == 'inactivo') ? 'selected' : ''; ?>>🔴 Inactivos</option>
@@ -65,7 +65,7 @@ $listaSocios = $sentencia->fetchAll(PDO::FETCH_ASSOC);
         </div>
     </div>
 
-    <?php
+    <?php // stats de los socios
     $totalSocios = count($listaSocios);
     $sociosActivos = count(array_filter($listaSocios, fn($socio) => $socio['estado'] === 'activo'));
     $sociosInactivos = $totalSocios - $sociosActivos;
@@ -160,7 +160,7 @@ $listaSocios = $sentencia->fetchAll(PDO::FETCH_ASSOC);
     </div>
 </div>
 
-<script>
+<script> // gestion de estados, cambiar de estados por error
 function enviarSocioAccion(id, nuevoEstado) {
     const confirmacion = confirm(`¿Está seguro de que desea ${nuevoEstado === 'activo' ? 'activar' : 'desactivar'} este socio?`);
     if (confirmacion) {
@@ -169,7 +169,7 @@ function enviarSocioAccion(id, nuevoEstado) {
         form.submit();
     }
 }
-
+// busqueda en tiempo real
 function filterItems() {
     const input = document.getElementById('searchInput');
     const filter = (input.value || '').trim().toUpperCase();

@@ -1,12 +1,11 @@
-  </div> <!-- /.row -->
-</div> <!-- /.container-fluid -->
+  </div>
+</div>
 
-<!-- ✅ Bootstrap 5 JS (con Popper incluido) -->
+
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
         crossorigin="anonymous"></script>
 
-<!-- 🔹 Scripts Mejorados -->
 <script>
   // Autoremover alertas después de 5 segundos
   setTimeout(() => {
@@ -18,7 +17,6 @@
     });
   }, 5000);
 
-  // Efecto de scroll suave para enlaces internos
   document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     anchor.addEventListener('click', function (e) {
       e.preventDefault();
@@ -32,7 +30,6 @@
     });
   });
 
-  // Resaltar elemento activo en el menú
   document.addEventListener('DOMContentLoaded', function() {
     const currentPage = window.location.pathname;
     const navLinks = document.querySelectorAll('.nav-link');
@@ -43,8 +40,6 @@
       }
     });
   });
-
-  // Tooltips para elementos con data-bs-toggle
   const tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
   const tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
     return new bootstrap.Tooltip(tooltipTriggerEl);
@@ -58,7 +53,7 @@
         submitBtn.disabled = true;
         submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Procesando...';
         
-        // Re-enable after 5 seconds in case of error
+   
         setTimeout(() => {
           submitBtn.disabled = false;
           submitBtn.innerHTML = submitBtn.getAttribute('data-original-text') || 'Enviar';
@@ -67,20 +62,20 @@
     });
   });
 
-  // Guardar texto original de botones
+  
   document.querySelectorAll('button[type="submit"], input[type="submit"]').forEach(btn => {
     btn.setAttribute('data-original-text', btn.innerHTML);
   });
 </script>
 
-<!-- 🔸 Estilos adicionales para el footer -->
+
 <style>
   .container-fluid {
     padding-left: 20px;
     padding-right: 20px;
   }
   
-  /* Mejoras para las alertas */
+
   .alert {
     border: none;
     border-radius: 12px;

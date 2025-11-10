@@ -1,5 +1,8 @@
 <?php
+<<<<<<< HEAD
 //Garantizo que haya una sesión activa y creo la sesion.
+=======
+>>>>>>> 724c893d0c5e263a04d36fe6479dcd67a1653b7c
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
@@ -23,10 +26,15 @@ $listaTalleres = $talleresBD->ListarTalleres();
     <title>AJUPEN Durazno</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+<<<<<<< HEAD
     <!-- BOOTSTRAP -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
 
     <!-- CSS PERSONALIZADO -->
+=======
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+>>>>>>> 724c893d0c5e263a04d36fe6479dcd67a1653b7c
     <link rel="stylesheet" href="./estilos/index.css">
     <link rel="stylesheet" href="./css/modal.css">
 </head>
@@ -37,6 +45,7 @@ $listaTalleres = $talleresBD->ListarTalleres();
         <img src="./images/bandera.png" alt="Bandera" height="60">
         <img src="./images/Logo.png" alt="Logo" height="60">
     </div>
+<<<<<<< HEAD
   <!--  <button id="loginButton" class="btn btn-primary" onclick="openLoginModal()">Iniciar sesión</button> -->
 
        <!-- Incluyo el archivo que contiene el usuario logueado y el boton cerrar cesión -->
@@ -44,6 +53,12 @@ $listaTalleres = $talleresBD->ListarTalleres();
 </header>
 
 <!-- Modal de Login -->
+=======
+<?php include_once './incluidos/loginBanner.php'; ?>
+</header>
+
+
+>>>>>>> 724c893d0c5e263a04d36fe6479dcd67a1653b7c
 <div id="loginModal" class="custom-login-modal">
   <div class="modal-content">
     <span class="close" onclick="closeLoginModal()">&times;</span>
@@ -99,7 +114,11 @@ $listaTalleres = $talleresBD->ListarTalleres();
 
 <!-- Banner lateral -->
 <aside class="vertical-banner" id="verticalBanner">
+<<<<<<< HEAD
     <button onclick="window.location.href='institucion.html'">Institución</button>
+=======
+    <button onclick="window.location.href='institucion.php'">Institución</button>
+>>>>>>> 724c893d0c5e263a04d36fe6479dcd67a1653b7c
     <button onclick="window.location.href='autoridades.php'">Autoridades</button>
    
     <button onclick="window.location.href='talleres.php'">Talleres</button>

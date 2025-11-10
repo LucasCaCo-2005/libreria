@@ -7,7 +7,7 @@ $resultados = [];
 
 // Conexión
 $conn = (new conexion())->Conectar();
-// Variables del formulario
+// Variables del formulario con null 
 $txtID          = $_POST['id'] ?? "";
 $txtNombre      = $_POST['nombre'] ?? "";
 $txtDia         = $_POST['dia'] ?? "";
@@ -17,8 +17,9 @@ $costo          = $_POST['costo'] ?? "";
 $txtestado      = $_POST['estado'] ?? "";
 $accion         = $_POST['accion'] ?? "";
 
-if (isset($_POST['agregar'])) {
-    $taller = new Talleres();
+// creacion de talleres
+if (isset($_POST['agregar'])) { // crear instancia
+    $taller = new Talleres(); // setters para propiedades
     $taller->setNombre($txtNombre);
     $taller->setDia($txtDia);
     $taller->setHorario($txtHorario);
@@ -35,14 +36,14 @@ if (isset($_POST['agregar'])) {
         }
     }
 
-    $taller->CargarTalleres();
+    $taller->CargarTalleres(); // guarda en base de datos
 }
-
+//obtiene todos los talleres
 if (isset($_POST['ListarTalleres'])) {
     $taller = new Talleres();
-    $resultados = $taller->ListarTalleres();
+    $resultados = $taller->ListarTalleres(); //almacena talleres en $resultados
 }
-
+// Busca taller  por id
 if (isset($_POST['BuscarTalleres'])) {
     $id = intval($_POST['id']);
     $stmt = $conn->prepare("SELECT * FROM talleres WHERE Id = :id");
@@ -96,7 +97,7 @@ if (isset($_POST['Modificar'])) {
         echo "<script>alert('Seleccione un taller antes de modificar');</script>";
     }
 }
-
+// limpia formulario 
 if (isset($_POST['Limpiar'])) {
     $txtID = $txtNombre = $txtDia = $txtHorario = $txtDescripcion = $costo = $txtestado = "";
     $tallerSeleccionado = null;

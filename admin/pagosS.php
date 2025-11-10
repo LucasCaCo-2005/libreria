@@ -1,11 +1,10 @@
 <?php
 include_once("template/cabecera.php");
 include_once("seccion/bd.php");
-
-// Mes actual en formato igual al usado en pagos.php
+// establece el formato de los meses, en ingles
 $mesActual = date("F Y");
 
-// --- 1️⃣ Obtener todos los pagos realizados este mes ---
+// Consulta para traer datos de los socios, se muestran los recienttes primero
 $consultaPagos = $conexion->prepare("
     SELECT p.id, s.nombre, s.apellidos, p.tipo_pago, p.monto, p.fecha_pago, p.mes_pagado
     FROM pagos p
@@ -17,7 +16,7 @@ $consultaPagos->bindParam(':mes', $mesActual, PDO::PARAM_STR);
 $consultaPagos->execute();
 $pagos = $consultaPagos->fetchAll(PDO::FETCH_ASSOC);
 
-// --- 2️⃣ Obtener socios que NO han pagado este mes ---
+// Consulta para traer socios que NO estan en pagos
 $consultaNoPagaron = $conexion->prepare("
     SELECT s.id, s.nombre, s.apellidos, s.cedula, s.correo, s.telefono
     FROM socios s
@@ -30,7 +29,7 @@ $consultaNoPagaron->bindParam(':mes', $mesActual, PDO::PARAM_STR);
 $consultaNoPagaron->execute();
 $noPagaron = $consultaNoPagaron->fetchAll(PDO::FETCH_ASSOC);
 
-// Contadores y totales
+// Calculos para estadisticas
 $totalPagos = count($pagos);
 $totalNoPagaron = count($noPagaron);
 $totalRecaudado = array_sum(array_column($pagos, 'monto'));
@@ -52,7 +51,6 @@ $porcentajePagos = $totalSocios > 0 ? round(($totalPagos / $totalSocios) * 100, 
 <body>
 
 <div class="reporte-pagos">
-    <!-- Header -->
     <div class="header-reporte">
         <h1>📊 Reporte de Pagos Mensual</h1>
         <div class="mes-actual"><?php echo $mesActual; ?></div>
@@ -83,7 +81,7 @@ $porcentajePagos = $totalSocios > 0 ? round(($totalPagos / $totalSocios) * 100, 
     </div>
 
     <div class="secciones-reporte">
-        <!-- Sección: Socios que Pagaron -->
+      
         <div class="seccion-pagos">
             <div class="seccion-header">
                 <h2>
@@ -92,12 +90,12 @@ $porcentajePagos = $totalSocios > 0 ? round(($totalPagos / $totalSocios) * 100, 
                 </h2>
                 <span class="contador-seccion"><?php echo $totalPagos; ?> registros</span>
             </div>
-            <div class="seccion-body">
-                <?php if ($totalPagos > 0): ?>
+            <div class="seccion-body"> <!-- -->
+                <?php if ($totalPagos > 0): ?> <!-- Muestra pagos si hay en primer lugar -->
                     <div class="table-responsive">
                         <table class="tabla-pagos">
                             <thead>
-                                <tr>
+                                <tr> <!-- Datos de interes -->
                                     <th>Socio</th>
                                     <th>Tipo de Pago</th>
                                     <th>Monto</th>
@@ -106,7 +104,7 @@ $porcentajePagos = $totalSocios > 0 ? round(($totalPagos / $totalSocios) * 100, 
                                 </tr>
                             </thead>
                             <tbody>
-                                <?php foreach ($pagos as $pago): ?>
+                                <?php foreach ($pagos as $pago): // foreACH que muestra los pagos, tipo de pago y datos del socio ?>
                                     <tr>
                                         <td>
                                             <div class="info-socio">
@@ -120,7 +118,7 @@ $porcentajePagos = $totalSocios > 0 ? round(($totalPagos / $totalSocios) * 100, 
                                                 </div>
                                             </div>
                                         </td>
-                                        <td>
+                                        <td> <!-- Diferenciaicon de los tipos de pagos-->
                                             <span class="badge-tipo <?php echo $pago['tipo_pago'] == 'pago1' ? 'badge-completo' : 'badge-medio'; ?>">
                                                 <?php echo $pago['tipo_pago'] == 'pago1' ? 'Cuota Completa' : 'Media Cuota'; ?>
                                             </span>
@@ -134,11 +132,11 @@ $porcentajePagos = $totalSocios > 0 ? round(($totalPagos / $totalSocios) * 100, 
                         </table>
                     </div>
                     
-                    <!-- Resumen de Recaudación -->
+                    <!-- Resumen de Recaudacion -->
                     <div class="resumen-recaudacion">
                         <div class="resumen-titulo">
                             <span>💰</span>
-                            Resumen de Recaudación
+                            Resumen de Recaudacion
                         </div>
                         <div class="resumen-monto">$<?php echo number_format($totalRecaudado, 2); ?></div>
                         <div style="margin-top: 8px; font-size: 0.9rem; color: var(--color-dark); opacity: 0.8;">
@@ -155,7 +153,7 @@ $porcentajePagos = $totalSocios > 0 ? round(($totalPagos / $totalSocios) * 100, 
             </div>
         </div>
 
-        <!-- Sección: Socios Pendientes -->
+        <!-- Socios Pendientes a pagar -->
         <div class="seccion-pagos">
             <div class="seccion-header">
                 <h2>
@@ -165,7 +163,7 @@ $porcentajePagos = $totalSocios > 0 ? round(($totalPagos / $totalSocios) * 100, 
                 <span class="contador-seccion"><?php echo $totalNoPagaron; ?> registros</span>
             </div>
             <div class="seccion-body">
-                <?php if ($totalNoPagaron > 0): ?>
+                <?php if ($totalNoPagaron > 0): // muestra unicamente si hay pagos?> 
                     <div class="table-responsive">
                         <table class="tabla-pagos">
                             <thead>
@@ -176,12 +174,14 @@ $porcentajePagos = $totalSocios > 0 ? round(($totalPagos / $totalSocios) * 100, 
                                 </tr>
                             </thead>
                             <tbody>
-                                <?php foreach ($noPagaron as $socio): ?>
+                                <?php foreach ($noPagaron as $socio): ?><!-- Foreach para mostrar cada caso -->
                                     <tr>
                                         <td>
                                             <div class="info-socio">
                                                 <div class="avatar-socio">
-                                                    <?php echo strtoupper(substr($socio['nombre'], 0, 1) . substr($socio['apellidos'], 0, 1)); ?>
+                                                    <?php
+                                                    // saca la primer letra del nombre y apellido para el avatar, strtoupper vuelve mayuscula
+                                                    echo strtoupper(substr($socio['nombre'], 0, 1) . substr($socio['apellidos'], 0, 1));  ?> 
                                                 </div>
                                                 <div class="info-socio-texto">
                                                     <div class="nombre-socio">
@@ -203,7 +203,7 @@ $porcentajePagos = $totalSocios > 0 ? round(($totalPagos / $totalSocios) * 100, 
                                             <div class="acciones-rapidas">
                                                 <a href="pagos.php?socio_id=<?php echo $socio['id']; ?>" class="btn-pagar">
                                                     💵 Registrar Pago
-                                                </a>
+                                                </a> <!-- Boton para ir a pagar rapido -->
                                             </div>
                                         </td>
                                     </tr>
@@ -211,11 +211,11 @@ $porcentajePagos = $totalSocios > 0 ? round(($totalPagos / $totalSocios) * 100, 
                             </tbody>
                         </table>
                     </div>
-                <?php else: ?>
+                <?php else: ?> <!-- Caso de pago total -->
                     <div class="sin-registros">
                         <i>🎉</i>
                         <h3>¡Todos al día!</h3>
-                        <p>Todos los socios han pagado este mes. ¡Excelente trabajo!</p>
+                        <p>Todos los socios han pagado este mes</p>
                     </div>
                 <?php endif; ?>
             </div>
@@ -224,16 +224,16 @@ $porcentajePagos = $totalSocios > 0 ? round(($totalPagos / $totalSocios) * 100, 
 </div>
 
 <script>
-// Efectos de interacción
+// solo hace algo cuando la pagina esta biwen cargada
 document.addEventListener('DOMContentLoaded', function() {
-    // Animación para las tarjetas de estadísticas
+    // Animación para las tarjetas 
     const tarjetas = document.querySelectorAll('.tarjeta-estadistica');
     tarjetas.forEach((tarjeta, index) => {
         tarjeta.style.animationDelay = `${index * 0.1}s`;
         tarjeta.classList.add('fade-in');
     });
     
-    // Confirmación para registrar pagos
+    // Confirmación para registrar pagos y evitar pagos accidentales
     document.querySelectorAll('.btn-pagar').forEach(boton => {
         boton.addEventListener('click', function(e) {
             if (!confirm('¿Está seguro de que desea registrar el pago para este socio?')) {
@@ -260,6 +260,5 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 }
 </style>
-
 </body>
 </html>

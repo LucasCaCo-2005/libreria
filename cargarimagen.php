@@ -1,12 +1,12 @@
 <?php
-
+// declara la funcion
 function CargarFoto(): mixed{
 
  
 if (isset($_FILES['image'])) {
    
     $RutaTemporal = $_FILES['image']['tmp_name'];
-
+// verifica archivo subido
     $NombreDelArchivo = $_FILES['image']['name'];
 
 
@@ -15,12 +15,11 @@ if (isset($_FILES['image'])) {
 
     $ExtensionDelArchivo = strtolower(end($NombreDelArchivoCmps));
 
- 
+ // valida las extensiones
     $extensionesPErmitidas = array('jpg', 'gif', 'png', 'jpeg');
 
     if (in_array(needle: $ExtensionDelArchivo, haystack: $extensionesPErmitidas)) {
-      
-      //  $DirectorioDestino = './images/';
+      // destino de la imagen
         $DirectorioDestino = '../images/';
         $RutaCompetaFinal = $DirectorioDestino . $NombreDelArchivo;
 

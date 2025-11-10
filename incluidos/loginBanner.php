@@ -109,7 +109,11 @@ if (session_status() === PHP_SESSION_NONE) {
 </div>
 
 <script>
+<<<<<<< HEAD
 // 🔹 Mostrar/ocultar el menú del usuario
+=======
+// Mostrar/ocultar el menú del usuario
+>>>>>>> 724c893d0c5e263a04d36fe6479dcd67a1653b7c
 document.addEventListener('DOMContentLoaded', function() {
   const userButton = document.getElementById('userButton');
   const userDropdown = document.getElementById('userDropdown');

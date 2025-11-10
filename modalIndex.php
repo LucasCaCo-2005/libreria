@@ -20,6 +20,7 @@
 
 <!-- Estilos personalizados -->
 <style>
+<<<<<<< HEAD
   /* Fondo semitransparente del backdrop */
   .modal-backdrop.show {
     opacity: 0.1 !important; /* Nivel de transparencia */
@@ -27,6 +28,15 @@
   }
 
   /* Animación de aparición suave */
+=======
+  
+  .modal-backdrop.show {
+    opacity: 0.1 !important; 
+    background-color: rgba(0, 0, 0, 0.7) !important;
+  }
+
+
+>>>>>>> 724c893d0c5e263a04d36fe6479dcd67a1653b7c
   .modal.fade .modal-dialog {
     transform: scale(0.95);
     transition: transform 0.25s ease-out;

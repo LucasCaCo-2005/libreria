@@ -1,10 +1,10 @@
 :root {
-    --color-primary: #f10000;
-    --color-secondary: #ceabab;
+     --color-primary: #4a80e2ff;
+      --color-secondary: #4a80e2ff;
     --color-dark: #5a4a4a;
     --color-light: #f8f4f4;
     --color-success: #4a8b6b;
-    --color-danger: #8b6b6b;
+    --color-danger: #e02323;
     --color-warning: #8b7b4a;
     --color-hover: #b98c8c;
     --shadow: 0 4px 12px rgba(0,0,0,0.15);
@@ -155,7 +155,7 @@
         }
 
         .tarjeta-socio {
-            background: #958ef5;
+            background: #ffffff;
             border-radius: var(--border-radius);
             box-shadow: var(--shadow);
             overflow: hidden;
@@ -195,6 +195,11 @@
             background: #8b6b6b;
             color: #f8f4f4;
         }
+         .estado-pendiente {
+            background: #9cf000;
+            color: #f8f4f4;
+        }
+
 
         .nombre-socio {
             font-size: 1.3rem;
@@ -318,7 +323,7 @@
         }
 
         .btn-desactivar:hover {
-            background: #7a5b5b;
+            background: #d32222;
             transform: translateY(-2px);
         }
 

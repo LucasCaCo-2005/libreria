@@ -67,8 +67,8 @@ $listaTalleres = array_filter($todosTalleres, function($taller) {
                                 <?= htmlspecialchars($taller->getCosto()) ?>
                             </div>
                             
-                            <a href="inscripcion.php?id=<?= $taller->getId() ?>" class="btn-inscribirse">
-                                Inscribirse Ahora
+                            <a href="inscripcion.php?id=<?= $taller->getId() ?>" class="">
+                                Ver mas
                             </a>
                         </div>
                     </div>

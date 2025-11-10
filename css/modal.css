@@ -1,14 +1,21 @@
+<<<<<<< HEAD
 /* ============================
    ESTILOS GENERALES
 ============================ */
+=======
+
+>>>>>>> 724c893d0c5e263a04d36fe6479dcd67a1653b7c
 body {
     margin: 0;
     font-family: Arial, sans-serif;
 }
 
+<<<<<<< HEAD
 /* ============================
    HEADER
 ============================ */
+=======
+>>>>>>> 724c893d0c5e263a04d36fe6479dcd67a1653b7c
 .header-content {
     display: flex;
     justify-content: space-between;
@@ -18,11 +25,14 @@ body {
     height: 138px;
 }
 
+<<<<<<< HEAD
 
 
 /* ============================
    BOTÓN LOGIN
 ============================ */
+=======
+>>>>>>> 724c893d0c5e263a04d36fe6479dcd67a1653b7c
 .login-button button,
 #loginButton {
     padding: 16px 32px;
@@ -41,6 +51,7 @@ body {
     background-color: #003f75;
 }
 
+<<<<<<< HEAD
 /* ============================
    MODAL LOGIN PERSONALIZADO
 ============================ */
@@ -48,6 +59,13 @@ body {
     display: none; /* oculto por defecto */
     position: fixed;
     z-index: 2100; /* más alto que Bootstrap (2060 aprox.) */
+=======
+
+.custom-login-modal {
+    display: none;
+    position: fixed;
+    z-index: 2100;
+>>>>>>> 724c893d0c5e263a04d36fe6479dcd67a1653b7c
     left: 0;
     top: 0;
     width: 100%;
@@ -79,9 +97,13 @@ body {
     cursor: pointer;
 }
 
+<<<<<<< HEAD
 /* ============================
    TARJETAS DE TALLERES
 ============================ */
+=======
+
+>>>>>>> 724c893d0c5e263a04d36fe6479dcd67a1653b7c
 .grid-container {
     display: flex;
     flex-wrap: wrap;
@@ -120,9 +142,13 @@ body {
     transform: scale(1.02);
 }
 
+<<<<<<< HEAD
 /* ============================
    BANNER INFERIOR
 ============================ */
+=======
+
+>>>>>>> 724c893d0c5e263a04d36fe6479dcd67a1653b7c
 .banner-inferior {
     position: fixed;
     bottom: 0;
@@ -156,6 +182,7 @@ body {
     cursor: pointer;
 }
 
+<<<<<<< HEAD
 /* ============================
    BANNER LATERAL
 ============================ */
@@ -163,6 +190,13 @@ body {
     position: fixed;
     top: 178px; /* altura del header */
     bottom: 50px; /* altura del banner inferior */
+=======
+
+.vertical-banner {
+    position: fixed;
+    top: 178px; 
+    bottom: 50px; 
+>>>>>>> 724c893d0c5e263a04d36fe6479dcd67a1653b7c
     left: 0;
     width: 180px;
     background-color: #20055b;
@@ -189,9 +223,13 @@ body {
     background-color: #003f75;
 }
 
+<<<<<<< HEAD
 /* ============================
    BOTÓN PARA OCULTAR BANNER
 ============================ */
+=======
+
+>>>>>>> 724c893d0c5e263a04d36fe6479dcd67a1653b7c
 .toggle-banner-btn {
     position: fixed;
     bottom: 60px;
@@ -204,9 +242,13 @@ body {
     cursor: pointer;
 }
 
+<<<<<<< HEAD
 /* ============================
    LOGO / OVERLAY DE IMAGEN
 ============================ */
+=======
+
+>>>>>>> 724c893d0c5e263a04d36fe6479dcd67a1653b7c
 .logo-header img.enlarged {
     transform: scale(1.9);
     transition: transform 0.3s ease;
@@ -243,21 +285,32 @@ body {
     font-weight: bold;
 }
 
+<<<<<<< HEAD
 /* ============================
    BOOTSTRAP MODAL FIXES
 ============================ */
+=======
+
+>>>>>>> 724c893d0c5e263a04d36fe6479dcd67a1653b7c
 .modal-backdrop {
     z-index: 2000 !important;
 }
 
+<<<<<<< HEAD
 /* Solo afecta a los modales de Bootstrap, NO al login */
+=======
+
+>>>>>>> 724c893d0c5e263a04d36fe6479dcd67a1653b7c
 .modal.fade {
     z-index: 2050 !important;
 }
 
+<<<<<<< HEAD
 /* ============================
    CORRECCIONES EXTRA
 ============================ */
+=======
+>>>>>>> 724c893d0c5e263a04d36fe6479dcd67a1653b7c
 #loginModal {
     position: fixed;
     z-index: 2100 !important;
@@ -270,6 +323,7 @@ body {
   pointer-events: auto;
   z-index: 10;
 }
+<<<<<<< HEAD
 /* =======================
    FIX DE CAPAS Y CLICK
 ======================= */
@@ -281,20 +335,42 @@ body {
 }
 
 /* El banner lateral debajo de los botones */
+=======
+
+
+
+#loginButton, #userButton {
+  position: relative;
+  z-index: 5000;
+}
+
+
+>>>>>>> 724c893d0c5e263a04d36fe6479dcd67a1653b7c
 .vertical-banner {
   z-index: 1000;
 }
 
+<<<<<<< HEAD
 /* Banner inferior — más bajo aún */
+=======
+>>>>>>> 724c893d0c5e263a04d36fe6479dcd67a1653b7c
 .banner-inferior {
   z-index: 900;
 }
 
+<<<<<<< HEAD
 /* Modal de login — solo visible cuando se abre */
 #loginModal.custom-login-modal {
   display: none;
   z-index: 6000;
   pointer-events: none; /* no intercepta clics cuando está oculto */
+=======
+
+#loginModal.custom-login-modal {
+  display: none;
+  z-index: 6000;
+  pointer-events: none; 
+>>>>>>> 724c893d0c5e263a04d36fe6479dcd67a1653b7c
 }
 
 #loginModal.custom-login-modal.active {
@@ -302,8 +378,15 @@ body {
   pointer-events: all;
 }
 
+<<<<<<< HEAD
 /* El backdrop de Bootstrap no debe quedar encima */
 .modal-backdrop {
   z-index: 2000 !important;
   pointer-events: none; /* evita que bloquee clics */
+=======
+
+.modal-backdrop {
+  z-index: 2000 !important;
+  pointer-events: none;
+>>>>>>> 724c893d0c5e263a04d36fe6479dcd67a1653b7c
 }
