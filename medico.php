@@ -53,7 +53,7 @@
       </div>
       <a href="https://wa.me/598092749714?text=Hola,%20quiero%20solicitar%20un%20turno%20con%20el%20podólogo%20<?php echo urlencode($podologo['nombre'] ?? ''); ?>."
          class="btn-whatsapp" target="_blank">
-        <i class="fab fa-whatsapp"></i> Pedir turno por WhatsApp
+        <i class="fab fa-whatsapp"></i> Pedir turno por WhatsApp 123
       </a>
     </div>
   </div>
