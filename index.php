@@ -3,8 +3,9 @@ if (session_status() == PHP_SESSION_NONE) {
     session_start();
 }
 
-include_once __DIR__ . '/admin/seccion/bd.php';
-include_once __DIR__ . '/admin/seccion/Talleres.php';
+include_once __DIR__ . '/Logica/Admin/bd.php';
+// __DIR__ . '/admin/seccion/Talleres.php';
+include_once __DIR__ . '/Logica/Admin/Talleres.php';
 
 // Aviso activo
 $sql = "SELECT titulo, contenido FROM avisos WHERE activo = 1 LIMIT 1";
@@ -24,8 +25,8 @@ $listaTalleres = $talleresBD->ListarTalleres();
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
 
-    <link rel="stylesheet" href="./estilos/index.css">
-    <link rel="stylesheet" href="./css/modal.css">
+    <link rel="stylesheet" href="./Presentacion/css/Usuario/index.css">
+    <link rel="stylesheet" href="./Presentacion/css/Usuario/modal.css">
 </head>
 <body>
 
@@ -34,14 +35,14 @@ $listaTalleres = $talleresBD->ListarTalleres();
         <img src="./images/bandera.png" alt="Bandera" height="60">
         <img src="./images/Logo.png" alt="Logo" height="60">
     </div>
-<?php include_once './incluidos/loginBanner.php'; ?>
+<?php include_once './Logica/Usuario/loginBanner.php'; ?>
 
- <button onclick="window.location.href='institucion.php'">Institución</button>
-    <button onclick="window.location.href='autoridades.php'">Autoridades</button>
+ <button onclick="window.location.href='./Presentacion/Usuario/institucion.php'">Institución</button>
+    <button onclick="window.location.href='./Presentacion/Usuario/autoridades.php'">Autoridades</button>
    
-    <button onclick="window.location.href='talleres.php'">Talleres</button>
-    <button onclick="window.location.href='./admin/index.php'">Admin</button>
-    <button onclick="window.location.href='productos.php'">Productos</button>
+    <button onclick="window.location.href='./Presentacion/Usuario/talleres.php'">Talleres</button>
+    <button onclick="window.location.href='Presentacion/Admin/index.php'">Admin</button>
+    <button onclick="window.location.href='./Presentacion/Usuario/productos.php'">Productos</button>
 </header>
 
 
@@ -61,7 +62,7 @@ $listaTalleres = $talleresBD->ListarTalleres();
             <?php foreach ($listaTalleres as $taller): ?>
                 <div class="col-md-4">
                     <div class="card shadow-sm h-100">
-                        <img src="./images/<?= htmlspecialchars($taller->getFoto()) ?>" 
+                        <img src="./imagenes/<?= htmlspecialchars($taller->getFoto()) ?>" 
                              class="card-img-top" 
                              alt="<?= htmlspecialchars($taller->getNombre()) ?>">
                         <div class="card-body">
