@@ -1,137 +1,124 @@
 <?php
-// Verifica que el archivo se esté accediendo por POST antes de procesar
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    include_once __DIR__ . "/../../Logica/Admin/Talleres.php";
-    include_once __DIR__ . "/../../Logica/Admin/bd.php";
+include_once __DIR__ ."/../../Logica/Admin/Talleres.php";
+include_once "cabecera.php";
+include_once __DIR__ ."/../../Logica/Admin/bd.php";
+$tallerSeleccionado = null;
+$resultados = [];
+
+// Conexión
+$conn = (new conexion())->Conectar();
+
+$stmt = $conn->query("SELECT DATABASE()");
+echo "<p>📦 Base de datos actual: " . $stmt->fetchColumn() . "</p>";
+
+// Variables del formulario con null 
+$txtID          = $_POST['id'] ?? "";
+$txtNombre      = $_POST['nombre'] ?? "";
+$txtDia         = $_POST['dia'] ?? "";
+$txtHorario     = $_POST['horario'] ?? "";
+$txtDescripcion = $_POST['descripcion'] ?? "";
+$costo          = $_POST['costo'] ?? "";
+$txtestado      = $_POST['estado'] ?? "";
+$accion         = $_POST['accion'] ?? "";
+
+// creacion de talleres
+if (isset($_POST['agregar'])) { // crear instancia
+    $taller = new Talleres(); // setters para propiedades
+    $taller->setNombre($txtNombre);
+    $taller->setDia($txtDia);
+    $taller->setHorario($txtHorario);
+    $taller->setDescripcion($txtDescripcion);
+    $taller->setCosto($costo);
+    $taller->setEstado($txtestado ?: "activo");
+
+    // Subir imagen si se seleccionó
+    if (!empty($_FILES['image']['name'])) {
+        include_once "cargarimagen.php";
+        $foto = CargarFoto();
+        if ($foto) {
+            $taller->setFoto($foto);
+        }
+    }
+
+    $taller->CargarTalleres(); // guarda en base de datos
+}
+//obtiene todos los talleres
+if (isset($_POST['ListarTalleres'])) {
+    $taller = new Talleres();
+    $resultados = $taller->ListarTalleres(); //almacena talleres en $resultados
     
-    $tallerSeleccionado = null;
-    $resultados = [];
+}
+// Busca taller  por id
+if (isset($_POST['BuscarTalleres'])) {
+    $id = intval($_POST['id']);
+    $stmt = $conn->prepare("SELECT * FROM talleres WHERE Id = :id");
+    $stmt->bindParam(':id', $id, PDO::PARAM_INT);
+    $stmt->execute();
+    $tallerSeleccionado = $stmt->fetch(PDO::FETCH_ASSOC);
 
-    // Conexión
-    $conn = (new conexion())->Conectar();
-
-    // Variables del formulario con valores por defecto
-    $txtID          = $_POST['id'] ?? "";
-    $txtNombre      = $_POST['nombre'] ?? "";
-    $txtDia         = $_POST['dia'] ?? "";
-    $txtHorario     = $_POST['horario'] ?? "";
-    $txtDescripcion = $_POST['descripcion'] ?? "";
-    $costo          = $_POST['costo'] ?? "";
-    $txtestado      = $_POST['estado'] ?? "activo"; // Valor por defecto
-
-    // Procesar según el botón presionado
-    if (isset($_POST['agregar'])) {
-        $taller = new Talleres();
-        $taller->setNombre($txtNombre);
-        $taller->setDia($txtDia);
-        $taller->setHorario($txtHorario);
-        $taller->setDescripcion($txtDescripcion);
-        $taller->setCosto($costo);
-        $taller->setEstado($txtestado);
-
-        // Subir imagen si se seleccionó
-        if (!empty($_FILES['image']['name'])) {
-            include_once __DIR__ . "/cargarimagen.php"; // Ajusta la ruta según tu estructura
-            $foto = CargarFoto();
-            if ($foto) {
-                $taller->setFoto($foto);
-            }
-        }
-
-        if ($taller->CargarTalleres()) {
-            echo "<script>alert('Taller agregado correctamente');</script>";
-            // Limpiar formulario después de agregar
-            $txtID = $txtNombre = $txtDia = $txtHorario = $txtDescripcion = $costo = "";
-        }
+    if ($tallerSeleccionado) {
+        $txtID          = $tallerSeleccionado['Id'];
+        $txtNombre      = $tallerSeleccionado['nombre'];
+        $txtDia         = $tallerSeleccionado['dia'];
+        $txtHorario     = $tallerSeleccionado['horario'];
+        $txtDescripcion = $tallerSeleccionado['descripcion'];
+        $costo          = $tallerSeleccionado['costo'];
+        $txtestado      = $tallerSeleccionado['estado'];
     }
-
-    if (isset($_POST['ListarTalleres'])) {
-        $taller = new Talleres();
-        $resultados = $taller->ListarTalleres();
-    }
-
-    if (isset($_POST['BuscarTalleres'])) {
-        $id = intval($_POST['id']);
-        if ($id > 0) {
-            $stmt = $conn->prepare("SELECT * FROM talleres WHERE Id = :id");
-            $stmt->bindParam(':id', $id, PDO::PARAM_INT);
-            $stmt->execute();
-            $tallerSeleccionado = $stmt->fetch(PDO::FETCH_ASSOC);
-
-            if ($tallerSeleccionado) {
-                $txtID          = $tallerSeleccionado['Id'];
-                $txtNombre      = $tallerSeleccionado['nombre'];
-                $txtDia         = $tallerSeleccionado['dia'];
-                $txtHorario     = $tallerSeleccionado['horario'];
-                $txtDescripcion = $tallerSeleccionado['descripcion'];
-                $costo          = $tallerSeleccionado['costo'];
-                $txtestado      = $tallerSeleccionado['estado'];
-            }
-        }
-    }
-
-    if (isset($_POST['Modificar'])) {
-        $id = intval($_POST['id']);
-        if ($id > 0) {
-            $sql = "UPDATE talleres 
-                    SET nombre = :nombre, dia = :dia, horario = :horario, 
-                        descripcion = :descripcion, costo = :costo, estado = :estado 
-                    WHERE Id = :id";
-            $stmt = $conn->prepare($sql);
-            $stmt->bindParam(':nombre', $txtNombre);
-            $stmt->bindParam(':dia', $txtDia);
-            $stmt->bindParam(':horario', $txtHorario);
-            $stmt->bindParam(':descripcion', $txtDescripcion);
-            $stmt->bindParam(':costo', $costo);
-            $stmt->bindParam(':estado', $txtestado);
-            $stmt->bindParam(':id', $id, PDO::PARAM_INT);
-            
-            if ($stmt->execute()) {
-                // Actualizar imagen si se subió una nueva
-                if (!empty($_FILES['image']['name'])) {
-                    include_once __DIR__ . "/cargarimagen.php";
-                    $foto = CargarFoto();
-                    if ($foto) {
-                        $stmtFoto = $conn->prepare("UPDATE talleres SET foto = :foto WHERE Id = :id");
-                        $stmtFoto->bindParam(':foto', $foto);
-                        $stmtFoto->bindParam(':id', $id, PDO::PARAM_INT);
-                        $stmtFoto->execute();
-                    }
-                }
-                echo "<script>alert('Taller modificado correctamente');</script>";
-            }
-        }
-    }
-
-    if (isset($_POST['Limpiar'])) {
-        $txtID = $txtNombre = $txtDia = $txtHorario = $txtDescripcion = $costo = "";
-        $txtestado = "activo";
-        $tallerSeleccionado = null;
-        $resultados = [];
-    }
-} else {
-    // Inicializar variables cuando no es POST
-    $txtID = $txtNombre = $txtDia = $txtHorario = $txtDescripcion = $costo = "";
-    $txtestado = "activo";
-    $resultados = [];
 }
 
-include_once "cabecera.php";
+if (isset($_POST['Modificar'])) {
+    $id = intval($_POST['id']);
+    if ($id > 0) {
+        // Actualizar campos con PDO
+        $sql = "UPDATE talleres 
+                SET nombre = :nombre, dia = :dia, horario = :horario, descripcion = :descripcion, 
+                    costo = :costo, estado = :estado 
+                WHERE Id = :id";
+        $stmt = $conn->prepare($sql);
+        $stmt->bindParam(':nombre', $txtNombre);
+        $stmt->bindParam(':dia', $txtDia);
+        $stmt->bindParam(':horario', $txtHorario);
+        $stmt->bindParam(':descripcion', $txtDescripcion);
+        $stmt->bindParam(':costo', $costo);
+        $stmt->bindParam(':estado', $txtestado);
+        $stmt->bindParam(':id', $id, PDO::PARAM_INT);
+        $stmt->execute();
+
+        // Si se subió una nueva imagen, actualizarla
+        if (!empty($_FILES['image']['name'])) {
+            include_once "../cargarimagen.php";
+            $foto = CargarFoto();
+            if ($foto) {
+                $stmtFoto = $conn->prepare("UPDATE talleres SET foto = :foto WHERE Id = :id");
+                $stmtFoto->bindParam(':foto', $foto);
+                $stmtFoto->bindParam(':id', $id, PDO::PARAM_INT);
+                $stmtFoto->execute();
+            }
+        }
+
+        echo "<script>alert('Taller modificado correctamente');</script>";
+    } else {
+        echo "<script>alert('Seleccione un taller antes de modificar');</script>";
+    }
+}
+// limpia formulario 
+if (isset($_POST['Limpiar'])) {
+    $txtID = $txtNombre = $txtDia = $txtHorario = $txtDescripcion = $costo = $txtestado = "";
+    $tallerSeleccionado = null;
+}
 ?>
-
-<?php
-
-include_once "cabecera.php";
-?>
-
 <!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Panel de Administración - Talleres</title>
-    <link rel="stylesheet" href="../css/Usuario/bootstrap.min.css">
+    <link rel="stylesheet" href="./css/Usuario/bootstrap.min.css">
     <link rel="stylesheet" href="../css/Admin/padmin.css">
+    <style>
+      
+    </style>
 </head>
 <body>
 
@@ -141,10 +128,9 @@ include_once "cabecera.php";
         <p>Gestiona los talleres de tu biblioteca</p>
     </div>
 
-    <!-- Formulario principal para CRUD -->
     <div class="form-container">
-        <form action="" method="post" enctype="multipart/form-data" id="formTaller">
-            <input type="hidden" name="id" value="<?= htmlspecialchars($txtID) ?>">
+        <form action="" method="post" enctype="multipart/form-data">
+            <input type="" name="id" value="<?= htmlspecialchars($txtID) ?>">
 
             <div class="form-section">
                 <h3>📝 Información del Taller</h3>
@@ -153,7 +139,7 @@ include_once "cabecera.php";
                         <label for="nombre">Nombre del Taller</label>
                         <input type="text" id="nombre" name="nombre" class="form-control" 
                                value="<?= htmlspecialchars($txtNombre) ?>" 
-                               placeholder="Ingrese nombre del taller">
+                               placeholder="Ingrese nombre del taller" >
                     </div>
 
                     <div class="form-group">
@@ -209,20 +195,14 @@ include_once "cabecera.php";
                 <button type="submit" name="agregar" class="btn btn-success" <?= !empty($txtID) ? 'disabled' : '' ?>>
                     ➕ Agregar Taller
                 </button>
-                <button type="submit" name="Modificar" class="btn btn-warning" <?= empty($txtID) ? 'disabled' : '' ?>>
+                <button type="submit" name="ListarTalleres" class="btn btn-primary">
+                    📋 Listar Talleres
+                </button>
+                <button type="submit" name="Modificar" class="btn btn-warning">
                     ✏️ Modificar
                 </button>
                 <button type="submit" name="Limpiar" class="btn btn-danger">
-                    🗑️ Limpiar
-                </button>
-            </div>
-        </form>
-        
-        <!-- Formulario separado para Listar -->
-        <form action="" method="post" style="margin-top: 20px;">
-            <div class="btn-group">
-                <button type="submit" name="ListarTalleres" class="btn btn-primary">
-                    📋 Listar Talleres
+                    🗑️ Cancelar
                 </button>
             </div>
         </form>

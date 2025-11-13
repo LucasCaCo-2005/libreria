@@ -23,7 +23,7 @@ include("bd.php");
 // Función para cargar imagen
 function cargarImagen() {
     if (!empty($_FILES['image']['name'])) {
-        $directorio = "../imagenes/";
+        $directorio = "../../Imagenes/Autoridades";
         $archivo = $directorio . basename($_FILES['image']['name']);
         $tipoArchivo = strtolower(pathinfo($archivo, PATHINFO_EXTENSION));
         

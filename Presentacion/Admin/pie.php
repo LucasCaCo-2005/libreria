@@ -1,6 +1,5 @@
-  </div>
 </div>
-
+</div>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
@@ -40,20 +39,56 @@
       }
     });
   });
+  
   const tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
   const tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
     return new bootstrap.Tooltip(tooltipTriggerEl);
   });
 
-  // Prevenir envío doble de formularios
+  // **CORRECCIÓN: Prevenir envío doble de formularios SOLO después de que se procese**
   document.querySelectorAll('form').forEach(form => {
+    let isSubmitting = false;
+    
+    form.addEventListener('submit', function(e) {
+      if (isSubmitting) {
+        e.preventDefault();
+        return;
+      }
+      
+      const submitBtn = this.querySelector('button[type="submit"], input[type="submit"]');
+      if (submitBtn && !submitBtn.disabled) {
+        isSubmitting = true;
+        
+        // Guardar el texto original si no existe
+        if (!submitBtn.getAttribute('data-original-text')) {
+          submitBtn.setAttribute('data-original-text', submitBtn.innerHTML);
+        }
+        
+        // Deshabilitar después de un pequeño delay para permitir el envío
+        setTimeout(() => {
+          submitBtn.disabled = true;
+          submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Procesando...';
+        }, 100);
+        
+        // Restaurar después de 5 segundos por si hay error
+        setTimeout(() => {
+          submitBtn.disabled = false;
+          submitBtn.innerHTML = submitBtn.getAttribute('data-original-text');
+          isSubmitting = false;
+        }, 5000);
+      }
+    });
+  });
+
+  // **OPCIÓN ALTERNATIVA MÁS SEGURA: Solo para formularios que no recargan la página**
+  /*
+  document.querySelectorAll('form[data-ajax="true"]').forEach(form => {
     form.addEventListener('submit', function(e) {
       const submitBtn = this.querySelector('button[type="submit"], input[type="submit"]');
       if (submitBtn) {
         submitBtn.disabled = true;
         submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Procesando...';
         
-   
         setTimeout(() => {
           submitBtn.disabled = false;
           submitBtn.innerHTML = submitBtn.getAttribute('data-original-text') || 'Enviar';
@@ -61,13 +96,8 @@
       }
     });
   });
-
-  
-  document.querySelectorAll('button[type="submit"], input[type="submit"]').forEach(btn => {
-    btn.setAttribute('data-original-text', btn.innerHTML);
-  });
+  */
 </script>
-
 
 <style>
   .container-fluid {

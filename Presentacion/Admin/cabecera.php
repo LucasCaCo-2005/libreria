@@ -1,26 +1,11 @@
 <?php 
-// Garantizo que haya una sesión activa 
+//Garantizo que haya una sesión activa 
 if (session_status() === PHP_SESSION_NONE) {
+  // y creo la sesion.
     session_start();
 }
 
-// **CORRECCIÓN: Calcular la URL base automáticamente**
-$protocol = isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http";
-$host = $_SERVER['HTTP_HOST'];
-$scriptPath = dirname($_SERVER['SCRIPT_NAME']); // Obtiene el directorio del script actual
-
-// Calcular la URL base correcta
-if (strpos($scriptPath, 'Admin') !== false) {
-    // Si estamos en una carpeta admin, subimos un nivel
-    $basePath = dirname($scriptPath);
-} else {
-    $basePath = $scriptPath;
-}
-
-$url = $protocol . "://" . $host . $basePath;
-
-// **OPCIÓN MÁS SIMPLE: Si sabes la estructura fija**
-// $url = "http://" . $_SERVER['HTTP_HOST'] . "/Proyecto";
+$url = "http://" . $_SERVER['HTTP_HOST'] . "/sitioweb";
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -196,7 +181,7 @@ $url = $protocol . "://" . $host . $basePath;
   <div class="container-fluid">
 
 
-    <a class="navbar-brand" href="<?php echo $url; ?>/Admin/index.php">
+    <a class="navbar-brand" href="<?php echo $url; ?>/Presentacion/Admin/index.php">
       <i class="fas fa-cogs"></i>
       Panel Admin
     </a>
@@ -213,7 +198,7 @@ $url = $protocol . "://" . $host . $basePath;
 
       
         <li class="nav-item">
-          <a class="nav-link" href="<?php echo $url; ?>/Admin/index.php">
+          <a class="nav-link" href="<?php echo $url; ?>/Presentacion/Admin/index.php">
             <i class="fas fa-home"></i>
             Inicio
           </a>
@@ -227,13 +212,13 @@ $url = $protocol . "://" . $host . $basePath;
           </a>
           <ul class="dropdown-menu" aria-labelledby="dropdownTalleres">
             <li>
-              <a class="dropdown-item" href="<?php echo $url; ?>/Admin/panelAdmin.php">
+              <a class="dropdown-item" href="<?php echo $url; ?>/Presentacion/Admin/panelAdmin.php">
                 <i class="fas fa-plus-circle"></i>
                 Registro de Talleres
               </a>
             </li>
             <li>
-              <a class="dropdown-item" href="<?php echo $url; ?>/Admin/VistaT.php">
+              <a class="dropdown-item" href="<?php echo $url; ?>/Presentacion/Admin/VistaT.php">
                 <i class="fas fa-eye"></i>
                 Vista Talleres
               </a>
@@ -249,20 +234,20 @@ $url = $protocol . "://" . $host . $basePath;
           </a>
           <ul class="dropdown-menu" aria-labelledby="dropdownLibros">
             <li>
-              <a class="dropdown-item" href="<?php echo $url; ?>/Admin/productos.php">
+              <a class="dropdown-item" href="<?php echo $url; ?>/Presentacion/Admin/productos.php">
                 <i class="fas fa-plus-circle"></i>
                 Registro
               </a>
             </li>
             <li>
-              <a class="dropdown-item" href="<?php echo $url; ?>/Admin/VistaLibros.php">
+              <a class="dropdown-item" href="<?php echo $url; ?>/Presentacion/Admin/VistaLibros.php">
                 <i class="fas fa-eye"></i>
                 Vista Libros
               </a>
             </li>
             <li><hr class="dropdown-divider"></li>
             <li>
-              <a class="dropdown-item" href="<?php echo $url; ?>/Admin/prest.php">
+              <a class="dropdown-item" href="<?php echo $url; ?>/Presentacion/Admin/prest.php">
                 <i class="fas fa-exchange-alt"></i>
                 Préstamos
               </a>
@@ -278,19 +263,19 @@ $url = $protocol . "://" . $host . $basePath;
           </a>
           <ul class="dropdown-menu" aria-labelledby="dropdownSocios">
             <li>
-              <a class="dropdown-item" href="<?php echo $url; ?>/Admin/socios.php">
+              <a class="dropdown-item" href="<?php echo $url; ?>/Presentacion/Admin/socios.php">
                 <i class="fas fa-user-plus"></i>
                 Registro de Socios
               </a>
             </li>
             <li>
-              <a class="dropdown-item" href="<?php echo $url; ?>/Admin/sociosT.php">
+              <a class="dropdown-item" href="<?php echo $url; ?>/Presentacion/Admin/sociosT.php">
                 <i class="fas fa-list"></i>
                 Lista de Socios
               </a>
             </li>
             <li>
-              <a class="dropdown-item" href="<?php echo $url; ?>/Admin/PagosS.php">
+              <a class="dropdown-item" href="<?php echo $url; ?>/Presentacion/Admin/PagosS.php">
                 <i class="fas fa-money-bill-wave"></i>
                 Gestión de Pagos
               </a>
@@ -306,13 +291,13 @@ $url = $protocol . "://" . $host . $basePath;
           </a>
           <ul class="dropdown-menu" aria-labelledby="dropdownEmpleados">
             <li>
-              <a class="dropdown-item" href="<?php echo $url; ?>/Admin/Trab.php">
+              <a class="dropdown-item" href="<?php echo $url; ?>/Presentacion/Admin/Trab.php">
                 <i class="fas fa-briefcase"></i>
                 Trabajadores
               </a>
             </li>
             <li>
-              <a class="dropdown-item" href="<?php echo $url; ?>/Admin/panelautoridades.php">
+              <a class="dropdown-item" href="<?php echo $url; ?>/Presentacion/Admin/panelautoridades.php">
                 <i class="fas fa-user-shield"></i>
                 Autoridades
               </a>
