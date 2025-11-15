@@ -15,14 +15,11 @@ if (isset($_SESSION['id'])) {
   <meta charset="UTF-8">
   <meta name="viewport" contnt="width=device-width, initial-scale=1.0"> 
   <title>Biblioteca</title>
-<<<<<<<< HEAD:presentacion/usuario/cabecera.php
+
    <!-- ✅ Bootstrap 5 CSS -->
   <link rel="stylesheet" href="./estilos/bootstrap.min.css">
-========
- 
-  <!--  Bootstrap 5 CSS -->
-  <link rel="stylesheet" href="../css/Usuario/bootstrap.min.css">
->>>>>>>> 72a969d9b84989c8325ef25b7bf44b91d1c94b1a:Presentacion/Usuario/cabecera.php
+
+
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
  
   <style>
@@ -276,18 +273,12 @@ if (isset($_SESSION['id'])) {
         </li>
       </ul>
       
-      <!-- Botón Admin mejorado -->
-<<<<<<<< HEAD:presentacion/usuario/cabecera.php
       <button class="btn btn-admin" onclick="window.location.href='../admin/paneladmin.php'">
         <i class="fas fa-user-shield"></i> Panel Admin
       </button>
-         <?php include_once '../../logica/usuario/loginBanner.php'; ?>
-========
-      <button class="btn btn-admin" onclick="window.location.href='../Admin/paneladmin.php'">
-        <i class="fas fa-user-shield"></i> Panel Admin
-      </button>
+    
       <?php include_once '../../Logica/Usuario/loginBanner.php'; ?>
->>>>>>>> 72a969d9b84989c8325ef25b7bf44b91d1c94b1a:Presentacion/Usuario/cabecera.php
+
     </div>
   </div>
 </nav>

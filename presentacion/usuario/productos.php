@@ -11,20 +11,16 @@ if (session_status() === PHP_SESSION_NONE) {
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <title>Biblioteca Digital</title>
-<<<<<<<< HEAD:presentacion/usuario/productos.php
+
      <link rel="stylesheet" href="../../css/usuario/productos.css"> 
-========
+
      <link rel="stylesheet" href="../css/Usuario/productos.css"> 
->>>>>>>> 72a969d9b84989c8325ef25b7bf44b91d1c94b1a:Presentacion/Usuario/productos.php
 </head>
 
 
 <?php include_once 'cabecera.php'; ?>
-<<<<<<<< HEAD:presentacion/usuario/productos.php
+
 <?php include_once '../../logica/admin/bd.php'; ?>
-========
-<?php include_once '../../Logica/Admin/bd.php'; ?>
->>>>>>>> 72a969d9b84989c8325ef25b7bf44b91d1c94b1a:Presentacion/Usuario/productos.php
 
 <?php
 // Obtener categoría seleccionada desde la URL (GET)

@@ -4,11 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Listado de Préstamos</title>
-<<<<<<<< HEAD:presentacion/admin/prest.php
     <link rel="stylesheet" href="../../css/admin/prest.css">
-========
+
     <link rel="stylesheet" href="../css/Admin/prest.css">
->>>>>>>> 72a969d9b84989c8325ef25b7bf44b91d1c94b1a:Presentacion/Admin/prest.php
 </head>
 <body>
 <?php include_once 'cabecera.php'; ?>

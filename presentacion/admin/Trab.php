@@ -10,11 +10,11 @@ include("cabecera.php");
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Gestión de Trabajadores - Biblioteca</title>
-<<<<<<<< HEAD:presentacion/admin/Trab.php
+
     <link rel="stylesheet" href="../../css/admin/trab.css">
-========
+
     <link rel="stylesheet" href="../css/Admin/trab.css">
->>>>>>>> 72a969d9b84989c8325ef25b7bf44b91d1c94b1a:Presentacion/Admin/Trab.php
+
     <style>
       
     </style>

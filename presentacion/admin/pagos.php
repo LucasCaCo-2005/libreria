@@ -126,11 +126,8 @@ $historialPagos = $sentenciaHistorial->fetchAll(PDO::FETCH_ASSOC);
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Gestor de Pagos - <?php echo htmlspecialchars($socio['nombre'] . ' ' . $socio['apellidos']); ?></title>
-<<<<<<<< HEAD:presentacion/admin/pagos.php
     <link rel="stylesheet" href="../../css/admin/pagos.css">
-========
-    <link rel="stylesheet" href="../css/Admin/pagos.css">
->>>>>>>> 72a969d9b84989c8325ef25b7bf44b91d1c94b1a:Presentacion/Admin/pagos.php
+
 </head>
 <body>
     <div class="pagos-container">

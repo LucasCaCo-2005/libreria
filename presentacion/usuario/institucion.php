@@ -4,10 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sobre Nosotros - Asociación de Jubilados y Pensionistas de Durazno</title>
-<<<<<<<< HEAD:presentacion/usuario/institucion.php
+
     <link rel="stylesheet" href="css/carrusel.css">
      <link rel="stylesheet" href="../../css/usuario/institucion.css">
-========
     <link rel="stylesheet" href="../css/Usuario/carrusel.css">
     <?php include_once 'cabecera.php'; ?>
     <style>
@@ -188,11 +187,9 @@
                 font-size: 1.8rem;
             }
         }
->>>>>>>> 72a969d9b84989c8325ef25b7bf44b91d1c94b1a:Presentacion/Usuario/institucion.php
 
     <?php include_once 'cabecera.php'; ?>
  
-   <style>
          
    <?php include_once 'css/institucion.css'; ?> 
     

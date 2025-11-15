@@ -6,13 +6,6 @@ include_once __DIR__ . '/logica/admin/Talleres.php';
 include_once __DIR__ . '/persistencia/admin/TalleresBD.php';
 include_once __DIR__ . '/logica/admin/bd.php';
 
-<<<<<<< HEAD
-=======
-include_once __DIR__ . '/Logica/Admin/bd.php';
-// __DIR__ . '/admin/seccion/Talleres.php';
-include_once __DIR__ . '/Logica/Admin/Talleres.php';
->>>>>>> 72a969d9b84989c8325ef25b7bf44b91d1c94b1a
-
 // Aviso activo
 $sql = "SELECT titulo, contenido FROM avisos WHERE activo = 1 LIMIT 1";
 $resultado = $conexion->query($sql);
@@ -31,14 +24,8 @@ $listaTalleres = $talleres->ListarTalleres();
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
 
-<<<<<<< HEAD
-  <!-- <link rel="stylesheet" href="./estilos/index.css"> -->
-    <link rel="stylesheet" href="./css/modal.css">
-     <?php include_once 'cabecera.php'; ?> 
-=======
     <link rel="stylesheet" href="./Presentacion/css/Usuario/index.css">
     <link rel="stylesheet" href="./Presentacion/css/Usuario/modal.css">
->>>>>>> 72a969d9b84989c8325ef25b7bf44b91d1c94b1a
 </head>
 <body>
 <!--
@@ -47,19 +34,8 @@ $listaTalleres = $talleres->ListarTalleres();
         <img src="./images/bandera.png" alt="Bandera" height="60">
         <img src="./images/Logo.png" alt="Logo" height="60">
     </div>
-<<<<<<< HEAD
 <?php //include_once './incluidos/loginBanner.php'; ?>
 -->
-=======
-<?php include_once './Logica/Usuario/loginBanner.php'; ?>
-
- <button onclick="window.location.href='./Presentacion/Usuario/institucion.php'">Institución</button>
-    <button onclick="window.location.href='./Presentacion/Usuario/autoridades.php'">Autoridades</button>
-   
-    <button onclick="window.location.href='./Presentacion/Usuario/talleres.php'">Talleres</button>
-    <button onclick="window.location.href='Presentacion/Admin/index.php'">Admin</button>
-    <button onclick="window.location.href='./Presentacion/Usuario/productos.php'">Productos</button>
->>>>>>> 72a969d9b84989c8325ef25b7bf44b91d1c94b1a
 </header>
 
 

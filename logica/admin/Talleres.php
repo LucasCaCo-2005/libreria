@@ -1,8 +1,6 @@
 
 <?php
-<<<<<<<< HEAD:persistencia/admin/TalleresBD.php
-include_once "bd.php";
-========
+include_once __DIR__ . "/persistencia/admin/TalleresBD.php";
 //  de conexión a base de datos
 include_once __DIR__ . "/bd.php";
 
@@ -66,7 +64,6 @@ class Talleres {
     }
 }
 
->>>>>>>> 72a969d9b84989c8325ef25b7bf44b91d1c94b1a:Logica/Admin/Talleres.php
 // Maneja las operaciones de base de datos para los talleres, hereda conexion a la bd
 class TalleresBD extends Conexion {
 

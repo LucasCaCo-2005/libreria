@@ -9,11 +9,10 @@ include("cabecera.php");
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Gestión de Autoridades - Biblioteca</title>
-<<<<<<<< HEAD:presentacion/admin/panelautoridades.php
+
     <link rel="stylesheet" href="../../css/admin/panelautoridades.css">
-========
+
     <link rel="stylesheet" href="../css/admin/panelautoridades.css">
->>>>>>>> 72a969d9b84989c8325ef25b7bf44b91d1c94b1a:Presentacion/Admin/panelautoridades.php
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
