@@ -115,7 +115,11 @@ if (isset($_POST['Limpiar'])) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Panel de Administración - Talleres</title>
     <link rel="stylesheet" href="./css/Usuario/bootstrap.min.css">
+<<<<<<<< HEAD:presentacion/admin/paneladmin.php
     <link rel="stylesheet" href="../../css/admin/padmin.css">
+========
+    <link rel="stylesheet" href="../css/Admin/padmin.css">
+>>>>>>>> 72a969d9b84989c8325ef25b7bf44b91d1c94b1a:Presentacion/Admin/paneladmin.php
     <style>
       
     </style>

@@ -24,7 +24,11 @@ if(!$taller){
 <head>
     <meta charset="UTF-8">
     <title><?php echo htmlspecialchars($taller['nombre']); ?> - Detalles del Taller</title>
+<<<<<<<< HEAD:presentacion/admin/T.php
     <link rel="stylesheet" href="../../css/admin/t.css">
+========
+    <link rel="stylesheet" href="../css/Admin/t.css">
+>>>>>>>> 72a969d9b84989c8325ef25b7bf44b91d1c94b1a:Presentacion/Admin/T.php
 
 </head>
 <body>

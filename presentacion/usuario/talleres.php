@@ -2,9 +2,14 @@
 if (session_status() == PHP_SESSION_NONE) {
     session_start();
 }
+<<<<<<<< HEAD:presentacion/usuario/talleres.php
 include_once __DIR__ . '/../../logica/admin/Talleres.php';
 include_once __DIR__ . '/../../persistencia/admin/TalleresBD.php';
 include_once __DIR__ . '/../../logica/admin/bd.php';
+========
+include_once __DIR__ . '/../../Logica/Admin/bd.php';
+include_once __DIR__ . '/../../Logica/Admin/talleres.php';
+>>>>>>>> 72a969d9b84989c8325ef25b7bf44b91d1c94b1a:Presentacion/Usuario/talleres.php
 
 
 // Obtener lista de talleres y filtrar solo los activos
@@ -21,7 +26,11 @@ $listaTalleres = array_filter($todosTalleres, function($taller) {
 <meta charset="utf-8">
 <title>Talleres - Biblioteca Digital</title>
 <meta name="viewport" content="width=device-width,initial-scale=1">
+<<<<<<<< HEAD:presentacion/usuario/talleres.php
 <link rel="stylesheet" href="../../css/usuario/talleres.css">
+========
+<link rel="stylesheet" href="../css/Usuario/talleres.css">
+>>>>>>>> 72a969d9b84989c8325ef25b7bf44b91d1c94b1a:Presentacion/Usuario/talleres.php
 <style>
   
 </style>
@@ -46,7 +55,7 @@ $listaTalleres = array_filter($todosTalleres, function($taller) {
             <?php if (!empty($listaTalleres)): ?>
                 <?php foreach ($listaTalleres as $taller): ?>
                     <div class="card-taller">
-                        <img src="images/<?= htmlspecialchars($taller->getFoto()) ?>" 
+                        <img src="../../imagenes/<?= htmlspecialchars($taller->getFoto()) ?>" 
                              alt="Taller de <?= htmlspecialchars($taller->getNombre()) ?>" 
                              class="imagen-taller">
                         

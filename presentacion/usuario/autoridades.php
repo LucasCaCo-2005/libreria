@@ -3,8 +3,13 @@
 if (session_status() == PHP_SESSION_NONE) {
     session_start();
 }
+<<<<<<<< HEAD:presentacion/usuario/autoridades.php
  include_once '../../logica/admin/bd.php'; 
  include_once '../../logica/admin/autoridades.php'; 
+========
+include_once __DIR__ . '/../../Logica/Admin/bd.php';
+include_once __DIR__ . '/../../Logica/Admin/autoridades.php';
+>>>>>>>> 72a969d9b84989c8325ef25b7bf44b91d1c94b1a:Presentacion/Usuario/autoridades.php
 
 // Obtener lista de Autoridades como ARRAY
 $autoridadesBD = new AutoridadesBD();
@@ -31,7 +36,11 @@ foreach ($listaAutoridadesObjects as $autoridad) {
 <head>
 <meta charset="utf-8">
 <title>Index - Autoridades</title>
+<<<<<<<< HEAD:presentacion/usuario/autoridades.php
  <link rel="stylesheet" href="../../css/usuario/autoridades.css">
+========
+ <link rel="stylesheet" href="../css/Usuario/autoridades.css">
+>>>>>>>> 72a969d9b84989c8325ef25b7bf44b91d1c94b1a:Presentacion/Usuario/autoridades.php
 <meta name="viewport" content="width=device-width,initial-scale=1">
 </head>
 <body>
@@ -72,7 +81,7 @@ foreach ($listaAutoridadesObjects as $autoridad) {
             <div class="organigrama-otros">
                 <?php foreach ($otros as $autoridad): ?>
                     <div class="card">
-                        <img src="images/<?= htmlspecialchars($autoridad['foto']) ?>" 
+                        <img src="../../imagenes/<?= htmlspecialchars($autoridad['foto']) ?>" 
                              alt="Foto de <?= htmlspecialchars($autoridad['cargo']) ?>"
                              onerror="this.src='images/default-avatar.jpg'">
                         <div class="card-content">

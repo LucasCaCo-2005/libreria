@@ -9,7 +9,11 @@ include_once(__DIR__ . "/../../Logica/Admin/bd.php");
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<<<<<<<< HEAD:presentacion/admin/productos.php
   <title>Document</title> <link rel="stylesheet" href="../../css/admin/productos.css">
+========
+  <title>Document</title> <link rel="stylesheet" href="../css/Admin/productos.css">
+>>>>>>>> 72a969d9b84989c8325ef25b7bf44b91d1c94b1a:Presentacion/Admin/productos.php
 </head>
 <body>
 

@@ -44,7 +44,11 @@ include_once 'cabecera.php';
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Gestión de Talleres</title>
+<<<<<<<< HEAD:presentacion/admin/vistaT.php
     <link rel="stylesheet" href="../../css/admin/vistaT.css">
+========
+    <link rel="stylesheet" href="../css/Admin/vistat.css">
+>>>>>>>> 72a969d9b84989c8325ef25b7bf44b91d1c94b1a:Presentacion/Admin/vistaT.php
 </head>
 <body>
 

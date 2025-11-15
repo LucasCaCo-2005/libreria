@@ -1,6 +1,6 @@
 <?php
 
-include_once __DIR__ . "/../admin/seccion/bd.php";  // Incluye la clase de conexión
+include_once __DIR__ . "admin/bd.php";  // Incluye la clase de conexión
 
 class socioBD extends Conexion {
     // Método para registrar un socio

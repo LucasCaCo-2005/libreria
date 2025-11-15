@@ -43,7 +43,11 @@ $porcentajePagos = $totalSocios > 0 ? round(($totalPagos / $totalSocios) * 100, 
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Reporte de Pagos - <?php echo $mesActual; ?></title>
+<<<<<<<< HEAD:presentacion/admin/pagosS.php
     <link rel="stylesheet" href="../../css/admin/pagoss.css">
+========
+    <link rel="stylesheet" href="../css/Admin/pagoss.css">
+>>>>>>>> 72a969d9b84989c8325ef25b7bf44b91d1c94b1a:Presentacion/Admin/pagosS.php
     <style>
      
     </style>

@@ -1,0 +1,409 @@
+:root {
+     --color-primary: #4a80e2ff;
+      --color-secondary: #4a80e2ff;
+    --color-dark: #5a4a4a;
+    --color-light: #f8f4f4;
+    --color-success: #4a8b6b;
+    --color-danger: #e02323;
+    --color-warning: #8b7b4a;
+    --color-hover: #b98c8c;
+    --shadow: 0 4px 12px rgba(0,0,0,0.15);
+    --shadow-hover: 0 6px 20px rgba(0,0,0,0.2);
+    --border-radius: 12px;
+}
+        .socios-dashboard {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #f5f0f0;
+            min-height: 100vh;
+        }
+
+        .dashboard-header {
+            background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-dark) 100%);
+            color: #f8f4f4;
+            padding: 30px;
+            border-radius: var(--border-radius);
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        .dashboard-header h1 {
+            font-size: 2.3rem;
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+
+        .dashboard-header p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+
+        .controles-superiores {
+            display: grid;
+            grid-template-columns: 1fr auto;
+            gap: 20px;
+            margin-bottom: 30px;
+            align-items: center;
+        }
+
+        .buscador-container {
+            position: relative;
+            max-width: 500px;
+        }
+
+        .buscador-input {
+            width: 100%;
+            padding: 15px 45px 15px 20px;
+            border: 2px solid var(--color-secondary);
+            border-radius: var(--border-radius);
+            font-size: 1rem;
+            background: #f8f4f4;
+            color: var(--color-dark);
+            transition: all 0.3s ease;
+        }
+
+        .buscador-input:focus {
+            outline: none;
+            border-color: var(--color-primary);
+            box-shadow: 0 0 0 3px rgba(139, 107, 107, 0.1);
+        }
+
+        .buscador-icono {
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 1.2rem;
+            color: var(--color-primary);
+        }
+
+        .filtro-container {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .filtro-label {
+            font-weight: 600;
+            color: var(--color-primary);
+            white-space: nowrap;
+        }
+
+        .filtro-select {
+            padding: 12px 15px;
+            border: 2px solid var(--color-secondary);
+            border-radius: var(--border-radius);
+            background: #f8f4f4;
+            color: var(--color-dark);
+            font-size: 1rem;
+            min-width: 180px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .filtro-select:focus {
+            outline: none;
+            border-color: var(--color-primary);
+        }
+
+        .estadisticas-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .tarjeta-estadistica {
+            background: #f8f4f4;
+            padding: 25px;
+            border-radius: var(--border-radius);
+            text-align: center;
+            box-shadow: var(--shadow);
+            border: 1px solid #e8e0e0;
+            transition: transform 0.3s ease;
+        }
+
+        .tarjeta-estadistica:hover {
+            transform: translateY(-3px);
+        }
+
+        .estadistica-icono {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            display: block;
+        }
+
+        .estadistica-valor {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--color-primary);
+            margin-bottom: 5px;
+        }
+
+        .estadistica-label {
+            color: var(--color-dark);
+            font-weight: 500;
+            opacity: 0.8;
+        }
+
+        .grid-socios {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 25px;
+            margin-bottom: 40px;
+        }
+
+        .tarjeta-socio {
+            background: #ffffff;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            overflow: hidden;
+            border: 1px solid #e8e0e0;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .tarjeta-socio:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-hover);
+        }
+
+        .tarjeta-header {
+            background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-secondary) 100%);
+            color: #ffffff;
+            padding: 20px;
+            position: relative;
+        }
+
+        .estado-socio {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        .estado-activo {
+            background: #4a8b6b;
+            color: #f8f4f4;
+        }
+
+        .estado-inactivo {
+            background: #8b6b6b;
+            color: #f8f4f4;
+        }
+         .estado-pendiente {
+            background: #9cf000;
+            color: #f8f4f4;
+        }
+
+
+        .nombre-socio {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin: 0;
+            padding-right: 80px;
+        }
+
+        .cedula-socio {
+            font-size: 0.9rem;
+            opacity: 0.9;
+            margin: 5px 0 0 0;
+        }
+
+        .tarjeta-body {
+            padding: 20px;
+        }
+
+        .info-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            margin-bottom: 12px;
+            padding-bottom: 12px;
+            border-bottom: 1px solid #e8e0e0;
+        }
+
+        .info-item:last-child {
+            margin-bottom: 0;
+            padding-bottom: 0;
+            border-bottom: none;
+        }
+
+        .info-icono {
+            font-size: 1.1rem;
+            color: var(--color-primary);
+            min-width: 20px;
+            text-align: center;
+        }
+
+        .info-contenido {
+            flex: 1;
+        }
+
+        .info-label {
+            font-weight: 600;
+            color: var(--color-primary);
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 2px;
+        }
+
+        .info-valor {
+            color: var(--color-dark);
+            font-size: 0.95rem;
+            line-height: 1.4;
+        }
+
+        .tarjeta-footer {
+            padding: 15px 20px;
+            background: #e8e0e0;
+            border-top: 1px solid #d8d0d0;
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .btn-accion {
+            padding: 8px 15px;
+            border: none;
+            border-radius: var(--border-radius);
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 0.9rem;
+            flex: 1;
+            justify-content: center;
+            min-width: 100px;
+        }
+
+        .btn-editar {
+            background: var(--color-primary);
+            color: #f8f4f4;
+        }
+
+        .btn-editar:hover {
+            background: var(--color-dark);
+            transform: translateY(-2px);
+        }
+
+        .btn-pagos {
+            background: var(--color-success);
+            color: #f8f4f4;
+        }
+
+        .btn-pagos:hover {
+            background: #3a7a5b;
+            transform: translateY(-2px);
+        }
+
+        .btn-estado {
+            color: #f8f4f4;
+        }
+
+        .btn-activar {
+            background: var(--color-success);
+        }
+
+        .btn-activar:hover {
+            background: #3a7a5b;
+            transform: translateY(-2px);
+        }
+
+        .btn-desactivar {
+            background: var(--color-danger);
+        }
+
+        .btn-desactivar:hover {
+            background: #d32222;
+            transform: translateY(-2px);
+        }
+
+        .sin-resultados {
+            text-align: center;
+            padding: 60px 20px;
+            grid-column: 1 / -1;
+            background: #f8f4f4;
+            border-radius: var(--border-radius);
+            border: 2px dashed var(--color-secondary);
+        }
+
+        .sin-resultados i {
+            font-size: 4rem;
+            color: var(--color-secondary);
+            margin-bottom: 20px;
+            display: block;
+            opacity: 0.7;
+        }
+
+        .sin-resultados h3 {
+            color: var(--color-primary);
+            margin-bottom: 10px;
+        }
+
+        .sin-resultados p {
+            color: var(--color-dark);
+            opacity: 0.8;
+        }
+
+        .form-accion-socio {
+            display: none;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .socios-dashboard {
+                padding: 15px;
+            }
+            
+            .dashboard-header {
+                padding: 20px;
+            }
+            
+            .dashboard-header h1 {
+                font-size: 1.8rem;
+            }
+            
+            .controles-superiores {
+                grid-template-columns: 1fr;
+            }
+            
+            .grid-socios {
+                grid-template-columns: 1fr;
+            }
+            
+            .estadisticas-container {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .tarjeta-footer {
+                flex-direction: column;
+            }
+            
+            .btn-accion {
+                width: 100%;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .estadisticas-container {
+                grid-template-columns: 1fr;
+            }
+            
+            .filtro-container {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            
+            .filtro-label {
+                text-align: center;
+            }
+        }

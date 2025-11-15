@@ -6,12 +6,12 @@ if (session_status() === PHP_SESSION_NONE) {
 
 // Verifica que el usuario esté logueado
 if (!isset($_SESSION['socios'])) {
-    header("Location: login.php");  // Redirige al login si no hay datos de sesión
+    header("Location: .../index.php");  // Redirige al login si no hay datos de sesión
     exit;
 }
 
 // Incluye la conexión a la base de datos
-require_once __DIR__ . '/../admin/seccion/bd.php';
+require_once __DIR__ . '/Logica/bd.php';
 
 // Recupera el id del socio logueado desde la sesión
 $id = $_SESSION['socios']['id'];

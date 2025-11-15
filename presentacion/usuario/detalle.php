@@ -1,9 +1,13 @@
-<?php include_once 'template/cabecera.php'; ?>
+<?php include_once 'cabecera.php'; ?>
 
 <?php
 
+<<<<<<<< HEAD:presentacion/usuario/detalle.php
 
 include_once("admin/config/bd.php");
+========
+include_once __DIR__ . "/../../Logica/Admin/bd.php";
+>>>>>>>> 72a969d9b84989c8325ef25b7bf44b91d1c94b1a:Presentacion/Usuario/detalle.php
 
 if(isset($_GET['id'])){
     $id = $_GET['id'];
@@ -45,4 +49,4 @@ if(isset($_GET['id'])){
 <a class="btn btn-sm btn-primary" href="productos.php">Volver</a>
 </body>
 </html>
- <?php include_once 'template/pie.php'; 
+ <?php include_once 'pie.php'; 

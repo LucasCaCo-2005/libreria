@@ -1,7 +1,12 @@
 <?php 
 include_once 'cabecera.php';
+<<<<<<<< HEAD:presentacion/usuario/inscripcion.php
  include_once '../../logica/admin/bd.php'; 
 $taller = null;
+========
+include_once __DIR__ . '/../../Logica/Admin/talleres.php';
+
+>>>>>>>> 72a969d9b84989c8325ef25b7bf44b91d1c94b1a:Presentacion/Usuario/inscripcion.php
 // obtecion de datos
 if(isset($_GET['id'])){
     $idTaller = $_GET['id'];
@@ -23,7 +28,11 @@ if(!$taller){
 <head>
     <meta charset="UTF-8">
     <title><?php echo htmlspecialchars($taller['nombre']); ?> - Detalles del Taller</title>
+<<<<<<<< HEAD:presentacion/usuario/inscripcion.php
     <link rel="stylesheet" href="../../css/usuario/t.css">
+========
+    <link rel="stylesheet" href="../css/Usuario/t.css">
+>>>>>>>> 72a969d9b84989c8325ef25b7bf44b91d1c94b1a:Presentacion/Usuario/inscripcion.php
 
 </head>
 <body>
@@ -38,7 +47,7 @@ if(!$taller){
             
             <div class="contenido-detalle">
                 <div class="seccion-imagen">
-                    <img src="./images/<?php echo $taller['foto']; ?>" 
+                    <img src="../../imagenes/<?php echo $taller['foto']; ?>" 
                          alt="Imagen del taller <?php echo htmlspecialchars($taller['nombre']); ?>" 
                          class="imagen-taller">
                 </div>

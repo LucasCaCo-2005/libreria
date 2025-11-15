@@ -5,7 +5,11 @@
 <head>
        <meta charset="UTF-8">
        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<<<<<<<< HEAD:presentacion/admin/index.php
            <link rel="stylesheet" href="../../css/admin/inicio.css">
+========
+           <link rel="stylesheet" href="../css/Admin/inicio.css">
+>>>>>>>> 72a969d9b84989c8325ef25b7bf44b91d1c94b1a:Presentacion/Admin/index.php
        <title>Document</title>
 </head>
 <body>

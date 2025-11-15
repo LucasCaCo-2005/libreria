@@ -1,19 +1,18 @@
 <?php
 session_start();
-if (!isset($_SESSION['usuario'])) {
+if (!isset($_SESSION['usuario'])) { // usuario debe estar logueado
     header("Location: login.php");
     exit;
 }
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    require 'conexion.php'; // tu archivo de conexión a la BD
-    $id = $_SESSION['usuario']['id'];
+if ($_SERVER['REQUEST_METHOD'] === 'POST') { // acepta unicamente envios por post
+    require 'conexion.php'; D
+    $id = $_SESSION['usuario']['id']; // obtiene datos
     $actual = $_POST['password_actual'];
     $nueva = $_POST['password_nueva'];
     $confirmar = $_POST['password_confirmar'];
 
-    // Verificar que coincidan
-    if ($nueva !== $confirmar) {
+    if ($nueva !== $confirmar) { // verifica que coincidan las contraseñas nuevas
         $error = "Las contraseñas nuevas no coinciden.";
     } else {
         // Verificar la contraseña actual

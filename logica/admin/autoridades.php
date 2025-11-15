@@ -20,11 +20,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 // Incluir archivo de conexión
 include("bd.php");
-
 // Función para cargar imagen
 function cargarImagen() {
     if (!empty($_FILES['image']['name'])) {
-        $directorio = "../images/";
+        $directorio = "../../Imagenes/Autoridades";
         $archivo = $directorio . basename($_FILES['image']['name']);
         $tipoArchivo = strtolower(pathinfo($archivo, PATHINFO_EXTENSION));
         
@@ -34,13 +33,13 @@ function cargarImagen() {
             return null;
         }
         
-        // Generar nombre único
-        $nombreArchivo = uniqid() . '.' . $tipoArchivo;
-        $archivoDestino = $directorio . $nombreArchivo;
+        // Generar Nombre único
+        $NombreArchivo = uniqid() . '.' . $tipoArchivo;
+        $archivoDestino = $directorio . $NombreArchivo;
         
         // Mover archivo
         if (move_uploaded_file($_FILES['image']['tmp_name'], $archivoDestino)) {
-            return $nombreArchivo;
+            return $NombreArchivo;
         }
     }
     return null;
@@ -52,12 +51,12 @@ switch($accion) {
         $foto = cargarImagen();
         
         $sentencia = $conexion->prepare("
-            INSERT INTO autoridades (cedula, nombre, cargo, fecha_inicio, fecha_fin, foto, estado)
-            VALUES (:cedula, :nombre, :cargo, :fecha_inicio, :fecha_fin, :foto, :estado)
+            INSERT INTO autoridades (cedula, Nombre, cargo, fecha_inicio, fecha_fin, foto, estado)
+            VALUES (:cedula, :Nombre, :cargo, :fecha_inicio, :fecha_fin, :foto, :estado)
         ");
-        
+
         $sentencia->bindParam(':cedula', $txtCedula);
-        $sentencia->bindParam(':nombre', $txtNombre);
+        $sentencia->bindParam(':Nombre', $txtNombre);
         $sentencia->bindParam(':cargo', $txtCargo);
         $sentencia->bindParam(':fecha_inicio', $txtFecha_inicio);
         $sentencia->bindParam(':fecha_fin', $txtFecha_fin);
@@ -82,14 +81,14 @@ switch($accion) {
         
         if ($autoridad) {
             $txtCedula = $autoridad['cedula'];
-            $txtNombre = $autoridad['nombre'];
+            $txtNombre = $autoridad['Nombre'];
             $txtCargo = $autoridad['cargo'];
             $txtFecha_inicio = $autoridad['fecha_inicio'];
             $txtFecha_fin = $autoridad['fecha_fin'];
             $txtEstado = $autoridad['estado'];
             $foto_actual = $autoridad['foto'];
             
-            echo "<script>alert('Autoridad seleccionada para edición: {$autoridad['nombre']}');</script>";
+            echo "<script>alert('Autoridad seleccionada para edición: {$autoridad['Nombre']}');</script>";
         } else {
             echo "<script>alert('Error: No se encontró la autoridad');</script>";
         }
@@ -105,7 +104,7 @@ switch($accion) {
                 $sentencia = $conexion->prepare("
                     UPDATE autoridades SET
                         cedula = :cedula,
-                        nombre = :nombre,
+                        Nombre = :Nombre,
                         cargo = :cargo,
                         fecha_inicio = :fecha_inicio,
                         fecha_fin = :fecha_fin,
@@ -119,7 +118,7 @@ switch($accion) {
                 $sentencia = $conexion->prepare("
                     UPDATE autoridades SET
                         cedula = :cedula,
-                        nombre = :nombre,
+                        Nombre = :Nombre,
                         cargo = :cargo,
                         fecha_inicio = :fecha_inicio,
                         fecha_fin = :fecha_fin,
@@ -129,7 +128,7 @@ switch($accion) {
             }
             
             $sentencia->bindParam(':cedula', $txtCedula);
-            $sentencia->bindParam(':nombre', $txtNombre);
+            $sentencia->bindParam(':Nombre', $txtNombre);
             $sentencia->bindParam(':cargo', $txtCargo);
             $sentencia->bindParam(':fecha_inicio', $txtFecha_inicio);
             $sentencia->bindParam(':fecha_fin', $txtFecha_fin);
@@ -172,7 +171,7 @@ switch($accion) {
 
 // Siempre listar las autoridades (excepto en redirecciones)
 if ($accion !== "Agregar" && $accion !== "Modificar" && $accion !== "Eliminar") {
-    $sentencia = $conexion->prepare("SELECT * FROM autoridades ORDER BY cargo, nombre");
+    $sentencia = $conexion->prepare("SELECT * FROM autoridades ORDER BY cargo, Nombre");
     $sentencia->execute();
     $listaAutoridades = $sentencia->fetchAll(PDO::FETCH_ASSOC);
 }
@@ -186,7 +185,7 @@ class AutoridadesBD extends Conexion {
             $con = $this->Conectar();
             $sql = "SELECT * FROM autoridades WHERE estado = 'activo' ORDER BY 
                     CASE WHEN LOWER(cargo) = 'presidente' THEN 1 ELSE 2 END, 
-                    cargo, nombre";
+                    cargo, Nombre";
             $stmt = $con->prepare($sql);
             $stmt->execute();
             $resultado = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -216,7 +215,7 @@ class AutoridadesBD extends Conexion {
 class Autoridades extends Conexion {
     private $id;
     private $cedula;
-    private $nombre;
+    private $Nombre;
     private $cargo;
     private $fecha_inicio;
     private $fecha_fin;
@@ -230,8 +229,8 @@ class Autoridades extends Conexion {
     public function setCedula($cedula){ $this->cedula = $cedula; }
     public function getCedula(){ return $this->cedula ?? ''; }
     
-    public function setNombre($nombre){ $this->nombre = $nombre; }
-    public function getNombre(){ return $this->nombre ?? ''; }
+    public function setNombre($Nombre){ $this->Nombre = $Nombre; }
+    public function getNombre(){ return $this->Nombre ?? ''; }
     
     public function setCargo($cargo){ $this->cargo = $cargo; }
     public function getCargo(){ return $this->cargo ?? ''; }

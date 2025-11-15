@@ -15,7 +15,11 @@ $url = "http://" . $_SERVER['HTTP_HOST'] . "/sitioweb";
   <title>Panel Administrativo - Biblioteca</title>
 
    <!-- ✅ Bootstrap 5 CSS -->
+<<<<<<<< HEAD:presentacion/admin/cabecera.php
   <link rel="stylesheet" href="../../css/usuario/bootstrap.min.css">
+========
+  <link rel="stylesheet" href="../css/Usuario/bootstrap.min.css">
+>>>>>>>> 72a969d9b84989c8325ef25b7bf44b91d1c94b1a:Presentacion/Admin/cabecera.php
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
  
   <style>

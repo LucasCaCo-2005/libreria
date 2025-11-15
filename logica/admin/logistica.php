@@ -41,7 +41,7 @@ switch($accion) { // CRUD
         $tmpImagen = $_FILES['txtIMG']['tmp_name']; // genera un unico nombre para la imagen en base con timestap
         
         if ($tmpImagen != "") {
-            move_uploaded_file($tmpImagen, "../../images/" . $nombreArchivo); // sube las imagenes a una carpeta
+            move_uploaded_file($tmpImagen, "../imagenes/" . $nombreArchivo); // sube las imagenes a una carpeta
         }
         
         $sentencia->bindParam(':imagen', $nombreArchivo);
@@ -114,7 +114,7 @@ switch($accion) { // CRUD
         $libro = $sentencia->fetch(PDO::FETCH_LAZY);
 
         if (isset($libro["imagen"]) && $libro["imagen"] != "imagen.jpg") {
-            $rutaImagen = "../../images/" . $libro["imagen"];
+            $rutaImagen = "../imagenes/" . $libro["imagen"];
             if (file_exists($rutaImagen)) {
                 unlink($rutaImagen);
             }

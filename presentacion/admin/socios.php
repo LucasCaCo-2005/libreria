@@ -10,7 +10,11 @@ include_once (__DIR__ ."/../../Logica/Admin/bd.php");
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Registro de Socios - Biblioteca</title>
+<<<<<<<< HEAD:presentacion/admin/socios.php
     <link rel="stylesheet" href="../../css/admin/socios.css">
+========
+    <link rel="stylesheet" href="../css/Admin/socios.css">
+>>>>>>>> 72a969d9b84989c8325ef25b7bf44b91d1c94b1a:Presentacion/Admin/socios.php
 
 </head>
 <body>

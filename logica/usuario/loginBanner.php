@@ -1,4 +1,8 @@
-
+<?php
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
+?>
 
 <style>
 /* 🔹 Estilos específicos para el login banner */
@@ -87,7 +91,7 @@
       👤 <?= htmlspecialchars($_SESSION['socios']['nombre'] ?? '') ?>
     </button>
     <div class="user-dropdown" id="userDropdown">
-   <a href='/sitioweb/users/Perfil.php'>Mi Perfil</a>
+   <a href='/sitioweb/Presentacion/Usuario/Perfil.php'>Mi Perfil</a>
    
      
       <a href="ayuda.php"><i class="fas fa-question-circle"></i> Ayuda</a>
@@ -105,7 +109,7 @@
 </div>
 
 <script>
-// 🔹 Mostrar/ocultar el menú del usuario
+// Mostrar/ocultar el menú del usuario
 document.addEventListener('DOMContentLoaded', function() {
   const userButton = document.getElementById('userButton');
   const userDropdown = document.getElementById('userDropdown');

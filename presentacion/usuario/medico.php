@@ -5,7 +5,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Sección Médica</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<<<<<<<< HEAD:presentacion/usuario/medico.php
   <link rel="stylesheet" href="../../css/usuario/medico.css">
+========
+  <link rel="stylesheet" href="../css/Usuario/medico.css">
+>>>>>>>> 72a969d9b84989c8325ef25b7bf44b91d1c94b1a:Presentacion/Usuario/medico.php
   <style>
    
   </style>
@@ -13,7 +17,11 @@
 <body>
 
 <?php include_once 'cabecera.php'; ?>
+<<<<<<<< HEAD:presentacion/usuario/medico.php
 <?php  include_once '../../logica/admin/trabajador.php';  ?>
+========
+<?php include_once '../../Logica/Admin/Trabajador.php'; ?>
+>>>>>>>> 72a969d9b84989c8325ef25b7bf44b91d1c94b1a:Presentacion/Usuario/medico.php
 <div class="contenedor">
   <div class="header">
     <h1>Sección Médica</h1>
@@ -53,7 +61,7 @@
       </div>
       <a href="https://wa.me/598092749714?text=Hola,%20quiero%20solicitar%20un%20turno%20con%20el%20podólogo%20<?php echo urlencode($podologo['nombre'] ?? ''); ?>."
          class="btn-whatsapp" target="_blank">
-        <i class="fab fa-whatsapp"></i> Pedir turno por WhatsApp
+        <i class="fab fa-whatsapp"></i> Pedir turno por WhatsApp 123
       </a>
     </div>
   </div>

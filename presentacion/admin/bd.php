@@ -33,4 +33,5 @@ if (!class_exists('Conexion')) {
 if (!isset($conexion)) {
     $conexion = (new Conexion())->Conectar();
 }
+
 ?>

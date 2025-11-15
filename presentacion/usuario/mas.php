@@ -21,7 +21,11 @@ if(!$libro){
 <head>
     <meta charset="UTF-8">
     <title><?php echo $libro['nombre']; ?> - Detalles</title>
+<<<<<<<< HEAD:presentacion/usuario/mas.php
     <link rel="stylesheet" href="../../css/Usuario/mas.css">
+========
+    <link rel="stylesheet" href="../css/Usuario/mas.css">
+>>>>>>>> 72a969d9b84989c8325ef25b7bf44b91d1c94b1a:Presentacion/Usuario/mas.php
     <style>
        
     </style>
