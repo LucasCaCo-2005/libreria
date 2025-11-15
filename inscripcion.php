@@ -12,7 +12,7 @@ if(isset($_GET['id'])){
     $sentencia->execute();
     $taller = $sentencia->fetch(PDO::FETCH_ASSOC);
 }
-// si el taller esta vacio salta este mensaje
+
 if(!$taller){
     echo "<h2>Taller no encontrado</h2>";
     exit;

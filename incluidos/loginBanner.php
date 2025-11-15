@@ -5,7 +5,7 @@ if (session_status() === PHP_SESSION_NONE) {
 ?>
 
 <style>
-/*  Estilos específicos para el login banner */
+/* 🔹 Estilos específicos para el login banner */
 .login-banner {
   position: relative;
   display: flex;

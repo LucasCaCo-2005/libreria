@@ -1,5 +1,5 @@
 <?php
-if (session_status() == PHP_SESSION_NONE) {
+if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
 
@@ -24,24 +24,19 @@ $listaTalleres = $talleresBD->ListarTalleres();
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
 
-    <link rel="stylesheet" href="./estilos/index.css">
+  <!-- <link rel="stylesheet" href="./estilos/index.css"> -->
     <link rel="stylesheet" href="./css/modal.css">
+     <?php include_once 'template/cabecera.php'; ?> 
 </head>
 <body>
-
+<!--
 <header class="p-3 bg-light border-bottom d-flex justify-content-between align-items-center">
     <div class="d-flex align-items-center gap-3">
         <img src="./images/bandera.png" alt="Bandera" height="60">
         <img src="./images/Logo.png" alt="Logo" height="60">
     </div>
-<?php include_once './incluidos/loginBanner.php'; ?>
-
- <button onclick="window.location.href='institucion.php'">Institución</button>
-    <button onclick="window.location.href='autoridades.php'">Autoridades</button>
-   
-    <button onclick="window.location.href='talleres.php'">Talleres</button>
-    <button onclick="window.location.href='./admin/index.php'">Admin</button>
-    <button onclick="window.location.href='productos.php'">Productos</button>
+<?php //include_once './incluidos/loginBanner.php'; ?>
+-->
 </header>
 
 

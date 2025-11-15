@@ -1,4 +1,18 @@
-
+/* Estilos para el panel de administración de libros */
+:root {
+    --color-primary: #8b6b6b;
+    --color-secondary: #ceabab;
+    --color-dark: #5a4a4a;
+    --color-light: #f8f4f4;
+    --color-success: #4a8b6b;
+    --color-danger: #8b6b6b;
+    --color-warning: #8b7b4a;
+    --color-info: #6b8b8b;
+    --color-hover: #b98c8c;
+    --shadow: 0 4px 12px rgba(0,0,0,0.15);
+    --shadow-hover: 0 6px 20px rgba(0,0,0,0.2);
+    --border-radius: 12px;
+}
 
 .admin-container {
     max-width: 1400px;

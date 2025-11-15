@@ -1,14 +1,10 @@
-/* ============================
-   ESTILOS GENERALES
-============================ */
+/* Estilos Generales */
 body {
     margin: 0;
     font-family: Arial, sans-serif;
 }
 
-/* ============================
-   HEADER
-============================ */
+/* Header */
 .header-content {
     display: flex;
     justify-content: space-between;
@@ -23,9 +19,7 @@ body {
     height: 150px; /* duplica el tamaño del logo */
 }
 
-/* ============================
-   BOTÓN LOGIN
-============================ */
+/* Boton del Login*/
 .login-button button,
 #loginButton {
     padding: 16px 32px;
@@ -44,17 +38,13 @@ body {
     background-color: #003f75;
 }
 
-/* ============================
-   MODAL LOGIN PERSONALIZADO
-============================ */
+/* Modal Login Personalizado */
 .custom-
 .vertical-banner {
   pointer-events: auto;
   z-index: 10;
 }
-/* =======================
-   FIX DE CAPAS Y CLICK
-======================= */
+/* Fix de capas y click */
 
 /* Capa del botón login */
 #loginButton, #userButton {

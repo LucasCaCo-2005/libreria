@@ -1,5 +1,5 @@
 <?php
-// Inicializar las variables que utilizo para recibir y guardar datos del Form.
+// Inicializar variables
 $txtID = $txtCedula = $txtNombre = $txtCargo = $txtFecha_inicio = $txtFecha_fin = $txtEstado = "";
 $foto_actual = "";
 $listaAutoridades = [];

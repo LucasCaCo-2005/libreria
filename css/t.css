@@ -7,7 +7,7 @@
         }
 
         .contenedor-detalle {
-            background: #ffffff;
+            background: #67c7ff;
             border-radius: 16px;
             box-shadow: 0 8px 32px rgba(139, 107, 107, 0.15);
             overflow: hidden;
@@ -26,7 +26,6 @@
             font-size: 2.5rem;
             margin-bottom: 10px;
             font-weight: 600;
-            color: #17680c;
         }
 
       

@@ -196,7 +196,8 @@ if (session_status() === PHP_SESSION_NONE) {
 <nav class="navbar navbar-expand-lg navbar-dark navbar-custom fixed-top">
   <div class="container">
     <a class="navbar-brand" href="index.php">
-       Bandera
+      
+       
     </a>
 
     <!-- Botón responsive -->

@@ -1,10 +1,6 @@
 <?php
 session_start();
-<<<<<<< HEAD
-if (!isset($_SESSION['usuario'])) {
-=======
 if (!isset($_SESSION['usuario'])) { // usuario debe estar logueado
->>>>>>> 724c893d0c5e263a04d36fe6479dcd67a1653b7c
     header("Location: login.php");
     exit;
 }
