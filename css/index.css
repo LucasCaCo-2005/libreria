@@ -1,77 +1,81 @@
-.custom-login-modal {
-    display: none;
-    position: fixed;
-    z-index: 1055; /* Menor que el modal Bootstrap (1060), pero mayor que el resto */
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.6);
-    justify-content: center;
-    align-items: center;
-}
-
-.modal-content {
-    background-color: #0057a0;
-    padding: 60px 80px;
-    border-radius: 15px;
-    box-shadow: 0 0 20px rgba(0,0,0,0.3);
-    color: white;
+/* Estilos Generales */
+body {
+    margin: 0;
     font-family: Arial, sans-serif;
-    width: 100%;
-    max-width: 800px;
-    position: relative;
-    overflow: hidden;
 }
 
-.modal-content .close {
-    position: absolute;
-    right: 15px;
-    top: 10px;
-    font-size: 28px;
-    font-weight: bold;
+/* Header */
+.header-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #20055b;
+    padding: 20px;
+    height: 138px;
+}
+
+.flag img,
+.logo-header img {
+    height: 150px; /* duplica el tamaño del logo */
+}
+
+/* Boton del Login*/
+.login-button button,
+#loginButton {
+    padding: 16px 32px;
+    background-color: #0057a0;
     color: white;
-    cursor: pointer;
-}
-
-.login-form input[type="text"],
-.login-form input[type="password"],
-.login-form input[type="submit"] {
-    display: block;
-    width: 100%;
-    margin: 12px 0;
-    padding: 10px;
-    font-size: 20px;
     border: none;
-    border-radius: 5px;
-}
-
-.login-form input[type="submit"] {
-    background-color: #003d70;
-    color: white;
     cursor: pointer;
-    transition: background-color 0.3s;
-    font-size: 2.5em; /* tamaño aumentado */
-    padding: 10px 0;    /* espacio interno aumentado */
-    border: none;
+    z-index: 900;
+    font-size: 1.5rem;
     border-radius: 5px;
-    margin-top: 10px;
-
+    transition: background-color 0.3s ease;
 }
 
-.login-form input[type="submit"]:hover {
-    background-color: #002f5c;
-   
-   .login-banner-button {
-    background-color: #0057a0; /* Fondo azul */
-    color: white; /* Texto blanco */
-    padding: 12px 20px; /* Espaciado alrededor del texto */
-    border: none; /* Sin borde */
-    border-radius: 8px; /* Bordes redondeados */
-    font-size: 18px; /* Tamaño de la fuente */
-    cursor: pointer; /* Apunta con el cursor */
-    transition: background-color 0.3s, transform 0.3s; /* Transiciones suaves */
-    display: inline-block; /* Para no romper el flujo del layout */
+.login-button button:hover,
+#loginButton:hover {
+    background-color: #003f75;
 }
 
+/* Modal Login Personalizado */
+.custom-
+.vertical-banner {
+  pointer-events: auto;
+  z-index: 10;
+}
+/* Fix de capas y click */
+
+/* Capa del botón login */
+#loginButton, #userButton {
+  position: relative;
+  z-index: 5000; /* muy por encima de todo */
+}
+
+/* El banner lateral debajo de los botones */
+.vertical-banner {
+  z-index: 1000;
+}
+
+/* Banner inferior — más bajo aún */
+.banner-inferior {
+  z-index: 900;
+}
+
+/* Modal de login — solo visible cuando se abre */
+#loginModal.custom-login-modal {
+  display: none;
+  z-index: 6000;
+  pointer-events: none; /* no intercepta clics cuando está oculto */
+}
+
+#loginModal.custom-login-modal.active {
+  display: flex;
+  pointer-events: all;
+}
+
+/* El backdrop de Bootstrap no debe quedar encima */
+.modal-backdrop {
+  z-index: 2000 !important;
+  pointer-events: none; /* evita que bloquee clics */
 }

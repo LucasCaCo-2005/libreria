@@ -2,9 +2,10 @@
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
+include_once __DIR__ . '/logica/admin/Talleres.php';
+include_once __DIR__ . '/persistencia/admin/TalleresBD.php';
+include_once __DIR__ . '/logica/admin/bd.php';
 
-include_once __DIR__ . '/admin/seccion/bd.php';
-include_once __DIR__ . '/admin/seccion/Talleres.php';
 
 // Aviso activo
 $sql = "SELECT titulo, contenido FROM avisos WHERE activo = 1 LIMIT 1";
@@ -12,8 +13,8 @@ $resultado = $conexion->query($sql);
 $mensaje = ($resultado && $resultado->rowCount() > 0) ? $resultado->fetch(PDO::FETCH_ASSOC) : null;
 
 // Talleres
-$talleresBD = new TalleresBD();
-$listaTalleres = $talleresBD->ListarTalleres();
+$talleres = new Talleres();
+$listaTalleres = $talleres->ListarTalleres();
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -26,7 +27,7 @@ $listaTalleres = $talleresBD->ListarTalleres();
 
   <!-- <link rel="stylesheet" href="./estilos/index.css"> -->
     <link rel="stylesheet" href="./css/modal.css">
-     <?php include_once 'template/cabecera.php'; ?> 
+     <?php include_once 'cabecera.php'; ?> 
 </head>
 <body>
 <!--
@@ -95,12 +96,13 @@ $listaTalleres = $talleresBD->ListarTalleres();
 
 <!-- Banner lateral -->
 <aside class="vertical-banner" id="verticalBanner">
-    <button onclick="window.location.href='institucion.php'">Institución</button>
-    <button onclick="window.location.href='autoridades.php'">Autoridades</button>
+    <button onclick="window.location.href='./presentacion/usuario/institucion.php'">Institución</button>
+    <button onclick="window.location.href='./presentacion/usuario/autoridades.php'">Autoridades</button>
    
-    <button onclick="window.location.href='talleres.php'">Talleres</button>
-    <button onclick="window.location.href='./admin/index.php'">Admin</button>
-    <button onclick="window.location.href='productos.php'">Productos</button>
+    <button onclick="window.location.href='./presentacion/usuario/talleres.php'">Talleres</button>
+    <button onclick="window.location.href='./presentacion/admin/index.php'">Admin</button>
+    <button onclick="window.location.href='./presentacion/usuario/productos.php'">Productos</button>
+    
 </aside>
 
 <!-- JS -->
