@@ -1,7 +1,6 @@
 <?php
 
-include_once __DIR__ . "admin/bd.php";  // Incluye la clase de conexión
-
+include_once "../../persistencia/admin/bd.php";  // Incluye la clase de conexión
 class socioBD extends Conexion {
     // Método para registrar un socio
     public function RegistrarSocio($cedula, $nombre, $apellidos, $domicilio, $telefono, $correo, $contrasena, $estado) {

@@ -2,8 +2,10 @@
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
     } // inicio de sesion de forma que se evitan varias sesiones
-include_once "./admin/seccion/bd.php";
-include_once __DIR__ . "/admin/seccion/users.php";
+
+ include_once '../../logica/admin/bd.php'; 
+
+ include_once '../../logica/admin/users.php'; 
 
 
 if (isset($_POST['login'])) {

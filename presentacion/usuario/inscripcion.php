@@ -3,7 +3,6 @@ include_once 'cabecera.php';
 
  include_once '../../logica/admin/bd.php'; 
 $taller = null;
-========
 include_once __DIR__ . '/../../Logica/Admin/talleres.php';
 
 
@@ -29,7 +28,7 @@ if(!$taller){
     <meta charset="UTF-8">
     <title><?php echo htmlspecialchars($taller['nombre']); ?> - Detalles del Taller</title>
 
-    <link rel="stylesheet" href="../../css/usuario/t.css">
+    <link rel="stylesheet" href="./../css/usuario/t.css">
 
 </head>
 <body>

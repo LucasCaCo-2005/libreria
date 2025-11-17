@@ -2,9 +2,9 @@
 // Procesa el formulario si se envió
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['agregar'])) {
 
-include_once __DIR__ . "/../../Logica/Admin/bd.php";
-include_once __DIR__ . "/../../Logica/Admin/users.php";
-include_once __DIR__ . "/../../Logica/Usuario/usersbd.php"; 
+include_once(__DIR__ ."/../../logica/Admin/bd.php");
+include_once(__DIR__ ."/../../logica/admin/users.php");
+include_once(__DIR__ ."/../../persistencia/usuario/usersBD.php");
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['agregar'])) {
 

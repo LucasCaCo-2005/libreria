@@ -22,7 +22,7 @@ if(!$libro){
     <meta charset="UTF-8">
     <title><?php echo $libro['nombre']; ?> - Detalles</title>
 
-    <link rel="stylesheet" href="../../css/Usuario/mas.css">
+    <link rel="stylesheet" href="./../css/Usuario/mas.css">
 
 </head>
 <body>
@@ -45,7 +45,7 @@ if(!$libro){
                 
                 <div class="contenedor-botones">
                     <a href="productos.php" class="btn-volver">← Volver a la Biblioteca</a>
-                    <a href="reserva.php?id=<?php echo $libro['id']; ?>" class="btn-reservar">📚 Reservar este Libro</a>
+                    <a href="reservascarrito.php?id=<?php echo $libro['id']; ?>" class="btn-reservar">📚 Reservar este Libro</a>
                 </div>
             </div>
         </div>

@@ -22,7 +22,7 @@ $listaTalleres = array_filter($todosTalleres, function($taller) {
 <meta charset="utf-8">
 <title>Talleres - Biblioteca Digital</title>
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<link rel="stylesheet" href="../../css/usuario/talleres.css">
+<link rel="stylesheet" href="./../css/usuario/talleres.css">
 
 <style>
   

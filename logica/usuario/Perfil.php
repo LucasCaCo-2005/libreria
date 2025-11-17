@@ -1,8 +1,7 @@
 <?php
 // Incluye las clases necesarias
-include_once __DIR__ . "Logica/Admin/bd.php";
+include_once __DIR__ . "./Logica/Admin/bd.php";
 include_once "usersBD.php"; // Asegúrate de que esta ruta esté correcta
-include_once "FormPerfil.php";
 //session_start();  // Asegúrate de que la sesión esté iniciada
 
 // Verifica que el usuario esté logueado

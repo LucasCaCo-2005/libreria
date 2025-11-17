@@ -16,7 +16,7 @@ if (isset($_SESSION['id'])) {
   <meta name="viewport" contnt="width=device-width, initial-scale=1.0"> 
   <title>Biblioteca</title>
    <!-- ✅ Bootstrap 5 CSS -->
-  <link rel="stylesheet" href="./estilos/bootstrap.min.css">
+  <link rel="stylesheet" href="./presentacion/usuario/bootstrap.min.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
  
   <style>
@@ -274,7 +274,7 @@ if (isset($_SESSION['id'])) {
       <button class="btn btn-admin" onclick="window.location.href='presentacion/admin/paneladmin.php'">
         <i class="fas fa-user-shield"></i> Panel Admin
       </button>
-         <?php include_once 'logica/usuario/loginBanner.php'; ?>
+         <?php include_once 'presentacion/usuario/loginBanner.php'; ?>
     </div>
   </div>
 </nav>

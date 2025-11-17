@@ -2,9 +2,9 @@
 ini_set('display_errors', 1);
 error_reporting(E_ALL);
 
-include_once 'bd.php';
-include_once '../template/cabecera.php';
-include_once __DIR__ . '/../users/loginBanner.php';
+include_once(__DIR__ ."/../../Logica/Admin/bd.php");
+include_once 'cabecera.php';
+include_once __DIR__ . '/../../logica/usuario/loginBanner.php';
 
 
 
@@ -64,7 +64,7 @@ $reservas = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
   <!-- <link rel="stylesheet" href="./estilos/index.css"> -->
     <link rel="stylesheet" href="../css/modal.css">
-     <?php include_once '../template/cabecera.php'; ?> 
+     <?php include_once 'cabecera.php'; ?> 
 </head>
 <body>
     
@@ -126,4 +126,4 @@ $reservas = $stmt->fetchAll(PDO::FETCH_ASSOC);
 .btn-confirmar { background-color: #28a745; }
 .btn-eliminar { background-color: #dc3545; }
 </style>
-<?phpinclude_once '../template/pie.php';?>
+<?php include_once 'pie.php';?>

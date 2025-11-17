@@ -2,9 +2,10 @@
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
-include_once __DIR__ . '/logica/admin/Talleres.php';
 include_once __DIR__ . '/persistencia/admin/TalleresBD.php';
+include_once __DIR__ . '/logica/admin/Talleres.php';
 include_once __DIR__ . '/logica/admin/bd.php';
+include_once 'cabecera.php';
 
 // Aviso activo
 $sql = "SELECT titulo, contenido FROM avisos WHERE activo = 1 LIMIT 1";
@@ -42,7 +43,7 @@ $listaTalleres = $talleres->ListarTalleres();
 <div id="loginModal" class="custom-login-modal">
   <div class="modal-content">
     <span class="close" onclick="closeLoginModal()">&times;</span>
-  <iframe id="loginIframe" src="login.php" frameborder="0"
+  <iframe id="loginIframe" src="presentacion/usuario/login.php" frameborder="0"
         style="width:100%; height:300px; border-radius:10px; overflow:hidden;"></iframe>
   </div>
 </div>
@@ -110,7 +111,7 @@ $listaTalleres = $talleres->ListarTalleres();
 function openLoginModal() {
     const modal = document.getElementById("loginModal");
     const iframe = document.getElementById("loginIframe");
-    iframe.src = "login.php";
+    iframe.src = "presentacion/usuario/login.php";
     modal.classList.add("active");
 }
 

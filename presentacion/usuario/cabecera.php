@@ -17,7 +17,7 @@ if (isset($_SESSION['id'])) {
   <title>Biblioteca</title>
 
    <!-- ✅ Bootstrap 5 CSS -->
-  <link rel="stylesheet" href="./estilos/bootstrap.min.css">
+  <link rel="stylesheet" href="./presentacion/css/Usuario/bootstrap.min.css">
 
 
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -247,7 +247,7 @@ if (isset($_SESSION['id'])) {
           </a>
         </li>
 <li class="nav-item">
-<a class="nav-link" href="../Persistencia/reserva_carrito.php">
+<a class="nav-link" href="reserva_carrito.php">
          Reservas
     </a>
 </li>
@@ -277,7 +277,7 @@ if (isset($_SESSION['id'])) {
         <i class="fas fa-user-shield"></i> Panel Admin
       </button>
     
-      <?php include_once '../../Logica/Usuario/loginBanner.php'; ?>
+      <?php include_once 'loginBanner.php'; ?>
 
     </div>
   </div>

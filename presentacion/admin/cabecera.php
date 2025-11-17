@@ -317,7 +317,7 @@ $url = "http://" . $_SERVER['HTTP_HOST'] . "/sitioweb";
 
         <!-- Cerrar Sesión -->
         <li class="nav-item">
-          <a class="nav-link text-warning" href="<?php echo $url; ?>/../../Logica/Admin/cerrar.php">
+          <a class="nav-link text-warning" href="<?php echo $url; ?>/cerrar.php">
             <i class="fas fa-sign-out-alt"></i>
             Cerrar Sesión
           </a>
