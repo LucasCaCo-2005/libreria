@@ -41,7 +41,7 @@ switch($accion) { // CRUD
         $tmpImagen = $_FILES['txtIMG']['tmp_name']; // genera un unico nombre para la imagen en base con timestap
         
         if ($tmpImagen != "") {
-            move_uploaded_file($tmpImagen, "../imagenes/" . $nombreArchivo); // sube las imagenes a una carpeta
+            move_uploaded_file($tmpImagen, "../../imagenes/" . $nombreArchivo); // sube las imagenes a una carpeta
         }
         
         $sentencia->bindParam(':imagen', $nombreArchivo);
@@ -70,7 +70,7 @@ switch($accion) { // CRUD
             // Mover la imagen al servidor
             $tmpImagen = $_FILES['txtIMG']['tmp_name'];
             if ($tmpImagen != "") {
-                move_uploaded_file($tmpImagen, "../../images/" . $nombreArchivo);
+                move_uploaded_file($tmpImagen, "../../imagenes/Lib" . $nombreArchivo);
             }
             // Actualizar el nombre de la imagen en la base de datos
             $sentencia = $conexion->prepare("UPDATE libros SET imagen=:imagen WHERE id=:id");
@@ -114,7 +114,7 @@ switch($accion) { // CRUD
         $libro = $sentencia->fetch(PDO::FETCH_LAZY);
 
         if (isset($libro["imagen"]) && $libro["imagen"] != "imagen.jpg") {
-            $rutaImagen = "../imagenes/" . $libro["imagen"];
+            $rutaImagen = "../../imagenes/" . $libro["imagen"];
             if (file_exists($rutaImagen)) {
                 unlink($rutaImagen);
             }

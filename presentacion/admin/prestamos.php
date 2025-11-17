@@ -119,7 +119,7 @@ if ($_POST) {
 
         <div class="card">
             <h2>Carátula del Libro</h2>
-            <img src=/../../imagenes/<?php echo htmlspecialchars($libro['imagen']); ?> " alt="Imagen del libro">
+            <img src=../../imagenes/lib<?php echo htmlspecialchars($libro['imagen']); ?> " alt="Imagen del libro">
         </div>
     <?php } else { ?>
         <p style="text-align:center;">No se encontró el libro seleccionado.</p>

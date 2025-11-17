@@ -15,10 +15,11 @@ if (session_status() === PHP_SESSION_NONE) {
      <link rel="stylesheet" href="../../css/usuario/productos.css"> 
 
      <link rel="stylesheet" href="../css/Usuario/productos.css"> 
+     
 </head>
 
 
-<?php include_once 'cabecera.php'; ?>
+
 
 <?php include_once '../../logica/admin/bd.php'; ?>
 
@@ -42,7 +43,7 @@ $categorias = [
   "Ficcion", "Romantico", "Biografia", "Autoayuda", "Nacional", "Otros"
 ];
 ?>
-
+<?php include_once 'cabecera.php'; ?>
 <div class="contenedor-principal">
   <h1 class="titulo-pagina">Nuestra Colección de Libros</h1>
 
@@ -64,7 +65,7 @@ $categorias = [
     <?php if (count($listaLibros) > 0): ?>
       <?php foreach($listaLibros as $libro){ ?> 
         <div class="carta-libro">
-          <img src=../../imagenes//<?php echo $libro['imagen']; ?>" alt="Portada de <?php echo $libro['nombre']; ?>">
+          <img src=../../imagenes/lib<?php echo $libro['imagen']; ?> alt="Portada de <?php echo $libro['nombre']; ?>">
           <div class="card-body">
             <h3 class="card-title"><?php echo $libro['nombre']; ?></h3>
             <p class="card-autor"><?php echo $libro['autor']; ?></p>
@@ -88,5 +89,6 @@ $categorias = [
 </div>
 
 <?php include_once 'pie.php'; ?>
+
 </body>
 </html>

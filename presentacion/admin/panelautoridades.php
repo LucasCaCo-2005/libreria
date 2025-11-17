@@ -179,7 +179,7 @@ include("cabecera.php");
                             <td><?= htmlspecialchars($autoridad['fecha_fin']) ?></td>
                             <td class="foto-cell">
                                 <?php if (!empty($autoridad['foto'])): ?>
-                                    <img src="../../imagenes/<?= htmlspecialchars($autoridad['foto']) ?>" 
+                                    <img src="../../imagenes/aut<?= htmlspecialchars($autoridad['foto']) ?>" 
                                          alt="Foto de <?= htmlspecialchars($autoridad['cargo']) ?>" 
                                          class="autoridad-foto">
                                 <?php else: ?>

@@ -44,7 +44,7 @@ $listaLibros = $sentencia->fetchAll(PDO::FETCH_ASSOC);
 <div class="contenedor-libros">
 <?php foreach($listaLibros as $libro){ ?> 
     <div class="card carta-chica">
-        <img class="card-img-top" src="/imagenes/<?php echo $libro['imagen']; ?>" alt="">
+        <img class="card-img-top" src="../../imagenes/lib<?php echo $libro['imagen']; ?>" alt="">
         <div class="card-body">
             <h6 class="card-title"><?php echo $libro['nombre']; ?></h6>
           autor:<h6 class="card-title"><?php echo $libro['autor']; ?></h6>

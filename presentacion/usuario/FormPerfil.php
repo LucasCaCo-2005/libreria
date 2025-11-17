@@ -57,8 +57,6 @@ if (isset($_POST['cambiar_password'])) {
 }
 ?>
 
-?>
-
 
 <!DOCTYPE html>
 <html lang="es">

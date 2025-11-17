@@ -33,7 +33,7 @@ foreach ($listaAutoridadesObjects as $autoridad) {
 <head>
 <meta charset="utf-8">
 <title>Index - Autoridades</title>
- <link rel="stylesheet" href="./../css/usuario/autoridades.css">
+ <link rel="stylesheet" href="../../css/usuario/autoridades.css">
 ¡
 </head>
 <body>
@@ -74,7 +74,7 @@ foreach ($listaAutoridadesObjects as $autoridad) {
             <div class="organigrama-otros">
                 <?php foreach ($otros as $autoridad): ?>
                     <div class="card">
-                        <img src="../../imagenes/<?= htmlspecialchars($autoridad['foto']) ?>" 
+                        <img src="../../imagenes<?= htmlspecialchars($autoridad['foto']) ?>" 
                              alt="Foto de <?= htmlspecialchars($autoridad['cargo']) ?>"
                              onerror="this.src='images/default-avatar.jpg'">
                         <div class="card-content">

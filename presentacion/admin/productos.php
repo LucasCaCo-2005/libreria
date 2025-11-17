@@ -128,7 +128,7 @@ include_once(__DIR__ . "/../../Logica/Admin/bd.php");
                   </label>
                   <?php if ($txtIMG != ""): ?>
                     <div class="mb-2">
-                      <img src="/imagenes/<?php echo htmlspecialchars($txtIMG); ?>" 
+                      <img src="../../imagenes/lib<?php echo htmlspecialchars($txtIMG); ?>" 
                            class="img-thumbnail" width="80" alt="Portada actual">
                     </div>
                   <?php endif; ?>
@@ -137,7 +137,7 @@ include_once(__DIR__ . "/../../Logica/Admin/bd.php");
                   <div class="form-text">Formatos: JPG, PNG, GIF. Máx: 2MB</div>
                 </div>
               </div>
-            </div>
+            </div> 
 
             <div class="mb-3">
               <label for="txtDesc" class="form-label">
@@ -223,7 +223,7 @@ include_once(__DIR__ . "/../../Logica/Admin/bd.php");
                       </td>
                       <td>
                         <?php if (!empty($libro['imagen'])): ?>
-                          <img src="../../imagenes/<?php echo htmlspecialchars($libro['imagen']); ?>" 
+                          <img src="../../imagenes/lib<?php echo htmlspecialchars($libro['imagen']); ?>" 
                                class="img-thumbnail" width="60" alt="Portada">
                         <?php else: ?>
                           <span class="text-muted">Sin imagen</span>

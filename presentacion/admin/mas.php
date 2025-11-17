@@ -56,7 +56,7 @@ if(!$libro){
 <body>
 <div   class="libro-detalle" style="text-align:center;">
      <br>
-<img class= "imagen"src="../../imagenes/<?php echo $libro['imagen']; ?>" alt="" style="width:200px; height:300px; object-fit:cover;"><br>
+<img class= "imagen"src="../../imagenes/lib<?php echo $libro['imagen']; ?>" alt="" style="width:200px; height:300px; object-fit:cover;"><br>
 Nombre: <?php echo $libro['nombre']; ?><br>
 Autor: <?php echo $libro['autor']; ?><br>
 </div>

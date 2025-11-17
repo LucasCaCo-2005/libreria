@@ -87,7 +87,7 @@ if (isset($_POST['Modificar'])) {
 
         // Si se subió una nueva imagen, actualizarla
         if (!empty($_FILES['image']['name'])) {
-            include_once "../cargarimagen.php";
+            include_once "cargarimagen.php";
             $foto = CargarFoto();
             if ($foto) {
                 $stmtFoto = $conn->prepare("UPDATE talleres SET foto = :foto WHERE Id = :id");

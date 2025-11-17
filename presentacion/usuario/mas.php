@@ -22,14 +22,14 @@ if(!$libro){
     <meta charset="UTF-8">
     <title><?php echo $libro['nombre']; ?> - Detalles</title>
 
-    <link rel="stylesheet" href="./../css/Usuario/mas.css">
+    <link rel="stylesheet" href="../../css/Usuario/mas.css">
 
 </head>
 <body>
     <div class="contenedor-detalle">
         <div class="tarjeta-detalle">
             <div class="seccion-imagen">
-                <img class="imagen-libro" src="../../imagenes/<?php echo $libro['imagen']; ?>" alt="Portada de <?php echo $libro['nombre']; ?>">
+                <img class="imagen-libro" src="../../imagenes/lib<?php echo $libro['imagen']; ?>" alt="Portada de <?php echo $libro['nombre']; ?>">
             </div>
             
             <div class="seccion-info">

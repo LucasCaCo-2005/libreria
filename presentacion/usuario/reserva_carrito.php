@@ -4,7 +4,7 @@ error_reporting(E_ALL);
 
 include_once(__DIR__ ."/../../Logica/Admin/bd.php");
 include_once 'cabecera.php';
-include_once __DIR__ . '/../../logica/usuario/loginBanner.php';
+include_once __DIR__ . '/loginBanner.php';
 
 
 

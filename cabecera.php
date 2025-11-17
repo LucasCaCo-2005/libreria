@@ -244,7 +244,7 @@ if (isset($_SESSION['id'])) {
           </a>
         </li>
 <li class="nav-item">
-<a class="nav-link" href="../Persistencia/reserva_carrito.php">
+<a class="nav-link" href="presentacion/usuario/reserva_carrito.php">
          Reservas
     </a>
 </li>
