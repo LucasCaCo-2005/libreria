@@ -52,7 +52,7 @@ include("cabecera.php");
             </div>
             <div class="form-body">
                 <form method="POST" enctype="multipart/form-data" class="trabajador-form">
-                    <input type="" name="txtID" value="<?php echo $txtID; ?>">
+                    <input type="hidden" name="txtID" value="<?php echo $txtID; ?>">
 
                     <div class="form-grid">
                         <div class="form-group full-width">

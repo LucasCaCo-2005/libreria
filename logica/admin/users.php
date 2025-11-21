@@ -12,7 +12,6 @@ $txtCorreo = (isset($_POST['txtCorreo'])) ? $_POST['txtCorreo'] : "";
 $txtcon = (isset($_POST['txtcon'])) ? $_POST['txtcon'] : "";
 $txtestado = (isset($_POST['txtestado'])) ? $_POST['txtestado'] : "";
 $accion = (isset($_POST['accion'])) ? $_POST['accion'] : ""; 
-
 // Incluir archivo de conexión a base de datos
 include("bd.php");
 // Obtener la lista de usuarios

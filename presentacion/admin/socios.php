@@ -123,7 +123,7 @@ include_once (__DIR__ ."/../../Logica/Admin/bd.php");
                             </label>
                             <input type="text" class="form-control" name="txtcon" id="txtcon" 
                                    value="<?php echo htmlspecialchars($txtcon); ?>"
-                                   placeholder="Ingrese apellidos" >
+                                   placeholder="Ingrese Contraseña" >
                         </div>
 
 

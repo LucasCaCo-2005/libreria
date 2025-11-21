@@ -44,7 +44,7 @@ include("cabecera.php");
             <?php endif; ?>
             
             <form method="POST" enctype="multipart/form-data" class="admin-form">
-                <input type="" name="txtID" value="<?= htmlspecialchars($txtID) ?>">
+                <input type="hidden" name="txtID" value="<?= htmlspecialchars($txtID) ?>">
 
                 <div class="form-grid">
                     <div class="form-group">

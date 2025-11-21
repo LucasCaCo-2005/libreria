@@ -305,6 +305,13 @@ $url = "http://" . $_SERVER['HTTP_HOST'] . "/sitioweb";
                 Autoridades
               </a>
             </li>
+
+             <li>
+              <a class="dropdown-item" href="<?php echo $url; ?>/Presentacion/Admin/panelavisos.php">
+                <i class="fas fa-user-shield"></i>
+                Avisos
+              </a>
+            </li>
           </ul>
         </li>
 

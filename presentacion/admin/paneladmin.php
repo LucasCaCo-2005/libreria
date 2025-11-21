@@ -128,7 +128,7 @@ if (isset($_POST['Limpiar'])) {
 
     <div class="form-container">
         <form action="" method="post" enctype="multipart/form-data">
-            <input type="" name="id" value="<?= htmlspecialchars($txtID) ?>">
+            <input type="hidden" name="id" value="<?= htmlspecialchars($txtID) ?>">
 
             <div class="form-section">
                 <h3>📝 Información del Taller</h3>

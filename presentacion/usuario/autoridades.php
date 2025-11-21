@@ -56,7 +56,7 @@ foreach ($listaAutoridadesObjects as $autoridad) {
                 <div class="organigrama-presidente">
                     <?php foreach ($presidentes as $autoridad): ?>
                         <div class="card presidente">
-                            <img src="images/<?= htmlspecialchars($autoridad['foto']) ?>" 
+                            <img src="../../imagenes/aut<?= htmlspecialchars($autoridad['foto']) ?>" 
                                  alt="Foto de <?= htmlspecialchars($autoridad['cargo']) ?>"
                                  onerror="this.src='images/default-avatar.jpg'">
                             <div class="card-content">
@@ -74,7 +74,7 @@ foreach ($listaAutoridadesObjects as $autoridad) {
             <div class="organigrama-otros">
                 <?php foreach ($otros as $autoridad): ?>
                     <div class="card">
-                        <img src="../../imagenes<?= htmlspecialchars($autoridad['foto']) ?>" 
+                        <img src="../../imagenes/aut<?= htmlspecialchars($autoridad['foto']) ?>" 
                              alt="Foto de <?= htmlspecialchars($autoridad['cargo']) ?>"
                              onerror="this.src='images/default-avatar.jpg'">
                         <div class="card-content">

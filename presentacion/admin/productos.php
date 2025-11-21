@@ -11,7 +11,6 @@ include_once(__DIR__ . "/../../Logica/Admin/bd.php");
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <title>Document</title> <link rel="stylesheet" href="../../css/admin/productos.css">
-  <title>Document</title> <link rel="stylesheet" href="../css/Admin/productos.css">
 
 </head>
 <body>
@@ -58,7 +57,7 @@ include_once(__DIR__ . "/../../Logica/Admin/bd.php");
 
           <!-- Formulario -->
           <form method="POST" enctype="multipart/form-data" id="formLibro">
-            <input type="" name="txtID" id="txtID" value="<?php echo $txtID; ?>">
+            <input type="hidden" name="txtID" id="txtID" value="<?php echo $txtID; ?>">
             
             <div class="row">
            

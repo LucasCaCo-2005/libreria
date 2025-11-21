@@ -18,8 +18,8 @@ $reservas = $sentencia->fetchAll(PDO::FETCH_ASSOC);
                 Libro: <?php echo $reserva['nombre']; ?> |
                 Autor: <?php echo $reserva['autor']; ?> |
                 Estado: <?php echo $reserva['estado']; ?> |
-                <a href="confirmar_reserva.php?id=<?php echo $reserva['libro_id']; ?>">Confirmar</a> | 
-                <a href="eliminar_reserva.php?id=<?php echo $reserva['libro_id']; ?>">Eliminar</a>
+                <a href="/../../Logica/Admin/confirmar_reserva.php?id=<?php echo $reserva['libro_id']; ?>">Confirmar</a> | 
+                <a href="/../../Logica/Admin/eliminar_reserva.php?id=<?php echo $reserva['libro_id']; ?>">Eliminar</a>
             </li>
         <?php endforeach; ?>
     </ul>

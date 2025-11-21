@@ -2,12 +2,13 @@
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
+include_once __DIR__ . '/persistencia/admin/AvisosBD.php';
+include_once __DIR__ . '/logica/admin/Avisos.php';
+include_once __DIR__ . '/persistencia/admin/TalleresBD.php';
 include_once __DIR__ . '/logica/admin/Talleres.php';
-include_once __DIR__ . '../persistencia/admin/TalleresBD.php';
-
 include_once __DIR__ . '/logica/admin/bd.php';
-
 include_once 'cabecera.php';
+
 // Aviso activo
 $sql = "SELECT titulo, contenido FROM avisos WHERE activo = 1 LIMIT 1";
 $resultado = $conexion->query($sql);
@@ -26,27 +27,17 @@ $listaTalleres = $talleres->ListarTalleres();
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
 
-    <link rel="stylesheet" href="./css/Usuario/index.css">
-    <link rel="stylesheet" href="./css/Usuario/modal.css">
+    <link rel="stylesheet" href="./Presentacion/css/Usuario/index.css">
+    <link rel="stylesheet" href="./Presentacion/css/Usuario/modal.css">
 </head>
 <body>
-<!--
-<header class="p-3 bg-light border-bottom d-flex justify-content-between align-items-center">
-    <div class="d-flex align-items-center gap-3">
-        <img src="./images/bandera.png" alt="Bandera" height="60">
-        <img src="./images/Logo.png" alt="Logo" height="60">
-    </div>
--->
-
-        
-
 </header>
 
 
 <div id="loginModal" class="custom-login-modal">
   <div class="modal-content">
     <span class="close" onclick="closeLoginModal()">&times;</span>
-  <iframe id="loginIframe" src="login.php" frameborder="0"
+  <iframe id="loginIframe" src="presentacion/usuario/login.php" frameborder="0"
         style="width:100%; height:300px; border-radius:10px; overflow:hidden;"></iframe>
   </div>
 </div>
@@ -79,7 +70,7 @@ $listaTalleres = $talleres->ListarTalleres();
 
 <!-- Avisos -->
 <?php if ($mensaje): ?>
-    <?php include 'presentacion/usuario/modalIndex.php'; ?>
+    <?php include 'modalIndex.php'; ?>
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             const avisoModal = new bootstrap.Modal(document.getElementById('mensajeModal'));
@@ -96,6 +87,17 @@ $listaTalleres = $talleres->ListarTalleres();
     </div>
 </footer>
 
+<!-- Banner lateral -->
+<aside class="vertical-banner" id="verticalBanner">
+    <button onclick="window.location.href='./presentacion/usuario/institucion.php'">Institución</button>
+    <button onclick="window.location.href='./presentacion/usuario/autoridades.php'">Autoridades</button>
+   
+    <button onclick="window.location.href='./presentacion/usuario/talleres.php'">Talleres</button>
+    <button onclick="window.location.href='./presentacion/admin/index.php'">Admin</button>
+    <button onclick="window.location.href='./presentacion/usuario/productos.php'">Productos</button>
+    
+</aside>
+
 <!-- JS -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 
@@ -103,7 +105,7 @@ $listaTalleres = $talleres->ListarTalleres();
 function openLoginModal() {
     const modal = document.getElementById("loginModal");
     const iframe = document.getElementById("loginIframe");
-    iframe.src = "./presentacion/usuario/login.php";
+    iframe.src = "presentacion/usuario/login.php";
     modal.classList.add("active");
 }
 
