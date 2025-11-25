@@ -2,12 +2,6 @@
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
-// Verificar el contenido de la sesión
-if (isset($_SESSION['id'])) {
-    echo "ID de usuario en la sesión: " . $_SESSION['id'];
-} else {
-    echo "No se encuentra el ID del usuario en la sesión.";
-}
 ?>
 
 <!DOCTYPE html>
@@ -17,14 +11,12 @@ if (isset($_SESSION['id'])) {
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Panel Administrativo - Biblioteca</title>
 
-   <!-- ✅ Bootstrap 5 CSS -->
+  <!-- ✅ Bootstrap 5 CSS -->
   <link rel="stylesheet" href="../../css/usuario/bootstrap.min.css">
-
   <link rel="stylesheet" href="../css/Usuario/bootstrap.min.css">
-
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
  
-    <style>
+  <style>
     :root {
       --primary-color: #2c5aa0;
       --secondary-color: #35c4f3;
@@ -164,6 +156,53 @@ if (isset($_SESSION['id'])) {
       margin-right: 8px;
     }
     
+    /* Botones de login/logout */
+    .btn-login {
+      background-color: rgba(255, 255, 255, 0.2);
+      color: white;
+      border: 2px solid rgba(255, 255, 255, 0.3);
+      border-radius: 6px;
+      padding: 8px 20px;
+      font-weight: 600;
+      transition: var(--transition);
+      display: flex;
+      align-items: center;
+      margin-left: 10px;
+    }
+    
+    .btn-login:hover {
+      background-color: white;
+      color: var(--primary-color);
+      transform: translateY(-2px);
+    }
+    
+    .user-dropdown {
+      background: transparent;
+      border: none;
+      color: white;
+      display: flex;
+      align-items: center;
+      padding: 8px 15px;
+      border-radius: 6px;
+      transition: var(--transition);
+    }
+    
+    .user-dropdown:hover {
+      background-color: rgba(255, 255, 255, 0.15);
+    }
+    
+    .user-avatar {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-right: 10px;
+      font-size: 0.9rem;
+    }
+    
     /* Navbar toggler personalizado */
     .navbar-toggler {
       border: none;
@@ -192,10 +231,18 @@ if (isset($_SESSION['id'])) {
         margin: 4px 0;
       }
       
-      .btn-admin {
+      .btn-admin,
+      .btn-login {
         margin-top: 10px;
         width: 100%;
         justify-content: center;
+        margin-left: 0;
+      }
+      
+      .user-dropdown {
+        width: 100%;
+        justify-content: center;
+        margin-top: 10px;
       }
     }
   </style>
@@ -205,9 +252,8 @@ if (isset($_SESSION['id'])) {
 <!-- 🔹 Navbar principal mejorado -->
 <nav class="navbar navbar-expand-lg navbar-dark navbar-custom fixed-top">
   <div class="container">
-    <a class="navbar-brand" href="index.php">
-      
-       
+    <a class="navbar-brand" href="../../index.php">
+      <i class="fas fa-book"></i> Biblioteca
     </a>
 
     <!-- Botón responsive -->
@@ -219,18 +265,13 @@ if (isset($_SESSION['id'])) {
     <div class="collapse navbar-collapse" id="navbarBiblioteca">
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
         <li class="nav-item">
-          <a class="nav-link " href="../../index.php">
+          <a class="nav-link" href="../../index.php">
             <i class="fas fa-home"></i> Inicio
           </a>
         </li>
         <li class="nav-item">
           <a class="nav-link" href="productos.php">
             <i class="fas fa-book"></i> Libros
-          </a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="nosotros.php" hidden>
-            <i class="fas fa-users"></i> Nosotros
           </a>
         </li>
         <li class="nav-item">
@@ -248,11 +289,11 @@ if (isset($_SESSION['id'])) {
             <i class="fas fa-stethoscope"></i> Médico
           </a>
         </li>
-<li class="nav-item">
-<a class="nav-link" href="reserva_carrito.php">
-         Reservas
-    </a>
-</li>
+        <li class="nav-item">
+          <a class="nav-link" href="reserva_carrito.php">
+            <i class="fas fa-calendar-check"></i> Reservas
+          </a>
+        </li>
 
         <!-- Dropdown mejorado -->
         <li class="nav-item dropdown">
@@ -275,12 +316,43 @@ if (isset($_SESSION['id'])) {
         </li>
       </ul>
       
-      <button class="btn btn-admin" onclick="window.location.href='../admin/paneladmin.php'">
-        <i class="fas fa-user-shield"></i> Panel Admin
-      </button>
-    
-      <?php include_once 'loginBanner.php'; ?>
-
+      <div class="d-flex align-items-center">
+        <!-- Botón Panel Admin -->
+        <button class="btn btn-admin" onclick="window.location.href='../admin/paneladmin.php'">
+          <i class="fas fa-user-shield"></i> Panel Admin
+        </button>
+        
+        <!-- Estado de login/logout -->
+        <?php if (isset($_SESSION['usuario'])): ?>
+          <!-- Usuario logueado -->
+          <div class="dropdown">
+            <button class="user-dropdown dropdown-toggle" type="button" id="userDropdown" 
+                    data-bs-toggle="dropdown" aria-expanded="false">
+              <div class="user-avatar">
+                <i class="fas fa-user"></i>
+              </div>
+              <span class="d-none d-md-inline"><?php echo htmlspecialchars($_SESSION['usuario']['nombre']); ?></span>
+            </button>
+            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
+              <li><a class="dropdown-item" href="perfil.php">
+                <i class="fas fa-user-circle"></i> Mi Perfil
+              </a></li>
+              <li><a class="dropdown-item" href="mis_reservas.php">
+                <i class="fas fa-calendar-check"></i> Mis Reservas
+              </a></li>
+              <li><hr class="dropdown-divider"></li>
+              <li><a class="dropdown-item" href="logout.php">
+                <i class="fas fa-sign-out-alt"></i> Cerrar Sesión
+              </a></li>
+            </ul>
+          </div>
+        <?php else: ?>
+          <!-- Usuario no logueado -->
+          <button class="btn btn-login" onclick="window.location.href='login.php'">
+            <i class="fas fa-sign-in-alt"></i> Iniciar Sesión
+          </button>
+        <?php endif; ?>
+      </div>
     </div>
   </div>
 </nav>
@@ -288,28 +360,24 @@ if (isset($_SESSION['id'])) {
 <!-- Espacio para el contenido debajo del navbar fijo -->
 <div style="height: 80px;"></div>
 
-<div class="container mt-4">
-  <div class="row">
-    <!-- Tu contenido aquí -->
-  </div>
-</div>
-
-<!-- Bootstrap JS -->
+<!-- Bootstrap JS - IMPORTANTE: Incluir al final del body -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
 <script>
   // Efecto de navbar al hacer scroll
-  window.addEventListener('scroll', function() {
-    const navbar = document.querySelector('.navbar-custom');
-    if (window.scrollY > 50) {
-      navbar.classList.add('scrolled');
-    } else {
-      navbar.classList.remove('scrolled');
-    }
-  });
-  
-  // Activar elemento de navegación actual
   document.addEventListener('DOMContentLoaded', function() {
+    const navbar = document.querySelector('.navbar-custom');
+    
+    // Scroll effect
+    window.addEventListener('scroll', function() {
+      if (window.scrollY > 50) {
+        navbar.classList.add('scrolled');
+      } else {
+        navbar.classList.remove('scrolled');
+      }
+    });
+    
+    // Activar elemento de navegación actual
     const currentLocation = location.href;
     const menuItems = document.querySelectorAll('.nav-link');
     
@@ -318,7 +386,16 @@ if (isset($_SESSION['id'])) {
         item.classList.add('active');
       }
     });
+    
+    // Debug: Verificar si Bootstrap está cargado
+    console.log('Bootstrap cargado:', typeof bootstrap !== 'undefined');
+    
+    // Forzar inicialización de dropdowns si es necesario
+    const dropdowns = document.querySelectorAll('.dropdown-toggle');
+    dropdowns.forEach(dropdown => {
+      dropdown.addEventListener('click', function(e) {
+        // Permitir que Bootstrap maneje el dropdown
+      });
+    });
   });
 </script>
-
-</body>

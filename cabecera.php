@@ -2,18 +2,12 @@
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
-// Verificar el contenido de la sesión
-if (isset($_SESSION['id'])) {
-    echo "ID de usuario en la sesión: " . $_SESSION['id'];
-} else {
-    echo "No se encuentra el ID del usuario en la sesión.";
-}
 ?>
 <!DOCTYPE html>
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" contnt="width=device-width, initial-scale=1.0"> 
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
   <title>Biblioteca</title>
 
   <link rel="stylesheet" href="./presentacion/usuario/bootstrap.min.css">
@@ -134,7 +128,6 @@ if (isset($_SESSION['id'])) {
       margin: 8px 0;
     }
     
-  
     .btn-admin {
       background-color: white;
       color: var(--primary-color);
@@ -156,6 +149,66 @@ if (isset($_SESSION['id'])) {
     
     .btn-admin i {
       margin-right: 8px;
+    }
+    
+    /* Botones de login/logout */
+    .btn-login {
+      background-color: rgba(255, 255, 255, 0.2);
+      color: white;
+      border: 2px solid rgba(255, 255, 255, 0.3);
+      border-radius: 6px;
+      padding: 8px 20px;
+      font-weight: 600;
+      transition: var(--transition);
+      display: flex;
+      align-items: center;
+      margin-left: 10px;
+    }
+    
+    .btn-login:hover {
+      background-color: white;
+      color: var(--primary-color);
+      transform: translateY(-2px);
+    }
+    
+    .user-welcome {
+      color: white;
+      display: flex;
+      align-items: center;
+      margin-left: 15px;
+      font-weight: 500;
+    }
+    
+    .user-welcome i {
+      margin-right: 8px;
+      font-size: 1.1rem;
+    }
+    
+    .user-dropdown {
+      background: transparent;
+      border: none;
+      color: white;
+      display: flex;
+      align-items: center;
+      padding: 8px 15px;
+      border-radius: 6px;
+      transition: var(--transition);
+    }
+    
+    .user-dropdown:hover {
+      background-color: rgba(255, 255, 255, 0.15);
+    }
+    
+    .user-avatar {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-right: 10px;
+      font-size: 0.9rem;
     }
     
     .navbar-toggler {
@@ -185,8 +238,16 @@ if (isset($_SESSION['id'])) {
         margin: 4px 0;
       }
       
-      .btn-admin {
+      .btn-admin,
+      .btn-login,
+      .user-welcome {
         margin-top: 10px;
+        width: 100%;
+        justify-content: center;
+        margin-left: 0;
+      }
+      
+      .user-dropdown {
         width: 100%;
         justify-content: center;
       }
@@ -198,8 +259,7 @@ if (isset($_SESSION['id'])) {
 <nav class="navbar navbar-expand-lg navbar-dark navbar-custom fixed-top">
   <div class="container">
     <a class="navbar-brand" href="index.php">
-      
-       
+      <i class="fas fa-book"></i> Biblioteca
     </a>
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarBiblioteca"
@@ -239,12 +299,11 @@ if (isset($_SESSION['id'])) {
             <i class="fas fa-stethoscope"></i> Médico
           </a>
         </li>
-<li class="nav-item">
-<a class="nav-link" href="presentacion/usuario/reserva_carrito.php">
-         Reservas
-    </a>
-</li>
-
+        <li class="nav-item">
+          <a class="nav-link" href="presentacion/usuario/reserva_carrito.php">
+            <i class="fas fa-calendar-check"></i> Reservas
+          </a>
+        </li>
   
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" id="dropdownMenu" role="button"
@@ -266,10 +325,43 @@ if (isset($_SESSION['id'])) {
         </li>
       </ul>
       
-      <button class="btn btn-admin" onclick="window.location.href='presentacion/admin/paneladmin.php'">
-        <i class="fas fa-user-shield"></i> Panel Admin
-      </button>
-         <?php include_once 'presentacion/usuario/loginBanner.php'; ?>
+      <div class="d-flex align-items-center">
+        <!-- Botón Panel Admin -->
+        <button class="btn btn-admin" onclick="window.location.href='presentacion/admin/paneladmin.php'">
+          <i class="fas fa-user-shield"></i> Panel Admin
+        </button>
+        
+        <!-- Estado de login/logout -->
+        <?php if (isset($_SESSION['usuario'])): ?>
+          <!-- Usuario logueado -->
+          <div class="dropdown">
+            <button class="user-dropdown dropdown-toggle" type="button" id="userDropdown" 
+                    data-bs-toggle="dropdown" aria-expanded="false">
+              <div class="user-avatar">
+                <i class="fas fa-user"></i>
+              </div>
+              <span class="d-none d-md-inline"><?php echo htmlspecialchars($_SESSION['usuario']['nombre']); ?></span>
+            </button>
+            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
+              <li><a class="dropdown-item" href="presentacion/usuario/perfil.php">
+                <i class="fas fa-user-circle"></i> Mi Perfil
+              </a></li>
+              <li><a class="dropdown-item" href="presentacion/usuario/mis_reservas.php">
+                <i class="fas fa-calendar-check"></i> Mis Reservas
+              </a></li>
+              <li><hr class="dropdown-divider"></li>
+              <li><a class="dropdown-item" href="presentacion/usuario/logout.php">
+                <i class="fas fa-sign-out-alt"></i> Cerrar Sesión
+              </a></li>
+            </ul>
+          </div>
+        <?php else: ?>
+          <!-- Usuario no logueado -->
+          <button class="btn btn-login" onclick="window.location.href='presentacion/usuario/login.php'">
+            <i class="fas fa-sign-in-alt"></i> Iniciar Sesión
+          </button>
+        <?php endif; ?>
+      </div>
     </div>
   </div>
 </nav>

@@ -6,8 +6,6 @@ include_once __DIR__ . '/../../logica/admin/Talleres.php';
 include_once __DIR__ . '/../../persistencia/admin/TalleresBD.php';
 include_once __DIR__ . '/../../logica/admin/bd.php';
 
-
-
 // Obtener lista de talleres y filtrar solo los activos
 $talleresBD = new TalleresBD();
 $todosTalleres = $talleresBD->ListarTalleres();
@@ -22,10 +20,11 @@ $listaTalleres = array_filter($todosTalleres, function($taller) {
 <meta charset="utf-8">
 <title>Talleres - Biblioteca Digital</title>
 <meta name="viewport" content="width=device-width,initial-scale=1">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 <link rel="stylesheet" href="../../css/usuario/talleres.css">
 
 <style>
-  
+  /* Estilos adicionales si son necesarios */
 </style>
 </head>
 <body>
@@ -33,6 +32,7 @@ $listaTalleres = array_filter($todosTalleres, function($taller) {
 <?php include_once 'cabecera.php'; ?>
 
 <div class="pagina-talleres">
+    <!-- Tu contenido de talleres aquí -->
     <section class="hero-talleres">
         <h1>Nuestros Talleres</h1>
         <p class="descripcion">
@@ -111,5 +111,17 @@ $listaTalleres = array_filter($todosTalleres, function($taller) {
 </div>
 
 <?php include_once 'pie.php'; ?>
+
+<!-- Asegurar que no hay conflictos con otros scripts -->
+<script>
+  // Debug para verificar que todo funciona
+  document.addEventListener('DOMContentLoaded', function() {
+    console.log('Página de talleres cargada correctamente');
+    
+    // Verificar que los dropdowns funcionan
+    const dropdowns = document.querySelectorAll('.dropdown-toggle');
+    console.log('Dropdowns encontrados:', dropdowns.length);
+  });
+</script>
 </body>
 </html>
