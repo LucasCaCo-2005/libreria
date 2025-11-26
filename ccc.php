@@ -3,14 +3,14 @@ if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
 ?>
-
 <!DOCTYPE html>
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Panel Administrativo - Biblioteca</title>
- <link rel="stylesheet" href="./presentacion/usuario/bootstrap.min.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+  <title>Biblioteca</title>
+
+  <link rel="stylesheet" href="./presentacion/usuario/bootstrap.min.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
  
   <style>
@@ -22,7 +22,7 @@ if (session_status() === PHP_SESSION_NONE) {
       --dark-color: #343a40;
       --transition: all 0.3s ease;
     }
-    
+   
     .navbar-custom {
       background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%) !important;
       box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
@@ -49,6 +49,11 @@ if (session_status() === PHP_SESSION_NONE) {
       font-size: 1.6rem;
     }
     
+    .navbar-brand:hover {
+      transform: translateY(-2px);
+      color: var(--light-color) !important;
+    }
+    
     .nav-link {
       color: white !important;
       font-weight: 500;
@@ -56,6 +61,7 @@ if (session_status() === PHP_SESSION_NONE) {
       padding: 8px 16px !important;
       border-radius: 6px;
       transition: var(--transition);
+      position: relative;
     }
     
     .nav-link:hover {
@@ -68,7 +74,60 @@ if (session_status() === PHP_SESSION_NONE) {
       font-weight: 600;
     }
     
-    /* Botones */
+    .nav-link i {
+      margin-right: 6px;
+      font-size: 0.9rem;
+    }
+    
+    /* Indicador para enlace activo */
+    .nav-link::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 0;
+      height: 2px;
+      background-color: white;
+      transition: var(--transition);
+    }
+    
+    .nav-link:hover::after,
+    .nav-link.active::after {
+      width: 70%;
+    }
+    
+    /* Dropdown personalizado */
+    .dropdown-menu {
+      border: none;
+      border-radius: 8px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+      padding: 8px 0;
+      margin-top: 8px !important;
+    }
+    
+    .dropdown-item {
+      padding: 10px 20px;
+      transition: var(--transition);
+      display: flex;
+      align-items: center;
+    }
+    
+    .dropdown-item i {
+      margin-right: 10px;
+      width: 18px;
+      text-align: center;
+    }
+    
+    .dropdown-item:hover {
+      background-color: rgba(44, 90, 160, 0.1);
+      padding-left: 25px;
+    }
+    
+    .dropdown-divider {
+      margin: 8px 0;
+    }
+    
     .btn-admin {
       background-color: white;
       color: var(--primary-color);
@@ -88,6 +147,11 @@ if (session_status() === PHP_SESSION_NONE) {
       box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
     }
     
+    .btn-admin i {
+      margin-right: 8px;
+    }
+    
+    /* Botones de login/logout */
     .btn-login {
       background-color: rgba(255, 255, 255, 0.2);
       color: white;
@@ -107,114 +171,57 @@ if (session_status() === PHP_SESSION_NONE) {
       transform: translateY(-2px);
     }
     
-    .btn-user {
-      background: transparent;
-      border: 2px solid rgba(255, 255, 255, 0.3);
+    .user-welcome {
       color: white;
-      border-radius: 6px;
-      padding: 8px 20px;
-      font-weight: 600;
-      transition: var(--transition);
       display: flex;
       align-items: center;
-      margin-left: 10px;
+      margin-left: 15px;
+      font-weight: 500;
     }
     
-    .btn-user:hover {
-      background-color: rgba(255, 255, 255, 0.15);
-      transform: translateY(-2px);
+    .user-welcome i {
+      margin-right: 8px;
+      font-size: 1.1rem;
     }
     
-    /* Modal personalizado */
-    .user-modal {
-      display: none;
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: rgba(0, 0, 0, 0.5);
-      z-index: 9999;
-      align-items: center;
-      justify-content: center;
-    }
-    
-    .user-modal-content {
-      background: white;
-      border-radius: 12px;
-      padding: 0;
-      width: 90%;
-      max-width: 300px;
-      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
-      animation: modalSlideIn 0.3s ease;
-    }
-    
-    @keyframes modalSlideIn {
-      from {
-        opacity: 0;
-        transform: translateY(-20px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
-    
-    .user-modal-header {
-      background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+    .user-dropdown {
+      background: transparent;
+      border: none;
       color: white;
-      padding: 20px;
-      border-radius: 12px 12px 0 0;
-      text-align: center;
+      display: flex;
+      align-items: center;
+      padding: 8px 15px;
+      border-radius: 6px;
+      transition: var(--transition);
     }
     
-    .user-avatar-large {
-      width: 60px;
-      height: 60px;
+    .user-dropdown:hover {
+      background-color: rgba(255, 255, 255, 0.15);
+    }
+    
+    .user-avatar {
+      width: 32px;
+      height: 32px;
       border-radius: 50%;
       background: rgba(255, 255, 255, 0.2);
       display: flex;
       align-items: center;
       justify-content: center;
-      margin: 0 auto 10px;
-      font-size: 1.5rem;
+      margin-right: 10px;
+      font-size: 0.9rem;
     }
     
-    .user-modal-body {
-      padding: 20px;
+    .navbar-toggler {
+      border: none;
+      padding: 4px 8px;
     }
     
-    .user-option {
-      display: flex;
-      align-items: center;
-      padding: 12px 0;
-      text-decoration: none;
-      color: var(--dark-color);
-      transition: var(--transition);
-      border-bottom: 1px solid #f0f0f0;
+    .navbar-toggler:focus {
+      box-shadow: none;
     }
     
-    .user-option:last-child {
-      border-bottom: none;
-    }
-    
-    .user-option:hover {
-      color: var(--primary-color);
-      padding-left: 10px;
-    }
-    
-    .user-option i {
-      margin-right: 12px;
-      width: 20px;
-      text-align: center;
-    }
-    
-    .user-option.logout {
-      color: #dc3545;
-    }
-    
-    .user-option.logout:hover {
-      color: #c82333;
+    .navbar-toggler-icon {
+      background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba(255, 255, 255, 1)' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
     }
     
     /* Responsive */
@@ -233,11 +240,16 @@ if (session_status() === PHP_SESSION_NONE) {
       
       .btn-admin,
       .btn-login,
-      .btn-user {
+      .user-welcome {
         margin-top: 10px;
         width: 100%;
         justify-content: center;
         margin-left: 0;
+      }
+      
+      .user-dropdown {
+        width: 100%;
+        justify-content: center;
       }
     }
   </style>
@@ -258,13 +270,18 @@ if (session_status() === PHP_SESSION_NONE) {
     <div class="collapse navbar-collapse" id="navbarBiblioteca">
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
         <li class="nav-item">
-          <a class="nav-link" href="index.php">
+          <a class="nav-link " href="index.php">
             <i class="fas fa-home"></i> Inicio
           </a>
         </li>
         <li class="nav-item">
           <a class="nav-link" href="presentacion/usuario/productos.php">
             <i class="fas fa-book"></i> Libros
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="presentacion/usuario/nosotros.php" hidden>
+            <i class="fas fa-users"></i> Nosotros
           </a>
         </li>
         <li class="nav-item">
@@ -287,21 +304,57 @@ if (session_status() === PHP_SESSION_NONE) {
             <i class="fas fa-calendar-check"></i> Reservas
           </a>
         </li>
+  
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="dropdownMenu" role="button"
+             data-bs-toggle="dropdown" aria-expanded="false">
+            <i class="fas fa-ellipsis-h"></i> Más opciones
+          </a>
+          <ul class="dropdown-menu" aria-labelledby="dropdownMenu">
+            <li><a class="dropdown-item" href="#">
+              <i class="fas fa-calendar-alt"></i> Eventos
+            </a></li>
+            <li><a class="dropdown-item" href="#">
+              <i class="fas fa-newspaper"></i> Noticias
+            </a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item" href="#">
+              <i class="fas fa-info-circle"></i> Ayuda
+            </a></li>
+          </ul>
+        </li>
       </ul>
       
       <div class="d-flex align-items-center">
         <!-- Botón Panel Admin -->
-        <button class="btn btn-admin" onclick="window.location.href='../admin/paneladmin.php'">
+        <button class="btn btn-admin" onclick="window.location.href='presentacion/admin/paneladmin.php'">
           <i class="fas fa-user-shield"></i> Panel Admin
         </button>
         
         <!-- Estado de login/logout -->
         <?php if (isset($_SESSION['usuario'])): ?>
-          <!-- Usuario logueado - Botón que abre modal -->
-          <button class="btn btn-user" onclick="openUserModal()">
-            <i class="fas fa-user"></i>
-            <span class="d-none d-md-inline ms-2"><?php echo htmlspecialchars($_SESSION['usuario']['nombre']); ?></span>
-          </button>
+          <!-- Usuario logueado -->
+          <div class="dropdown">
+            <button class="user-dropdown dropdown-toggle" type="button" id="userDropdown" 
+                    data-bs-toggle="dropdown" aria-expanded="false">
+              <div class="user-avatar">
+                <i class="fas fa-user"></i>
+              </div>
+              <span class="d-none d-md-inline"><?php echo htmlspecialchars($_SESSION['usuario']['nombre']); ?></span>
+            </button>
+            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
+              <li><a class="dropdown-item" href="presentacion/usuario/perfil.php">
+                <i class="fas fa-user-circle"></i> Mi Perfil
+              </a></li>
+              <li><a class="dropdown-item" href="presentacion/usuario/mis_reservas.php">
+                <i class="fas fa-calendar-check"></i> Mis Reservas
+              </a></li>
+              <li><hr class="dropdown-divider"></li>
+              <li><a class="dropdown-item" href="presentacion/usuario/logout.php">
+                <i class="fas fa-sign-out-alt"></i> Cerrar Sesión
+              </a></li>
+            </ul>
+          </div>
         <?php else: ?>
           <!-- Usuario no logueado -->
           <button class="btn btn-login" onclick="window.location.href='presentacion/usuario/login.php'">
@@ -313,57 +366,11 @@ if (session_status() === PHP_SESSION_NONE) {
   </div>
 </nav>
 
-<!-- Modal para opciones de usuario -->
-<div id="userModal" class="user-modal">
-  <div class="user-modal-content">
-    <div class="user-modal-header">
-      <div class="user-avatar-large">
-        <i class="fas fa-user"></i>
-      </div>
-      <h5 class="mb-0"><?php echo htmlspecialchars($_SESSION['usuario']['nombre']); ?></h5>
-      <small><?php echo htmlspecialchars($_SESSION['usuario']['correo']); ?></small>
-    </div>
-    <div class="user-modal-body">
-      <a href="perfil.php" class="user-option">
-        <i class="fas fa-user-circle"></i> Mi Perfil
-      </a>
-      <a href="mis_reservas.php" class="user-option">
-        <i class="fas fa-calendar-check"></i> Mis Reservas
-      </a>
-      <a href="logout.php" class="user-option logout">
-        <i class="fas fa-sign-out-alt"></i> Cerrar Sesión
-      </a>
-    </div>
-  </div>
-</div>
-
-<!-- Espacio para el contenido debajo del navbar fijo -->
 <div style="height: 80px;"></div>
 
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
 <script>
-  // Funciones para el modal de usuario
-  function openUserModal() {
-    document.getElementById('userModal').style.display = 'flex';
-  }
-  
-  function closeUserModal() {
-    document.getElementById('userModal').style.display = 'none';
-  }
-  
-  // Cerrar modal al hacer clic fuera
-  document.getElementById('userModal').addEventListener('click', function(e) {
-    if (e.target === this) {
-      closeUserModal();
-    }
-  });
-  
-  // Cerrar modal con ESC
-  document.addEventListener('keydown', function(e) {
-    if (e.key === 'Escape') {
-      closeUserModal();
-    }
-  });
-  
   // Efecto de navbar al hacer scroll
   window.addEventListener('scroll', function() {
     const navbar = document.querySelector('.navbar-custom');
@@ -386,5 +393,6 @@ if (session_status() === PHP_SESSION_NONE) {
     });
   });
 </script>
+
 </body>
 </html>

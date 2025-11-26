@@ -19,12 +19,17 @@ $telefono = trim($_POST['telefono'] ?? '');
 $correo = trim($_POST['correo'] ?? '');
 $contrasena = $_POST['contrasena'] ?? '';
 $confirmar_contrasena = $_POST['confirmar_contrasena'] ?? '';
-$estado = 'activo';
+
+// FORZAR estado como 'Pendiente' - esto asegura que siempre sea este valor
+$estado = 'Pendiente';
 
 // Validaciones básicas
-if (empty($nombre) || empty($apellidos) || empty($telefono) || empty($correo) || empty($contrasena)) {
-    header('Location: registro.php?error=Todos los campos son obligatorios');
-    exit;
+$camposRequeridos = ['nombre', 'apellidos', 'telefono', 'correo', 'contrasena'];
+foreach ($camposRequeridos as $campo) {
+    if (empty(trim($_POST[$campo] ?? ''))) {
+        header('Location: registro.php?error=Todos los campos son obligatorios');
+        exit;
+    }
 }
 
 // Validar que las contraseñas coincidan
@@ -49,10 +54,22 @@ try {
     // Crear instancia
     $socioBD = new socioBD();
     
-    // Generar una cédula temporal
-    $cedula = time() . rand(100, 999);
+    // Verificar si el correo ya existe ANTES de registrar
+    if ($socioBD->existeCorreo($correo)) {
+        header('Location: registro.php?error=El correo electrónico ya está registrado');
+        exit;
+    }
     
-    // Intentar registro
+    // Generar una cédula temporal más robusta
+    $cedula = uniqid() . rand(100, 999);
+    
+    // Hashear la contraseña para seguridad
+    $contrasenaHash = password_hash($contrasena, PASSWORD_DEFAULT);
+    
+    // LOG: Verificar que el estado se está enviando correctamente
+    error_log("Registrando usuario con estado: " . $estado);
+    
+    // Intentar registro - asegurando que el estado sea 'Pendiente'
     $resultado = $socioBD->RegistrarSocio(
         $cedula, 
         $nombre, 
@@ -60,8 +77,8 @@ try {
         'Por definir', // domicilio
         $telefono, 
         $correo, 
-        $contrasena, 
-        $estado
+        $contrasenaHash, // Usar contraseña hasheada
+        $estado // Estado forzado como 'Pendiente'
     );
     
     if ($resultado) {
@@ -69,7 +86,7 @@ try {
         header('Location: registro.php?success=1');
         exit;
     } else {
-        header('Location: registro.php?error=Error al registrar el usuario. Puede que el correo ya esté en uso.');
+        header('Location: registro.php?error=Error al registrar el usuario');
         exit;
     }
     

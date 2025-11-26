@@ -11,7 +11,6 @@ if (session_status() === PHP_SESSION_NONE) {
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Panel Administrativo - Biblioteca</title>
 
-  <!-- ✅ Bootstrap 5 CSS -->
   <link rel="stylesheet" href="../../css/usuario/bootstrap.min.css">
   <link rel="stylesheet" href="../css/Usuario/bootstrap.min.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -26,7 +25,6 @@ if (session_status() === PHP_SESSION_NONE) {
       --transition: all 0.3s ease;
     }
     
-    /* 🔹 Navbar personalizado */
     .navbar-custom {
       background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%) !important;
       box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
@@ -53,11 +51,6 @@ if (session_status() === PHP_SESSION_NONE) {
       font-size: 1.6rem;
     }
     
-    .navbar-brand:hover {
-      transform: translateY(-2px);
-      color: var(--light-color) !important;
-    }
-    
     .nav-link {
       color: white !important;
       font-weight: 500;
@@ -65,7 +58,6 @@ if (session_status() === PHP_SESSION_NONE) {
       padding: 8px 16px !important;
       border-radius: 6px;
       transition: var(--transition);
-      position: relative;
     }
     
     .nav-link:hover {
@@ -78,61 +70,7 @@ if (session_status() === PHP_SESSION_NONE) {
       font-weight: 600;
     }
     
-    .nav-link i {
-      margin-right: 6px;
-      font-size: 0.9rem;
-    }
-    
-    /* Indicador para enlace activo */
-    .nav-link::after {
-      content: '';
-      position: absolute;
-      bottom: 0;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 0;
-      height: 2px;
-      background-color: white;
-      transition: var(--transition);
-    }
-    
-    .nav-link:hover::after,
-    .nav-link.active::after {
-      width: 70%;
-    }
-    
-    /* Dropdown personalizado */
-    .dropdown-menu {
-      border: none;
-      border-radius: 8px;
-      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
-      padding: 8px 0;
-      margin-top: 8px !important;
-    }
-    
-    .dropdown-item {
-      padding: 10px 20px;
-      transition: var(--transition);
-      display: flex;
-      align-items: center;
-    }
-    
-    .dropdown-item i {
-      margin-right: 10px;
-      width: 18px;
-      text-align: center;
-    }
-    
-    .dropdown-item:hover {
-      background-color: rgba(44, 90, 160, 0.1);
-      padding-left: 25px;
-    }
-    
-    .dropdown-divider {
-      margin: 8px 0;
-    }
-    
-    /* Botón Admin personalizado */
+    /* Botones */
     .btn-admin {
       background-color: white;
       color: var(--primary-color);
@@ -152,11 +90,6 @@ if (session_status() === PHP_SESSION_NONE) {
       box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
     }
     
-    .btn-admin i {
-      margin-right: 8px;
-    }
-    
-    /* Botones de login/logout */
     .btn-login {
       background-color: rgba(255, 255, 255, 0.2);
       color: white;
@@ -176,45 +109,114 @@ if (session_status() === PHP_SESSION_NONE) {
       transform: translateY(-2px);
     }
     
-    .user-dropdown {
+    .btn-user {
       background: transparent;
-      border: none;
+      border: 2px solid rgba(255, 255, 255, 0.3);
       color: white;
+      border-radius: 6px;
+      padding: 8px 20px;
+      font-weight: 600;
+      transition: var(--transition);
       display: flex;
       align-items: center;
-      padding: 8px 15px;
-      border-radius: 6px;
-      transition: var(--transition);
+      margin-left: 10px;
     }
     
-    .user-dropdown:hover {
+    .btn-user:hover {
       background-color: rgba(255, 255, 255, 0.15);
+      transform: translateY(-2px);
     }
     
-    .user-avatar {
-      width: 32px;
-      height: 32px;
+    /* Modal personalizado */
+    .user-modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.5);
+      z-index: 9999;
+      align-items: center;
+      justify-content: center;
+    }
+    
+    .user-modal-content {
+      background: white;
+      border-radius: 12px;
+      padding: 0;
+      width: 90%;
+      max-width: 300px;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+      animation: modalSlideIn 0.3s ease;
+    }
+    
+    @keyframes modalSlideIn {
+      from {
+        opacity: 0;
+        transform: translateY(-20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    
+    .user-modal-header {
+      background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+      color: white;
+      padding: 20px;
+      border-radius: 12px 12px 0 0;
+      text-align: center;
+    }
+    
+    .user-avatar-large {
+      width: 60px;
+      height: 60px;
       border-radius: 50%;
       background: rgba(255, 255, 255, 0.2);
       display: flex;
       align-items: center;
       justify-content: center;
-      margin-right: 10px;
-      font-size: 0.9rem;
+      margin: 0 auto 10px;
+      font-size: 1.5rem;
     }
     
-    /* Navbar toggler personalizado */
-    .navbar-toggler {
-      border: none;
-      padding: 4px 8px;
+    .user-modal-body {
+      padding: 20px;
     }
     
-    .navbar-toggler:focus {
-      box-shadow: none;
+    .user-option {
+      display: flex;
+      align-items: center;
+      padding: 12px 0;
+      text-decoration: none;
+      color: var(--dark-color);
+      transition: var(--transition);
+      border-bottom: 1px solid #f0f0f0;
     }
     
-    .navbar-toggler-icon {
-      background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba(255, 255, 255, 1)' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
+    .user-option:last-child {
+      border-bottom: none;
+    }
+    
+    .user-option:hover {
+      color: var(--primary-color);
+      padding-left: 10px;
+    }
+    
+    .user-option i {
+      margin-right: 12px;
+      width: 20px;
+      text-align: center;
+    }
+    
+    .user-option.logout {
+      color: #dc3545;
+    }
+    
+    .user-option.logout:hover {
+      color: #c82333;
     }
     
     /* Responsive */
@@ -232,31 +234,24 @@ if (session_status() === PHP_SESSION_NONE) {
       }
       
       .btn-admin,
-      .btn-login {
+      .btn-login,
+      .btn-user {
         margin-top: 10px;
         width: 100%;
         justify-content: center;
         margin-left: 0;
-      }
-      
-      .user-dropdown {
-        width: 100%;
-        justify-content: center;
-        margin-top: 10px;
       }
     }
   </style>
 </head>
 <body>
 
-<!-- 🔹 Navbar principal mejorado -->
 <nav class="navbar navbar-expand-lg navbar-dark navbar-custom fixed-top">
   <div class="container">
     <a class="navbar-brand" href="../../index.php">
       <i class="fas fa-book"></i> Biblioteca
     </a>
 
-    <!-- Botón responsive -->
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarBiblioteca"
       aria-controls="navbarBiblioteca" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
@@ -294,26 +289,6 @@ if (session_status() === PHP_SESSION_NONE) {
             <i class="fas fa-calendar-check"></i> Reservas
           </a>
         </li>
-
-        <!-- Dropdown mejorado -->
-        <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="#" id="dropdownMenu" role="button"
-             data-bs-toggle="dropdown" aria-expanded="false">
-            <i class="fas fa-ellipsis-h"></i> Más opciones
-          </a>
-          <ul class="dropdown-menu" aria-labelledby="dropdownMenu">
-            <li><a class="dropdown-item" href="#">
-              <i class="fas fa-calendar-alt"></i> Eventos
-            </a></li>
-            <li><a class="dropdown-item" href="#">
-              <i class="fas fa-newspaper"></i> Noticias
-            </a></li>
-            <li><hr class="dropdown-divider"></li>
-            <li><a class="dropdown-item" href="#">
-              <i class="fas fa-info-circle"></i> Ayuda
-            </a></li>
-          </ul>
-        </li>
       </ul>
       
       <div class="d-flex align-items-center">
@@ -324,28 +299,11 @@ if (session_status() === PHP_SESSION_NONE) {
         
         <!-- Estado de login/logout -->
         <?php if (isset($_SESSION['usuario'])): ?>
-          <!-- Usuario logueado -->
-          <div class="dropdown">
-            <button class="user-dropdown dropdown-toggle" type="button" id="userDropdown" 
-                    data-bs-toggle="dropdown" aria-expanded="false">
-              <div class="user-avatar">
-                <i class="fas fa-user"></i>
-              </div>
-              <span class="d-none d-md-inline"><?php echo htmlspecialchars($_SESSION['usuario']['nombre']); ?></span>
-            </button>
-            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
-              <li><a class="dropdown-item" href="perfil.php">
-                <i class="fas fa-user-circle"></i> Mi Perfil
-              </a></li>
-              <li><a class="dropdown-item" href="mis_reservas.php">
-                <i class="fas fa-calendar-check"></i> Mis Reservas
-              </a></li>
-              <li><hr class="dropdown-divider"></li>
-              <li><a class="dropdown-item" href="logout.php">
-                <i class="fas fa-sign-out-alt"></i> Cerrar Sesión
-              </a></li>
-            </ul>
-          </div>
+          <!-- Usuario logueado - Botón que abre modal -->
+          <button class="btn btn-user" onclick="openUserModal()">
+            <i class="fas fa-user"></i>
+            <span class="d-none d-md-inline ms-2"><?php echo htmlspecialchars($_SESSION['usuario']['nombre']); ?></span>
+          </button>
         <?php else: ?>
           <!-- Usuario no logueado -->
           <button class="btn btn-login" onclick="window.location.href='login.php'">
@@ -357,27 +315,69 @@ if (session_status() === PHP_SESSION_NONE) {
   </div>
 </nav>
 
+<!-- Modal para opciones de usuario -->
+<div id="userModal" class="user-modal">
+  <div class="user-modal-content">
+    <div class="user-modal-header">
+      <div class="user-avatar-large">
+        <i class="fas fa-user"></i>
+      </div>
+      <h5 class="mb-0"><?php echo htmlspecialchars($_SESSION['usuario']['nombre']); ?></h5>
+      <small><?php echo htmlspecialchars($_SESSION['usuario']['correo']); ?></small>
+    </div>
+    <div class="user-modal-body">
+      <a href="perfil.php" class="user-option">
+        <i class="fas fa-user-circle"></i> Mi Perfil
+      </a>
+      <a href="mis_reservas.php" class="user-option">
+        <i class="fas fa-calendar-check"></i> Mis Reservas
+      </a>
+      <a href="logout.php" class="user-option logout">
+        <i class="fas fa-sign-out-alt"></i> Cerrar Sesión
+      </a>
+    </div>
+  </div>
+</div>
+
 <!-- Espacio para el contenido debajo del navbar fijo -->
 <div style="height: 80px;"></div>
 
-<!-- Bootstrap JS - IMPORTANTE: Incluir al final del body -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-
 <script>
+  // Funciones para el modal de usuario
+  function openUserModal() {
+    document.getElementById('userModal').style.display = 'flex';
+  }
+  
+  function closeUserModal() {
+    document.getElementById('userModal').style.display = 'none';
+  }
+  
+  // Cerrar modal al hacer clic fuera
+  document.getElementById('userModal').addEventListener('click', function(e) {
+    if (e.target === this) {
+      closeUserModal();
+    }
+  });
+  
+  // Cerrar modal con ESC
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') {
+      closeUserModal();
+    }
+  });
+  
   // Efecto de navbar al hacer scroll
-  document.addEventListener('DOMContentLoaded', function() {
+  window.addEventListener('scroll', function() {
     const navbar = document.querySelector('.navbar-custom');
-    
-    // Scroll effect
-    window.addEventListener('scroll', function() {
-      if (window.scrollY > 50) {
-        navbar.classList.add('scrolled');
-      } else {
-        navbar.classList.remove('scrolled');
-      }
-    });
-    
-    // Activar elemento de navegación actual
+    if (window.scrollY > 50) {
+      navbar.classList.add('scrolled');
+    } else {
+      navbar.classList.remove('scrolled');
+    }
+  });
+  
+  // Activar elemento de navegación actual
+  document.addEventListener('DOMContentLoaded', function() {
     const currentLocation = location.href;
     const menuItems = document.querySelectorAll('.nav-link');
     
@@ -386,16 +386,7 @@ if (session_status() === PHP_SESSION_NONE) {
         item.classList.add('active');
       }
     });
-    
-    // Debug: Verificar si Bootstrap está cargado
-    console.log('Bootstrap cargado:', typeof bootstrap !== 'undefined');
-    
-    // Forzar inicialización de dropdowns si es necesario
-    const dropdowns = document.querySelectorAll('.dropdown-toggle');
-    dropdowns.forEach(dropdown => {
-      dropdown.addEventListener('click', function(e) {
-        // Permitir que Bootstrap maneje el dropdown
-      });
-    });
   });
 </script>
+</body>
+</html>

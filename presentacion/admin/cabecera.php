@@ -16,9 +16,7 @@ $url = "http://" . $_SERVER['HTTP_HOST'] . "/sitioweb";
 
    <!-- ✅ Bootstrap 5 CSS -->
   <link rel="stylesheet" href="../../css/usuario/bootstrap.min.css">
-
   <link rel="stylesheet" href="../css/Usuario/bootstrap.min.css">
-
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
  
   <style>
@@ -29,7 +27,8 @@ $url = "http://" . $_SERVER['HTTP_HOST'] . "/sitioweb";
       --color-light: #f8f4f4;
       --color-hover: #b98c8c;
     }
-   /* Estilo de la barra de navegaciòn, degradado rojo-oscuro, sombra y estilo visual atractivo */
+   
+    /* Estilo de la barra de navegaciòn, degradado rojo-oscuro, sombra y estilo visual atractivo */
     .navbar-admin {
       background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-dark) 100%) !important;
       box-shadow: 0 4px 12px rgba(0,0,0,0.15);
@@ -65,7 +64,8 @@ $url = "http://" . $_SERVER['HTTP_HOST'] . "/sitioweb";
       background: rgba(255, 255, 255, 0.15);
       transform: translateY(-2px);
     }
-/* Estilo de los menues bordes redondeados, sombra, animación al pasar el ratón y cambio de color. */
+
+    /* Estilo de los menues bordes redondeados, sombra, animación al pasar el ratón y cambio de color. */
     .dropdown-menu {
       background: #f8f4f4;
       border: 1px solid #e8e0e0;
@@ -104,23 +104,159 @@ $url = "http://" . $_SERVER['HTTP_HOST'] . "/sitioweb";
       background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba%28248, 244, 244, 1%29' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
     }
 
-    .navbar-text {
-      color: #f8f4f4 !important;
+    /* Botón de usuario con popup */
+    .btn-user-admin {
+      background: rgba(255, 255, 255, 0.1);
+      color: #f8f4f4;
+      border: 2px solid rgba(255, 255, 255, 0.3);
+      border-radius: 20px;
+      padding: 8px 16px;
       font-weight: 500;
+      transition: all 0.3s ease;
       display: flex;
       align-items: center;
       gap: 8px;
-      background: rgba(255, 255, 255, 0.1);
-      padding: 8px 16px;
-      border-radius: 20px;
+      cursor: pointer;
     }
 
-    .nav-item.dropdown .dropdown-toggle::after {
-      margin-left: 6px;
-      vertical-align: middle;
+    .btn-user-admin:hover {
+      background: rgba(255, 255, 255, 0.2);
+      transform: translateY(-2px);
     }
 
-    
+    .user-avatar {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.9rem;
+    }
+
+    /* Modal personalizado para usuario */
+    .user-modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.5);
+      z-index: 9999;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .user-modal-content {
+      background: white;
+      border-radius: 16px;
+      padding: 0;
+      width: 90%;
+      max-width: 350px;
+      box-shadow: 0 25px 50px rgba(0, 0, 0, 0.25);
+      animation: modalSlideIn 0.3s ease;
+      overflow: hidden;
+    }
+
+    @keyframes modalSlideIn {
+      from {
+        opacity: 0;
+        transform: translateY(-30px) scale(0.9);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
+    }
+
+    .user-modal-header {
+      background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-dark) 100%);
+      color: white;
+      padding: 25px;
+      text-align: center;
+      position: relative;
+    }
+
+    .user-avatar-large {
+      width: 70px;
+      height: 70px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 15px;
+      font-size: 1.8rem;
+      border: 3px solid rgba(255, 255, 255, 0.3);
+    }
+
+    .user-modal-close {
+      position: absolute;
+      top: 15px;
+      right: 15px;
+      background: rgba(255, 255, 255, 0.2);
+      border: none;
+      color: white;
+      border-radius: 50%;
+      width: 32px;
+      height: 32px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .user-modal-close:hover {
+      background: rgba(255, 255, 255, 0.3);
+      transform: rotate(90deg);
+    }
+
+    .user-modal-body {
+      padding: 20px;
+    }
+
+    .user-option {
+      display: flex;
+      align-items: center;
+      padding: 15px 0;
+      text-decoration: none;
+      color: var(--color-dark);
+      transition: all 0.3s ease;
+      border-bottom: 1px solid #f0f0f0;
+    }
+
+    .user-option:last-child {
+      border-bottom: none;
+    }
+
+    .user-option:hover {
+      color: var(--color-primary);
+      padding-left: 15px;
+      background: rgba(74, 128, 226, 0.05);
+    }
+
+    .user-option i {
+      margin-right: 15px;
+      width: 20px;
+      text-align: center;
+      font-size: 1.1rem;
+    }
+
+    .user-option.logout {
+      color: #dc3545;
+      border-top: 2px solid #f0f0f0;
+      margin-top: 10px;
+      padding-top: 20px;
+    }
+
+    .user-option.logout:hover {
+      color: #c82333;
+      background: rgba(220, 53, 69, 0.05);
+    }
+
     .nav-link.active {
       background: rgba(255, 255, 255, 0.2);
       font-weight: 600;
@@ -142,6 +278,12 @@ $url = "http://" . $_SERVER['HTTP_HOST'] . "/sitioweb";
       .dropdown-menu {
         background: rgba(248, 244, 244, 0.95);
         margin: 8px 0;
+      }
+
+      .btn-user-admin {
+        width: 100%;
+        justify-content: center;
+        margin-top: 10px;
       }
     }
 
@@ -183,23 +325,19 @@ $url = "http://" . $_SERVER['HTTP_HOST'] . "/sitioweb";
 <nav class="navbar navbar-expand-lg navbar-admin">
   <div class="container-fluid">
 
-
     <a class="navbar-brand" href="<?php echo $url; ?>/Presentacion/Admin/index.php">
       <i class="fas fa-cogs"></i>
       Panel Admin
     </a>
 
-   
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarAdmin"
       aria-controls="navbarAdmin" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
 
-   
     <div class="collapse navbar-collapse" id="navbarAdmin">
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
 
-      
         <li class="nav-item">
           <a class="nav-link" href="<?php echo $url; ?>/Presentacion/Admin/index.php">
             <i class="fas fa-home"></i>
@@ -207,7 +345,6 @@ $url = "http://" . $_SERVER['HTTP_HOST'] . "/sitioweb";
           </a>
         </li>
 
-   
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" id="dropdownTalleres" role="button" data-bs-toggle="dropdown" aria-expanded="false">
             <i class="fas fa-palette"></i>
@@ -322,8 +459,8 @@ $url = "http://" . $_SERVER['HTTP_HOST'] . "/sitioweb";
           </a>
         </li>
 
-        <!-- Cerrar Sesión -->
-        <li class="nav-item">
+        <!-- Cerrar Sesión en el menú principal (oculto en desktop, visible en móvil) -->
+        <li class="nav-item d-lg-none">
           <a class="nav-link text-warning" href="<?php echo $url; ?>/cerrar.php">
             <i class="fas fa-sign-out-alt"></i>
             Cerrar Sesión
@@ -331,15 +468,90 @@ $url = "http://" . $_SERVER['HTTP_HOST'] . "/sitioweb";
         </li>
       </ul>
 
-      <!-- Información del Usuario -->
-      <span class="navbar-text">
-        <i class="fas fa-user-circle"></i>
-        <?php echo $nombreUsuario ?? 'Administrador'; ?>
-      </span>
+      <!-- Botón de usuario con popup (reemplaza el navbar-text) -->
+      <button class="btn btn-user-admin" onclick="openUserModal()">
+        <div class="user-avatar">
+          <i class="fas fa-user-cog"></i>
+        </div>
+        <span class="d-none d-md-inline"><?php echo $nombreUsuario ?? 'Administrador'; ?></span>
+        <i class="fas fa-chevron-down d-none d-md-inline"></i>
+      </button>
     </div>
   </div>
 </nav>
 
+<!-- Modal para opciones de usuario -->
+<div id="userModal" class="user-modal">
+  <div class="user-modal-content">
+    <div class="user-modal-header">
+      <button class="user-modal-close" onclick="closeUserModal()">
+        <i class="fas fa-times"></i>
+      </button>
+      <div class="user-avatar-large">
+        <i class="fas fa-user-cog"></i>
+      </div>
+      <h5 class="mb-1"><?php echo $nombreUsuario ?? 'Administrador'; ?></h5>
+      <small>Panel Administrativo</small>
+    </div>
+    <div class="user-modal-body">
+      <a href="<?php echo $url; ?>/Presentacion/Admin/index.php" class="user-option">
+        <i class="fas fa-tachometer-alt"></i> Dashboard
+      </a>
+      <a href="<?php echo $url; ?>/Presentacion/Admin/perfil.php" class="user-option">
+        <i class="fas fa-user-edit"></i> Mi Perfil
+      </a>
+      <a href="<?php echo $url; ?>/Presentacion/Admin/configuracion.php" class="user-option">
+        <i class="fas fa-cog"></i> Configuración
+      </a>
+      <a href="<?php echo $url; ?>" class="user-option">
+        <i class="fas fa-external-link-alt"></i> Ver Sitio Web
+      </a>
+      <a href="<?php echo $url; ?>/cerrar.php" class="user-option logout">
+        <i class="fas fa-sign-out-alt"></i> Cerrar Sesión
+      </a>
+    </div>
+  </div>
+</div>
+
 <!-- Contenedor Principal -->
 <div class="container-fluid mt-3">
   <div class="row">
+
+<script>
+  // Funciones para el modal de usuario
+  function openUserModal() {
+    document.getElementById('userModal').style.display = 'flex';
+    document.body.style.overflow = 'hidden'; // Previene scroll del body
+  }
+  
+  function closeUserModal() {
+    document.getElementById('userModal').style.display = 'none';
+    document.body.style.overflow = 'auto'; // Restaura scroll del body
+  }
+  
+  // Cerrar modal al hacer clic fuera del contenido
+  document.getElementById('userModal').addEventListener('click', function(e) {
+    if (e.target === this) {
+      closeUserModal();
+    }
+  });
+  
+  // Cerrar modal con tecla ESC
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') {
+      closeUserModal();
+    }
+  });
+
+  // Activar elemento de navegación actual
+  document.addEventListener('DOMContentLoaded', function() {
+    const currentLocation = location.href;
+    const menuItems = document.querySelectorAll('.nav-link');
+    
+    menuItems.forEach(item => {
+      if (item.href === currentLocation) {
+        item.classList.add('active');
+      }
+    });
+  });
+</script>

@@ -1,6 +1,7 @@
 <?php
 session_start();
 
+
 // Si ya está logueado, redirigir al dashboard
 if (isset($_SESSION['usuario'])) {
     header('Location: dashboard.php');
@@ -42,7 +43,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     $success = true;
                     
                     // Redirigir después de 2 segundos
-                    header('Refresh: 2; URL=dashboard.php');
+                    header('Refresh: 2; URL=../../index.php');
                 } else {
                     $error = 'Correo electrónico o contraseña incorrectos';
                 }
@@ -52,6 +53,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
     }
 }
+
+include_once 'cabecera.php';
 ?>
 
 <!DOCTYPE html>
@@ -68,25 +71,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
 
-        body {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            min-height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 20px;
-        }
-
-        .container {
-            background: white;
-            border-radius: 15px;
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
-            width: 100%;
-            max-width: 450px;
-            padding: 40px;
-            position: relative;
-            overflow: hidden;
-        }
+     
 
         .container::before {
             content: '';
@@ -246,6 +231,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     </style>
 </head>
 <body>
+
+
     <div class="container">
         <div class="logo">
             <div class="logo-icon">👤</div>

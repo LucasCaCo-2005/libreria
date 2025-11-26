@@ -22,23 +22,25 @@ class loginBD extends Conexion {
             
             if ($usuario) {
                 error_log("✅ Usuario encontrado: " . $usuario['nombre']);
+                error_log("📝 Estado del usuario: " . $usuario['estado']);
                 
                 // Verificar contraseña
                 if (password_verify($contrasena, $usuario['contrasena'])) {
                     error_log("✅ Contraseña correcta");
                     
-                    // Verificar estado del usuario
-                    if ($usuario['estado'] === 'activo') {
-                        error_log("✅ Usuario activo - Login exitoso");
+                    // VERIFICAR ESTADO DEL USUARIO - ACEPTAR ACTIVOS Y PENDIENTES
+                    if ($usuario['estado'] === 'activo' || $usuario['estado'] === 'pendiente') {
+                        error_log("✅ Usuario " . $usuario['estado'] . " - Login permitido");
                         return [
                             'id' => $usuario['id'],
                             'nombre' => $usuario['nombre'],
                             'apellidos' => $usuario['apellidos'],
-                            'correo' => $correo
+                            'correo' => $correo,
+                            'estado' => $usuario['estado'] // Incluir estado en la respuesta
                         ];
                     } else {
-                        error_log("❌ Usuario inactivo");
-                        return 'inactivo';
+                        error_log("❌ Usuario con estado no permitido: " . $usuario['estado']);
+                        return 'estado_no_permitido';
                     }
                 } else {
                     error_log("❌ Contraseña incorrecta");
@@ -51,6 +53,38 @@ class loginBD extends Conexion {
             
         } catch (PDOException $e) {
             error_log("❌ Error PDO en login: " . $e->getMessage());
+            return false;
+        }
+    }
+    
+    // Método adicional para obtener información completa del usuario
+    public function obtenerUsuario($correo) {
+        $conexion = $this->Conectar();
+        if (!$conexion) return false;
+        
+        try {
+            $sql = "SELECT * FROM socios WHERE correo = ?";
+            $stmt = $conexion->prepare($sql);
+            $stmt->execute([$correo]);
+            return $stmt->fetch(PDO::FETCH_ASSOC);
+        } catch (PDOException $e) {
+            error_log("Error obteniendo usuario: " . $e->getMessage());
+            return false;
+        }
+    }
+    
+    // Método para verificar si un usuario está activo o pendiente
+    public function usuarioPuedeAcceder($correo) {
+        $conexion = $this->Conectar();
+        if (!$conexion) return false;
+        
+        try {
+            $sql = "SELECT estado FROM socios WHERE correo = ? AND estado IN ('activo', 'pendiente')";
+            $stmt = $conexion->prepare($sql);
+            $stmt->execute([$correo]);
+            return $stmt->rowCount() > 0;
+        } catch (PDOException $e) {
+            error_log("Error verificando acceso: " . $e->getMessage());
             return false;
         }
     }

@@ -18,7 +18,7 @@ class socioBD extends Conexion {
             $socio = $nombre . " " . $apellidos;
             $domicilio = "Por definir";
             $contrasena_hash = password_hash($contrasena, PASSWORD_DEFAULT);
-            $estado = 'activo';
+            $estado = 'Pendiente';
             
             error_log("Datos a insertar:");
             error_log("- Socio: $socio");

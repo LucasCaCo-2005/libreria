@@ -1,4 +1,6 @@
 <?php
+
+include_once 'cabecera.php';
 // Procesar el formulario si se envió
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     include_once __DIR__ . '/../../persistencia/usuario/usersBD.php';
@@ -59,32 +61,31 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <title>Registro de Socio</title>
     <style>
         * {
-            margin: 0;
-            padding: 0;
+           
+            padding: 1px;
             box-sizing: border-box;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
 
         body {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      
             min-height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 20px;
+           
+      
         }
 
         .container {
-            background: white;
+          
             border-radius: 15px;
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 20px 40px rgba(168, 168, 168, 0.1);
             width: 100%;
-            max-width: 500px;
-            padding: 40px;
-            position: relative;
-            overflow: hidden;
+         
+            
+        
         }
-
+        overflow: hidden;
+          background: white;
+          
         .container::before {
             content: '';
             position: absolute;
@@ -233,6 +234,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     </style>
 </head>
 <body>
+
+<br><br><br><br>
     <div class="container">
         <h1>Crear Cuenta</h1>
         <p class="subtitle">Únete a nuestra asociación</p>
