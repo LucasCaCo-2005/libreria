@@ -1,8 +1,4 @@
-<?php
-if (session_status() === PHP_SESSION_NONE) {
-    session_start();
-}
-?>
+
 
 <!DOCTYPE html>
 <html lang="es">
@@ -291,7 +287,7 @@ if (session_status() === PHP_SESSION_NONE) {
       
       <div class="d-flex align-items-center">
         <!-- Botón Panel Admin -->
-        <button class="btn btn-admin" onclick="window.location.href='../admin/paneladmin.php'">
+        <button class="btn btn-login" onclick="window.location.href='presentacion/admin/index.php'">
           <i class="fas fa-user-shield"></i> Panel Admin
         </button>
         
@@ -324,7 +320,7 @@ if (session_status() === PHP_SESSION_NONE) {
       <small><?php echo htmlspecialchars($_SESSION['usuario']['correo']); ?></small>
     </div>
     <div class="user-modal-body">
-      <a href="perfil.php" class="user-option">
+      <a href="presentacion/usuario/Perfil.php" class="user-option">
         <i class="fas fa-user-circle"></i> Mi Perfil
       </a>
       <a href="mis_reservas.php" class="user-option">

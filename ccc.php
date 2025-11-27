@@ -1,8 +1,7 @@
-<?php
-if (session_status() === PHP_SESSION_NONE) {
-    session_start();
-}
-?>
+include_once 'cabecera.php';
+include_once '../../logica/usuario/actperfil.php';
+include_once '../../logica/admin/bd.php';
+
 <!DOCTYPE html>
 <html lang="es">
 <head>

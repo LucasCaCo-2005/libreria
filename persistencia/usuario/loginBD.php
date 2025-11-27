@@ -15,7 +15,7 @@ class loginBD extends Conexion {
         
         try {
             // Buscar usuario por correo
-            $sql = "SELECT id, nombre, apellidos, contrasena, estado FROM socios WHERE correo = ?";
+            $sql = "SELECT id, nombre, apellidos, contrasena, estado, telefono, domicilio, correo FROM socios WHERE correo = ?";
             $stmt = $conexion->prepare($sql);
             $stmt->execute([$correo]);
             $usuario = $stmt->fetch(PDO::FETCH_ASSOC);
@@ -31,13 +31,15 @@ class loginBD extends Conexion {
                     // VERIFICAR ESTADO DEL USUARIO - ACEPTAR ACTIVOS Y PENDIENTES
                     if ($usuario['estado'] === 'activo' || $usuario['estado'] === 'pendiente') {
                         error_log("✅ Usuario " . $usuario['estado'] . " - Login permitido");
-                        return [
-                            'id' => $usuario['id'],
-                            'nombre' => $usuario['nombre'],
-                            'apellidos' => $usuario['apellidos'],
-                            'correo' => $correo,
-                            'estado' => $usuario['estado'] // Incluir estado en la respuesta
-                        ];
+                      return [
+    'id' => $usuario['id'],
+    'nombre' => $usuario['nombre'],
+    'apellidos' => $usuario['apellidos'],
+    'correo' => $usuario['correo'], // Mejor usar el de la BD
+    'estado' => $usuario['estado'],
+    'telefono' => $usuario['telefono'] ?? '', // Agregar teléfono
+    'domicilio' => $usuario['domicilio'] ?? '' // Agregar domicilio
+];
                     } else {
                         error_log("❌ Usuario con estado no permitido: " . $usuario['estado']);
                         return 'estado_no_permitido';
