@@ -67,12 +67,7 @@ include_once 'cabecera.php';
                 <?php endforeach; ?>
             </div>
             <!-- DEBUG Temporal -->
-<div style="background: yellow; padding: 10px; margin: 10px 0;">
-    <strong>DEBUG:</strong><br>
-    - Carrito count: <?php echo count($_SESSION['carrito_reservas']); ?><br>
-    - Action URL: controladores/reservaController.php<br>
-    - Session ID: <?php echo $_SESSION['id'] ?? 'No encontrado'; ?>
-</div>
+
             <div class="acciones-carrito">
     <a href="productos.php" class="btn-seguir">➕ Seguir Agregando</a>
     <form action="controlador.php" method="POST" class="form-confirmar">

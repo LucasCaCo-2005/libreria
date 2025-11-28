@@ -54,3 +54,9 @@ General
 -Arreglar institucion
 -Añadir sitio de ayuda y preguntas frecuentes
 
+<div style="background: yellow; padding: 10px; margin: 10px 0;">
+    <strong>DEBUG:</strong><br>
+    - Carrito count: <?php echo count($_SESSION['carrito_reservas']); ?><br>
+    - Action URL: controladores/reservaController.php<br>
+    - Session ID: <?php echo $_SESSION['id'] ?? 'No encontrado'; ?>
+</div>

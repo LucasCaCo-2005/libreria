@@ -55,10 +55,10 @@ include_once 'cabecera.php';
                 </ul>
             </div>
             
-            <div class="acciones-confirmacion">
-                <a href="productos.php" class="btn-volver">📚 Seguir Explorando</a>
-                <a href="mis_reservas.php" class="btn-ver-reservas">📋 Ver Mis Reservas</a>
-            </div>
+          <div class="acciones-confirmacion">
+    <a href="productos.php" class="btn-volver">📚 Seguir Explorando</a>
+    <a href="mis_reservas.php" class="btn-ver-reservas">📋 Ver Mis Reservas</a>
+</div>
         </div>
     </div>
 

@@ -1,0 +1,208 @@
+.contenedor-mis-reservas {
+    max-width: 1200px;
+    margin: 20px auto;
+    padding: 20px;
+}
+
+.alert {
+    padding: 12px;
+    margin-bottom: 20px;
+    border-radius: 5px;
+    font-weight: bold;
+}
+
+.alert-success {
+    background-color: #d4edda;
+    color: #155724;
+    border: 1px solid #c3e6cb;
+}
+
+.alert-error {
+    background-color: #f8d7da;
+    color: #721c24;
+    border: 1px solid #f5c6cb;
+}
+
+.seccion-reservas {
+    margin-bottom: 40px;
+}
+
+.seccion-reservas h2 {
+    color: #333;
+    border-bottom: 2px solid #007bff;
+    padding-bottom: 10px;
+    margin-bottom: 20px;
+}
+
+.sin-reservas {
+    text-align: center;
+    padding: 40px;
+    background-color: #f8f9fa;
+    border-radius: 10px;
+    color: #666;
+}
+
+.btn-explorar {
+    display: inline-block;
+    background-color: #007bff;
+    color: white;
+    padding: 10px 20px;
+    text-decoration: none;
+    border-radius: 5px;
+    margin-top: 15px;
+}
+
+.grid-reservas {
+    display: grid;
+    gap: 20px;
+    grid-template-columns: repeat(auto-fill, minmax(500px, 1fr));
+}
+
+.tarjeta-reserva {
+    background: white;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.tarjeta-reserva.activa {
+    border-left: 5px solid #28a745;
+}
+
+.tarjeta-reserva.historial {
+    border-left: 5px solid #6c757d;
+    opacity: 0.8;
+}
+
+.tarjeta-reserva.completada {
+    border-left: 5px solid #28a745;
+}
+
+.tarjeta-reserva.cancelada {
+    border-left: 5px solid #dc3545;
+}
+
+.info-libro {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 15px;
+}
+
+.imagen-libro {
+    width: 80px;
+    height: 100px;
+    object-fit: cover;
+    border-radius: 5px;
+}
+
+.detalles-libro h3 {
+    margin: 0 0 5px 0;
+    color: #333;
+}
+
+.autor, .categoria {
+    margin: 0;
+    color: #666;
+    font-size: 14px;
+}
+
+.info-reserva {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+}
+
+.fechas p {
+    margin: 5px 0;
+    font-size: 14px;
+}
+
+.fecha-limite.urgente {
+    color: #dc3545;
+    font-weight: bold;
+}
+
+.dias-restantes {
+    color: #28a745;
+    font-weight: bold;
+}
+
+.estado.pendiente {
+    color: #ffc107;
+}
+
+.estado.completada {
+    color: #28a745;
+}
+
+.estado.cancelada {
+    color: #dc3545;
+}
+
+.acciones-reserva {
+    display: flex;
+    gap: 10px;
+}
+
+.btn-ver, .btn-cancelar {
+    padding: 8px 15px;
+    text-decoration: none;
+    border-radius: 5px;
+    font-size: 14px;
+    border: none;
+    cursor: pointer;
+}
+
+.btn-ver {
+    background-color: #17a2b8;
+    color: white;
+}
+
+.btn-cancelar {
+    background-color: #dc3545;
+    color: white;
+}
+
+.acciones-pagina {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    margin-top: 30px;
+    padding-top: 20px;
+    border-top: 2px solid #eee;
+}
+
+.btn-volver, .btn-carrito {
+    padding: 12px 25px;
+    text-decoration: none;
+    border-radius: 5px;
+    color: white;
+    font-weight: bold;
+}
+
+.btn-volver {
+    background-color: #6c757d;
+}
+
+.btn-carrito {
+    background-color: #007bff;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .grid-reservas {
+        grid-template-columns: 1fr;
+    }
+    
+    .info-reserva {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 15px;
+    }
+    
+    .info-libro {
+        flex-direction: column;
+        text-align: center;
+    }
+}

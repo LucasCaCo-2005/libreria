@@ -284,7 +284,7 @@ if (session_status() === PHP_SESSION_NONE) {
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="reserva_carrito.php">
+          <a class="nav-link" href="mis_reservas.php">
             <i class="fas fa-calendar-check"></i> Reservas
           </a>
         </li>
