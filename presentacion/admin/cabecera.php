@@ -392,6 +392,13 @@ $url = "http://" . $_SERVER['HTTP_HOST'] . "/sitioweb";
                 Préstamos
               </a>
             </li>
+
+             <li>
+              <a class="dropdown-item" href="<?php echo $url; ?>/Presentacion/Admin/Res.php">
+                <i class="fas fa-exchange-alt"></i>
+               Reservas
+              </a>
+            </li>
           </ul>
         </li>
 

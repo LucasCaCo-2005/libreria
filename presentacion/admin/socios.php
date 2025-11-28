@@ -42,7 +42,7 @@ include_once (__DIR__ ."/../../Logica/Admin/bd.php");
                             </label>
                             <input type="text" class="form-control" name="txtsocio" id="txtsocio" 
                                    value="<?php echo htmlspecialchars($txtsocio); ?>"
-                                   placeholder="Ingrese Numero de socio" required>
+                                   placeholder="Ingrese Numero de socio" >
                         </div>
 
 
@@ -55,7 +55,7 @@ include_once (__DIR__ ."/../../Logica/Admin/bd.php");
                             </label>
                             <input type="text" class="form-control" name="txtNombre" id="txtNombre" 
                                    value="<?php echo htmlspecialchars($txtNombre); ?>"
-                                   placeholder="Ingrese nombre" required>
+                                   placeholder="Ingrese nombre" >
                         </div>
 
                         <div class="form-group">
@@ -65,7 +65,7 @@ include_once (__DIR__ ."/../../Logica/Admin/bd.php");
                             </label>
                             <input type="text" class="form-control" name="txtApellido" id="txtApellido" 
                                    value="<?php echo htmlspecialchars($txtApellido); ?>"
-                                   placeholder="Ingrese apellidos" required>
+                                   placeholder="Ingrese apellidos" >
                         </div>
 
                          <div class="form-group">
@@ -91,7 +91,7 @@ include_once (__DIR__ ."/../../Logica/Admin/bd.php");
                                    value="<?php echo htmlspecialchars($txtCedula); ?>"
                                    placeholder="x.xxx.xxx-x" 
                                    pattern="^[1-9]\.[0-9]{3}\.[0-9]{3}-[0-9X]$" 
-                                   title="Formato válido: x.xxx.xxx-x" required>
+                                   title="Formato válido: x.xxx.xxx-x" >
                             <div class="form-help">Formato: x.xxx.xxx-x</div>
                         </div>
 
