@@ -8,10 +8,8 @@ Usuario
 Admin
 General
 -Borrar imagenes al reemplazarlas
--Datos reales con count en index
 -Arreglar Dropdown
 -Añadir decoracion en pie/footer
--Añadir apartado propio de pagos
 
 Talleres
 -Boton de quitar imagen en Talleres
@@ -26,7 +24,6 @@ Socios
 -Limit 5 en registro de socios
 -Arreglar contraseña en registro socios
 -Arreglar Nro de socio en socios pendientes, al crear una cuenta el socio pendiente tiene como NRo de socio su nombre y apellido completo
--Quitar apellidos, dejar nombre completo
 -añadir editar en socios registro
 -Añadir filtrado de socios pendientes en Vista socios
 

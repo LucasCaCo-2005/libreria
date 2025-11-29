@@ -4,7 +4,6 @@
 $txtID = (isset($_POST['txtID'])) ? $_POST['txtID'] : "";
 $txtsocio = (isset($_POST['txtsocio'])) ? $_POST['txtsocio'] : "";
 $txtNombre = (isset($_POST['txtNombre'])) ? $_POST['txtNombre'] : "";
-$txtApellido = (isset($_POST['txtApellido'])) ? $_POST['txtApellido'] : "";
 $txtCedula = (isset($_POST['txtCedula'])) ? $_POST['txtCedula'] : "";
 $txtDomicilio = (isset($_POST['txtDomicilio'])) ? $_POST['txtDomicilio'] : "";
 $txtTelefono = (isset($_POST['txtTelefono'])) ? $_POST['txtTelefono'] : "";
@@ -18,12 +17,11 @@ include("bd.php");
 $sentencia = $conexion->prepare("SELECT * FROM socios"); $sentencia->execute(); $listaSocios = $sentencia->fetchAll(PDO::FETCH_ASSOC); switch($accion){
 case "Agregar":// insertar socio nuevo
     $sentencia = $conexion->prepare("INSERT INTO socios 
-        (socio, nombre, apellidos, cedula, domicilio, telefono, correo, contrasena, estado) 
-        VALUES (:socio, :nombre, :apellidos, :cedula, :domicilio, :telefono, :correo, :contrasena, :estado)");
+        (socio, nombre, cedula, domicilio, telefono, correo, contrasena, estado) 
+        VALUES (:socio, :nombre, :cedula, :domicilio, :telefono, :correo, :contrasena, :estado)");
          // Vincular todos los parámetros para prevenir inyección SQL
         $sentencia->bindParam(':socio', $txtsocio);
     $sentencia->bindParam(':nombre', $txtNombre);
-    $sentencia->bindParam(':apellidos', $txtApellido);
     $sentencia->bindParam(':cedula', $txtCedula);
     $sentencia->bindParam(':domicilio', $txtDomicilio);
     $sentencia->bindParam(':telefono', $txtTelefono);
@@ -51,7 +49,6 @@ case "Agregar":// insertar socio nuevo
          // Cargar datos del socio en variables para pre-llenar formulario
         $txtsocio = $socio['socio'];
         $txtNombre = $socio['nombre'];
-        $txtApellido = $socio['apellidos'];
         $txtCedula = $socio['cedula'];
         $txtDomicilio = $socio['domicilio'];
         $txtTelefono = $socio['telefono'];
@@ -64,7 +61,6 @@ case "Agregar":// insertar socio nuevo
     $sentencia = $conexion->prepare("UPDATE socios 
         SET socio=:socio,
         nombre=:nombre, 
-            apellidos=:apellidos, 
             cedula=:cedula, 
             domicilio=:domicilio, 
             telefono=:telefono, 
@@ -75,7 +71,6 @@ case "Agregar":// insertar socio nuevo
 // Vincular parámetros incluyendo ID para la cláusula WHERE
 $sentencia->bindParam(':socio', $txtsocio);
     $sentencia->bindParam(':nombre', $txtNombre);
-    $sentencia->bindParam(':apellidos', $txtApellido);
     $sentencia->bindParam(':cedula', $txtCedula);
     $sentencia->bindParam(':domicilio', $txtDomicilio);
     $sentencia->bindParam(':telefono', $txtTelefono);
@@ -119,7 +114,7 @@ $listaSocios = $sentencia->fetchAll(PDO::FETCH_ASSOC);
 $mesActual = date("F Y");
 
 // Consultar pagos del mes actual con información del socio
-$sentenciaPagos = $conexion->prepare("SELECT p.*, s.nombre, s.apellidos 
+$sentenciaPagos = $conexion->prepare("SELECT p.*, s.nombre
                                       FROM pagos p
                                       INNER JOIN socios s ON p.socio_id = s.id
                                       WHERE p.mes_pagado = :mes");
@@ -136,7 +131,6 @@ class socios{
     private $id;
     private $socio;
     private $nombre;
-    private $apellidos;
     private $cedula;
     private $domicilio;
     private $telefono;
@@ -167,14 +161,6 @@ class socios{
 
     public function setNombre($nombre) {
         $this->nombre = $nombre;
-    }
-
-    public function getApellidos() {
-        return $this->apellidos;
-    }
-
-    public function setApellidos($apellidos) {
-        $this->apellidos = $apellidos;
     }
 
     public function getCedula() {
@@ -225,7 +211,7 @@ class socios{
         $this->estado = $estado;
     }
 
-public function RegistrarSocio($cedula, $nombre, $apellidos, $domicilio, $telefono, $correo, $contrasena, $estado) {
+public function RegistrarSocio($cedula, $nombre, $domicilio, $telefono, $correo, $contrasena, $estado) {
     try {
         // ✅ Conectarse con la misma clase que vos usás
         $db = new Conexion();
@@ -235,7 +221,7 @@ public function RegistrarSocio($cedula, $nombre, $apellidos, $domicilio, $telefo
         // $contrasena = password_hash($contrasena, PASSWORD_BCRYPT);
 
         // Preparar consulta
-        $sql = "INSERT INTO socios (cedula, Nombre, Apellidos, Domicilio, Telefono, Correo, contrasena, estado)
+        $sql = "INSERT INTO socios (cedula, Nombre, Domicilio, Telefono, Correo, contrasena, estado)
                 VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
         $stmt = $con->prepare($sql);
 
@@ -310,7 +296,6 @@ if (isset($_GET['socio_id'])) {
         $txtID = $socio['id'];
         $txtsocio = $socio['socio'];
         $txtNombre = $socio['nombre'];
-        $txtApellido = $socio['apellidos'];
         $txtCedula = $socio['cedula'];
         $txtDomicilio = $socio['domicilio'];
         $txtTelefono = $socio['telefono'];
@@ -318,11 +303,11 @@ if (isset($_GET['socio_id'])) {
         $txtestado = $socio['estado'];
     } else {
         // Si el ID no existe, inicializamos vacíos
-        $txtID = $txtsocio = $txtNombre = $txtApellido = $txtCedula = $txtDomicilio = $txtTelefono = $txtCorreo = $txtestado = "";
+        $txtID = $txtsocio = $txtNombre = $txtCedula = $txtDomicilio = $txtTelefono = $txtCorreo = $txtestado = "";
     }
 } else {
     // Si no hay socio_id, el formulario está vacío (modo agregar)
-    $txtID = $txtsocio = $txtNombre = $txtApellido = $txtCedula = $txtDomicilio = $txtTelefono = $txtCorreo = $txtestado = "";
+    $txtID = $txtsocio = $txtNombre = $txtCedula = $txtDomicilio = $txtTelefono = $txtCorreo = $txtestado = "";
 }
 
 

@@ -7,7 +7,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     
     // Obtener y limpiar datos
     $nombre = trim($_POST['nombre'] ?? '');
-    $apellidos = trim($_POST['apellidos'] ?? '');
     $telefono = trim($_POST['telefono'] ?? '');
     $correo = trim($_POST['correo'] ?? '');
     $contrasena = $_POST['contrasena'] ?? '';
@@ -16,7 +15,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $error = '';
     
     // Validaciones
-    if (empty($nombre) || empty($apellidos) || empty($telefono) || empty($correo) || empty($contrasena)) {
+    if (empty($nombre) || empty($telefono) || empty($correo) || empty($contrasena)) {
         $error = 'Todos los campos son obligatorios';
     } elseif ($contrasena !== $confirmar_contrasena) {
         $error = 'Las contraseñas no coinciden';
@@ -38,7 +37,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             } elseif ($socioBD->correoExiste($correo)) {
                 $error = 'El correo electrónico ya está registrado';
             } else {
-                $resultado = $socioBD->registrarUsuarioCompleto($nombre, $apellidos, $telefono, $correo, $contrasena);
+                $resultado = $socioBD->registrarUsuarioCompleto($nombre, $telefono, $correo, $contrasena);
                 
                 if ($resultado) {
                     $success = true;
@@ -253,18 +252,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <form method="POST" action="">
             <div class="form-row">
                 <div class="form-group">
-                    <label for="nombre">Nombre *</label>
+                    <label for="nombre">Nombre Completo*</label>
                     <input type="text" id="nombre" name="nombre" 
                            value="<?php echo isset($_POST['nombre']) ? htmlspecialchars($_POST['nombre']) : ''; ?>" 
                            required>
                 </div>
-                
-                <div class="form-group">
-                    <label for="apellidos">Apellidos *</label>
-                    <input type="text" id="apellidos" name="apellidos" 
-                           value="<?php echo isset($_POST['apellidos']) ? htmlspecialchars($_POST['apellidos']) : ''; ?>" 
-                           required>
-                </div>
+                  
             </div>
             
             <div class="form-group">

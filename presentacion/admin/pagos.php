@@ -11,7 +11,7 @@ if (!isset($_GET['socio_id'])) {
 $socio_id = intval($_GET['socio_id']); //Valida el ID del socio desde la URL
 
 // Obtiene los datos del socio mediante una consulta
-$sentencia = $conexion->prepare("SELECT id, nombre, apellidos, socio, correo FROM socios WHERE id = :id");
+$sentencia = $conexion->prepare("SELECT id, nombre, socio, correo FROM socios WHERE id = :id");
 $sentencia->bindParam(':id', $socio_id, PDO::PARAM_INT); // bindparam para evitar inyecciones sql
 $sentencia->execute();
 $socio = $sentencia->fetch(PDO::FETCH_ASSOC); // array asociativo
@@ -88,7 +88,7 @@ switch ($accion) {
 $mesActual = date("F Y");
 // Consulta que obtiene lista completa de pagos del mes en curso
 $sentenciaPagos = $conexion->prepare("
-    SELECT p.*, s.nombre, s.apellidos 
+    SELECT p.*, s.nombre
     FROM pagos p
     INNER JOIN socios s ON p.socio_id = s.id
     WHERE p.mes_pagado = :mes
@@ -144,7 +144,7 @@ $historialPagos = $sentenciaHistorial->fetchAll(PDO::FETCH_ASSOC);
                 <div class="info-content">
                     <div class="info-item">
                         <span class="info-label">Nombre:</span>
-                        <span class="info-value"><?php echo htmlspecialchars($socio['nombre'] . ' ' . $socio['apellidos']); ?></span>
+                        <span class="info-value"><?php echo htmlspecialchars($socio['nombre']); ?></span>
                     </div>
                     <div class="info-item">
                         <span class="info-label">Correo:</span>

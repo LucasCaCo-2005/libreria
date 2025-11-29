@@ -15,7 +15,7 @@ class loginBD extends Conexion {
         
         try {
             // Buscar usuario por correo
-            $sql = "SELECT id, nombre, apellidos, contrasena, estado, telefono, domicilio, correo, socio, cedula FROM socios WHERE correo = ?";
+            $sql = "SELECT id, nombre, contrasena, estado, telefono, domicilio, correo, socio, cedula FROM socios WHERE correo = ?";
             $stmt = $conexion->prepare($sql);
             $stmt->execute([$correo]);
             $usuario = $stmt->fetch(PDO::FETCH_ASSOC);
@@ -36,7 +36,6 @@ class loginBD extends Conexion {
                         return [
                             'id' => $usuario['id'],
                             'nombre' => $usuario['nombre'],
-                            'apellidos' => $usuario['apellidos'],
                             'correo' => $usuario['correo'],
                             'estado' => $usuario['estado'],
                             'telefono' => $usuario['telefono'] ?? '',

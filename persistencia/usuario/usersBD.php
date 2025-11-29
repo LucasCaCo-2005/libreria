@@ -3,7 +3,7 @@ include_once "../../persistencia/admin/bd.php";
 
 class socioBD extends Conexion {
     
-    public function registrarUsuarioCompleto($nombre, $apellidos, $telefono, $correo, $contrasena) {
+    public function registrarUsuarioCompleto($nombre, $telefono, $correo, $contrasena) {
         error_log("=== INICIANDO REGISTRO COMPLETO ===");
         
         $conexion = $this->Conectar();
@@ -15,7 +15,7 @@ class socioBD extends Conexion {
         try {
             // Generar datos para los campos obligatorios
             $cedula = "SOC" . uniqid();
-            $socio = $nombre . " " . $apellidos;
+            $socio = $nombre;
             $domicilio = "Por definir";
             $contrasena_hash = password_hash($contrasena, PASSWORD_DEFAULT);
             $estado = 'Pendiente';
@@ -23,20 +23,19 @@ class socioBD extends Conexion {
             error_log("Datos a insertar:");
             error_log("- Socio: $socio");
             error_log("- Nombre: $nombre");
-            error_log("- Apellidos: $apellidos");
             error_log("- Teléfono: $telefono");
             error_log("- Correo: $correo");
             error_log("- Cédula: $cedula");
             error_log("- Estado: $estado");
             
             // INSERT con todos los campos
-            $sql = "INSERT INTO socios (socio, nombre, apellidos, cedula, domicilio, telefono, correo, contrasena, estado) 
-                    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+            $sql = "INSERT INTO socios (socio, nombre, cedula, domicilio, telefono, correo, contrasena, estado) 
+                    VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
             error_log("SQL: $sql");
             
             $stmt = $conexion->prepare($sql);
             
-            if ($stmt->execute([$socio, $nombre, $apellidos, $cedula, $domicilio, $telefono, $correo, $contrasena_hash, $estado])) {
+            if ($stmt->execute([$socio, $nombre, $cedula, $domicilio, $telefono, $correo, $contrasena_hash, $estado])) {
                 error_log("✅ Registro COMPLETO EXITOSO");
                 return true;
             } else {

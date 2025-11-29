@@ -161,7 +161,7 @@ include_once 'cabecera.php'; // Ajusta según tu cabecera de admin
                             
                             <div class="info-usuario">
                                 <h4>👤 Usuario</h4>
-                                <p><strong>Nombre:</strong> <?php echo $reserva['usuario_nombre'] . ' ' . $reserva['usuario_apellidos']; ?></p>
+                                <p><strong>Nombre:</strong> <?php echo $reserva['usuario_nombre']; ?></p>
                                 <p><strong>Contacto:</strong> <?php echo $reserva['usuario_correo']; ?></p>
                                 <?php if ($reserva['usuario_telefono']): ?>
                                     <p><strong>Teléfono:</strong> <?php echo $reserva['usuario_telefono']; ?></p>

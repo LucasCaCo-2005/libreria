@@ -51,22 +51,14 @@ include_once (__DIR__ ."/../../Logica/Admin/bd.php");
                         <div class="form-group">
                             <label for="txtNombre" class="form-label">
                                 <span class="label-icon">👤</span>
-                                Nombre
+                                Nombre Completo
                             </label>
                             <input type="text" class="form-control" name="txtNombre" id="txtNombre" 
                                    value="<?php echo htmlspecialchars($txtNombre); ?>"
                                    placeholder="Ingrese nombre" >
                         </div>
 
-                        <div class="form-group">
-                            <label for="txtApellido" class="form-label">
-                                <span class="label-icon">📝</span>
-                                Apellidos
-                            </label>
-                            <input type="text" class="form-control" name="txtApellido" id="txtApellido" 
-                                   value="<?php echo htmlspecialchars($txtApellido); ?>"
-                                   placeholder="Ingrese apellidos" >
-                        </div>
+                      
 
                          <div class="form-group">
                             <label for="txtTelefono" class="form-label">
@@ -203,7 +195,6 @@ include_once (__DIR__ ."/../../Logica/Admin/bd.php");
                         <tr>
                             <th>Nro de Socio</th>
                             <th>Nombre</th>
-                            <th>Apellido</th>
                             <th>Cédula</th>
                             <th>Estado</th>
                             <th>accion</th>
@@ -225,7 +216,6 @@ include_once (__DIR__ ."/../../Logica/Admin/bd.php");
                             <tr>
                                <td><?php echo htmlspecialchars($usuario['socio']); ?></td>
                                 <td><?php echo htmlspecialchars($usuario['nombre']); ?></td>
-                                <td><?php echo htmlspecialchars($usuario['apellidos']); ?></td>
                                 <td><?php echo htmlspecialchars($usuario['cedula']); ?></td>
                                 <td>
                                   <span class="estado-badge estado-<?php echo $usuario['estado']; ?>">

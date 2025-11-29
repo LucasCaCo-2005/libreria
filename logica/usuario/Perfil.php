@@ -17,7 +17,7 @@ $id = $_SESSION['socios']['id'];
 $socioBD = new socioBD();
 
 // Obtener los datos actuales del usuario
-$stmt = $conexion->prepare("SELECT nombre, apellidos, correo, domicilio, telefono FROM socios WHERE id = ?");
+$stmt = $conexion->prepare("SELECT nombre, correo, domicilio, telefono FROM socios WHERE id = ?");
 $stmt->execute([$id]);
 $usuario = $stmt->fetch(PDO::FETCH_ASSOC);
 
@@ -28,13 +28,12 @@ $error = "";
 // Si se ha enviado el formulario para actualizar los datos
 if (isset($_POST['actualizar_datos'])) {
     $nombre = trim($_POST['nombre']);
-    $apellidos = trim($_POST['apellidos']);
     $correo = trim($_POST['correo']);
     $domicilio = trim($_POST['domicilio']);
     $telefono = trim($_POST['telefono']);
 
     // Llamar al método ActualizarSocio
-    $resultado = $socioBD->ActualizarSocio($id, $nombre, $apellidos, $domicilio, $telefono, $correo);
+    $resultado = $socioBD->ActualizarSocio($id, $nombre, $domicilio, $telefono, $correo);
 
     // Mostrar mensaje o error
     if (strpos($resultado, "correctamente") !== false) {

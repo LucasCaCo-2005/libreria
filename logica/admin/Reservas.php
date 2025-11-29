@@ -16,7 +16,6 @@ class ReservasAdminLogic {
                     l.imagen as libro_imagen,
                     l.categoria as libro_categoria,
                     u.nombre as usuario_nombre,
-                    u.apellidos as usuario_apellidos,
                     u.correo as usuario_correo,
                     u.telefono as usuario_telefono
              FROM reservas r 
@@ -36,8 +35,7 @@ class ReservasAdminLogic {
                     l.nombre as libro_nombre, 
                     l.autor as libro_autor, 
                     l.imagen as libro_imagen,
-                    u.nombre as usuario_nombre,
-                    u.apellidos as usuario_apellidos
+                    u.nombre as usuario_nombre
              FROM reservas r 
              INNER JOIN libros l ON r.libro_id = l.id 
              INNER JOIN socios u ON r.usuario_id = u.id 

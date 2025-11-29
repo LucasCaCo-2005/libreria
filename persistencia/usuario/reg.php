@@ -14,7 +14,6 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
 
 // Obtener y limpiar datos
 $nombre = trim($_POST['nombre'] ?? '');
-$apellidos = trim($_POST['apellidos'] ?? '');
 $telefono = trim($_POST['telefono'] ?? '');
 $correo = trim($_POST['correo'] ?? '');
 $contrasena = $_POST['contrasena'] ?? '';
@@ -24,7 +23,7 @@ $confirmar_contrasena = $_POST['confirmar_contrasena'] ?? '';
 $estado = 'Pendiente';
 
 // Validaciones básicas
-$camposRequeridos = ['nombre', 'apellidos', 'telefono', 'correo', 'contrasena'];
+$camposRequeridos = ['nombre', 'telefono', 'correo', 'contrasena'];
 foreach ($camposRequeridos as $campo) {
     if (empty(trim($_POST[$campo] ?? ''))) {
         header('Location: registro.php?error=Todos los campos son obligatorios');
@@ -73,7 +72,6 @@ try {
     $resultado = $socioBD->RegistrarSocio(
         $cedula, 
         $nombre, 
-        $apellidos, 
         'Por definir', // domicilio
         $telefono, 
         $correo, 

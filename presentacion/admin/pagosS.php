@@ -6,7 +6,7 @@ $mesActual = date("F Y");
 
 // Consulta para traer datos de los socios, se muestran los recienttes primero
 $consultaPagos = $conexion->prepare("
-    SELECT p.id, s.nombre, s.apellidos, p.tipo_pago, p.monto, p.fecha_pago, p.mes_pagado
+    SELECT p.id, s.nombre, p.tipo_pago, p.monto, p.fecha_pago, p.mes_pagado
     FROM pagos p
     INNER JOIN socios s ON p.socio_id = s.id
     WHERE p.mes_pagado = :mes
@@ -18,12 +18,12 @@ $pagos = $consultaPagos->fetchAll(PDO::FETCH_ASSOC);
 
 // Consulta para traer socios que NO estan en pagos
 $consultaNoPagaron = $conexion->prepare("
-    SELECT s.id, s.nombre, s.apellidos, s.cedula, s.correo, s.telefono
+    SELECT s.id, s.nombre, s.cedula, s.correo, s.telefono
     FROM socios s
     WHERE s.id NOT IN (
         SELECT socio_id FROM pagos WHERE mes_pagado = :mes
     )
-    ORDER BY s.apellidos, s.nombre
+    ORDER BY s.nombre
 ");
 $consultaNoPagaron->bindParam(':mes', $mesActual, PDO::PARAM_STR);
 $consultaNoPagaron->execute();
@@ -110,11 +110,11 @@ $porcentajePagos = $totalSocios > 0 ? round(($totalPagos / $totalSocios) * 100, 
                                         <td>
                                             <div class="info-socio">
                                                 <div class="avatar-socio">
-                                                    <?php echo strtoupper(substr($pago['nombre'], 0, 1) . substr($pago['apellidos'], 0, 1)); ?>
+                                                    <?php echo strtoupper(substr($pago['nombre'], 0, 1)); ?>
                                                 </div>
                                                 <div class="info-socio-texto">
                                                     <div class="nombre-socio">
-                                                        <?php echo htmlspecialchars($pago['nombre'] . " " . $pago['apellidos']); ?>
+                                                        <?php echo htmlspecialchars($pago['nombre']); ?>
                                                     </div>
                                                 </div>
                                             </div>
@@ -182,11 +182,11 @@ $porcentajePagos = $totalSocios > 0 ? round(($totalPagos / $totalSocios) * 100, 
                                                 <div class="avatar-socio">
                                                     <?php
                                                     // saca la primer letra del nombre y apellido para el avatar, strtoupper vuelve mayuscula
-                                                    echo strtoupper(substr($socio['nombre'], 0, 1) . substr($socio['apellidos'], 0, 1));  ?> 
+                                                    echo strtoupper(substr($socio['nombre'], 0, 1));  ?> 
                                                 </div>
                                                 <div class="info-socio-texto">
                                                     <div class="nombre-socio">
-                                                        <?php echo htmlspecialchars($socio['nombre'] . " " . $socio['apellidos']); ?>
+                                                        <?php echo htmlspecialchars($socio['nombre']); ?>
                                                     </div>
                                                     <div class="detalle-socio">
                                                         Cédula: <?php echo htmlspecialchars($socio['cedula']); ?>

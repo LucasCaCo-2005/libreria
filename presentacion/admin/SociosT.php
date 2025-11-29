@@ -7,7 +7,6 @@ include_once("cabecera.php");
 // carga datos de los socios
 $txtID         = $_POST['txtID'] ?? "";
 $txtNombre     = $_POST['txtNombre'] ?? "";
-$txtApellido   = $_POST['txtApellido'] ?? "";
 $txtCedula     = $_POST['txtCedula'] ?? "";
 $txtDomicilio  = $_POST['txtDomicilio'] ?? "";
 $txtTelefono   = $_POST['txtTelefono'] ?? "";
@@ -102,13 +101,13 @@ $listaSocios = $sentencia->fetchAll(PDO::FETCH_ASSOC);
             </div>
         <?php else: ?>
             <?php foreach ($listaSocios as $socio): ?>
-                <div class="tarjeta-socio" data-nombre="<?= htmlspecialchars(strtoupper($socio['nombre'] . ' ' . $socio['apellidos'])); ?>">
+                <div class="tarjeta-socio" data-nombre="<?= htmlspecialchars(strtoupper($socio['nombre'])); ?>">
                    
                     <div class="tarjeta-header">
                         <span class="estado-socio estado-<?= $socio['estado']; ?>">
                             <?= $socio['estado'] == 'activo' ? '🟢 Activo' : '🔴 Inactivo'; ?>
                         </span>
-                        <h3 class="nombre-socio"><?= htmlspecialchars($socio['nombre'] . ' ' . $socio['apellidos']); ?></h3>
+                        <h3 class="nombre-socio"><?= htmlspecialchars($socio['nombre']); ?></h3>
                         <p class="cedula-socio">📋 <?= htmlspecialchars($socio['cedula']); ?></p>
                     </div>
 

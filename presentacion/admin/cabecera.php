@@ -366,6 +366,13 @@ $url = "http://" . $_SERVER['HTTP_HOST'] . "/sitioweb";
                 Vista Talleres
               </a>
             </li>
+
+             <li >
+              <a class="dropdown-item"  href="<?php echo $url; ?>/Presentacion/Admin/VistaT.php">
+                <i class="fas fa-eye"></i>
+                Vista Talleres
+              </a>
+            </li>
           </ul>
         </li>
 
@@ -424,12 +431,6 @@ $url = "http://" . $_SERVER['HTTP_HOST'] . "/sitioweb";
                 Lista de Socios
               </a>
             </li>
-            <li>
-              <a class="dropdown-item" href="<?php echo $url; ?>/Presentacion/Admin/PagosS.php">
-                <i class="fas fa-money-bill-wave"></i>
-                Gestión de Pagos
-              </a>
-            </li>
           </ul>
         </li>
 
@@ -444,6 +445,34 @@ $url = "http://" . $_SERVER['HTTP_HOST'] . "/sitioweb";
               <a class="dropdown-item" href="<?php echo $url; ?>/Presentacion/Admin/Trab.php">
                 <i class="fas fa-briefcase"></i>
                 Trabajadores
+              </a>
+            </li>
+            <li>
+              <a class="dropdown-item" href="<?php echo $url; ?>/Presentacion/Admin/panelautoridades.php">
+                <i class="fas fa-user-shield"></i>
+                Autoridades
+              </a>
+            </li>
+
+             <li>
+              <a class="dropdown-item" href="<?php echo $url; ?>/Presentacion/Admin/panelavisos.php">
+                <i class="fas fa-user-shield"></i>
+                Avisos
+              </a>
+            </li>
+          </ul>
+        </li>
+
+            <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="dropdownEmpleados" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            <i class="fas fa-user-tie"></i>
+            Pagos
+          </a>
+          <ul class="dropdown-menu" aria-labelledby="dropdownEmpleados">
+            <li>
+              <a class="dropdown-item" href="<?php echo $url; ?>/Presentacion/Admin/pagoss.php">
+                <i class="fas fa-briefcase"></i>
+               Gestion de Pagos
               </a>
             </li>
             <li>

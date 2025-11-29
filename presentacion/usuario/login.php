@@ -18,7 +18,6 @@ if ($_POST) {
         $_SESSION['usuario'] = [
             'id' => $resultado['id'],
             'nombre' => $resultado['nombre'],
-            'apellidos' => $resultado['apellidos'],
             'correo' => $resultado['correo'],
             'estado' => $resultado['estado'], // ¡IMPORTANTE! Incluir el estado
             'telefono' => $resultado['telefono'],
