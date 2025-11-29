@@ -11,7 +11,7 @@ if (!isset($_GET['socio_id'])) {
 $socio_id = intval($_GET['socio_id']); //Valida el ID del socio desde la URL
 
 // Obtiene los datos del socio mediante una consulta
-$sentencia = $conexion->prepare("SELECT id, nombre, apellidos, correo FROM socios WHERE id = :id");
+$sentencia = $conexion->prepare("SELECT id, nombre, apellidos, socio, correo FROM socios WHERE id = :id");
 $sentencia->bindParam(':id', $socio_id, PDO::PARAM_INT); // bindparam para evitar inyecciones sql
 $sentencia->execute();
 $socio = $sentencia->fetch(PDO::FETCH_ASSOC); // array asociativo
@@ -152,7 +152,7 @@ $historialPagos = $sentenciaHistorial->fetchAll(PDO::FETCH_ASSOC);
                     </div>
                     <div class="info-item">
                         <span class="info-label">ID Socio:</span>
-                        <span class="info-value">#<?php echo $socio_id; ?></span>
+                        <span class="info-value">#<?php echo htmlspecialchars($socio['socio']); ?></span>
                     </div>
                 </div>
             </div>

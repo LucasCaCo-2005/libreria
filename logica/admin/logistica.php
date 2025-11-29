@@ -142,7 +142,7 @@ if (isset($_SESSION['libroSeleccionado'])) {
 } 
 
 // Obtener lista de libros
-$sentencia = $conexion->prepare("SELECT * FROM libros ORDER BY id DESC");
+$sentencia = $conexion->prepare("SELECT * FROM libros ORDER BY id DESC limit 5");
 $sentencia->execute();
 $listaLibros = $sentencia->fetchAll(PDO::FETCH_ASSOC);
 ?>

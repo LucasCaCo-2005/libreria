@@ -1,7 +1,6 @@
 Problemas a solucionar:
 
 Usuario
--Reservas de libros funcional
 -Inscripciones a talleres
 -Mejorar presentacion Autoridades
 -Enviar historial de pagos a su perfil
@@ -20,10 +19,7 @@ Talleres
 -Añadir boton de "ir a editar" en vista talleres
 
 Libros
--Limite de 5 libros en registro de libros
 -Añadir Estados activo-inactivo en libros
--Cuando se preste un libro, el stock baja -1
--Poder vincular el socio con el prestamo de libros
 -Count de libros prestados y devueltos
 
 Socios
@@ -33,7 +29,6 @@ Socios
 -Quitar apellidos, dejar nombre completo
 -añadir editar en socios registro
 -Añadir filtrado de socios pendientes en Vista socios
--Reemplazar id por id socio en pagos(informacion del socio)
 
 PAgos
 -Mejorar pagos:
@@ -49,7 +44,6 @@ Avisos:
 
 General
 -Carpetas de imagenes por serparado
--Division de inicio de sesion: usuarios al panel usuarios y admin al panel admin
 -Pie con decoracion, redes sociales, numero, direccion e informacion
 -Arreglar institucion
 -Añadir sitio de ayuda y preguntas frecuentes

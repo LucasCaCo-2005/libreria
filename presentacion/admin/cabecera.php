@@ -4,6 +4,9 @@ if (session_status() === PHP_SESSION_NONE) {
   // y creo la sesion.
     session_start();
 }
+include_once __DIR__ . '/../../Logica/Admin/authHelper.php';
+AuthHelper::requerirAdministrador();
+
 
 $url = "http://" . $_SERVER['HTTP_HOST'] . "/sitioweb";
 ?>
@@ -394,7 +397,7 @@ $url = "http://" . $_SERVER['HTTP_HOST'] . "/sitioweb";
             </li>
 
              <li>
-              <a class="dropdown-item" href="<?php echo $url; ?>/Presentacion/Admin/Res.php">
+              <a class="dropdown-item" href="<?php echo $url; ?>/Presentacion/Admin/Reservas.php">
                 <i class="fas fa-exchange-alt"></i>
                Reservas
               </a>

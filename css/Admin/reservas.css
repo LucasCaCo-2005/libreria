@@ -1,0 +1,219 @@
+.contenedor-admin {
+    max-width: 1400px;
+    margin: 20px auto;
+    padding: 20px;
+}
+
+.estadisticas {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px;
+    margin-bottom: 30px;
+}
+
+.tarjeta-estadistica {
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    text-align: center;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    border-left: 5px solid #007bff;
+}
+
+.tarjeta-estadistica.urgente {
+    border-left-color: #dc3545;
+    background: #fff5f5;
+}
+
+.tarjeta-estadistica.preparada {
+    border-left-color: #28a745;
+    background: #f8fff9;
+}
+
+.tarjeta-estadistica h3 {
+    margin: 0 0 10px 0;
+    color: #333;
+    font-size: 16px;
+}
+
+.tarjeta-estadistica .numero {
+    font-size: 2.5em;
+    font-weight: bold;
+    margin: 0;
+    color: #007bff;
+}
+
+.tarjeta-estadistica.urgente .numero {
+    color: #dc3545;
+}
+
+.tarjeta-estadistica.preparada .numero {
+    color: #28a745;
+}
+
+.tarjeta-estadistica .descripcion {
+    margin: 10px 0 0 0;
+    color: #666;
+    font-size: 14px;
+}
+
+.seccion-reservas {
+    margin-bottom: 40px;
+}
+
+.seccion-reservas h2 {
+    color: #333;
+    border-bottom: 2px solid #007bff;
+    padding-bottom: 10px;
+    margin-bottom: 20px;
+}
+
+.lista-reservas {
+    display: grid;
+    gap: 20px;
+}
+
+.tarjeta-reserva {
+    background: white;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    padding: 20px;
+    display: grid;
+    grid-template-columns: 2fr 1.5fr 1.5fr 1fr;
+    gap: 20px;
+    align-items: start;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.tarjeta-reserva.normal {
+    border-left: 5px solid #17a2b8;
+}
+
+.tarjeta-reserva.urgente {
+    border-left: 5px solid #ffc107;
+    background: #fffdf5;
+}
+
+.tarjeta-reserva.muy-urgente {
+    border-left: 5px solid #dc3545;
+    background: #fff5f5;
+}
+
+.info-libro {
+    display: flex;
+    gap: 15px;
+}
+
+.imagen-libro {
+    width: 60px;
+    height: 80px;
+    object-fit: cover;
+    border-radius: 5px;
+}
+
+.detalles-libro h3 {
+    margin: 0 0 5px 0;
+    color: #333;
+    font-size: 16px;
+}
+
+.autor, .categoria {
+    margin: 0;
+    color: #666;
+    font-size: 14px;
+}
+
+.info-usuario h4 {
+    margin: 0 0 10px 0;
+    color: #333;
+    font-size: 14px;
+}
+
+.info-usuario p {
+    margin: 3px 0;
+    font-size: 13px;
+}
+
+.info-reserva p {
+    margin: 5px 0;
+    font-size: 13px;
+}
+
+.urgente {
+    color: #dc3545;
+    font-weight: bold;
+}
+
+.muy-urgente {
+    color: #dc3545;
+    font-weight: bold;
+    background: #ffe6e6;
+    padding: 2px 5px;
+    border-radius: 3px;
+}
+
+.acciones-admin {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.btn-preparar, .btn-entregar {
+    padding: 8px 12px;
+    text-decoration: none;
+    border-radius: 5px;
+    font-size: 12px;
+    text-align: center;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.btn-preparar {
+    background-color: #17a2b8;
+    color: white;
+}
+
+.btn-preparar:hover {
+    background-color: #138496;
+}
+
+.btn-entregar {
+    background-color: #28a745;
+    color: white;
+}
+
+.btn-entregar:hover {
+    background-color: #218838;
+}
+
+.sin-reservas {
+    text-align: center;
+    padding: 40px;
+    background-color: #f8f9fa;
+    border-radius: 10px;
+    color: #666;
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+    .tarjeta-reserva {
+        grid-template-columns: 1fr;
+        gap: 15px;
+    }
+    
+    .estadisticas {
+        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    }
+}
+
+@media (max-width: 768px) {
+    .info-libro {
+        flex-direction: column;
+        text-align: center;
+    }
+    
+    .imagen-libro {
+        align-self: center;
+    }
+}

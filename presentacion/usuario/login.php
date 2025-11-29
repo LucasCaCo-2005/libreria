@@ -1,59 +1,48 @@
 <?php
-session_start();
-
-
-// Si ya está logueado, redirigir al dashboard
-if (isset($_SESSION['usuario'])) {
-    header('Location: dashboard.php');
-    exit;
+// En tu archivo que procesa el login
+if (session_status() == PHP_SESSION_NONE) {
+    session_start();
 }
 
-// Procesar el formulario si se envió
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    include_once __DIR__ . '/../../persistencia/usuario/loginBD.php';
-    
-    // Obtener y limpiar datos
-    $correo = trim($_POST['correo'] ?? '');
+include_once __DIR__ . '/../../persistencia/usuario/loginBD.php';
+
+if ($_POST) {
+    $correo = $_POST['correo'] ?? '';
     $contrasena = $_POST['contrasena'] ?? '';
     
-    $error = '';
+    $loginBD = new loginBD();
+    $resultado = $loginBD->verificarCredenciales($correo, $contrasena);
     
-    // Validaciones básicas
-    if (empty($correo) || empty($contrasena)) {
-        $error = 'Todos los campos son obligatorios';
-    } elseif (!filter_var($correo, FILTER_VALIDATE_EMAIL)) {
-        $error = 'El formato del correo electrónico no es válido';
-    }
-    
-    // Si no hay errores, intentar login
-    if (empty($error)) {
-        try {
-            $loginBD = new loginBD();
-            
-            if (!$loginBD->probarConexion()) {
-                $error = 'Error de conexión a la base de datos';
-            } else {
-                $resultado = $loginBD->verificarCredenciales($correo, $contrasena);
-                
-                if ($resultado === 'inactivo') {
-                    $error = 'Tu cuenta está inactiva. Contacta al administrador.';
-                } elseif (is_array($resultado)) {
-                    // Login exitoso
-                    $_SESSION['usuario'] = $resultado;
-                    $success = true;
-                    
-                    // Redirigir después de 2 segundos
-                    header('Refresh: 2; URL=../../index.php');
-                } else {
-                    $error = 'Correo electrónico o contraseña incorrectos';
-                }
-            }
-        } catch (Exception $e) {
-            $error = 'Error del servidor. Intente más tarde.';
+    if ($resultado && is_array($resultado)) {
+        // Login exitoso - guardar TODOS los datos en sesión incluyendo el estado
+        $_SESSION['usuario'] = [
+            'id' => $resultado['id'],
+            'nombre' => $resultado['nombre'],
+            'apellidos' => $resultado['apellidos'],
+            'correo' => $resultado['correo'],
+            'estado' => $resultado['estado'], // ¡IMPORTANTE! Incluir el estado
+            'telefono' => $resultado['telefono'],
+            'domicilio' => $resultado['domicilio'],
+            'socio' => $resultado['socio'],
+            'cedula' => $resultado['cedula']
+        ];
+        
+        error_log("✅ Sesión iniciada - Estado: " . $_SESSION['usuario']['estado']);
+        
+        // Redirigir según el estado del usuario
+        if ($_SESSION['usuario']['estado'] === 'admin') {
+            header("Location: ../Admin/index.php");
+        } else {
+            header("Location: dashboard.php");
         }
+        exit();
+        
+    } else if ($resultado === 'estado_no_permitido') {
+        $error = "Tu cuenta no está activa. Contacta al administrador.";
+    } else {
+        $error = "Correo o contraseña incorrectos.";
     }
 }
-
 include_once 'cabecera.php';
 ?>
 
