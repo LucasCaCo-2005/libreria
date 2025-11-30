@@ -331,6 +331,9 @@ if (session_status() === PHP_SESSION_NONE) {
       <a href="mis_reservas.php" class="user-option">
         <i class="fas fa-calendar-check"></i> Mis Reservas
       </a>
+       <a href="mis_pagos.php" class="user-option">
+        <i class="fas fa-calendar-check"></i> Mis Pagos
+      </a>
       <a href="logout.php" class="user-option logout">
         <i class="fas fa-sign-out-alt"></i> Cerrar Sesión
       </a>

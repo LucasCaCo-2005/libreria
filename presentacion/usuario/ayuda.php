@@ -14,5 +14,24 @@
     <h1>¿Qué beneficios tengo por ser Socio ? </h1>
     <p>Como Socio puedes acceder a Servicio de Enfermería, consulta con Médico, Podología, participar de los diferentes Talleres, Eventos y Viajes que se realizan.</p> 
     <p>Además podrás acceder a nuestras instalaciones y Biblioteca. </p>
+
+    <?php
+include_once(__DIR__ ."/../../Logica/Admin/bd.php");
+
+// Obtener todas las tablas
+$consultaTablas = $conexion->query("SHOW TABLES");
+$tablas = $consultaTablas->fetchAll(PDO::FETCH_COLUMN);
+
+echo "<pre>";
+foreach ($tablas as $tabla) {
+    echo "--- Tabla: $tabla ---\n";
+    
+    $consultaCreate = $conexion->query("SHOW CREATE TABLE `$tabla`");
+    $createTable = $consultaCreate->fetch(PDO::FETCH_ASSOC);
+    
+    echo $createTable['Create Table'] . "\n\n";
+}
+echo "</pre>";
+?>
 </body>
 </html>

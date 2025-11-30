@@ -101,11 +101,11 @@ $listaSocios = $sentenciaSQL->fetchAll(PDO::FETCH_ASSOC);
 // Consultas específicas según el filtro seleccionado
 $filtroSeleccionado = isset($_GET['filtroEstado']) ? $_GET['filtroEstado'] : "activo";
 if ($filtroSeleccionado == "inactivo") {
-    $sentencia = $conexion->prepare("SELECT * FROM socios WHERE estado='inactivo'");
+    $sentencia = $conexion->prepare("SELECT * FROM socios WHERE estado='inactivo' limit 6 ");
 } elseif ($filtroSeleccionado == "pendiente") {
-    $sentencia = $conexion->prepare("SELECT * FROM socios WHERE estado='pendiente'");
+    $sentencia = $conexion->prepare("SELECT * FROM socios WHERE estado='pendiente' limit 6 ");
 } else { // Por defecto muestra socios activos
-    $sentencia = $conexion->prepare("SELECT * FROM socios WHERE estado='activo'");
+    $sentencia = $conexion->prepare("SELECT * FROM socios WHERE estado='activo' limit 6 ");
 }
 
 $sentencia->execute();

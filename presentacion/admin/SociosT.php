@@ -1,9 +1,9 @@
 <?php
 
 include_once(__DIR__ ."/../../Logica/Admin/bd.php");
-
 include_once(__DIR__ ."/../../Logica/Admin/users.php");
 include_once("cabecera.php");
+
 // carga datos de los socios
 $txtID         = $_POST['txtID'] ?? "";
 $txtNombre     = $_POST['txtNombre'] ?? "";
@@ -14,9 +14,11 @@ $txtCorreo     = $_POST['txtCorreo'] ?? "";
 $txtContraseña = $_POST['txtContraseña'] ?? "";
 $txtestado     = $_POST['txtestado'] ?? "";
 $accion        = $_POST['accion'] ?? "";
-// Filtro por estado  con get
+
+// Filtro por estado con get
 $estadoSeleccionado = $_GET['estado'] ?? '';
 $filtro = $estadoSeleccionado ? "WHERE estado = :estado" : '';
+
 // select de los socios
 $sentencia = $conexion->prepare("SELECT * FROM socios $filtro");
 if ($estadoSeleccionado) {
@@ -32,12 +34,44 @@ $listaSocios = $sentencia->fetchAll(PDO::FETCH_ASSOC);
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Gestión de Socios - Biblioteca</title>
-
     <link rel="stylesheet" href="../../css/admin/sociost.css">
-
     <link rel="stylesheet" href="../css/Admin/sociost.css">
-
-   
+    <style>
+        .btn-pagos.disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            pointer-events: none;
+            background-color: #95a5a6 !important;
+        }
+        
+        .tooltip {
+            position: relative;
+            display: inline-block;
+        }
+        
+        .tooltip .tooltiptext {
+            visibility: hidden;
+            width: 200px;
+            background-color: #555;
+            color: white;
+            text-align: center;
+            border-radius: 6px;
+            padding: 5px;
+            position: absolute;
+            z-index: 1;
+            bottom: 125%;
+            left: 50%;
+            margin-left: -100px;
+            opacity: 0;
+            transition: opacity 0.3s;
+            font-size: 12px;
+        }
+        
+        .tooltip:hover .tooltiptext {
+            visibility: visible;
+            opacity: 1;
+        }
+    </style>
 </head>
 <body>
 
@@ -47,8 +81,7 @@ $listaSocios = $sentencia->fetchAll(PDO::FETCH_ASSOC);
         <p>Administra y visualiza la información de todos los socios</p>
     </div>
 
-
-    <div class="controles-superiores"> <!-- Buscador por nombre sin recargar pagina gracias a Js-->
+    <div class="controles-superiores">
         <div class="buscador-container">
             <input type="text" id="searchInput" class="buscador-input" 
                    placeholder="🔍 Buscar socio por nombre o apellido..." 
@@ -59,19 +92,22 @@ $listaSocios = $sentencia->fetchAll(PDO::FETCH_ASSOC);
         <div class="filtro-container">
             <span class="filtro-label">Filtrar por estado:</span>
             <form method="GET" class="filtro-form">
-                <select name="estado" onchange="this.form.submit()" class="filtro-select"> <!-- Filtro instantaneo -->
+                <select name="estado" onchange="this.form.submit()" class="filtro-select">
                     <option value="">Todos los socios</option>
                     <option value="activo" <?= ($estadoSeleccionado == 'activo') ? 'selected' : ''; ?>>🟢 Activos</option>
                     <option value="inactivo" <?= ($estadoSeleccionado == 'inactivo') ? 'selected' : ''; ?>>🔴 Inactivos</option>
+                    <option value="pendiente" <?= ($estadoSeleccionado == 'pendiente') ? 'selected' : ''; ?>>🙈 Pendientes</option>
                 </select>
             </form>
         </div>
     </div>
 
-    <?php // stats de los socios
+    <?php 
+    // stats de los socios
     $totalSocios = count($listaSocios);
     $sociosActivos = count(array_filter($listaSocios, fn($socio) => $socio['estado'] === 'activo'));
-    $sociosInactivos = $totalSocios - $sociosActivos;
+    $sociosInactivos = count(array_filter($listaSocios, fn($socio) => $socio['estado'] === 'inactivo'));
+    $sociosPendientes = count(array_filter($listaSocios, fn($socio) => $socio['estado'] === 'pendiente'));
     ?>
     
     <div class="estadisticas-container">
@@ -90,6 +126,11 @@ $listaSocios = $sentencia->fetchAll(PDO::FETCH_ASSOC);
             <div class="estadistica-valor"><?= $sociosInactivos; ?></div>
             <div class="estadistica-label">Socios Inactivos</div>
         </div>
+        <div class="tarjeta-estadistica">
+            <span class="estadistica-icono">⏳</span>
+            <div class="estadistica-valor"><?= $sociosPendientes; ?></div>
+            <div class="estadistica-label">Socios Pendientes</div>
+        </div>
     </div>
 
     <div class="grid-socios" id="sociosContainer">
@@ -105,7 +146,21 @@ $listaSocios = $sentencia->fetchAll(PDO::FETCH_ASSOC);
                    
                     <div class="tarjeta-header">
                         <span class="estado-socio estado-<?= $socio['estado']; ?>">
-                            <?= $socio['estado'] == 'activo' ? '🟢 Activo' : '🔴 Inactivo'; ?>
+                            <?php 
+                            switch($socio['estado']) {
+                                case 'activo':
+                                    echo '🟢 Activo';
+                                    break;
+                                case 'inactivo':
+                                    echo '🔴 Inactivo';
+                                    break;
+                                case 'pendiente':
+                                    echo '⏳ Pendiente';
+                                    break;
+                                default:
+                                    echo $socio['estado'];
+                            }
+                            ?>
                         </span>
                         <h3 class="nombre-socio"><?= htmlspecialchars($socio['nombre']); ?></h3>
                         <p class="cedula-socio">📋 <?= htmlspecialchars($socio['cedula']); ?></p>
@@ -142,9 +197,24 @@ $listaSocios = $sentencia->fetchAll(PDO::FETCH_ASSOC);
                             ✏️ Editar
                         </a>
                         
-                        <a href="pagos.php?socio_id=<?= $socio['id']; ?>" class="btn-accion btn-pagos">
-                            💰 Pagos
-                        </a>
+                        <?php if ($socio['estado'] === 'activo'): ?>
+                            <a href="pagos.php?socio_id=<?= $socio['id']; ?>" class="btn-accion btn-pagos">
+                                💰 Pagos
+                            </a>
+                        <?php else: ?>
+                            <span class="btn-accion btn-pagos disabled tooltip">
+                                💰 Pagos
+                                <span class="tooltiptext">
+                                    <?php 
+                                    if ($socio['estado'] === 'inactivo') {
+                                        echo 'Los socios inactivos no pueden acceder a pagos';
+                                    } else {
+                                        echo 'Los socios pendientes no pueden acceder a pagos';
+                                    }
+                                    ?>
+                                </span>
+                            </span>
+                        <?php endif; ?>
 
                         <form id="formSocio<?= $socio['id']; ?>" method="POST" action="SociosT.php" class="form-accion-socio">
                             <input type="hidden" name="socio_id" value="<?= $socio['id']; ?>">
@@ -154,7 +224,15 @@ $listaSocios = $sentencia->fetchAll(PDO::FETCH_ASSOC);
                         <button type="button" 
                                 class="btn-accion btn-estado <?= $socio['estado'] == 'activo' ? 'btn-desactivar' : 'btn-activar'; ?>" 
                                 onclick="enviarSocioAccion('<?= $socio['id']; ?>', '<?= $socio['estado'] == 'activo' ? 'inactivo' : 'activo'; ?>')">
-                            <?= $socio['estado'] == 'activo' ? '⏸️ Desactivar' : '▶️ Activar'; ?>
+                            <?php 
+                            if ($socio['estado'] == 'activo') {
+                                echo '⏸️ Desactivar';
+                            } elseif ($socio['estado'] == 'inactivo') {
+                                echo '▶️ Activar';
+                            } else {
+                                echo '✅ Aprobar';
+                            }
+                            ?>
                         </button>
                     </div>
                 </div>
@@ -163,16 +241,22 @@ $listaSocios = $sentencia->fetchAll(PDO::FETCH_ASSOC);
     </div>
 </div>
 
-<script> // gestion de estados, cambiar de estados por error
+<script>
 function enviarSocioAccion(id, nuevoEstado) {
-    const confirmacion = confirm(`¿Está seguro de que desea ${nuevoEstado === 'activo' ? 'activar' : 'desactivar'} este socio?`);
+    const acciones = {
+        'activo': 'activar',
+        'inactivo': 'desactivar', 
+        'pendiente': 'aprobar'
+    };
+    
+    const confirmacion = confirm(`¿Está seguro de que desea ${acciones[nuevoEstado] || 'cambiar el estado de'} este socio?`);
     if (confirmacion) {
         const form = document.getElementById('formSocio' + id);
         form.querySelector('[name="nuevo_estado"]').value = nuevoEstado;
         form.submit();
     }
 }
-// busqueda en tiempo real
+
 function filterItems() {
     const input = document.getElementById('searchInput');
     const filter = (input.value || '').trim().toUpperCase();
@@ -187,6 +271,17 @@ function filterItems() {
         }
     });
 }
+
+// Prevenir clic en botones deshabilitados
+document.addEventListener('DOMContentLoaded', function() {
+    document.querySelectorAll('.btn-pagos.disabled').forEach(btn => {
+        btn.addEventListener('click', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            alert('No se pueden gestionar pagos para socios inactivos o pendientes');
+        });
+    });
+});
 </script>
 
 <?php include_once 'pie.php'; ?>
