@@ -2,6 +2,30 @@
 include(__DIR__ ."/../../Logica/Admin/users.php"); 
 include("cabecera.php"); 
 include_once (__DIR__ ."/../../Logica/Admin/bd.php");
+
+// Variables para el formulario
+$txtID = $txtsocio = $txtNombre = $txtTelefono = $txtCedula = $txtDomicilio = $txtCorreo = $txtcon = $txtestado = "";
+
+// Si se envió el formulario para cargar datos
+if (isset($_POST['cargar_datos'])) {
+    $id = intval($_POST['id']);
+    $stmt = $conexion->prepare("SELECT * FROM socios WHERE id = :id");
+    $stmt->bindParam(':id', $id, PDO::PARAM_INT);
+    $stmt->execute();
+    $usuario = $stmt->fetch(PDO::FETCH_ASSOC);
+    
+    if ($usuario) {
+        $txtID = $usuario['id'];
+        $txtsocio = $usuario['socio'];
+        $txtNombre = $usuario['nombre'];
+        $txtTelefono = $usuario['telefono'];
+        $txtCedula = $usuario['cedula'];
+        $txtDomicilio = $usuario['domicilio'];
+        $txtCorreo = $usuario['correo'];
+        $txtcon = $usuario['contrasena'];
+        $txtestado = $usuario['estado'];
+    }
+}
 ?>
 
 <!DOCTYPE html>
@@ -11,10 +35,38 @@ include_once (__DIR__ ."/../../Logica/Admin/bd.php");
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Registro de Socios - Biblioteca</title>
     <link rel="stylesheet" href="../../css/admin/socios.css">
-
     <link rel="stylesheet" href="../css/Admin/socios.css">
-
-
+    <style>
+        .btn-cargar {
+            background: #17a2b8;
+            color: white;
+            border: none;
+            padding: 6px 12px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.85rem;
+            transition: background 0.3s ease;
+        }
+        
+        .btn-cargar:hover {
+            background: #138496;
+        }
+        
+        .btn-cargar:disabled {
+            background: #6c757d;
+            cursor: not-allowed;
+        }
+        
+        .editing-notice {
+            background: #d4edda;
+            border: 1px solid #c3e6cb;
+            color: #155724;
+            padding: 10px 15px;
+            border-radius: 5px;
+            margin-bottom: 15px;
+            font-weight: 500;
+        }
+    </style>
 </head>
 <body>
 
@@ -23,6 +75,12 @@ include_once (__DIR__ ."/../../Logica/Admin/bd.php");
         <h1>👥 Registro de Socios</h1>
         <p>Gestiona los socios de la biblioteca</p>
     </div>
+
+    <?php if (!empty($txtID)): ?>
+        <div class="editing-notice">
+            ✏️ Editando socio: <strong><?php echo htmlspecialchars($txtNombre); ?></strong> (ID: <?php echo $txtID; ?>)
+        </div>
+    <?php endif; ?>
 
     <div class="socios-content">
    
@@ -35,7 +93,7 @@ include_once (__DIR__ ."/../../Logica/Admin/bd.php");
                     <input type="hidden" name="txtID" value="<?php echo $txtID; ?>">
 
                     <div class="form-grid">
-<div class="form-group">
+                        <div class="form-group">
                             <label for="txtsocio" class="form-label">
                                 <span class="label-icon">👤</span>
                                 Numero de socio
@@ -44,9 +102,6 @@ include_once (__DIR__ ."/../../Logica/Admin/bd.php");
                                    value="<?php echo htmlspecialchars($txtsocio); ?>"
                                    placeholder="Ingrese Numero de socio" >
                         </div>
-
-
-
 
                         <div class="form-group">
                             <label for="txtNombre" class="form-label">
@@ -58,9 +113,7 @@ include_once (__DIR__ ."/../../Logica/Admin/bd.php");
                                    placeholder="Ingrese nombre" >
                         </div>
 
-                      
-
-                         <div class="form-group">
+                        <div class="form-group">
                             <label for="txtTelefono" class="form-label">
                                 <span class="label-icon">📞</span>
                                 Teléfono
@@ -72,7 +125,6 @@ include_once (__DIR__ ."/../../Logica/Admin/bd.php");
                                    title="Debe tener 8 o 9 dígitos numéricos">
                             <div class="form-help">Formato: xx-xxx-xxx</div>
                         </div>
-
 
                         <div class="form-group full-width">
                             <label for="txtCedula" class="form-label">
@@ -97,7 +149,6 @@ include_once (__DIR__ ."/../../Logica/Admin/bd.php");
                                    placeholder="Ingrese domicilio completo">
                         </div>
 
-                      
                         <div class="form-group">
                             <label for="txtCorreo" class="form-label">
                                 <span class="label-icon">📧</span>
@@ -108,7 +159,7 @@ include_once (__DIR__ ."/../../Logica/Admin/bd.php");
                                    placeholder="correo@ejemplo.com" >
                         </div>
 
-                           <div class="form-group">
+                        <div class="form-group" hidden >
                             <label for="txtcon" class="form-label">
                                 <span class="label-icon">📝</span>
                                 Contraseña
@@ -117,7 +168,6 @@ include_once (__DIR__ ."/../../Logica/Admin/bd.php");
                                    value="<?php echo htmlspecialchars($txtcon); ?>"
                                    placeholder="Ingrese Contraseña" >
                         </div>
-
 
                         <div class="form-group full-width">
                             <div class="estado-container">
@@ -154,7 +204,6 @@ include_once (__DIR__ ."/../../Logica/Admin/bd.php");
             </div>
         </div>
 
-    
         <div class="table-section">
             <div class="form-header">
                 <h2>📋 Lista de Socios (<?php echo count($listaSocios); ?>)</h2>
@@ -180,7 +229,7 @@ include_once (__DIR__ ."/../../Logica/Admin/bd.php");
                         </button>
                     </form>
 
-                     <form method="GET" style="display: inline;">
+                    <form method="GET" style="display: inline;">
                         <input type="hidden" name="filtroEstado" value="pendiente">
                         <button type="submit" class="btn-filtro <?php echo (isset($_GET['filtroEstado']) && $_GET['filtroEstado']=="pendiente") ? 'btn-filtro-pendiente' : ''; ?>">
                             🙈 Socios Pendientes
@@ -197,14 +246,13 @@ include_once (__DIR__ ."/../../Logica/Admin/bd.php");
                             <th>Nombre</th>
                             <th>Cédula</th>
                             <th>Estado</th>
-                            <th>accion</th>
-
+                            <th>Acción</th>
                         </tr>
                     </thead>
                     <tbody>
                         <?php if (empty($listaSocios)): ?>
                             <tr>
-                                <td colspan="7" class="no-data">
+                                <td colspan="5" class="no-data">
                                     <div class="no-data-content">
                                         <span class="no-data-icon">👥</span>
                                         <p>No hay socios registrados</p>
@@ -214,21 +262,25 @@ include_once (__DIR__ ."/../../Logica/Admin/bd.php");
                         <?php else: ?>
                             <?php foreach($listaSocios as $usuario): ?>
                             <tr>
-                               <td><?php echo htmlspecialchars($usuario['socio']); ?></td>
+                                <td><?php echo htmlspecialchars($usuario['socio']); ?></td>
                                 <td><?php echo htmlspecialchars($usuario['nombre']); ?></td>
                                 <td><?php echo htmlspecialchars($usuario['cedula']); ?></td>
                                 <td>
-                                  <span class="estado-badge estado-<?php echo $usuario['estado']; ?>">
-                                     <div class="tarjeta-footer">
-                     
-                        
-    <?php
-    echo ($usuario['estado'] == 'activo') ? '🟢 Activo' :
-         (($usuario['estado'] == 'inactivo') ? '🔴 Inactivo' :
-         (($usuario['estado'] == 'pendiente') ? '🟡 Pendiente' : '⚪ Desconocido'));
-    ?>
-</span>
-
+                                    <span class="estado-badge estado-<?php echo $usuario['estado']; ?>">
+                                        <?php
+                                        echo ($usuario['estado'] == 'activo') ? '🟢 Activo' :
+                                             (($usuario['estado'] == 'inactivo') ? '🔴 Inactivo' :
+                                             (($usuario['estado'] == 'pendiente') ? '🟡 Pendiente' : '⚪ Desconocido'));
+                                        ?>
+                                    </span>
+                                </td>
+                                <td>
+                                    <form method="POST" style="display: inline;">
+                                        <input type="hidden" name="id" value="<?php echo $usuario['id']; ?>">
+                                        <button type="submit" name="cargar_datos" class="btn-cargar">
+                                            📝 Cargar Datos
+                                        </button>
+                                    </form>
                                 </td>
                             </tr>
                             <?php endforeach; ?>
