@@ -6,7 +6,28 @@ include_once (__DIR__ ."/../../Logica/Admin/bd.php");
 // Variables para el formulario
 $txtID = $txtsocio = $txtNombre = $txtTelefono = $txtCedula = $txtDomicilio = $txtCorreo = $txtcon = $txtestado = "";
 
-// Si se envió el formulario para cargar datos
+// SI SE RECIBE UN ID POR GET (desde el enlace)
+if (isset($_GET['id'])) {
+    $id = intval($_GET['id']);
+    $stmt = $conexion->prepare("SELECT * FROM socios WHERE id = :id");
+    $stmt->bindParam(':id', $id, PDO::PARAM_INT);
+    $stmt->execute();
+    $usuario = $stmt->fetch(PDO::FETCH_ASSOC);
+    
+    if ($usuario) {
+        $txtID = $usuario['id'];
+        $txtsocio = $usuario['socio'];
+        $txtNombre = $usuario['nombre'];
+        $txtTelefono = $usuario['telefono'];
+        $txtCedula = $usuario['cedula'];
+        $txtDomicilio = $usuario['domicilio'];
+        $txtCorreo = $usuario['correo'];
+        $txtcon = $usuario['contrasena'];
+        $txtestado = $usuario['estado'];
+    }
+}
+
+// Mantener el código original para cargar datos desde el formulario de la misma página
 if (isset($_POST['cargar_datos'])) {
     $id = intval($_POST['id']);
     $stmt = $conexion->prepare("SELECT * FROM socios WHERE id = :id");

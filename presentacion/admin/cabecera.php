@@ -367,12 +367,6 @@ $url = "http://" . $_SERVER['HTTP_HOST'] . "/sitioweb";
               </a>
             </li>
 
-             <li >
-              <a class="dropdown-item"  href="<?php echo $url; ?>/Presentacion/Admin/VistaT.php">
-                <i class="fas fa-eye"></i>
-                Vista Talleres
-              </a>
-            </li>
           </ul>
         </li>
 
@@ -405,7 +399,7 @@ $url = "http://" . $_SERVER['HTTP_HOST'] . "/sitioweb";
 
              <li>
               <a class="dropdown-item" href="<?php echo $url; ?>/Presentacion/Admin/Reservas.php">
-                <i class="fas fa-exchange-alt"></i>
+                <i class="fas fa-user-plus"></i>
                Reservas
               </a>
             </li>
@@ -473,19 +467,6 @@ $url = "http://" . $_SERVER['HTTP_HOST'] . "/sitioweb";
               <a class="dropdown-item" href="<?php echo $url; ?>/Presentacion/Admin/pagoss.php">
                 <i class="fas fa-briefcase"></i>
                Gestion de Pagos
-              </a>
-            </li>
-            <li>
-              <a class="dropdown-item" href="<?php echo $url; ?>/Presentacion/Admin/panelautoridades.php">
-                <i class="fas fa-user-shield"></i>
-                Autoridades
-              </a>
-            </li>
-
-             <li>
-              <a class="dropdown-item" href="<?php echo $url; ?>/Presentacion/Admin/panelavisos.php">
-                <i class="fas fa-user-shield"></i>
-                Avisos
               </a>
             </li>
           </ul>

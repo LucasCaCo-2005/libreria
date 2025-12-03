@@ -5,49 +5,13 @@ if (session_status() === PHP_SESSION_NONE) {
 }
 
 include_once(__DIR__ ."/../../Logica/Admin/bd.php");
-
+include_once(__DIR__ ."/../../Logica/usuario/pagos.php");
 // Verificar si el usuario está logueado
 if (!isset($_SESSION['usuario'])) {
     header("Location: login.php");
     exit();
 }
 
-// Obtener información ACTUALIZADA del socio desde la base de datos
-$socio_id = $_SESSION['usuario']['id'];
-
-// Consultar el estado ACTUAL del socio desde la base de datos
-$consultaSocio = $conexion->prepare("SELECT estado FROM socios WHERE id = :id");
-$consultaSocio->bindParam(':id', $socio_id, PDO::PARAM_INT);
-$consultaSocio->execute();
-$socioActual = $consultaSocio->fetch(PDO::FETCH_ASSOC);
-
-if (!$socioActual) {
-    $mensaje_error = "No se encontró tu información de socio.";
-} else {
-    $estado_socio = $socioActual['estado'];
-    
-    // Actualizar el estado en sesión por si cambió
-    $_SESSION['usuario']['estado'] = $estado_socio;
-
-    // Verificar si el socio está activo
-    if ($estado_socio !== 'activo') {
-        $mensaje_error = "No puedes acceder a los pagos porque tu cuenta no está activa. Estado actual: " . $estado_socio;
-    } else {
-        // Consulta para obtener los pagos del socio
-        $consultaPagos = $conexion->prepare("
-            SELECT p.id, p.tipo_pago, p.monto, p.fecha_pago, p.mes_pagado
-            FROM pagos p 
-            WHERE p.socio_id = :socio_id 
-            ORDER BY p.fecha_pago DESC
-        ");
-        $consultaPagos->bindParam(':socio_id', $socio_id, PDO::PARAM_INT);
-        $consultaPagos->execute();
-        $pagos = $consultaPagos->fetchAll(PDO::FETCH_ASSOC);
-        
-        $totalPagos = count($pagos);
-        $totalPagado = array_sum(array_column($pagos, 'monto'));
-    }
-}
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -56,134 +20,14 @@ if (!$socioActual) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mis Pagos - Biblioteca</title>
     <link rel="stylesheet" href="../../css/usuario/bootstrap.min.css">
+    <link rel="stylesheet" href="../../css/usuario/mpagos.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        :root {
-            --primary-color: #2c5aa0;
-            --secondary-color: #35c4f3;
-            --success-color: #28a745;
-            --warning-color: #ffc107;
-            --danger-color: #dc3545;
-            --light-color: #f8f9fa;
-            --dark-color: #343a40;
-        }
-        
-        .page-header {
-            background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
-            color: white;
-            padding: 40px 0;
-            margin-bottom: 30px;
-        }
-        
-        .stats-card {
-            background: white;
-            border-radius: 12px;
-            padding: 25px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-            border-left: 4px solid var(--primary-color);
-            margin-bottom: 20px;
-        }
-        
-        .stats-card.success {
-            border-left-color: var(--success-color);
-        }
-        
-        .stats-card.warning {
-            border-left-color: var(--warning-color);
-        }
-        
-        .stats-icon {
-            font-size: 2.5rem;
-            margin-bottom: 15px;
-            opacity: 0.8;
-        }
-        
-        .stats-number {
-            font-size: 2rem;
-            font-weight: bold;
-            margin-bottom: 5px;
-        }
-        
-        .stats-label {
-            color: #6c757d;
-            font-size: 0.9rem;
-        }
-        
-        .pagos-table {
-            background: white;
-            border-radius: 12px;
-            overflow: hidden;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-        }
-        
-        .table th {
-            background-color: var(--primary-color);
-            color: white;
-            border: none;
-            padding: 15px;
-        }
-        
-        .table td {
-            padding: 15px;
-            vertical-align: middle;
-        }
-        
-        .badge-pago {
-            padding: 6px 12px;
-            border-radius: 20px;
-            font-size: 0.8rem;
-            font-weight: 500;
-        }
-        
-        .badge-completo {
-            background-color: #d4edda;
-            color: #155724;
-        }
-        
-        .badge-medio {
-            background-color: #fff3cd;
-            color: #856404;
-        }
-        
-        .monto-pago {
-            font-weight: bold;
-            color: var(--success-color);
-        }
-        
-        .estado-inactivo {
-            background: linear-gradient(135deg, #6c757d 0%, #495057 100%);
-            color: white;
-            padding: 60px 0;
-            text-align: center;
-            border-radius: 12px;
-            margin: 20px 0;
-        }
-        
-        .estado-inactivo i {
-            font-size: 4rem;
-            margin-bottom: 20px;
-        }
-        
-        .empty-state {
-            text-align: center;
-            padding: 60px 20px;
-            color: #6c757d;
-        }
-        
-        .empty-state i {
-            font-size: 4rem;
-            margin-bottom: 20px;
-            opacity: 0.5;
-        }
+      
     </style>
 </head>
 <body>
-    <div style="background: yellow; padding: 10px; margin: 10px 0;">
-    <strong>DEBUG:</strong><br>
-    - Carrito count: <?php echo count($_SESSION['usuario']); ?><br>
-    - Action URL: controladores/reservaController.php<br>
-    - Session ID: <?php echo $_SESSION['id'] ?? 'No encontrado'; ?>
-</div>
+    
 
     <?php include_once('cabecera.php'); ?>
 
@@ -210,9 +54,9 @@ if (!$socioActual) {
                 <i class="fas fa-user-slash"></i>
                 <h2>Cuenta No Activa</h2>
                 <p class="lead"><?php echo $mensaje_error; ?></p>
-                <p>Por favor, contacta con la administración para activar tu cuenta.</p>
+                <p>Contacta con la asociacion y hazte socio para activar tu cuenta.</p>
                 <a href="contacto.php" class="btn btn-light btn-lg mt-3">
-                    <i class="fas fa-envelope me-2"></i>Contactar Administración
+                    <i class="fas fa-envelope me-2"></i>Contactar Asociacion
                 </a>
             </div>
         <?php else: ?>

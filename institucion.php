@@ -4,11 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sobre Nosotros - Asociación de Jubilados y Pensionistas de Durazno</title>
-
-    <link rel="stylesheet" href="css/carrusel.css">
-     <link rel="stylesheet" href="../../css/usuario/institucion.css">
-    <link rel="stylesheet" href="../css/Usuario/carrusel.css">
-    <?php include_once 'cabecera.php'; ?>
+     <link rel="stylesheet" href="css/Usuario/institucion.css">
+    <link rel="stylesheet" href="css/Usuario/carrusel.css">
+    <?php include_once 'presentacion/usuario/cabecera.php'; ?>
     <style>
       
         * {
@@ -187,11 +185,6 @@
                 font-size: 1.8rem;
             }
         }
-
-    <?php include_once 'cabecera.php'; ?>
- 
-         
-   <?php include_once 'css/institucion.css'; ?> 
     
     </style>
 </head>
@@ -200,9 +193,9 @@
 
 <header>
       <h1>
-            <img src="./images/bandera.png" alt="Bandera" height="120" class="image-thumbnail" id="bandera">
+            <img src="imagenes/bandera.png" alt="Bandera" height="120" class="image-thumbnail" id="bandera">
             Asociación de Jubilados y Pensionistas de Durazno
-            <img src="./images/Logo.png" alt="Logo" height="120" class="image-thumbnail" id="logo">
+            <img src="imagenes/Logo.png" alt="Logo" height="120" class="image-thumbnail" id="logo">
         </h1>
     </header>
 
@@ -224,22 +217,22 @@
             <div class="carrusel">
                 <div class="carrusel-inner">
                     <div class="carrusel-item active">
-                        <img src="../../imagenes/Carrusel/Fachada.jpeg" alt="Fachada de la institución">
+                        <img src="imagenes/Carrusel/Fachada.jpeg" alt="Fachada de la institución">
                     </div>
                     <div class="carrusel-item">
-                        <img src="../../imagenes//Carrusel/CoroTv.jpg" alt="Coro en televisión">
+                        <img src="imagenes/Carrusel/CoroTv.jpg" alt="Coro en televisión">
                     </div>
                     <div class="carrusel-item">
-                        <img src="../../imagenes/Carrusel/EdilAdultoMayor.jpg" alt="Actividad con adultos mayores">
+                        <img src="imagenes/Carrusel/EdilAdultoMayor.jpg" alt="Actividad con adultos mayores">
                     </div>
                     <div class="carrusel-item">
-                        <img src="../../imagenes/Carrusel/CoroBiblioteca.jpg" alt="Coro en la biblioteca">
+                        <img src="imagenes/Carrusel/CoroBiblioteca.jpg" alt="Coro en la biblioteca">
                     </div>
                     <div class="carrusel-item">
-                        <img src="../../imagenes/Carrusel/Reunion.jpg" alt="Reunión de la asociación">
+                        <img src="imagenes/Carrusel/Reunion.jpg" alt="Reunión de la asociación">
                     </div>
                     <div class="carrusel-item">
-                        <img src="../../imagenes/Carrusel/19dejunio.jpg" alt="Evento del 19 de junio">
+                        <img src="imagenes/Carrusel/19dejunio.jpg" alt="Evento del 19 de junio">
                     </div>
                 </div>
 
@@ -328,13 +321,7 @@
             </div>
         </div>
     </section>
-    
-   
-    
-<<<<<<<< HEAD:presentacion/usuario/institucion.php
-    <script src="../../css/usuario/carrusel.js"></script>
-========
-    <script src="./../../Logica/Usuario/carrusel.js"></script>
->>>>>>>> 72a969d9b84989c8325ef25b7bf44b91d1c94b1a:Presentacion/Usuario/institucion.php
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
 </body>
 </html>

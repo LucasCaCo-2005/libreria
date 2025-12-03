@@ -2,16 +2,75 @@
 include("cabecera.php");
 include( __DIR__ . "/../../Logica/Admin/logistica.php"); 
 include_once(__DIR__ . "/../../Logica/Admin/bd.php");
-// __DIR__ . "/../../Logica/Admin/.php"
+
+// CARGAR DATOS DEL LIBRO SI SE RECIBE UN ID POR GET (desde Vistalibros.php)
+if (isset($_GET['id'])) {
+    $id = intval($_GET['id']);
+    $stmt = $conexion->prepare("SELECT * FROM libros WHERE id = :id");
+    $stmt->bindParam(':id', $id, PDO::PARAM_INT);
+    $stmt->execute();
+    $libro = $stmt->fetch(PDO::FETCH_ASSOC);
+    
+    if ($libro) {
+        $txtID = $libro['id'];
+        $txtNombre = $libro['nombre'];
+        $txtfecha = $libro['fecha'];
+        $txtAutor = $libro['autor'];
+        $txtStock = $libro['stock'];
+        $txtCat = $libro['categoria'];
+        $txtDesc = $libro['descripcion'];
+        $txtIMG = $libro['imagen'];
+    }
+}
+
+// Mantener la lógica original para cuando se selecciona desde el formulario
+if (isset($_POST['accion']) && $_POST['accion'] == 'Seleccionar' && isset($_POST['txtID'])) {
+    $id = intval($_POST['txtID']);
+    $stmt = $conexion->prepare("SELECT * FROM libros WHERE id = :id");
+    $stmt->bindParam(':id', $id, PDO::PARAM_INT);
+    $stmt->execute();
+    $libro = $stmt->fetch(PDO::FETCH_ASSOC);
+    
+    if ($libro) {
+        $txtID = $libro['id'];
+        $txtNombre = $libro['nombre'];
+        $txtfecha = $libro['fecha'];
+        $txtAutor = $libro['autor'];
+        $txtStock = $libro['stock'];
+        $txtCat = $libro['categoria'];
+        $txtDesc = $libro['descripcion'];
+        $txtIMG = $libro['imagen'];
+    }
+}
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-  <title>Document</title> <link rel="stylesheet" href="../../css/admin/productos.css">
-
+  <title>Gestión de Libros</title>
+  <link rel="stylesheet" href="../../css/admin/productos.css">
+  <style>
+    .editing-alert {
+      background: linear-gradient(135deg, #d4edda 0%, #c3e6cb 100%);
+      border: 1px solid #b1dfbb;
+      color: #155724;
+      padding: 15px;
+      border-radius: 8px;
+      margin-bottom: 20px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+    .editing-alert i {
+      font-size: 1.2rem;
+      margin-right: 10px;
+    }
+    .card-title-with-badge {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+  </style>
 </head>
 <body>
 
@@ -22,9 +81,14 @@ include_once(__DIR__ . "/../../Logica/Admin/bd.php");
     <div class="col-md-4">
       <div class="card shadow-sm mb-4">
         <div class="card-header bg-primary text-white">
-          <h5 class="mb-0">
-            <i class="fas fa-book me-2"></i>Gestión de Libros
-          </h5>
+          <div class="card-title-with-badge">
+            <h5 class="mb-0">
+              <i class="fas fa-book me-2"></i>Gestión de Libros
+            </h5>
+            <?php if (!empty($txtID)): ?>
+              <span class="badge bg-warning">Editando ID: <?php echo $txtID; ?></span>
+            <?php endif; ?>
+          </div>
         </div>
         <div class="card-body">
 
@@ -55,9 +119,17 @@ include_once(__DIR__ . "/../../Logica/Admin/bd.php");
             </div>
           <?php endif; ?>
 
+          <!-- Aviso de Edición -->
+          <?php if (!empty($txtID) && isset($_GET['id'])): ?>
+            <div class="editing-alert">
+              <i class="fas fa-edit"></i>
+              <strong>Editando libro:</strong> "<?php echo htmlspecialchars($txtNombre); ?>"
+            </div>
+          <?php endif; ?>
+
           <!-- Formulario -->
           <form method="POST" enctype="multipart/form-data" id="formLibro">
-            <input type="hidden" name="txtID" id="txtID" value="<?php echo $txtID; ?>">
+            <input type="hidden" name="txtID" id="txtID" value="<?php echo isset($txtID) ? $txtID : ''; ?>">
             
             <div class="row">
            
@@ -67,7 +139,7 @@ include_once(__DIR__ . "/../../Logica/Admin/bd.php");
                     <i class="fas fa-heading me-1"></i>Nombre *
                   </label>
                   <input type="text" class="form-control" name="txtNombre" id="txtNombre" 
-                         value="<?php echo htmlspecialchars($txtNombre); ?>" 
+                         value="<?php echo isset($txtNombre) ? htmlspecialchars($txtNombre) : ''; ?>" 
                          placeholder="Nombre del libro" required>
                 </div>
 
@@ -76,7 +148,7 @@ include_once(__DIR__ . "/../../Logica/Admin/bd.php");
                     <i class="fas fa-calendar me-1"></i>Fecha *
                   </label>
                   <input type="text" class="form-control" name="txtfecha" id="txtfecha" 
-                         value="<?php echo htmlspecialchars($txtfecha); ?>" 
+                         value="<?php echo isset($txtfecha) ? htmlspecialchars($txtfecha) : ''; ?>" 
                          placeholder="Año de publicación" required>
                 </div>
 
@@ -125,7 +197,7 @@ include_once(__DIR__ . "/../../Logica/Admin/bd.php");
                   <label for="txtIMG" class="form-label">
                     <i class="fas fa-image me-1"></i>Portada
                   </label>
-                  <?php if ($txtIMG != ""): ?>
+                  <?php if (isset($txtIMG) && $txtIMG != ""): ?>
                     <div class="mb-2">
                       <img src="../../imagenes/lib<?php echo htmlspecialchars($txtIMG); ?>" 
                            class="img-thumbnail" width="80" alt="Portada actual">
@@ -143,7 +215,7 @@ include_once(__DIR__ . "/../../Logica/Admin/bd.php");
                 <i class="fas fa-align-left me-1"></i>Descripción *
               </label>
               <textarea class="form-control" name="txtDesc" id="txtDesc" 
-                        rows="3" placeholder="Descripción del libro" required><?php echo htmlspecialchars($txtDesc); ?></textarea>
+                        rows="3" placeholder="Descripción del libro" required><?php echo isset($txtDesc) ? htmlspecialchars($txtDesc) : ''; ?></textarea>
             </div>
 
             <!-- Botones de Acción -->
@@ -202,7 +274,12 @@ include_once(__DIR__ . "/../../Logica/Admin/bd.php");
                 <?php else: ?>
                   <?php foreach($listaLibros as $libro): ?>
                     <tr>
-                      <td><span class="badge bg-secondary"><?php echo $libro['id']; ?></span></td>
+                      <td>
+                        <span class="badge bg-secondary"><?php echo $libro['id']; ?></span>
+                        <?php if ($txtID == $libro['id']): ?>
+                          <span class="badge bg-warning ms-1">Editando</span>
+                        <?php endif; ?>
+                      </td>
                       <td><strong><?php echo htmlspecialchars($libro['nombre']); ?></strong></td>
                       <td><?php echo htmlspecialchars($libro['fecha']); ?></td>
                       <td><?php echo htmlspecialchars($libro['autor']); ?></td>

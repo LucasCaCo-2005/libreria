@@ -193,9 +193,9 @@ $listaSocios = $sentencia->fetchAll(PDO::FETCH_ASSOC);
                     </div>
 
                     <div class="tarjeta-footer">
-                        <a href="socios.php?socio_id=<?= $socio['id']; ?>" class="btn-accion btn-editar">
-                            ✏️ Editar
-                        </a>
+                         <a href="socios.php?id=<?= $socio['id']; ?>" class="btn-accion btn-editar">
+        ✏️ Editar
+    </a>
                         
                         <?php if ($socio['estado'] === 'activo'): ?>
                             <a href="pagos.php?socio_id=<?= $socio['id']; ?>" class="btn-accion btn-pagos">

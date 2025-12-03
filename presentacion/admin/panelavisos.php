@@ -12,10 +12,6 @@ $resultados = [];
 
 // Conexión
 $conn = (new conexion())->Conectar();
-
-$stmt = $conn->query("SELECT DATABASE()");
-echo "<p>📦 Base de datos actual: " . $stmt->fetchColumn() . "</p>";
-
 // Variables del formulario con null
 $txtID = $_POST['id'] ?? "";
 $txtTitulo = $_POST['titulo'] ?? "";

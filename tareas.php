@@ -2,14 +2,7 @@ Problemas a solucionar:
 
 Usuario
 -Inscripciones a talleres
--Mejorar presentacion Autoridades
-
-Admin
-General
--Arreglar Dropdown
-
-Libros
--Añadir Estados activo-inactivo en libros
+-Mejorar presentacion Autoridades 
 
 PAgos
 -Mejorar pagos:
@@ -17,15 +10,11 @@ PAgos
 -Opcion de quitar pago 
 -Historial de meses de pagos, ver pagos de meses pasados
 
-Avisos:
--Mejorar Avisos(Incluir imagenes)
-
 General
 -Arreglar institucion
 -Añadir sitio de ayuda y preguntas frecuentes
-
-
-
+-arreglar cabecera
+Arreglar ir a editar en socios
 --- Tabla: autoridades ---
 CREATE TABLE `autoridades` (
   `id` int NOT NULL AUTO_INCREMENT,
