@@ -1,8 +1,8 @@
 <?php
-// Obtener información ACTUALIZADA del socio desde la base de datos
+// Obtener información actualizada del socio desde la base de datos
 $socio_id = $_SESSION['usuario']['id'];
 
-// Consultar el estado ACTUAL del socio desde la base de datos
+// Consultar el estado actual del socio desde la base de datos
 $consultaSocio = $conexion->prepare("SELECT estado FROM socios WHERE id = :id");
 $consultaSocio->bindParam(':id', $socio_id, PDO::PARAM_INT);
 $consultaSocio->execute();

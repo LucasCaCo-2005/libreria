@@ -179,7 +179,7 @@ if ($accion !== "Agregar" && $accion !== "Modificar" && $accion !== "Eliminar") 
 
 class AutoridadesBD extends Conexion {
     
-    // Método para listar autoridades - CORREGIDO
+    // Método para listar autoridades 
     public function ListarAutoridades() {
         try {
             $con = $this->Conectar();
@@ -222,7 +222,7 @@ class Autoridades extends Conexion {
     private $foto;
     private $estado;
     
-    // Getters y Setters MEJORADOS para evitar null
+    // Getters y Setters que evitan null
     public function setId($id){ $this->id = $id; }
     public function getId(){ return $this->id ?? 0; }
     

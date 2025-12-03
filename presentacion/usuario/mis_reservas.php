@@ -1,6 +1,4 @@
 <?php
-// Presentacion/Usuario/mis_reservas.php
-
 if (session_status() == PHP_SESSION_NONE) {
     session_start();
 }
@@ -100,8 +98,6 @@ include_once 'cabecera.php';
                 </div>
             <?php endif; ?>
         </section>
-
-        <!-- Historial de Reservas -->
         <section class="seccion-reservas">
             <h2>📜 Historial de Reservas</h2>
             

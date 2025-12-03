@@ -1,9 +1,7 @@
 <?php
-// Incluye las clases necesarias
-include_once __DIR__ . "./Logica/Admin/bd.php";
-include_once "usersBD.php"; // Asegúrate de que esta ruta esté correcta
-//session_start();  // Asegúrate de que la sesión esté iniciada
 
+include_once __DIR__ . "./Logica/Admin/bd.php";
+include_once "usersBD.php";
 
 // Obtener los datos del socio logueado desde la sesión
 $id = $_SESSION['socios']['id'];

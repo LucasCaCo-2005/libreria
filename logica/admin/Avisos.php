@@ -1,6 +1,6 @@
 
 <?php
-//  de conexión a base de datos
+
 include_once __DIR__ . "/bd.php";
 // se crea una clase para gestionar los datos y operaciones relacionadas con los Avisos
 class Avisos {

@@ -1,6 +1,4 @@
 <?php
-// Presentacion/Admin/reservas_admin.php
-
 if (session_status() == PHP_SESSION_NONE) {
     session_start();
 }
@@ -51,7 +49,7 @@ $reservasPendientes = $reservasAdmin->obtenerReservasPendientes();
 $reservasHoy = $reservasAdmin->obtenerReservasHoy();
 $estadisticas = $reservasAdmin->obtenerEstadisticas();
 
-include_once 'cabecera.php'; // Ajusta según tu cabecera de admin
+include_once 'cabecera.php'; 
 ?>
 
 <!DOCTYPE html>

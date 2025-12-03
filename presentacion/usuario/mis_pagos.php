@@ -1,5 +1,5 @@
 <?php
-// mis_pagos.php - VERSIÓN CORREGIDA
+
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
@@ -92,7 +92,7 @@ if (!isset($_SESSION['usuario'])) {
             </div>
 
             <?php if ($totalPagos > 0): ?>
-                <!-- Tabla de pagos -->
+              
                 <div class="pagos-table">
                     <div class="table-responsive">
                         <table class="table table-hover mb-0">

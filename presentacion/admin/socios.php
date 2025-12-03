@@ -6,7 +6,7 @@ include_once (__DIR__ ."/../../Logica/Admin/bd.php");
 // Variables para el formulario
 $txtID = $txtsocio = $txtNombre = $txtTelefono = $txtCedula = $txtDomicilio = $txtCorreo = $txtcon = $txtestado = "";
 
-// SI SE RECIBE UN ID POR GET (desde el enlace)
+
 if (isset($_GET['id'])) {
     $id = intval($_GET['id']);
     $stmt = $conexion->prepare("SELECT * FROM socios WHERE id = :id");

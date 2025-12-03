@@ -1,6 +1,4 @@
 <?php
-// Logica/Admin/authHelper.php
-
 class AuthHelper {
     
     public static function esAdministrador() {

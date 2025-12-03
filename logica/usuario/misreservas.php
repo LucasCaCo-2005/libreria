@@ -1,6 +1,4 @@
 <?php
-// Logica/Usuario/misReservasLogic.php
-
 class MisReservasLogic {
     private $conexion;
     

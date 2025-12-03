@@ -19,7 +19,7 @@ $correo = trim($_POST['correo'] ?? '');
 $contrasena = $_POST['contrasena'] ?? '';
 $confirmar_contrasena = $_POST['confirmar_contrasena'] ?? '';
 
-// FORZAR estado como 'Pendiente' - esto asegura que siempre sea este valor
+// Fuerza estado como 'Pendiente' - esto asegura que siempre sea este valor
 $estado = 'Pendiente';
 
 // Validaciones básicas

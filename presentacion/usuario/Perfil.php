@@ -4,8 +4,7 @@ include_once 'cabecera.php';
 include_once '../../logica/admin/bd.php';
 
 include_once '../../logica/admin/cambiarContraseña.php';
-// Incluir archivos necesarios - rutas desde presentacion/usuario/
-// Recuperar mensajes de sesión
+
 // Recuperar mensajes de sesión
 $exito_personal = $_SESSION['mensaje_exito'] ?? '';
 $error_personal = $_SESSION['mensaje_error'] ?? '';
@@ -151,7 +150,7 @@ unset($_SESSION['error_password']);
         });
         
         // Validación de formulario de contraseña
-   // Solo para el formulario de contraseña
+
 document.querySelector('form[action*="cambiar_password"]').addEventListener('submit', function(e) {
     const nueva = document.getElementById('password_nueva').value;
     const confirmar = document.getElementById('password_confirmar').value;

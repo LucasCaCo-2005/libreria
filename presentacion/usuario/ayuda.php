@@ -18,7 +18,6 @@
     <?php
 include_once(__DIR__ ."/../../Logica/Admin/bd.php");
 
-// Obtener todas las tablas
 $consultaTablas = $conexion->query("SHOW TABLES");
 $tablas = $consultaTablas->fetchAll(PDO::FETCH_COLUMN);
 

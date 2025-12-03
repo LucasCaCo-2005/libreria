@@ -64,7 +64,6 @@ $listaLibros = $sentencia->fetchAll(PDO::FETCH_ASSOC);
                 <div class="btn-group-card">
                     <a class="btn btn-sm btn-primary" href="mas.php?id=<?php echo $libro['id']; ?>" role="button">Ver más</a>
                     <a class="btn btn-sm btn-warning" href="prestamos.php?id=<?php echo $libro['id']; ?>">Prestar</a>
-                    <!-- BOTÓN EDITAR QUE REDIRIGE A Productos.php -->
                     <a class="btn btn-sm btn-success" href="Productos.php?id=<?php echo $libro['id']; ?>" 
                        title="Editar libro">
                         Editar

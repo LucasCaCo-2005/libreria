@@ -1,6 +1,4 @@
 <?php
-// Logica/Usuario/reservaLogic.php
-
 class ReservaLogic {
     private $conexion;
     

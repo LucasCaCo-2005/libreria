@@ -3,7 +3,7 @@ include("cabecera.php");
 include( __DIR__ . "/../../Logica/Admin/logistica.php"); 
 include_once(__DIR__ . "/../../Logica/Admin/bd.php");
 
-// CARGAR DATOS DEL LIBRO SI SE RECIBE UN ID POR GET (desde Vistalibros.php)
+// Carga datos si se reciben desde vistalibros.php
 if (isset($_GET['id'])) {
     $id = intval($_GET['id']);
     $stmt = $conexion->prepare("SELECT * FROM libros WHERE id = :id");
@@ -23,7 +23,6 @@ if (isset($_GET['id'])) {
     }
 }
 
-// Mantener la lógica original para cuando se selecciona desde el formulario
 if (isset($_POST['accion']) && $_POST['accion'] == 'Seleccionar' && isset($_POST['txtID'])) {
     $id = intval($_POST['txtID']);
     $stmt = $conexion->prepare("SELECT * FROM libros WHERE id = :id");

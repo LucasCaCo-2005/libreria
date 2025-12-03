@@ -59,7 +59,7 @@ $porcentajePagos = $totalSociosActivos > 0 ? round(($totalPagos / $totalSociosAc
     <link rel="stylesheet" href="../../css/admin/pagoss.css">
 
     <style>
-        /* Estilos para el grid de estadísticas generales */
+   
         .stats-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));

@@ -14,7 +14,5 @@ class ReservaBD {
         $sentencia->bindParam(':usuario_id', $usuario_id);
         $sentencia->execute();
     }
-
-    // Puedes agregar más funciones como obtener reservas, confirmar, cancelar, etc.
 }
 ?>

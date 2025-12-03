@@ -14,12 +14,12 @@ if ($_POST) {
     $resultado = $loginBD->verificarCredenciales($correo, $contrasena);
     
     if ($resultado && is_array($resultado)) {
-        // Login exitoso - guardar TODOS los datos en sesión incluyendo el estado
+        // Login exitoso - guardar todos los datos en sesión incluyendo el estado
         $_SESSION['usuario'] = [
             'id' => $resultado['id'],
             'nombre' => $resultado['nombre'],
             'correo' => $resultado['correo'],
-            'estado' => $resultado['estado'], // ¡IMPORTANTE! Incluir el estado
+            'estado' => $resultado['estado'], 
             'telefono' => $resultado['telefono'],
             'domicilio' => $resultado['domicilio'],
             'socio' => $resultado['socio'],

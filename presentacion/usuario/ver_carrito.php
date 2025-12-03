@@ -66,7 +66,7 @@ include_once 'cabecera.php';
 
                 <?php endforeach; ?>
             </div>
-            <!-- DEBUG Temporal -->
+           
 
             <div class="acciones-carrito">
     <a href="productos.php" class="btn-seguir">➕ Seguir Agregando</a>

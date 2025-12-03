@@ -1,5 +1,4 @@
 <?php
-// Presentacion/Usuario/mas.php
 
 include_once __DIR__ . '/../../Logica/Admin/bd.php';
 include_once 'cabecera.php';

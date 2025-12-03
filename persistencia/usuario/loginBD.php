@@ -28,7 +28,7 @@ class loginBD extends Conexion {
                 if (password_verify($contrasena, $usuario['contrasena'])) {
                     error_log("✅ Contraseña correcta");
                     
-                    // VERIFICAR ESTADO DEL USUARIO - ACEPTAR ACTIVOS, PENDIENTES Y ADMINS
+                    // Verifica el estado de los usuarios, activos, inactivos y admins
                     if ($usuario['estado'] === 'activo' || $usuario['estado'] === 'pendiente' || $usuario['estado'] === 'admin') {
                         error_log("✅ Usuario " . $usuario['estado'] . " - Login permitido");
                         

@@ -23,16 +23,12 @@ $listaTalleres = array_filter($todosTalleres, function($taller) {
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 <link rel="stylesheet" href="../../css/usuario/talleres.css">
 
-<style>
-  /* Estilos adicionales si son necesarios */
-</style>
 </head>
 <body>
 
 <?php include_once 'cabecera.php'; ?>
 
 <div class="pagina-talleres">
-    <!-- Tu contenido de talleres aquí -->
     <section class="hero-talleres">
         <h1>Nuestros Talleres</h1>
         <p class="descripcion">
@@ -111,17 +107,5 @@ $listaTalleres = array_filter($todosTalleres, function($taller) {
 </div>
 
 <?php include_once 'pie.php'; ?>
-
-<!-- Asegurar que no hay conflictos con otros scripts -->
-<script>
-  // Debug para verificar que todo funciona
-  document.addEventListener('DOMContentLoaded', function() {
-    console.log('Página de talleres cargada correctamente');
-    
-    // Verificar que los dropdowns funcionan
-    const dropdowns = document.querySelectorAll('.dropdown-toggle');
-    console.log('Dropdowns encontrados:', dropdowns.length);
-  });
-</script>
 </body>
 </html>

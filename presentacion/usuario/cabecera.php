@@ -72,7 +72,7 @@ $esAdmin = isset($_SESSION['usuario']) && isset($_SESSION['usuario']['estado']) 
       font-weight: 600;
     }
     
-    /* Botones */
+
     .btn-admin {
       background-color: white;
       color: var(--primary-color);
@@ -129,7 +129,6 @@ $esAdmin = isset($_SESSION['usuario']) && isset($_SESSION['usuario']['estado']) 
       transform: translateY(-2px);
     }
     
-    /* Modal personalizado */
     .user-modal {
       display: none;
       position: fixed;
@@ -221,7 +220,7 @@ $esAdmin = isset($_SESSION['usuario']) && isset($_SESSION['usuario']['estado']) 
       color: #c82333;
     }
     
-    /* Responsive */
+  
     @media (max-width: 991px) {
       .navbar-collapse {
         margin-top: 15px;
@@ -292,9 +291,9 @@ $esAdmin = isset($_SESSION['usuario']) && isset($_SESSION['usuario']['estado']) 
       <div class="d-flex align-items-center">
       
         
-        <!-- Estado de login/logout -->
+   
         <?php if (isset($_SESSION['usuario'])): ?>
-          <!-- Usuario logueado - Botón que abre modal -->
+        
           <button class="btn btn-user" onclick="openUserModal()">
             <i class="fas fa-user"></i>
             <span class="d-none d-md-inline ms-2"><?php echo htmlspecialchars($_SESSION['usuario']['nombre']); ?></span>
@@ -350,7 +349,7 @@ $esAdmin = isset($_SESSION['usuario']) && isset($_SESSION['usuario']['estado']) 
 </div>
 <?php endif; ?>
 
-<!-- Espacio para el contenido debajo del navbar fijo -->
+
 <div style="height: 80px;"></div>
 
 <script>

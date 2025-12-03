@@ -4,7 +4,7 @@ if (!isset($_SESSION['usuario'])) { // usuario debe estar logueado
     header("Location: login.php");
     exit;
 }
-// Incluir archivos necesarios - rutas desde logica/usuario/
+
 include_once __DIR__ . '/../../logica/admin/bd.php';
 
 $id = $_SESSION['usuario']['id'];

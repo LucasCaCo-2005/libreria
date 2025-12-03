@@ -72,7 +72,7 @@ $categorias = [
             <span class="card-categoria"><?php echo $libro['categoria']; ?></span>
             <div class="contenedor-botones-card">
               <a class="btn btn-ver" href="mas.php?id=<?php echo $libro['id']; ?>">Ver más</a>
-             <!-- <a class="btn btn-reservar" href="mas.php?id=<?php echo $libro['id']; ?>">Reservar</a> -->
+
               <a class="btn btn-reservar" href="mas.php?id=<?php echo $libro['id']; ?>&accion=reserva">Reservar</a>
             </div>
           </div> 

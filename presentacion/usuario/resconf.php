@@ -1,6 +1,4 @@
 <?php
-// Presentacion/Usuario/resconf.php
-
 if (session_status() == PHP_SESSION_NONE) {
     session_start();
 }

@@ -1,12 +1,20 @@
+<?php
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
 
-
+// Verificar si el usuario es administrador
+$esAdmin = isset($_SESSION['usuario']) && isset($_SESSION['usuario']['estado']) && $_SESSION['usuario']['estado'] === 'admin';
+?>
 <!DOCTYPE html>
 <html lang="es">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Panel Administrativo - Biblioteca</title>
- <link rel="stylesheet" href="./presentacion/usuario/bootstrap.min.css">
+
+  <link rel="stylesheet" href="css/usuario/bootstrap.min.css">
+  <link rel="stylesheet" href="css/Usuario/bootstrap.min.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
  
   <style>
@@ -26,7 +34,7 @@
       transition: var(--transition);
     }
     
-    .navbar-custom.scrolled {
+    .navbar-custom.scestadoled {
       padding: 8px 0;
       background: var(--primary-color) !important;
     }
@@ -247,7 +255,7 @@
     </a>
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarBiblioteca"
-      aria-controls="navbarBiblioteca" aria-expanded="false" aria-label="Toggle navigation">
+      aria-contestados="navbarBiblioteca" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
 
@@ -278,18 +286,11 @@
             <i class="fas fa-stethoscope"></i> Médico
           </a>
         </li>
-        <li class="nav-item">
-          <a class="nav-link" href="presentacion/usuario/reserva_carrito.php">
-            <i class="fas fa-calendar-check"></i> Reservas
-          </a>
-        </li>
+       
       </ul>
       
       <div class="d-flex align-items-center">
-        <!-- Botón Panel Admin -->
-        <button class="btn btn-login" onclick="window.location.href='presentacion/admin/index.php'">
-          <i class="fas fa-user-shield"></i> Panel Admin
-        </button>
+      
         
         <!-- Estado de login/logout -->
         <?php if (isset($_SESSION['usuario'])): ?>
@@ -297,12 +298,15 @@
           <button class="btn btn-user" onclick="openUserModal()">
             <i class="fas fa-user"></i>
             <span class="d-none d-md-inline ms-2"><?php echo htmlspecialchars($_SESSION['usuario']['nombre']); ?></span>
+            <?php if ($esAdmin): ?>
+              <span class="badge bg-warning ms-1">Admin</span>
+            <?php endif; ?>
           </button>
         <?php else: ?>
           <!-- Usuario no logueado -->
           <button class="btn btn-login" onclick="window.location.href='presentacion/usuario/login.php'">
             <i class="fas fa-sign-in-alt"></i> Iniciar Sesión
-          </button>
+          </button> 
         <?php endif; ?>
       </div>
     </div>
@@ -310,6 +314,7 @@
 </nav>
 
 <!-- Modal para opciones de usuario -->
+<?php if (isset($_SESSION['usuario'])): ?>
 <div id="userModal" class="user-modal">
   <div class="user-modal-content">
     <div class="user-modal-header">
@@ -318,20 +323,32 @@
       </div>
       <h5 class="mb-0"><?php echo htmlspecialchars($_SESSION['usuario']['nombre']); ?></h5>
       <small><?php echo htmlspecialchars($_SESSION['usuario']['correo']); ?></small>
+      <?php if ($esAdmin): ?>
+        <span class="badge bg-warning mt-1">Administrador</span>
+      <?php endif; ?>
     </div>
     <div class="user-modal-body">
-      <a href="presentacion/usuario/Perfil.php" class="user-option">
+      <a href="presentacion/usuario/perfil.php" class="user-option">
         <i class="fas fa-user-circle"></i> Mi Perfil
       </a>
-      <a href="mis_reservas.php" class="user-option">
+      <a href="presentacion/usuario/mis_reservas.php" class="user-option">
         <i class="fas fa-calendar-check"></i> Mis Reservas
       </a>
+      <a href="presentacion/usuario/mis_pagos.php" class="user-option">
+        <i class="fas fa-calendar-check"></i> Mis Pagos
+      </a>
+      <?php if ($esAdmin): ?>
+        <a href="presentacion/admin/paneladmin.php" class="user-option" style="color: #ff9800;">
+          <i class="fas fa-user-shield"></i> Panel Administrativo
+        </a>
+      <?php endif; ?>
       <a href="logout.php" class="user-option logout">
         <i class="fas fa-sign-out-alt"></i> Cerrar Sesión
       </a>
     </div>
   </div>
 </div>
+<?php endif; ?>
 
 <!-- Espacio para el contenido debajo del navbar fijo -->
 <div style="height: 80px;"></div>
@@ -360,13 +377,13 @@
     }
   });
   
-  // Efecto de navbar al hacer scroll
-  window.addEventListener('scroll', function() {
+  // Efecto de navbar al hacer scestadol
+  window.addEventListener('scestadol', function() {
     const navbar = document.querySelector('.navbar-custom');
-    if (window.scrollY > 50) {
-      navbar.classList.add('scrolled');
+    if (window.scestadolY > 50) {
+      navbar.classList.add('scestadoled');
     } else {
-      navbar.classList.remove('scrolled');
+      navbar.classList.remove('scestadoled');
     }
   });
   

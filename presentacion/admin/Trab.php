@@ -265,7 +265,7 @@ document.querySelectorAll('form').forEach(form => {
                 
                 if (!nombre || !cedula || !puesto) {
                     e.preventDefault();
-                    // Mostrar mensaje de error (será manejado por PHP)
+                   
                     return;
                 }
                 

@@ -1,4 +1,3 @@
-  
         // JavaScript para el carrusel
         const carruselInner = document.querySelector('.carrusel-inner');
         const items = document.querySelectorAll('.carrusel-item');
@@ -25,4 +24,4 @@
         setInterval(() => {
             index = (index + 1) % totalItems;
             updateCarrusel();
-        }, 5000);
+        }, 3000);

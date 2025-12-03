@@ -208,7 +208,7 @@
     <footer class="custom-footer">
         <div class="container">
             <div class="row">
-                <!-- Información de contacto -->
+               
                 <div class="col-md-4 footer-section">
               
                     <h5 class="footer-title">Contacto</h5>
@@ -218,8 +218,8 @@
                         </div>
                         <div>
                             <p class="mb-1">Teléfono</p>
-                            <p class="mb-0 fw-bold">+1 (555) 123-4567</p>
-                            <a href="https://wa.me/15551234567" class="whatsapp-link mt-2">
+                            <p class="mb-0 fw-bold">43628063</p>
+                            <a href="https://wa.me/598092749714" class="whatsapp-link mt-2">
                                 <i class="fab fa-whatsapp me-2"></i> Escribir por WhatsApp
                             </a>
                         </div>
@@ -231,7 +231,7 @@
                         </div>
                         <div>
                             <p class="mb-1">Email</p>
-                            <p class="mb-0 fw-bold">info@tudominio.com</p>
+                            <p class="mb-0 fw-bold">ajupendurazno@adinet.com.uy</p>
                         </div>
                     </div>
                     
@@ -249,7 +249,6 @@
                     </div>
                 </div>
                 
-                <!-- Dirección y ubicación -->
                 <div class="col-md-4 footer-section">
                     <h5 class="footer-title">Dirección</h5>
                     
@@ -258,8 +257,8 @@
                             <i class="fas fa-map-marker-alt"></i>
                         </div>
                         <div>
-                            <p class="mb-1">Nuestra ubicación</p>
-                            <p class="mb-0">123 Calle Principal<br>Ciudad, Estado 12345<br>País</p>
+                           
+                            <p class="mb-0">Luis Alberto de Herrera <br>1037<br>Durazno</p>
                         </div>
                     </div>
                     
@@ -269,7 +268,8 @@
                         </div>
                         <div>
                             <p class="mb-1">Horario de atención</p>
-                            <p class="mb-0">Lunes a Viernes: 9:00 - 18:00<br>Sábados: 10:00 - 14:00</p>
+                            <p class="mb-0">Lunes a Viernes: 9:00 - 12:00 (Verano)</p>
+                            <p class="mb-0">Lunes a Viernes: 14:00 - 17:00 (Invierno)</p>
                         </div>
                     </div>
                     
@@ -292,11 +292,9 @@
             <div class="footer-bottom">
                 <div class="row">
                     <div class="col-md-6 text-md-start">
-                        <p>&copy; 2023 AJUPEND. Todos los derechos reservados.</p>
+                        <p>&copy; 2025 AJUPEN. Todos los derechos reservados.</p>
                     </div>
-                    <div class="col-md-6 text-md-end">
-                        <p>Diseñado con <i class="fas fa-heart text-danger"></i> para nuestros usuarios</p>
-                    </div>
+                    
                 </div>
             </div>
         </div>
