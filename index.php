@@ -259,7 +259,10 @@
                     <img src="https://via.placeholder.com/600x400/4a6491/ffffff?text=Historia+de+Nuestra+Institución" alt="Historia de nuestra institución">
                 </div>
             </div>
-            
+             <div class="historia-video">
+                 <video src="imagenes/videos/Talleres.mp4" controls autoplay muted></video>
+                </div>
+            </div>
             <div class="areas-trabajo">
                 <h3 class="titulo-carrusel">Nuestras Áreas de Trabajo</h3>
                 

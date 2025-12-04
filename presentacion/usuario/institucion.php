@@ -187,6 +187,14 @@
                 font-size: 1.8rem;
             }
         }
+        .historia-video video,
+.historia-video iframe {
+    width: 100%;
+    max-width: 600px;
+    height: auto;
+    display: block;
+    margin: 0 auto;
+}
     
     </style>
 </head>
@@ -254,9 +262,9 @@
                     <p>Nuestra Institución fue fundada en <strong>1946</strong> con el objetivo de brindar apoyo a los jubilados y pensionistas del Departamento de Durazno. A lo largo de los años, la institución ha consolidado su rol no solo como un referente en la defensa de los derechos de los adultos mayores, sino también como un espacio cultural y recreativo clave para la integración y el fortalecimiento del sentido de pertenencia de sus miembros.</p>
                     
                     <p>Como organización de tipo sindical y gremial, la Asociación se dedica a una amplia gama de áreas de trabajo enfocadas en la inclusión social, la salud y el fomento de ideas culturales y tiempo libre.</p>
-                </div>
-                <div class="historia-imagen">
-                    <img src="https://via.placeholder.com/600x400/4a6491/ffffff?text=Historia+de+Nuestra+Institución" alt="Historia de nuestra institución">
+                
+                <div class="historia-video">
+                 <video src="imagenes/videos/Talleres.mp4" controls autoplay muted></video>
                 </div>
             </div>
             
