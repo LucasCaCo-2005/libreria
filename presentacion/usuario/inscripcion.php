@@ -2,6 +2,7 @@
 include_once 'cabecera.php';
 
  include_once '../../logica/admin/bd.php'; 
+ 
 $taller = null;
 include_once __DIR__ . '/../../Logica/Admin/talleres.php';
 
@@ -86,7 +87,7 @@ if(!$taller){
                         </a>
                         
                         <?php if ($taller['estado'] == 'activo'): ?>
-                            <a href="inscripcion.php?id=<?php echo $taller['Id']; ?>" class="btn-inscribir">
+                            <a href="inscTalleres.php?id=<?php echo $taller['Id']; ?>" class="btn-inscribir">
                                 ✍️ Inscribirse al Taller
                             </a>
                         <?php else: ?>
@@ -99,7 +100,7 @@ if(!$taller){
             </div>
         </div>
     </div>
-
+    
     <?php  include_once 'pie.php'; ?>
 </body>
 </html>

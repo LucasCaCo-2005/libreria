@@ -297,7 +297,7 @@ $esAdmin = isset($_SESSION['usuario']) && isset($_SESSION['usuario']['estado']) 
           <button class="btn btn-user" onclick="openUserModal()">
             <i class="fas fa-user"></i>
             <span class="d-none d-md-inline ms-2"><?php echo htmlspecialchars($_SESSION['usuario']['nombre']); ?></span>
-            <?php if ($esAdmin): ?>
+              <?php if ($esAdmin): ?>
               <span class="badge bg-warning ms-1">Admin</span>
             <?php endif; ?>
           </button>

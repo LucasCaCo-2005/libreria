@@ -133,3 +133,15 @@ CREATE TABLE `trabajadores` (
   `estado` enum('activo','inactivo') NOT NULL DEFAULT 'activo',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci
+
+--- Tabla: inscripcion a Talleres ---
+CREATE TABLE inscTalleres (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    socio_id INT NOT NULL,
+    taller_id INT NOT NULL,
+    fecha_inscripcion DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    asiste ENUM('si','no') DEFAULT 'si',
+    UNIQUE (socio_id, taller_id),
+    FOREIGN KEY (socio_id) REFERENCES socios(id) ON DELETE CASCADE,
+    FOREIGN KEY (taller_id) REFERENCES talleres(id) ON DELETE CASCADE
+);
