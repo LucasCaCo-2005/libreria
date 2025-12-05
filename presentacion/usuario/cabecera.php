@@ -26,7 +26,7 @@ $esAdmin = isset($_SESSION['usuario']) && isset($_SESSION['usuario']['estado']) 
 <nav class="navbar navbar-expand-lg navbar-dark navbar-custom fixed-top">
   <div class="container">
     <a class="navbar-brand" href="../../index.php">
-      <i class="fas fa-book"></i> Asociacion
+      <i class="fas fa-home"></i> Asociacion
     </a>
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarBiblioteca"
@@ -36,11 +36,6 @@ $esAdmin = isset($_SESSION['usuario']) && isset($_SESSION['usuario']['estado']) 
 
     <div class="collapse navbar-collapse" id="navbarBiblioteca">
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-        <li class="nav-item">
-          <a class="nav-link" href="../../index.php">
-            <i class="fas fa-home"></i> Inicio
-          </a>
-        </li>
         <li class="nav-item">
           <a class="nav-link" href="productos.php">
             <i class="fas fa-book"></i> Libros
