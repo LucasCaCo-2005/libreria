@@ -4,7 +4,6 @@ if (session_status() == PHP_SESSION_NONE) {
     session_start();
 }
 
-
 // Inicializar carrito si no existe para evitar errores
 if (!isset($_SESSION['carrito_reservas'])) {
     $_SESSION['carrito_reservas'] = [];
@@ -23,7 +22,8 @@ include_once 'cabecera.php';
 <body>
     <div class="contenedor-carrito">
         <h1>🛒 Carrito de Reservas</h1>
-<!--  MEnsajes segun o que suceda-->
+        
+        <!-- Mensajes según lo que suceda -->
         <?php if (isset($_GET['success'])): ?>
             <div class="alert alert-success"><?php echo htmlspecialchars($_GET['success']); ?></div>
         <?php endif; ?>
@@ -31,15 +31,16 @@ include_once 'cabecera.php';
         <?php if (isset($_GET['error'])): ?>
             <div class="alert alert-error"><?php echo htmlspecialchars($_GET['error']); ?></div>
         <?php endif; ?>
-        <!-- --> <!-- Se establece el limite de libros por persona-->
-      <div class="info-carrito">
-    <p>Límite: <strong><?php echo count($_SESSION['carrito_reservas']); ?>/3</strong> libros</p>
-    <?php if (!empty($_SESSION['carrito_reservas'])): ?>
-        <a href="controlador.php?accion=vaciar" class="btn-vaciar" onclick="return confirm('¿Estás seguro de vaciar el carrito?')">🗑️ Vaciar Carrito</a>
-    <?php endif; ?> <!-- Boton para vaciar el carrito -->
-</div>
-
-     <!-- Si el carrito esta vacio o tiene libros, mostrara un mensaje distinto -->   
+        
+        <!-- Se establece el límite de libros por persona -->
+        <div class="info-carrito">
+            <p>Límite: <strong><?php echo count($_SESSION['carrito_reservas']); ?>/3</strong> libros</p>
+            <?php if (!empty($_SESSION['carrito_reservas'])): ?>
+                <a href="controlador.php?accion=vaciar" class="btn-vaciar" onclick="return confirm('¿Estás seguro de vaciar el carrito?')">🗑️ Vaciar Carrito</a>
+            <?php endif; ?> <!-- Botón para vaciar el carrito -->
+        </div>
+        
+        <!-- Si el carrito está vacío o tiene libros, mostrará un mensaje distinto -->   
         <?php if (empty($_SESSION['carrito_reservas'])): ?>
             <div class="carrito-vacio">
                 <h2>Tu carrito de reservas está vacío</h2>
@@ -47,7 +48,7 @@ include_once 'cabecera.php';
                 <a href="productos.php" class="btn-volver">📚 Explorar Biblioteca</a>
             </div>
         <?php else: ?> 
-            <div class="lista-libros-carrito"> <!-- Hace un foreach de los datos del libro -->
+            <div class="lista-libros-carrito">
                 <?php foreach ($_SESSION['carrito_reservas'] as $libro): ?>
                     <div class="item-carrito">
                         <div class="libro-info">
@@ -58,22 +59,22 @@ include_once 'cabecera.php';
                                 <p class="fecha-agregado">Agregado: <?php echo $libro['fecha_agregado']; ?></p>
                             </div>
                         </div>
-                      <div class="acciones-libro">
-    <a href="mas.php?id=<?php echo $libro['id']; ?>" class="btn-ver">👁️ Ver</a>
-    <a href="controlador.php?accion=eliminar&id=<?php echo $libro['id']; ?>" class="btn-eliminar" onclick="return confirm('¿Eliminar este libro del carrito?')">❌ Eliminar</a>
-</div>
-
+                        <div class="acciones-libro">
+                            <a href="mas.php?id=<?php echo $libro['id']; ?>" class="btn-ver">👁️ Ver</a>
+                            <a href="controlador.php?accion=eliminar&id=<?php echo $libro['id']; ?>" class="btn-eliminar" onclick="return confirm('¿Eliminar este libro del carrito?')">❌ Eliminar</a>
+                        </div>
+                    </div>
                 <?php endforeach; ?>
             </div>
-           
-<!-- Acciomes -->
+            
+            <!-- Acciones -->
             <div class="acciones-carrito">
-    <a href="productos.php" class="btn-seguir">➕ Seguir Agregando</a>
-    <form action="controlador.php" method="POST" class="form-confirmar">
-        <input type="hidden" name="accion" value="confirmar">
-        <button type="submit" class="btn-confirmar">✅ Confirmar Reserva</button>
-    </form>
-</div>
+                <a href="productos.php" class="btn-seguir">➕ Seguir Agregando</a>
+                <form action="controlador.php" method="POST" class="form-confirmar">
+                    <input type="hidden" name="accion" value="confirmar">
+                    <button type="submit" class="btn-confirmar">✅ Confirmar Reserva</button>
+                </form>
+            </div>
         <?php endif; ?>
     </div>
 
