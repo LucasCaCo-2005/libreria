@@ -15,310 +15,15 @@ $url = "http://" . $_SERVER['HTTP_HOST'] . "/sitioweb";
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../../css/admin/cab.css">
   <title>Panel Administrativo - Biblioteca</title>
 
-   <!-- ✅ Bootstrap 5 CSS -->
   <link rel="stylesheet" href="../../css/usuario/bootstrap.min.css">
   <link rel="stylesheet" href="../css/Usuario/bootstrap.min.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
  
   <style>
-      :root {
-      --color-primary: #4a80e2ff;
-      --color-secondary: #4a80e2ff;
-       --color-dark: #5a4a4a;
-      --color-light: #f8f4f4;
-      --color-hover: #b98c8c;
-    }
    
-    /* Estilo de la barra de navegaciòn, degradado rojo-oscuro, sombra y estilo visual atractivo */
-    .navbar-admin {
-      background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-dark) 100%) !important;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-      padding: 12px 0;
-    }
-
-    .navbar-brand {
-      font-weight: 700;
-      font-size: 1.5rem;
-      color: #f8f4f4 !important;
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-
-    .navbar-brand i {
-      font-size: 1.8rem;
-    }
-
-     /* Estilo de los enlaces de navegación,  efecto hover elegante (fondo semitransparente y desplazamiento)*/
-    .nav-link {
-      color: #f8f4f4 !important;
-      font-weight: 500;
-      padding: 8px 16px !important;
-      border-radius: 8px;
-      transition: all 0.3s ease;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-
-    .nav-link:hover {
-      background: rgba(255, 255, 255, 0.15);
-      transform: translateY(-2px);
-    }
-
-    /* Estilo de los menues bordes redondeados, sombra, animación al pasar el ratón y cambio de color. */
-    .dropdown-menu {
-      background: #f8f4f4;
-      border: 1px solid #e8e0e0;
-      border-radius: 12px;
-      box-shadow: 0 8px 25px rgba(0,0,0,0.15);
-      padding: 8px;
-    }
-
-    .dropdown-item {
-      color: var(--color-dark);
-      padding: 10px 16px;
-      border-radius: 8px;
-      transition: all 0.3s ease;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-
-    .dropdown-item:hover {
-      background: var(--color-secondary);
-      color: #f8f4f4;
-      transform: translateX(5px);
-    }
-
-    .dropdown-divider {
-      border-color: #e8e0e0;
-      margin: 8px 0;
-    }
-
-    .navbar-toggler {
-      border: 2px solid #f8f4f4;
-      padding: 6px 10px;
-    }
-
-    .navbar-toggler-icon {
-      background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba%28248, 244, 244, 1%29' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
-    }
-
-    /* Botón de usuario con popup */
-    .btn-user-admin {
-      background: rgba(255, 255, 255, 0.1);
-      color: #f8f4f4;
-      border: 2px solid rgba(255, 255, 255, 0.3);
-      border-radius: 20px;
-      padding: 8px 16px;
-      font-weight: 500;
-      transition: all 0.3s ease;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      cursor: pointer;
-    }
-
-    .btn-user-admin:hover {
-      background: rgba(255, 255, 255, 0.2);
-      transform: translateY(-2px);
-    }
-
-    .user-avatar {
-      width: 32px;
-      height: 32px;
-      border-radius: 50%;
-      background: rgba(255, 255, 255, 0.2);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 0.9rem;
-    }
-
-    /* Modal personalizado para usuario */
-    .user-modal {
-      display: none;
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: rgba(0, 0, 0, 0.5);
-      z-index: 9999;
-      align-items: center;
-      justify-content: center;
-    }
-
-    .user-modal-content {
-      background: white;
-      border-radius: 16px;
-      padding: 0;
-      width: 90%;
-      max-width: 350px;
-      box-shadow: 0 25px 50px rgba(0, 0, 0, 0.25);
-      animation: modalSlideIn 0.3s ease;
-      overflow: hidden;
-    }
-
-    @keyframes modalSlideIn {
-      from {
-        opacity: 0;
-        transform: translateY(-30px) scale(0.9);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0) scale(1);
-      }
-    }
-
-    .user-modal-header {
-      background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-dark) 100%);
-      color: white;
-      padding: 25px;
-      text-align: center;
-      position: relative;
-    }
-
-    .user-avatar-large {
-      width: 70px;
-      height: 70px;
-      border-radius: 50%;
-      background: rgba(255, 255, 255, 0.2);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      margin: 0 auto 15px;
-      font-size: 1.8rem;
-      border: 3px solid rgba(255, 255, 255, 0.3);
-    }
-
-    .user-modal-close {
-      position: absolute;
-      top: 15px;
-      right: 15px;
-      background: rgba(255, 255, 255, 0.2);
-      border: none;
-      color: white;
-      border-radius: 50%;
-      width: 32px;
-      height: 32px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-      transition: all 0.3s ease;
-    }
-
-    .user-modal-close:hover {
-      background: rgba(255, 255, 255, 0.3);
-      transform: rotate(90deg);
-    }
-
-    .user-modal-body {
-      padding: 20px;
-    }
-
-    .user-option {
-      display: flex;
-      align-items: center;
-      padding: 15px 0;
-      text-decoration: none;
-      color: var(--color-dark);
-      transition: all 0.3s ease;
-      border-bottom: 1px solid #f0f0f0;
-    }
-
-    .user-option:last-child {
-      border-bottom: none;
-    }
-
-    .user-option:hover {
-      color: var(--color-primary);
-      padding-left: 15px;
-      background: rgba(74, 128, 226, 0.05);
-    }
-
-    .user-option i {
-      margin-right: 15px;
-      width: 20px;
-      text-align: center;
-      font-size: 1.1rem;
-    }
-
-    .user-option.logout {
-      color: #dc3545;
-      border-top: 2px solid #f0f0f0;
-      margin-top: 10px;
-      padding-top: 20px;
-    }
-
-    .user-option.logout:hover {
-      color: #c82333;
-      background: rgba(220, 53, 69, 0.05);
-    }
-
-    .nav-link.active {
-      background: rgba(255, 255, 255, 0.2);
-      font-weight: 600;
-    }
-
-    /* Responsive (menú móvil) Cuando la pantalla es pequeña, el menú se convierte en un panel colapsable con fondo oscuro.*/
-    @media (max-width: 991.98px) {
-      .navbar-collapse {
-        background: var(--color-dark);
-        padding: 20px;
-        border-radius: 12px;
-        margin-top: 15px;
-      }
-      
-      .nav-link {
-        padding: 12px 16px !important;
-      }
-      
-      .dropdown-menu {
-        background: rgba(248, 244, 244, 0.95);
-        margin: 8px 0;
-      }
-
-      .btn-user-admin {
-        width: 100%;
-        justify-content: center;
-        margin-top: 10px;
-      }
-    }
-
-    /* Animaciones */
-    @keyframes fadeInDown {
-      from {
-        opacity: 0;
-        transform: translateY(-10px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
-
-    .navbar-collapse.show {
-      animation: fadeInDown 0.3s ease;
-    }
-
-    /* notificaciones */
-    .nav-badge {
-      background: var(--color-secondary);
-      color: #f8f4f4;
-      border-radius: 50%;
-      width: 20px;
-      height: 20px;
-      font-size: 0.7rem;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      margin-left: 5px;
-    }
   
   </style>
 </head>
@@ -481,10 +186,9 @@ $url = "http://" . $_SERVER['HTTP_HOST'] . "/sitioweb";
 
         <!-- Cerrar Sesión en el menú principal (oculto en desktop, visible en móvil) -->
         <li class="nav-item d-lg-none">
-          <a class="nav-link text-warning" href="<?php echo $url; ?>/cerrar.php">
-            <i class="fas fa-sign-out-alt"></i>
-            Cerrar Sesión
-          </a>
+        <a href="../usuario/logout.php" class="user-option logout">
+        <i class="fas fa-sign-out-alt"></i> Cerrar Sesión
+      </a>
         </li>
       </ul>
 
@@ -517,16 +221,14 @@ $url = "http://" . $_SERVER['HTTP_HOST'] . "/sitioweb";
       <a href="<?php echo $url; ?>/Presentacion/Admin/index.php" class="user-option">
         <i class="fas fa-tachometer-alt"></i> Dashboard
       </a>
-      <a href="<?php echo $url; ?>/Presentacion/Admin/perfil.php" class="user-option">
+      <a href="<?php echo $url; ?>../Presentacion/usuario/Perfil.php" class="user-option">
         <i class="fas fa-user-edit"></i> Mi Perfil
       </a>
-      <a href="<?php echo $url; ?>/Presentacion/Admin/configuracion.php" class="user-option">
-        <i class="fas fa-cog"></i> Configuración
-      </a>
+    
       <a href="<?php echo $url; ?>" class="user-option">
         <i class="fas fa-external-link-alt"></i> Ver Sitio Web
       </a>
-      <a href="<?php echo $url; ?>/cerrar.php" class="user-option logout">
+      <a href="../usuario/logout.php" class="user-option logout">
         <i class="fas fa-sign-out-alt"></i> Cerrar Sesión
       </a>
     </div>

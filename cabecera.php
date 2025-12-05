@@ -11,7 +11,7 @@ $esAdmin = isset($_SESSION['usuario']) && isset($_SESSION['usuario']['estado']) 
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Panel Administrativo - Biblioteca</title>
+  <title>Panel Administrativo - Asociacion</title>
 
   <link rel="stylesheet" href="css/usuario/bootstrap.min.css">
   <link rel="stylesheet" href="css/Usuario/cabecer.css">
@@ -26,7 +26,7 @@ $esAdmin = isset($_SESSION['usuario']) && isset($_SESSION['usuario']['estado']) 
 <nav class="navbar navbar-expand-lg navbar-dark navbar-custom fixed-top">
   <div class="container">
     <a class="navbar-brand" href="index.php">
-      <i class="fas fa-book"></i> Biblioteca
+      <i class="fas fa-book"></i> Asociacion
     </a>
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarBiblioteca"

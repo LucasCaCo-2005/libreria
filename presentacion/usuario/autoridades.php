@@ -34,7 +34,6 @@ foreach ($listaAutoridadesObjects as $autoridad) {
 <meta charset="utf-8">
 <title>Index - Autoridades</title>
  <link rel="stylesheet" href="../../css/usuario/autoridades.css">
-¡
 </head>
 <body>
 

@@ -5,3 +5,6 @@ session_destroy();  // Destruye la sesión
 header("Location: index.php");  // Redirige a la página principal
 exit();
 ?>
+
+Login y registero, medico y autoridades
+PErfil, index admin, registro de libros
