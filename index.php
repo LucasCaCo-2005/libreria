@@ -100,9 +100,7 @@ $listaTalleres = $talleresBD->ListarTalleres();
                         
                         <p>Como organización de tipo sindical y gremial, la Asociación se dedica a una amplia gama de áreas de trabajo enfocadas en la inclusión social, la salud y el fomento de ideas culturales y tiempo libre.</p>
                     </div>
-                    <div class="historia-imagen">
-                        <img src="https://via.placeholder.com/600x400/4a6491/ffffff?text=Historia+de+Nuestra+Institución" alt="Historia de nuestra institución">
-                    </div>
+                 
                 </div>
                 
              

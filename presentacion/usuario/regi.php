@@ -162,5 +162,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') { // detecta si la solicitud es post
             confirmar.addEventListener('input', validarContrasenas);
         });
     </script>
+
+     <?php include_once 'pie.php'; ?>
 </body>
 </html>

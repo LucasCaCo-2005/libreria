@@ -55,7 +55,7 @@ if (!isset($_SESSION['usuario'])) {
                 <h2>Cuenta No Activa</h2>
                 <p class="lead"><?php echo $mensaje_error; ?></p>
                 <p>Contacta con la asociacion y hazte socio para activar tu cuenta.</p>
-                <a href="contacto.php" class="btn btn-light btn-lg mt-3">
+                <a href="#" class="btn btn-light btn-lg mt-3">
                     <i class="fas fa-envelope me-2"></i>Contactar Asociacion
                 </a>
             </div>
@@ -147,7 +147,7 @@ if (!isset($_SESSION['usuario'])) {
                     <div class="card-body text-center">
                         <h5 class="card-title">¿Necesitas ayuda con tus pagos?</h5>
                         <p class="card-text">Si tienes alguna duda sobre tus pagos o necesitas realizar un pago, no dudes en contactarnos.</p>
-                        <a href="contacto.php" class="btn btn-primary">
+                        <a href="#" class="btn btn-primary">
                             <i class="fas fa-envelope me-2"></i>Contactar Soporte
                         </a>
                     </div>
@@ -173,5 +173,7 @@ if (!isset($_SESSION['usuario'])) {
             });
         });
     </script>
+
+     <?php include_once 'pie.php'; ?>
 </body>
 </html>

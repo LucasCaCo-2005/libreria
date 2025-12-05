@@ -92,6 +92,6 @@ foreach ($listaAutoridadesObjects as $autoridad) {
         <?php endif; ?>
     </section>
 </div>
-
+ <?php include_once 'pie.php'; ?>
 </body>
 </html>

@@ -8,3 +8,5 @@ exit();
 
 Login y registero, medico y autoridades
 PErfil, index admin, registro de libros
+Registro de socios
+Empleados y autoridades

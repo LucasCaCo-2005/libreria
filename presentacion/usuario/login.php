@@ -125,5 +125,7 @@ include_once 'cabecera.php';
             });
         });
     </script>
+
+  <?php  include_once 'pie.php'; ?>
 </body>
 </html>

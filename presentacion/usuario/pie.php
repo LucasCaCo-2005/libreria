@@ -9,14 +9,14 @@
     <style>
         :root {
             --primary-color: #598ec4ff;
-            --secondary-color: #3498db;
+            --secondary-color: #418abbff;
             --accent-color: #e74c3c;
             --text-light: #ecf0f1;
-            --bg-dark: #1a252f;
+            --bg-dark: #588296ff;
         }
         
         body {
-            min-height: 100vh;
+            min-height: 120vh;
             display: flex;
             flex-direction: column;
         }
@@ -28,7 +28,7 @@
         .custom-footer {
             background: linear-gradient(135deg, var(--primary-color), var(--bg-dark));
             color: var(--text-light);
-            padding: 3rem 0 1rem;
+            padding: 10rem 0 1rem;
             margin-top: auto;
             position: relative;
             overflow: hidden;
@@ -45,7 +45,7 @@
         }
         
         .footer-section {
-            margin-bottom: 2rem;
+            margin-bottom: 4rem;
         }
         
         .footer-title {
@@ -73,7 +73,7 @@
         }
         
         .contact-icon, .address-icon {
-            background-color: rgba(255, 255, 255, 0.1);
+           background-color: rgba(255, 255, 255, 1);
             width: 36px;
             height: 36px;
             border-radius: 50%;
@@ -209,46 +209,7 @@
         <div class="container">
             <div class="row">
                
-                <div class="col-md-4 footer-section">
-              
-                    <h5 class="footer-title">Contacto</h5>
-                    <div class="contact-info">
-                        <div class="contact-icon">
-                            <i class="fas fa-phone"></i>
-                        </div>
-                        <div>
-                            <p class="mb-1">Teléfono</p>
-                            <p class="mb-0 fw-bold">43628063</p>
-                            <a href="https://wa.me/598092749714" class="whatsapp-link mt-2">
-                                <i class="fab fa-whatsapp me-2"></i> Escribir por WhatsApp
-                            </a>
-                        </div>
-                    </div>
-                    
-                    <div class="contact-info">
-                        <div class="contact-icon">
-                            <i class="fas fa-envelope"></i>
-                        </div>
-                        <div>
-                            <p class="mb-1">Email</p>
-                            <p class="mb-0 fw-bold">ajupendurazno@adinet.com.uy</p>
-                        </div>
-                    </div>
-                    
-                    <div class="social-links">
-                        <a href="#" class="social-link">
-                            <i class="fab fa-facebook-f"></i>
-                        </a>
-                        <a href="#" class="social-link">
-                            <i class="fab fa-twitter"></i>
-                        </a>
-                        <a href="#" class="social-link">
-                            <i class="fab fa-instagram"></i>
-                        </a>
-                  
-                    </div>
-                </div>
-                
+               
                 <div class="col-md-4 footer-section">
                     <h5 class="footer-title">Dirección</h5>
                     
@@ -275,6 +236,47 @@
                     
 
                 </div>
+
+                 <div class="col-md-4 footer-section">
+              
+                    <h5 class="footer-title">Contacto</h5>
+                    <div class="contact-info">
+                        <div class="contact-icon">
+                            <i class="fas fa-phone"></i>
+                        </div>
+                        <div>
+                            <p class="mb-1">Teléfono</p>
+                            <p class="mb-0 fw-bold">43628063</p>
+                            <a href="https://wa.me/598092749714" class="whatsapp-link mt-2">
+                                <i class="fab fa-whatsapp me-2"></i> Escribir por WhatsApp
+                            </a>
+                        </div>
+                    </div>
+                    
+                    <div class="contact-info">
+                        <div class="contact-icon">
+                            <i class="fas fa-envelope"></i>
+                        </div>
+                        <div>
+                            <p class="mb-2">Email</p>
+                            <p class="mb-1 ">ajupendurazno@adinet.com.uy</p>
+                        </div>
+                    </div>
+                    
+                    <div class="social-links">
+                        <a href="#" class="social-link">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                        <a href="#" class="social-link">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                        <a href="#" class="social-link">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                  
+                    </div>
+                </div>
+                
                 
                 <!-- Enlaces rápidos y área de usuarios -->
                 <div class="col-md-4 footer-section">

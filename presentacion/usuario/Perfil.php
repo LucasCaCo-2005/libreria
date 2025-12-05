@@ -188,5 +188,7 @@ document.querySelector('form[action*="cambiar_password"]').addEventListener('sub
             }
         });
     </script>
+
+     <?php include_once 'pie.php'; ?>
 </body>
 </html>
