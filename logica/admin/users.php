@@ -315,9 +315,6 @@ if (isset($_GET['socio_id'])) {
 
 
 
-
-
-
 ?>
 
 

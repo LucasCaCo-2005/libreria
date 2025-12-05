@@ -2,10 +2,10 @@
 
 include_once 'cabecera.php';
 // Procesar el formulario si se envió
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+if ($_SERVER['REQUEST_METHOD'] === 'POST') { // detecta si la solicitud es post
     include_once __DIR__ . '/../../persistencia/usuario/usersBD.php';
     
-    // Obtener y limpiar datos
+    // Obtener y limpiar datos, trim elimina espacios y ??''asigna valor null
     $nombre = trim($_POST['nombre'] ?? '');
     $telefono = trim($_POST['telefono'] ?? '');
     $correo = trim($_POST['correo'] ?? '');
@@ -23,7 +23,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $error = 'La contraseña debe tener al menos 6 caracteres';
     } elseif (!filter_var($correo, FILTER_VALIDATE_EMAIL)) {
         $error = 'El formato del correo electrónico no es válido';
-    } elseif (!preg_match('/^[1-9]{2,3}\-[0-9]{3}\-[0-9]{3}$/', $telefono)) {
+    } elseif (!preg_match('/^[1-9]{2,3}\-[0-9]{3}\-[0-9]{3}$/', $telefono)) { // parametros para telefono
         $error = 'El formato del teléfono no es válido. Use: XX-XXX-XXX o XXX-XXX-XXX';
     }
     
@@ -32,14 +32,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         try {
             $socioBD = new socioBD();
             
-            if (!$socioBD->probarConexion()) {
+            if (!$socioBD->probarConexion()) { // prueba conexion
                 $error = 'Error de conexión a la base de datos';
-            } elseif ($socioBD->correoExiste($correo)) {
+            } elseif ($socioBD->correoExiste($correo)) { // verifica si el correo ya exitse
                 $error = 'El correo electrónico ya está registrado';
             } else {
-                $resultado = $socioBD->registrarUsuarioCompleto($nombre, $telefono, $correo, $contrasena);
+                $resultado = $socioBD->registrarUsuarioCompleto($nombre, $telefono, $correo, $contrasena); 
+                // registra al usuario
                 
-                if ($resultado) {
+                if ($resultado) { // mensaje si hay exito o error
                     $success = true;
                 } else {
                     $error = 'Error al registrar el usuario. Intente nuevamente.';

@@ -11,7 +11,7 @@ if (!isset($_SESSION['usuario']['id'])) {
 
 include_once __DIR__ . '/../../Logica/Admin/bd.php';
 include_once __DIR__ . '/../../Logica/Usuario/misReservas.php';
-
+// obtiene datos de user 
 $misReservasLogic = new MisReservasLogic($conexion);
 $usuarioId = $_SESSION['usuario']['id'];
 

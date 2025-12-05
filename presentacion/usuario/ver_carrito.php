@@ -1,12 +1,11 @@
 <?php
-// Presentacion/Usuario/ver_carrito.php
-
+// Inicia la sesion
 if (session_status() == PHP_SESSION_NONE) {
     session_start();
 }
 
 
-// Inicializar carrito si no existe
+// Inicializar carrito si no existe para evitar errores
 if (!isset($_SESSION['carrito_reservas'])) {
     $_SESSION['carrito_reservas'] = [];
 }
@@ -24,7 +23,7 @@ include_once 'cabecera.php';
 <body>
     <div class="contenedor-carrito">
         <h1>🛒 Carrito de Reservas</h1>
-        
+<!--  MEnsajes segun o que suceda-->
         <?php if (isset($_GET['success'])): ?>
             <div class="alert alert-success"><?php echo htmlspecialchars($_GET['success']); ?></div>
         <?php endif; ?>
@@ -32,23 +31,23 @@ include_once 'cabecera.php';
         <?php if (isset($_GET['error'])): ?>
             <div class="alert alert-error"><?php echo htmlspecialchars($_GET['error']); ?></div>
         <?php endif; ?>
-        
+        <!-- --> <!-- Se establece el limite de libros por persona-->
       <div class="info-carrito">
     <p>Límite: <strong><?php echo count($_SESSION['carrito_reservas']); ?>/3</strong> libros</p>
     <?php if (!empty($_SESSION['carrito_reservas'])): ?>
         <a href="controlador.php?accion=vaciar" class="btn-vaciar" onclick="return confirm('¿Estás seguro de vaciar el carrito?')">🗑️ Vaciar Carrito</a>
-    <?php endif; ?>
+    <?php endif; ?> <!-- Boton para vaciar el carrito -->
 </div>
 
-        
+     <!-- Si el carrito esta vacio o tiene libros, mostrara un mensaje distinto -->   
         <?php if (empty($_SESSION['carrito_reservas'])): ?>
             <div class="carrito-vacio">
                 <h2>Tu carrito de reservas está vacío</h2>
                 <p>Agrega libros desde la biblioteca para reservarlos.</p>
                 <a href="productos.php" class="btn-volver">📚 Explorar Biblioteca</a>
             </div>
-        <?php else: ?>
-            <div class="lista-libros-carrito">
+        <?php else: ?> 
+            <div class="lista-libros-carrito"> <!-- Hace un foreach de los datos del libro -->
                 <?php foreach ($_SESSION['carrito_reservas'] as $libro): ?>
                     <div class="item-carrito">
                         <div class="libro-info">
@@ -67,7 +66,7 @@ include_once 'cabecera.php';
                 <?php endforeach; ?>
             </div>
            
-
+<!-- Acciomes -->
             <div class="acciones-carrito">
     <a href="productos.php" class="btn-seguir">➕ Seguir Agregando</a>
     <form action="controlador.php" method="POST" class="form-confirmar">

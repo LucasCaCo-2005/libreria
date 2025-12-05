@@ -2,7 +2,6 @@
 //session_start();
 header('Content-Type: application/json');
 include_once("../logica/Reserva.php");
-<?php
 include_once __DIR__ . '/admin/seccion/bd.php';
 
 if (isset($_GET['id'])) {

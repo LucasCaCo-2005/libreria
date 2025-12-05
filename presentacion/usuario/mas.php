@@ -13,17 +13,17 @@ if (!isset($_SESSION['carrito_reservas'])) {
 }
 
 $libro = null;
-if(isset($_GET['id'])){
+if(isset($_GET['id'])){ // verifica que existe el libro
     $idLibro = $_GET['id'];
 
     $sentencia = $conexion->prepare("SELECT * FROM libros WHERE id=:id");
-    $sentencia->bindParam(":id", $idLibro);
+    $sentencia->bindParam(":id", $idLibro); // vincula variable a parametro
     $sentencia->execute();
     $libro = $sentencia->fetch(PDO::FETCH_ASSOC);
 }
 
 if(!$libro){
-    echo "<h2>Libro no encontrado</h2>";
+    header("Location: libros.php?error=Libro+no+encontrado");
     exit;
 }
 

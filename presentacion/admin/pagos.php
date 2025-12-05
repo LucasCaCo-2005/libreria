@@ -8,6 +8,7 @@ if (!isset($_GET['socio_id'])) {
     echo "No se ha especificado un socio.";
     exit;
 }
+
 $socio_id = intval($_GET['socio_id']); //Valida el ID del socio desde la URL
 
 // Obtiene los datos del socio mediante una consulta
@@ -37,7 +38,7 @@ switch ($accion) {
             "pago2" => 50.00
         ];
 
-        if (array_key_exists($tipoPago, $tipos)) { // Verifica que eñ àgp exista en el array definido $tipos,
+        if (array_key_exists($tipoPago, $tipos)) { // Verifica que el pago exista en el array definido $tipos,
             $monto = $tipos[$tipoPago];
 
             // Consulta para evitar pagos duplicados
@@ -118,6 +119,9 @@ $sentenciaHistorial = $conexion->prepare("
 $sentenciaHistorial->bindParam(':socio_id', $socio_id, PDO::PARAM_INT);
 $sentenciaHistorial->execute();
 $historialPagos = $sentenciaHistorial->fetchAll(PDO::FETCH_ASSOC);
+
+
+
 ?>
 
 <!DOCTYPE html>

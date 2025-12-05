@@ -27,7 +27,7 @@ $total_libros = $libros_result->fetch_assoc()['total'];
 $total_socios = $socios_result->fetch_assoc()['total'];
 $total_talleres = $talleres_result->fetch_assoc()['total'];
 $total_empleados = $empleados_result->fetch_assoc()['total'];
-
+// guarda en variables
 $conn->close();
 ?>
 

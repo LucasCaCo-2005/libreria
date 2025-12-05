@@ -13,7 +13,7 @@ $listaTalleres = array_filter($todosTalleres, function($taller) {
     return $taller->getEstado() === 'activo';
 });
 ?>
-
+<!-- -->
 <!doctype html>
 <html lang="es">
 <head>
@@ -41,7 +41,7 @@ $listaTalleres = array_filter($todosTalleres, function($taller) {
         <h2 class="titulo-seccion">Talleres Activos</h2>
         
         <div class="grid-talleres">
-            <?php if (!empty($listaTalleres)): ?>
+            <?php if (!empty($listaTalleres)): ?> <!-- Foreach de los datos del taller, llama los metodos get, usa htmlspecial chars para leerlo facil -->
                 <?php foreach ($listaTalleres as $taller): ?>
                     <div class="card-taller">
                         <img src="../../imagenes/<?= htmlspecialchars($taller->getFoto()) ?>" 
@@ -72,7 +72,7 @@ $listaTalleres = array_filter($todosTalleres, function($taller) {
                         </div>
                     </div>
                 <?php endforeach; ?>
-            <?php else: ?>
+            <?php else: ?> <!-- Si no hay talleres muestra este mensaje -->
                 <div class="mensaje-vacio">
                     <i>🎨</i>
                     <p>No hay talleres disponibles en este momento.</p>

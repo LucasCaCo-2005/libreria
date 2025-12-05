@@ -3,14 +3,14 @@ if (session_status() == PHP_SESSION_NONE) {
     session_start();
 }
 
-// Verificar que hay una reserva confirmada
+// Verificar que hay una reserva confirmada, si no te lleva a productos.php
 if (!isset($_SESSION['reserva_confirmada'])) {
     header("Location: productos.php");
     exit();
 }
 
-$reserva = $_SESSION['reserva_confirmada'];
-unset($_SESSION['reserva_confirmada']);
+$reserva = $_SESSION['reserva_confirmada']; // asigna a la variable los datos de la sesion
+unset($_SESSION['reserva_confirmada']); // elimina los datos despues de usarlos 
 
 include_once 'cabecera.php';
 ?>

@@ -30,7 +30,7 @@ $consultaNoPagaron->bindParam(':mes', $mesActual, PDO::PARAM_STR);
 $consultaNoPagaron->execute();
 $noPagaron = $consultaNoPagaron->fetchAll(PDO::FETCH_ASSOC);
 
-// CONSULTA MODIFICADA: Contar solo socios activos que están en el sistema de pagos
+// Contar solo socios activos que están en el sistema de pagos
 $consultaTotalSociosActivos = $conexion->prepare("
     SELECT COUNT(*) as total 
     FROM socios 

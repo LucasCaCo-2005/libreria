@@ -17,10 +17,6 @@ if (session_status() === PHP_SESSION_NONE) {
      <link rel="stylesheet" href="../css/Usuario/productos.css"> 
      
 </head>
-
-
-
-
 <?php include_once '../../logica/admin/bd.php'; ?>
 
 <?php

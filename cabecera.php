@@ -14,236 +14,11 @@ $esAdmin = isset($_SESSION['usuario']) && isset($_SESSION['usuario']['estado']) 
   <title>Panel Administrativo - Biblioteca</title>
 
   <link rel="stylesheet" href="css/usuario/bootstrap.min.css">
-  <link rel="stylesheet" href="css/Usuario/bootstrap.min.css">
+  <link rel="stylesheet" href="css/Usuario/cabecer.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
  
   <style>
-    :root {
-      --primary-color: #2c5aa0;
-      --secondary-color: #35c4f3;
-      --accent-color: #ff6b6b;
-      --light-color: #f8f9fa;
-      --dark-color: #343a40;
-      --transition: all 0.3s ease;
-    }
     
-    .navbar-custom {
-      background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%) !important;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-      padding: 12px 0;
-      transition: var(--transition);
-    }
-    
-    .navbar-custom.scestadoled {
-      padding: 8px 0;
-      background: var(--primary-color) !important;
-    }
-    
-    .navbar-brand {
-      font-weight: 700;
-      font-size: 1.8rem;
-      display: flex;
-      align-items: center;
-      color: white !important;
-      transition: var(--transition);
-    }
-    
-    .navbar-brand i {
-      margin-right: 10px;
-      font-size: 1.6rem;
-    }
-    
-    .nav-link {
-      color: white !important;
-      font-weight: 500;
-      margin: 0 8px;
-      padding: 8px 16px !important;
-      border-radius: 6px;
-      transition: var(--transition);
-    }
-    
-    .nav-link:hover {
-      background-color: rgba(255, 255, 255, 0.15);
-      transform: translateY(-2px);
-    }
-    
-    .nav-link.active {
-      background-color: rgba(255, 255, 255, 0.2);
-      font-weight: 600;
-    }
-    
-    /* Botones */
-    .btn-admin {
-      background-color: white;
-      color: var(--primary-color);
-      border: none;
-      border-radius: 6px;
-      padding: 8px 20px;
-      font-weight: 600;
-      transition: var(--transition);
-      display: flex;
-      align-items: center;
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    }
-    
-    .btn-admin:hover {
-      background-color: var(--light-color);
-      transform: translateY(-2px);
-      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
-    }
-    
-    .btn-login {
-      background-color: rgba(255, 255, 255, 0.2);
-      color: white;
-      border: 2px solid rgba(255, 255, 255, 0.3);
-      border-radius: 6px;
-      padding: 8px 20px;
-      font-weight: 600;
-      transition: var(--transition);
-      display: flex;
-      align-items: center;
-      margin-left: 10px;
-    }
-    
-    .btn-login:hover {
-      background-color: white;
-      color: var(--primary-color);
-      transform: translateY(-2px);
-    }
-    
-    .btn-user {
-      background: transparent;
-      border: 2px solid rgba(255, 255, 255, 0.3);
-      color: white;
-      border-radius: 6px;
-      padding: 8px 20px;
-      font-weight: 600;
-      transition: var(--transition);
-      display: flex;
-      align-items: center;
-      margin-left: 10px;
-    }
-    
-    .btn-user:hover {
-      background-color: rgba(255, 255, 255, 0.15);
-      transform: translateY(-2px);
-    }
-    
-    /* Modal personalizado */
-    .user-modal {
-      display: none;
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: rgba(0, 0, 0, 0.5);
-      z-index: 9999;
-      align-items: center;
-      justify-content: center;
-    }
-    
-    .user-modal-content {
-      background: white;
-      border-radius: 12px;
-      padding: 0;
-      width: 90%;
-      max-width: 300px;
-      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
-      animation: modalSlideIn 0.3s ease;
-    }
-    
-    @keyframes modalSlideIn {
-      from {
-        opacity: 0;
-        transform: translateY(-20px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
-    
-    .user-modal-header {
-      background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
-      color: white;
-      padding: 20px;
-      border-radius: 12px 12px 0 0;
-      text-align: center;
-    }
-    
-    .user-avatar-large {
-      width: 60px;
-      height: 60px;
-      border-radius: 50%;
-      background: rgba(255, 255, 255, 0.2);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      margin: 0 auto 10px;
-      font-size: 1.5rem;
-    }
-    
-    .user-modal-body {
-      padding: 20px;
-    }
-    
-    .user-option {
-      display: flex;
-      align-items: center;
-      padding: 12px 0;
-      text-decoration: none;
-      color: var(--dark-color);
-      transition: var(--transition);
-      border-bottom: 1px solid #f0f0f0;
-    }
-    
-    .user-option:last-child {
-      border-bottom: none;
-    }
-    
-    .user-option:hover {
-      color: var(--primary-color);
-      padding-left: 10px;
-    }
-    
-    .user-option i {
-      margin-right: 12px;
-      width: 20px;
-      text-align: center;
-    }
-    
-    .user-option.logout {
-      color: #dc3545;
-    }
-    
-    .user-option.logout:hover {
-      color: #c82333;
-    }
-    
-    /* Responsive */
-    @media (max-width: 991px) {
-      .navbar-collapse {
-        margin-top: 15px;
-        padding: 15px;
-        background-color: rgba(255, 255, 255, 0.05);
-        border-radius: 8px;
-        backdrop-filter: blur(10px);
-      }
-      
-      .nav-link {
-        margin: 4px 0;
-      }
-      
-      .btn-admin,
-      .btn-login,
-      .btn-user {
-        margin-top: 10px;
-        width: 100%;
-        justify-content: center;
-        margin-left: 0;
-      }
-    }
   </style>
 </head>
 <body>
@@ -294,7 +69,7 @@ $esAdmin = isset($_SESSION['usuario']) && isset($_SESSION['usuario']['estado']) 
         
         <!-- Estado de login/logout -->
         <?php if (isset($_SESSION['usuario'])): ?>
-          <!-- Usuario logueado - Botón que abre modal -->
+          <!-- Para Usuario logueado -->
           <button class="btn btn-user" onclick="openUserModal()">
             <i class="fas fa-user"></i>
             <span class="d-none d-md-inline ms-2"><?php echo htmlspecialchars($_SESSION['usuario']['nombre']); ?></span>
@@ -358,7 +133,7 @@ $esAdmin = isset($_SESSION['usuario']) && isset($_SESSION['usuario']['estado']) 
   function openUserModal() {
     document.getElementById('userModal').style.display = 'flex';
   }
-  
+  // cerrar modal
   function closeUserModal() {
     document.getElementById('userModal').style.display = 'none';
   }
@@ -377,15 +152,6 @@ $esAdmin = isset($_SESSION['usuario']) && isset($_SESSION['usuario']['estado']) 
     }
   });
   
-  // Efecto de navbar al hacer scestadol
-  window.addEventListener('scestadol', function() {
-    const navbar = document.querySelector('.navbar-custom');
-    if (window.scestadolY > 50) {
-      navbar.classList.add('scestadoled');
-    } else {
-      navbar.classList.remove('scestadoled');
-    }
-  });
   
   // Activar elemento de navegación actual
   document.addEventListener('DOMContentLoaded', function() {
