@@ -54,39 +54,11 @@ if (isset($_POST['cargar_datos'])) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Registro de Socios - Biblioteca</title>
+    <title>Registro de Socios - AJUPEN</title>
     <link rel="stylesheet" href="../../css/admin/socios.css">
     <link rel="stylesheet" href="../css/Admin/socios.css">
     <style>
-        .btn-cargar {
-            background: #17a2b8;
-            color: white;
-            border: none;
-            padding: 6px 12px;
-            border-radius: 4px;
-            cursor: pointer;
-            font-size: 0.85rem;
-            transition: background 0.3s ease;
-        }
-        
-        .btn-cargar:hover {
-            background: #138496;
-        }
-        
-        .btn-cargar:disabled {
-            background: #6c757d;
-            cursor: not-allowed;
-        }
-        
-        .editing-notice {
-            background: #d4edda;
-            border: 1px solid #c3e6cb;
-            color: #155724;
-            padding: 10px 15px;
-            border-radius: 5px;
-            margin-bottom: 15px;
-            font-weight: 500;
-        }
+       
     </style>
 </head>
 <body>

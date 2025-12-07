@@ -31,7 +31,6 @@ body {
     padding: 20px;
 }
 
-/* Header */
 .header-talleres {
     text-align: center;
     margin-bottom: 40px;
@@ -52,7 +51,7 @@ body {
     opacity: 0.9;
 }
 
-/* Controles de búsqueda */
+
 .controles-busqueda {
     margin-bottom: 40px;
 }
@@ -111,7 +110,6 @@ body {
     border-color: var(--color-primary);
 }
 
-/* Grid de talleres */
 .grid-talleres {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
@@ -293,7 +291,7 @@ body {
     opacity: 0.8;
 }
 
-/* Responsive */
+
 @media (max-width: 768px) {
     .contenedor-principal {
         padding: 15px;

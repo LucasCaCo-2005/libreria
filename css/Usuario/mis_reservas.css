@@ -189,7 +189,6 @@
     background-color: #007bff;
 }
 
-/* Responsive */
 @media (max-width: 768px) {
     .grid-reservas {
         grid-template-columns: 1fr;

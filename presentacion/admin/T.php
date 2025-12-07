@@ -23,7 +23,7 @@ if(!$taller){
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title><?php echo htmlspecialchars($taller['nombre']); ?> - Detalles del Taller</title>
+    <title><?php echo htmlspecialchars($taller['nombre']); ?> - Detalles del Taller - AJUPEN</title>
 
     <link rel="stylesheet" href="../../css/admin/t.css">
 

@@ -32,7 +32,7 @@ foreach ($listaAutoridadesObjects as $autoridad) {
 <html lang="es">
 <head>
 <meta charset="utf-8">
-<title>Index - Autoridades</title>
+<title> Autoridades - AJUPEN</title>
  <link rel="stylesheet" href="../../css/usuario/autoridades.css">
 </head>
 <body>

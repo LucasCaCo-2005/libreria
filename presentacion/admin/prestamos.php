@@ -42,7 +42,7 @@ if ($_POST) {
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Registrar Préstamo</title>
+    <title>Registrar Préstamo - AJUPEN</title>
     <style>
         body {
             font-family: Arial, sans-serif;

@@ -31,7 +31,7 @@ $listaTalleres = $talleresBD->ListarTalleres();
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sobre Nosotros - Asociación de Jubilados y Pensionistas de Durazno</title>
+    <title>Index - AJUPEN</title>
     <link rel="stylesheet" href="css/Usuario/institucion.css">
     <link rel="stylesheet" href="css/Usuario/carrusel.css">
     <?php include_once 'cabecera.php'; ?>

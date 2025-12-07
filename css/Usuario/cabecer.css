@@ -52,7 +52,7 @@
       font-weight: 600;
     }
     
-    /* Botones */
+  
     .btn-admin {
       background-color: white;
       color: var(--primary-color);
@@ -109,7 +109,7 @@
       transform: translateY(-2px);
     }
     
-    /* Modal personalizado */
+  
     .user-modal {
       display: none;
       position: fixed;

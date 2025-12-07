@@ -11,7 +11,6 @@ $esAdmin = isset($_SESSION['usuario']) && isset($_SESSION['usuario']['estado']) 
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Panel Administrativo - Asoiacion</title>
  <link rel="stylesheet" href="../../css/usuario/cabe.css">
   <link rel="stylesheet" href="../../css/usuario/bootstrap.min.css">
   <link rel="stylesheet" href="../css/Usuario/bootstrap.min.css">

@@ -195,7 +195,6 @@
     color: #666;
 }
 
-/* Responsive */
 @media (max-width: 1024px) {
     .tarjeta-reserva {
         grid-template-columns: 1fr;

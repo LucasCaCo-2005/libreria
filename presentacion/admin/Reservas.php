@@ -56,7 +56,7 @@ include_once 'cabecera.php';
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Administración de Reservas</title>
+    <title>Administración de Reservas - AJUPEN</title>
     <link rel="stylesheet" href="../../css/admin/reservas.css">
 </head>
 <body>

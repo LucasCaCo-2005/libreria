@@ -5,16 +5,15 @@ section {
     gap: 40px;
     padding: 20px;
 }
-/* Centrar el título */
+
 .titulo-autoridades {
     text-align: center;
-    font-size: 4rem; /* Tamaño del texto */
+    font-size: 4rem; 
     font-weight: bold;
-    margin-bottom: 20px; /* Espacio abajo del título */
-    color: #333; /*Color de letra */
+    margin-bottom: 20px; 
+    color: #333; 
 }
 
-/* === PRESIDENTE === */
 .organigrama-presidente {
     display: flex;
     justify-content: center;
@@ -22,14 +21,13 @@ section {
 }
 
 .card.presidente {
-    border: 3px solid #FFD700; /* Dorado */
+    border: 3px solid #FFD700; 
     background-color: #FFF9E5;
     box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
     transform: scale(1.1);
     z-index: 10;
 }
 
-/* === OTROS CARGOS === */
 .organigrama-otros {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
@@ -39,7 +37,6 @@ section {
     justify-items: center;
 }
 
-/* === ESTILOS GENERALES DE CARD === */
 .card {
     border: 1px solid #ccc;
     border-radius: 10px;

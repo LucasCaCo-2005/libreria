@@ -327,9 +327,6 @@
             }
         }
 
-
-
-        /* Sección de historial */
 .seccion-historial {
     grid-column: 1 / -1;
     margin-top: 20px;

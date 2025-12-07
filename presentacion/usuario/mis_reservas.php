@@ -33,7 +33,7 @@ include_once 'cabecera.php';
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Mis Reservas</title>
+    <title>Mis Reservas - AJUPEN</title>
     <link rel="stylesheet" href="../../css/Usuario/mis_reservas.css">
 </head>
 <body>

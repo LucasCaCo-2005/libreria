@@ -219,7 +219,7 @@
             transform: translateY(-2px);
         }
 
-        /* Tabla */
+    
         .table-section {
             background: #f8f4f4;
             border-radius: var(--border-radius);
@@ -340,7 +340,7 @@
             font-size: 3rem;
         }
 
-        /* Responsive */
+      
         @media (max-width: 1200px) {
             .trabajadores-content {
                 grid-template-columns: 1fr;
@@ -389,7 +389,6 @@
         }
 
 
-        /* Sistema de mensajes de alerta */
 .alert-message {
     padding: 15px 20px;
     border-radius: 10px;

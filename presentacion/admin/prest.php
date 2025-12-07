@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Listado de Préstamos</title>
+    <title>Listado de Préstamos - AJUPEN</title>
     <link rel="stylesheet" href="../../css/admin/prest.css">
 
     <link rel="stylesheet" href="../css/Admin/prest.css">
@@ -13,7 +13,7 @@
 
 <div class="container">
     <div class="header">
-        <h1>Gestión de Préstamos</h1>
+        <h1>Gestión de Préstamos - AJUPEN</h1>
         <p>Administra y realiza seguimiento de los préstamos de libros</p>
     </div>
 

@@ -44,7 +44,7 @@ $limiteAlcanzado = count($_SESSION['carrito_reservas']) >= 3;
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title><?php echo $libro['nombre']; ?> - Detalles</title>
+    <title><?php echo $libro['nombre']; ?> - Detalles - AJUPEN</title>
     <link rel="stylesheet" href="../../css/Usuario/mas.css">
 </head>
 <body>

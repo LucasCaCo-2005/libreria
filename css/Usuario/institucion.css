@@ -175,7 +175,6 @@
             }
         }
 
-           /* Estilos para la sección de video mejorada */
         .video-section {
             margin: 40px 0;
             padding: 30px 0;
@@ -192,7 +191,7 @@
         .video-wrapper {
             position: relative;
             width: 100%;
-            padding-bottom: 56.25%; /* Relación 16:9 */
+            padding-bottom: 56.25%; 
             border-radius: 12px;
             overflow: hidden;
             box-shadow: 0 10px 30px rgba(0,0,0,0.15);

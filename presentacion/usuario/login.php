@@ -50,7 +50,7 @@ include_once 'cabecera.php';
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Iniciar Sesión</title>
+    <title>Iniciar Sesión - AJUPEN</title>
         <link rel="stylesheet" href="../../css/Usuario/login.css">
     <style>
       
@@ -92,7 +92,7 @@ include_once 'cabecera.php';
                        placeholder="••••••••"
                        required>
                 <div class="password-helper">
-                    <a href="recuperar.php">¿Olvidaste tu contraseña?</a>
+                    <a href="#">¿Olvidaste tu contraseña?</a>
                 </div>
             </div>
             

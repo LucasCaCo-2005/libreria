@@ -10,7 +10,7 @@ if (session_status() === PHP_SESSION_NONE) {
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <title>Biblioteca Digital</title>
+  <title>Biblioteca Digital - AJUPEN</title>
 
      <link rel="stylesheet" href="../../css/usuario/productos.css"> 
 

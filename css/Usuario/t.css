@@ -181,7 +181,7 @@
             transform: translateY(-2px);
         }
 
-        /* PArte Responsive */
+    
         @media (max-width: 968px) {
             .contenido-detalle {
                 grid-template-columns: 1fr;

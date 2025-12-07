@@ -1,10 +1,10 @@
-/* Estilos Generales */
+
 body {
     margin: 0;
     font-family: Arial, sans-serif;
 }
 
-/* Header */
+
 .header-content {
     display: flex;
     justify-content: space-between;
@@ -16,10 +16,10 @@ body {
 
 .flag img,
 .logo-header img {
-    height: 150px; /* duplica el tamaño del logo */
+    height: 150px; 
 }
 
-/* Boton del Login*/
+
 .login-button button,
 #loginButton {
     padding: 16px 32px;
@@ -38,35 +38,33 @@ body {
     background-color: #003f75;
 }
 
-/* Modal Login Personalizado */
+
 .custom-
 .vertical-banner {
   pointer-events: auto;
   z-index: 10;
 }
-/* Fix de capas y click */
 
-/* Capa del botón login */
+
 #loginButton, #userButton {
   position: relative;
-  z-index: 5000; /* muy por encima de todo */
+  z-index: 5000;
 }
 
-/* El banner lateral debajo de los botones */
+
 .vertical-banner {
   z-index: 1000;
 }
 
-/* Banner inferior — más bajo aún */
+
 .banner-inferior {
   z-index: 900;
 }
 
-/* Modal de login — solo visible cuando se abre */
 #loginModal.custom-login-modal {
   display: none;
   z-index: 6000;
-  pointer-events: none; /* no intercepta clics cuando está oculto */
+  pointer-events: none; 
 }
 
 #loginModal.custom-login-modal.active {
@@ -74,8 +72,7 @@ body {
   pointer-events: all;
 }
 
-/* El backdrop de Bootstrap no debe quedar encima */
 .modal-backdrop {
   z-index: 2000 !important;
-  pointer-events: none; /* evita que bloquee clics */
+  pointer-events: none; 
 }

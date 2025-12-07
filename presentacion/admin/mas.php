@@ -20,7 +20,7 @@ if(!$libro){
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Detalles del Libro</title>
+    <title>Detalles del Libro - AJUPEN</title>
     <style> 
 .imagen {
     border: 1px solid #ceababff;

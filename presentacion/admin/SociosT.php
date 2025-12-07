@@ -33,44 +33,11 @@ $listaSocios = $sentencia->fetchAll(PDO::FETCH_ASSOC);
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gestión de Socios - Biblioteca</title>
+    <title>Gestión de Socios - AJUPEN</title>
     <link rel="stylesheet" href="../../css/admin/sociost.css">
     <link rel="stylesheet" href="../css/Admin/sociost.css">
     <style>
-        .btn-pagos.disabled {
-            opacity: 0.5;
-            cursor: not-allowed;
-            pointer-events: none;
-            background-color: #95a5a6 !important;
-        }
-        
-        .tooltip {
-            position: relative;
-            display: inline-block;
-        }
-        
-        .tooltip .tooltiptext {
-            visibility: hidden;
-            width: 200px;
-            background-color: #555;
-            color: white;
-            text-align: center;
-            border-radius: 6px;
-            padding: 5px;
-            position: absolute;
-            z-index: 1;
-            bottom: 125%;
-            left: 50%;
-            margin-left: -100px;
-            opacity: 0;
-            transition: opacity 0.3s;
-            font-size: 12px;
-        }
-        
-        .tooltip:hover .tooltiptext {
-            visibility: visible;
-            opacity: 1;
-        }
+       
     </style>
 </head>
 <body>

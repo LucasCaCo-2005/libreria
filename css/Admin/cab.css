@@ -6,7 +6,7 @@
       --color-hover: #b98c8c;
     }
    
-    /* Estilo de la barra de navegaciòn, degradado rojo-oscuro, sombra y estilo visual atractivo */
+
     .navbar-admin {
       background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-dark) 100%) !important;
       box-shadow: 0 4px 12px rgba(0,0,0,0.15);
@@ -26,7 +26,7 @@
       font-size: 1.8rem;
     }
 
-     /* Estilo de los enlaces de navegación,  efecto hover elegante (fondo semitransparente y desplazamiento)*/
+  
     .nav-link {
       color: #f8f4f4 !important;
       font-weight: 500;
@@ -264,7 +264,7 @@
       }
     }
 
-    /* Animaciones */
+
     @keyframes fadeInDown {
       from {
         opacity: 0;

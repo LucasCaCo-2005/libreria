@@ -16,7 +16,7 @@ include_once 'cabecera.php';
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Carrito de Reservas</title>
+    <title>Carrito de Reservas - AJUPEN</title>
     <link rel="stylesheet" href="../../css/Usuario/carrito.css">
 </head>
 <body>

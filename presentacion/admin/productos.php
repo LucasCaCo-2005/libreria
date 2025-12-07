@@ -48,7 +48,7 @@ if (isset($_POST['accion']) && $_POST['accion'] == 'Seleccionar' && isset($_POST
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Gestión de Libros</title>
+  <title>Gestión de Libros - AJUPEN</title>
   <link rel="stylesheet" href="../../css/admin/productos.css">
   <style>
     .editing-alert {

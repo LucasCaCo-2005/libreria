@@ -25,7 +25,7 @@ unset($_SESSION['error_password']);
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
          <link rel="stylesheet" href="../../css/usuario/perfil.css"> 
-    <title>Mi Perfil</title>
+    <title>Mi Perfil - AJUPEN</title>
     <style>
         
        

@@ -21,9 +21,7 @@
             
         
         }
-        overflow: hidden;
-          background: white;
-          
+       
         .container::before {
             content: '';
             position: absolute;

@@ -19,7 +19,7 @@ include_once 'cabecera.php';
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Reserva Confirmada</title>
+    <title>Reserva Confirmada - AJUPEN</title>
     <link rel="stylesheet" href="../../css/Usuario/confirmacion.css">
 </head>
 <body>

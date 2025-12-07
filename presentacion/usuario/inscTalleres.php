@@ -1,7 +1,8 @@
 <?php
 
-include_once '../../persistencia/admin/bd.php';  // conexión
-session_start();
+include_once '../../persistencia/admin/bd.php'; 
+include_once 'cabecera.php'; // conexión
+
 
 // Obtengo la Id del Socio logueado
 if (!isset($_SESSION['usuario']['id'])) {

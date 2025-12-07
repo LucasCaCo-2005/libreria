@@ -11,8 +11,8 @@ body {
 .form-container {
     display: flex;
     flex-direction: column;
-    align-items: center; /* centra todo dentro del contenedor */
-    background-color: #0057a0; /* fondo azul para el título y formulario */
+    align-items: center; 
+    background-color: #0057a0; 
     padding: 40px;
     border-radius: 10px;
 }
@@ -26,13 +26,13 @@ body {
 }
 
 form {
-    width: 100%; /* ocupa todo el ancho del contenedor */
+    width: 100%; 
 }
 
 .form-row {
     display: flex;
     align-items: center;
-    justify-content: flex-end; /* etiquetas a la derecha */
+    justify-content: flex-end;
     margin-bottom: 15px;
 }
 

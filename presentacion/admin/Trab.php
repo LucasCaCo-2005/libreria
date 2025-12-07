@@ -9,7 +9,7 @@ include("cabecera.php");
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gestión de Trabajadores - Biblioteca</title>
+    <title>Gestión de Trabajadores - AJUPEN</title>
 
     <link rel="stylesheet" href="../../css/admin/trab.css">
 
@@ -23,7 +23,7 @@ include("cabecera.php");
 
 <div class="trabajadores-container">
     <div class="trabajadores-header">
-        <h1>👥 Gestión de Trabajadores</h1>
+        <h1>👥 Gestión de Trabajadores - AJUPEN</h1>
         <p>Administra el personal de la biblioteca</p>
     </div>
 

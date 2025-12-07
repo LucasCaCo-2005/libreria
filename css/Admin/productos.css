@@ -265,7 +265,6 @@ textarea.form-control {
     transform: translateY(-2px);
 }
 
-/* Estilos para la tabla */
 .table-responsive {
     overflow-x: auto;
 }
@@ -402,7 +401,6 @@ textarea.form-control {
     font-size: 3rem;
 }
 
-/* Responsive */
 @media (max-width: 1200px) {
     .admin-content {
         grid-template-columns: 1fr;
